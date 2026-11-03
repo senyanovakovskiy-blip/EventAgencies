@@ -1,0 +1,22 @@
+{
+  "name": "EventAgencies",
+  "shortName": "EventAgencies",
+  "title": "EventAgencies — агентства и их проекты",
+  "description": "Выбирайте агентство по реальным проектам: фотографии, формат события, площадка и роль команды. Сравнивайте компании в каталоге EventAgencies.",
+  "email": "",
+  "contactLabel": "Каталог агентств",
+  "contactUrl": "/catalog",
+  "location": "EventAgencies",
+  "url": "http://127.0.0.1:8780",
+  "language": "ru",
+  "ogImage": "/custom/events/positive-hack-days-01.webp",
+  "favicon": "/custom/favicon.svg",
+  "playgroundDescription": "Фотографии реальных событий: оформление площадок, сцены и гости. Посмотрите, какие решения подойдут вашему событию.",
+  "music": "/assets/The Earth Prelude-C69ddvHx.m4a",
+  "home": {
+    "kicker": "Агентства и их проекты",
+    "title": "Команда для вашего события",
+    "copy": "Выбирайте агентство по реальным проектам.",
+    "cta": "Смотреть проекты"
+  }
+}
