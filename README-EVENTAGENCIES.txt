@@ -35,8 +35,9 @@ EVENTAGENCIES — MOTION FOLIO
 ЗАПУСК
 Откройте PowerShell в этой папке и выполните:
   powershell -ExecutionPolicy Bypass -File .\start.ps1
-Либо выполните npm start и откройте адрес выше. Нужен Node.js 20+.
+Либо выполните npm start и откройте адрес выше. Нужен Node.js 24+.
 Зависимости устанавливать не требуется.
+Регрессионные тесты: node --test tests/*.test.mjs (либо npm test).
 
 МАТЕРИАЛЫ
 content/site.json — название и описание сайта.

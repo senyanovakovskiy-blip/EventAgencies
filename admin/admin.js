@@ -8,7 +8,7 @@ const emptyDetail=$('#request-detail').innerHTML;
 const format=v=>occasions[v]||(v==='other'?'Другой формат':'Формат нужно уточнить');
 const date=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
 try{if(localStorage.getItem('zizi-theme')==='dark')document.documentElement.dataset.theme='dark';}catch{}
-let csrf='',current=null,catalog=null,catalogPromise=null,page=1,listVersion=0,detailVersion=0,saving=false;
+let csrf='',current=null,catalog=null,catalogPromise=null,page=1,listVersion=0,detailVersion=0,saving=false,loggingOut=false;
 const getCatalog=()=>catalogPromise||(catalogPromise=api('/api/admin/catalog').then(data=>(catalog=data)).catch(error=>{catalogPromise=null;throw error;}));
 const dirty=()=>editorChanged($('#operator-form'),current);
 const allowLeave=()=>!dirty()||confirm('Есть несохранённые изменения. Уйти без сохранения?');
@@ -28,7 +28,14 @@ async function api(url,options={}){
 function showLogin(){ $('#login-view').hidden=false;$('#workspace').hidden=true;$('#logout').hidden=true;$('#initial-status').hidden=true; }
 async function showWorkspace(session){csrf=session.csrf;$('#login-view').hidden=true;$('#workspace').hidden=false;$('#logout').hidden=false;$('#reauth').hidden=true;$('#initial-status').hidden=true;await loadList();if(!current){const match=/^#request-(\d+)$/.exec(location.hash);if(match)await openDetail(Number(match[1]));}}
 $('#login-form').addEventListener('submit',async event=>{event.preventDefault();const form=event.currentTarget,button=form.querySelector('button');button.disabled=true;$('#login-status').textContent='Проверяем вход…';try{const session=await api('/api/admin/login',{method:'POST',body:JSON.stringify({username:form.elements.username.value,password:form.elements.password.value})});form.elements.password.value='';$('#login-status').textContent='';await showWorkspace(session);}catch(error){$('#login-status').textContent=error.message;}finally{button.disabled=false;}});
-$('#logout').addEventListener('click',async()=>{if(!allowLeave())return;try{await api('/api/admin/logout',{method:'POST'});csrf='';current=null;$('#request-detail').innerHTML=emptyDetail;$('#request-list').replaceChildren();$('.inbox-layout').classList.remove('has-detail');history.replaceState(null,'','/admin');showLogin();}catch(error){$('#workspace-status').textContent=error.message;}});
+$('#logout').addEventListener('click',async()=>{
+ if(loggingOut||saving||!allowLeave())return;
+ loggingOut=true;++detailVersion;++listVersion;
+ setEditorBusy($('#operator-form'),true);$('#logout').disabled=true;
+ try{await api('/api/admin/logout',{method:'POST'});csrf='';current=null;$('#request-detail').innerHTML=emptyDetail;$('#request-list').replaceChildren();$('.inbox-layout').classList.remove('has-detail');history.replaceState(null,'','/admin');showLogin();}
+ catch(error){$('#workspace-status').textContent=error.message;}
+ finally{loggingOut=false;setEditorBusy($('#operator-form'),false);$('#logout').disabled=false;}
+});
 $('#reauth').addEventListener('click',()=>{showLogin();$('#login-form').elements.password.focus();});
 async function loadList(){
  const version=++listVersion,params=new URLSearchParams({q:$('#filters').elements.q.value,status:$('#filters').elements.status.value,page:String(page)});
@@ -38,7 +45,7 @@ async function loadList(){
   $('#total-count').textContent=Object.values(data.counts).reduce((a,b)=>a+b,0);
   $('#list-count').textContent=data.total+' найдено';
   $('#status-counts').innerHTML=Object.entries({'':'Все',...labels}).map(([value,label])=>`<button type="button" data-filter="${value}" aria-pressed="${$('#filters').elements.status.value===value}">${label}<span>${value?data.counts[value]:Object.values(data.counts).reduce((a,b)=>a+b,0)}</span></button>`).join('');
-  $('#request-list').innerHTML=data.items.length?data.items.map(row=>`<button class="request-row" data-id="${row.recordId}" aria-current="${current?.recordId===row.recordId}" aria-label="Открыть заявку ${esc(row.id)}"><span class="row-top"><span>${esc(row.id)}</span><time>${esc(date(row.createdAt))}</time></span><span class="row-name">${esc(row.name)}</span><span class="row-task">${esc([format(row.format),row.city||'Город нужно уточнить',row.guests&&row.guests+' гостей'].filter(Boolean).join(' · '))}</span><span class="row-detail">Дата: ${esc(row.dateUnknown?'пока неизвестна':row.date||'нужно уточнить')}</span>${row.budgetHelp||row.budget?`<span class="row-detail">Бюджет: ${esc(row.budgetHelp?'нужна помощь с оценкой':Number(row.budget).toLocaleString('ru-RU')+' ₽')}</span>`:''}<span class="row-bottom"><span class="badge" data-status="${row.status}">${labels[row.status]}</span>${row.test?'<span class="test-badge">Тестовая</span>':`<span>${row.agencies.length?row.agencies.length+' команды':'Помощь с подбором'}</span>`}</span></button>`).join(''):'<p class="empty-list">Заявок по этим условиям пока нет. Измените поиск или статус.</p>';
+  $('#request-list').innerHTML=data.items.length?data.items.map(row=>`<button class="request-row" data-id="${row.recordId}" aria-current="${current?.recordId===row.recordId}" aria-label="Открыть заявку ${esc(row.id)}"><span class="row-top"><span>${esc(row.id)}</span><time>${esc(date(row.createdAt))}</time></span><span class="row-name">${esc(row.name)}</span><span class="row-task">${esc([format(row.format),row.city||'Город нужно уточнить',row.guests&&row.guests+' гостей'].filter(Boolean).join(' · '))}</span><span class="row-detail">Дата: ${esc(row.dateUnknown?'пока неизвестна':row.date||'нужно уточнить')}</span>${row.budgetHelp||row.budget?`<span class="row-detail">Бюджет: ${esc(row.budgetHelp?'нужна помощь с оценкой':Number(row.budget).toLocaleString('ru-RU')+' ₽')}</span>`:''}<span class="row-bottom"><span class="badge" data-status="${row.status}">${labels[row.status]}</span>${row.test?'<span class="test-badge">Тестовая</span>':`<span>${row.agencies.length?row.agencies.length+(row.agencies.length===1?' команда':' команды'):'Помощь с подбором'}</span>`}</span></button>`).join(''):'<p class="empty-list">Заявок по этим условиям пока нет. Измените поиск или статус.</p>';
   $('#pagination').hidden=data.pages<=1;$('#page-label').textContent=page+' / '+data.pages;$('#prev-page').disabled=page<=1;$('#next-page').disabled=page>=data.pages;
   $('#workspace-status').textContent='Список обновлён · '+new Intl.DateTimeFormat('ru-RU',{hour:'2-digit',minute:'2-digit'}).format(new Date());
  }catch(error){if(version===listVersion)$('#workspace-status').textContent=error.message;}
@@ -50,9 +57,14 @@ function renderDetail(data){
  wireEditor({data,catalog,onSave:saveDetail,onReload:()=>openDetail(data.recordId)});
 }
 async function openDetail(id){
- if(!allowLeave())return;const version=++detailVersion;
- try{const [data]=await Promise.all([api('/api/admin/inquiries/'+id),getCatalog()]);if(version!==detailVersion)return;current=data;renderDetail(data);history.replaceState(null,'','/admin#request-'+id);$('.inbox-layout').classList.add('has-detail');document.querySelectorAll('[data-id]').forEach(row=>row.setAttribute('aria-current',String(Number(row.dataset.id)===id)));if(matchMedia('(max-width:760px)').matches){$('#request-detail').scrollIntoView({block:'start'});$('#request-detail').focus({preventScroll:true});}}
- catch(error){$('#workspace-status').textContent=error.message;}
+ if(loggingOut||!allowLeave())return;const version=++detailVersion;
+ const departingEditor=$('#operator-form'),departingValues=JSON.stringify(readEditor(departingEditor));
+ try{
+  const [data]=await Promise.all([api('/api/admin/inquiries/'+id),getCatalog()]);if(version!==detailVersion||loggingOut)return;
+  // A delayed navigation must not discard edits made after the initial confirmation.
+  if(($('#operator-form')!==departingEditor||JSON.stringify(readEditor(departingEditor))!==departingValues)&&!allowLeave())return;
+  current=data;renderDetail(data);history.replaceState(null,'','/admin#request-'+id);$('.inbox-layout').classList.add('has-detail');document.querySelectorAll('[data-id]').forEach(row=>row.setAttribute('aria-current',String(Number(row.dataset.id)===id)));if(matchMedia('(max-width:760px)').matches){$('#request-detail').scrollIntoView({block:'start'});$('#request-detail').focus({preventScroll:true});}
+ }catch(error){if(version===detailVersion&&!loggingOut)$('#workspace-status').textContent=error.message;}
 }
 async function saveDetail(event){
  event.preventDefault();if(saving)return;const form=event.currentTarget,id=current.recordId;const input={...readEditor(form),revision:current.revision};
