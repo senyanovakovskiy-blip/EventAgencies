@@ -58,8 +58,24 @@ html:root .card-actions .ea-save-button{font-family:Motion,Arial,sans-serif;font
 .primary-action{background:var(--ink);color:var(--canvas)}
 .secondary-action{background:transparent;color:var(--ink)}
 .primary-action:hover{background:var(--color-highlight);border-color:var(--color-highlight);color:var(--canvas)}
-.brief-summary{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 18px}
-.brief-summary span{border:1px solid var(--line);border-radius:25px;padding:7px 12px;font-size:12px;color:var(--muted)}
+.brief-summary{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:24px 0 18px}
+.brief-field-card{position:relative;grid-column:span 2;display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:0;min-height:106px;padding:16px 30px 16px 16px;border:1px solid var(--line);border-radius:8px;background:var(--glass);color:var(--ink);text-align:left;font-family:inherit;cursor:pointer}
+.brief-field-card:nth-last-child(-n+2){grid-column:span 3}
+.brief-field-card small{font-size:11px;line-height:1.4;color:var(--muted)}
+.brief-field-card strong{font-size:16px;line-height:1.4;font-weight:400;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.brief-field-card i{position:absolute;right:12px;top:14px;font-size:15px;font-style:normal;color:var(--muted)}
+.brief-field-card.is-empty strong{color:var(--muted);font-size:14px}
+.brief-field-card:hover{border-color:var(--color-highlight)}
+.brief-field-card:hover i{color:var(--color-highlight)}
+.brief-field-card:focus-visible,.project-wishes button:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.project-wishes{padding:17px 0 22px;border-top:1px solid var(--line);margin-bottom:6px}
+.project-wishes-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
+.project-wishes-heading h2{font-size:14px;line-height:1.4;font-weight:400;letter-spacing:0;margin:0}
+.project-wishes button{min-height:36px;padding:6px 0;border:0;background:transparent;color:var(--color-highlight);font:12px/1.4 Motion,Arial,sans-serif;cursor:pointer}
+.project-wishes #project-description{max-width:none;margin:0;font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.project-wishes #project-description.is-empty{font-size:13px;color:var(--muted)}
+.project-wishes-toggle{margin-top:8px}
+@media(max-width:540px){.brief-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.brief-field-card,.brief-field-card:nth-last-child(-n+2){grid-column:span 1;min-height:100px;padding:14px 28px 14px 14px}.brief-field-card:last-child{grid-column:1/-1;min-height:88px}.brief-field-card strong{font-size:15px}}
 #project-description:empty{display:none}
 #project-description{white-space:pre-wrap}
 .project-comparison{padding-top:42px}

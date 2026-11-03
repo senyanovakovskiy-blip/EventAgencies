@@ -1,5 +1,6 @@
 import {setupSelectionShare} from './share-selection.js';
 import {setupProjectSections} from './project-sections.js';
+import {setupBriefSummary} from './project-brief.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -7,6 +8,7 @@ import {INQUIRY_KEY,contactError,validPayload,submissionPayload} from './inquiry
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let removedAgency=null;
 const expandedAgencies=new Set();
+const renderBriefSummary=setupBriefSummary(formatName);
 const orderStatus=document.createElement('p');orderStatus.className='project-order-status';orderStatus.setAttribute('role','status');orderStatus.setAttribute('aria-live','polite');
 document.querySelector('.comparison-toolbar')?.after(orderStatus);
 const helpMode=new URLSearchParams(location.search).has('help');
@@ -106,7 +108,7 @@ document.addEventListener('click',async event=>{
  const occasion=event.target.closest('[data-occasion]');if(occasion&&!draft.brief.format&&Object.hasOwn(occasions,occasion.dataset.occasion))persist(updateBrief(draft,{format:occasion.dataset.occasion}),{quiet:true});
  const editBrief=event.target.closest('[data-edit-brief]');if(editBrief)openBrief(editBrief.dataset.briefField);
  if(event.target.closest('[data-edit-selection]')){event.preventDefault();setHelpSelection(true);const section=document.getElementById('project-comparison');section?.scrollIntoView({block:'start'});section?.focus({preventScroll:true});}
- if(event.target.closest('[data-return-project]')){document.querySelector('.project-intro')?.scrollIntoView({block:'start'});document.querySelector('.project-intro [data-edit-brief]')?.focus({preventScroll:true});}
+ if(event.target.closest('[data-return-project]')){document.querySelector('.project-intro')?.scrollIntoView({block:'start'});document.querySelector('.project-intro-actions [data-edit-brief]')?.focus({preventScroll:true});}
  if(event.target.closest('[data-submit-project]')){
   await sendInquiry();return;
  }
@@ -144,9 +146,7 @@ async function renderProject(){
   const agencyMap=new Map(data.agencies.map(a=>[a.slug,a]));
   const entries=draft.selection.filter(s=>agencyMap.has(s.agencySlug)),b=draft.brief;
   host.dataset.count=String(entries.length);
-  document.getElementById('project-summary').innerHTML=[b.format&&formatName(b.format),b.city,b.dateUnknown?'Дата пока неизвестна':b.date,b.guests&&b.guests+' гостей',b.budgetHelp?'Нужна помощь с оценкой бюджета':b.budget&&'Бюджет: '+b.budget+' ₽'].filter(Boolean).map(v=>`<span>${esc(v)}</span>`).join('');
-  document.getElementById('project-description').textContent=b.description;
-  document.querySelector('.project-intro [data-edit-brief]').textContent=b.format||b.city||b.description?'Изменить описание':'Описать мероприятие';
+  renderBriefSummary(b);
   document.getElementById('selection-total').textContent=entries.length+' / 3';
   host.innerHTML=entries.length?entries.map((s,index)=>{
    const a=agencyMap.get(s.agencySlug),p=selectedWork(data,s),link=p?'/work/'+p.slug+'?from=%2Fmy-project':null;
@@ -200,7 +200,8 @@ function fillBrief(form){
 }
 function openBrief(field){
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
- fillBrief(dialog.querySelector('form'));dialog.showModal();if(field)dialog.querySelector('form').elements.namedItem(field)?.focus();
+ const form=dialog.querySelector('form');fillBrief(form);dialog.showModal();
+ if(field){const target=form.elements.namedItem(field);(target?.disabled?form.elements.namedItem(field==='date'?'dateUnknown':'budgetHelp'):target)?.focus();}
 }
 function focusContact(){
  const form=document.getElementById('project-contact-form');if(!form)return;
