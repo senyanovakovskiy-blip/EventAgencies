@@ -1,4 +1,5 @@
 import {setupSelectionShare} from './share-selection.js';
+import {setupProjectSections} from './project-sections.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -33,6 +34,7 @@ async function offerReplacement(agencySlug,workSlug){
  }catch{notice('Не удалось загрузить варианты замены','Подборка не изменилась. Попробуйте ещё раз.');}
 }
 function refresh(){
+ document.querySelectorAll('[data-workspace-team-count]').forEach(node=>node.textContent=String(draft.selection.length));
  document.querySelectorAll('[data-save-agency]').forEach(button=>{
   const entry=draft.selection.find(s=>s.agencySlug===button.dataset.saveAgency),work=button.dataset.saveWork;
   const selected=Boolean(entry&&(!work||entry.workSlug===work));
@@ -326,6 +328,7 @@ function renderComparison(data,entries){
 }
 
 setupSelectionShare({getState:()=>draft,getData});
+setupProjectSections();
 
 document.addEventListener('change',async event=>{
  const field=event.target.closest('[data-selected-work]');if(!field)return;
