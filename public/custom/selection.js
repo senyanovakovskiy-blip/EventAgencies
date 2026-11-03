@@ -1,6 +1,7 @@
 import {setupSelectionShare} from './share-selection.js';
 import {setupProjectSections} from './project-sections.js';
 import {setupBriefSummary} from './project-brief.js';
+import {setupProjectExport} from './project-export.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -130,7 +131,6 @@ document.addEventListener('click',async event=>{
   finally{savingDraft=false;button.disabled=Boolean(available&&draft.request);}
  }
 
- if(event.target.closest('[data-download-brief]'))downloadBrief();
 });
 addEventListener('storage',e=>{if(e.key===INQUIRY_KEY)refresh();if(e.key===KEY||e.key===null){try{draft=readDraft(localStorage);refresh();if(briefForm&&document.getElementById('brief-dialog').open)fillBrief(briefForm);if(contactForm)fillContact();}catch{}}});
 new MutationObserver(changes=>{if(changes.some(c=>c.type==='attributes'||[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-save-agency],[data-project-count]')||n.querySelector?.('[data-save-agency],[data-project-count]')))))refresh();}).observe(document.getElementById('root')||document.getElementById('content'),{childList:true,subtree:true,attributes:true,attributeFilter:['data-save-agency','data-save-work']});
@@ -315,9 +315,6 @@ if(contactForm){
  contactForm.addEventListener('input',saveContact);contactForm.addEventListener('change',saveContact);
  contactForm.addEventListener('submit',event=>{event.preventDefault();saveContact();});
 }
-async function downloadBrief(){
- try{const data=await getData(),b=draft.brief;const lines=['МОЁ МЕРОПРИЯТИЕ',...briefRows(b).map(([k,v])=>k+': '+v),'','ВЫБРАННЫЕ КОМАНДЫ'];for(const s of draft.selection){const a=data.agencies.find(a=>a.slug===s.agencySlug),p=selectedWork(data,s);if(!a)continue;lines.push('',a.name,p?.fullTitle||'Кейс не выбран',p?location.origin+'/work/'+p.slug:'',p?facts(p):'',p?'Роль: '+role(p):'',p&&draft.workNotes[workNoteKey(s.agencySlug,p.slug)]?'Личная заметка: '+draft.workNotes[workNoteKey(s.agencySlug,p.slug)]:'','Специализация: '+a.types.map(t=>data.types[t]).filter(Boolean).join(', '),'Город команды: '+(a.city||'Нужно уточнить'),'География: '+(a.geography||'Нужно уточнить'),'Услуги: '+(a.services||'Нужно уточнить'),'Условия по бюджету: '+(a.budgetConditions||'Нужно уточнить'),'Источник: '+(p?.source||a.website||'Нужно уточнить'),'Уточнить: доступность даты, стоимость и состав предложения.');}if(!draft.selection.length)lines.push('Пока не выбраны.');lines.push('','КОНТАКТ ДЛЯ ОТВЕТА','Имя: '+(draft.contact.name||'Не указано'),contactMethods[draft.contact.method]+': '+(draft.contact.value||'Не указан'),'','Это копия текущего черновика. Подтверждение передачи и номер заявки показаны в «Моём проекте» после записи на сервер.','Сообщения агентствам не отправляются.');const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='EventAgencies — мой проект.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}catch{notice('Не удалось подготовить файл','Обновите страницу и попробуйте ещё раз.');}
-}
 refresh();
 
 if(briefForm&&helpMode){
@@ -368,6 +365,7 @@ function renderComparison(data,entries){
 }
 
 setupSelectionShare({getState:()=>draft,getData});
+setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
 setupProjectSections();
 
 document.addEventListener('change',async event=>{

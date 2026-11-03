@@ -420,6 +420,33 @@ html:root .ea-save-button{pointer-events:auto}
 #share-selection-dialog button{cursor:pointer}#share-selection-dialog button:disabled{opacity:.45;cursor:default}
 @media(max-width:600px){#share-selection-dialog{padding:24px 18px}#share-selection-dialog h2{font-size:27px}#share-selection-preview{font-size:16px}}
 #share-selection-dialog .draft-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+#project-export-dialog{box-sizing:border-box;width:min(740px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:32px;border:1px solid var(--line);border-radius:12px;background:var(--color-bg);color:var(--ink);font-family:Motion,Arial,sans-serif;box-shadow:0 20px 70px #0003}
+#project-export-dialog::backdrop{background:#07100dc9;backdrop-filter:blur(8px)}
+#project-export-dialog>.eyebrow{display:block;padding-right:32px;margin-top:4px}
+#project-export-dialog h2{font-size:32px;font-weight:400;line-height:1.15;letter-spacing:-.03em;margin:18px 0 16px}
+#project-export-dialog>p{font-size:14px;line-height:1.6;color:var(--muted);margin:0 0 20px}
+.project-export-options{margin:24px 0 18px;padding:18px 20px;border:1px solid var(--line);border-radius:8px;min-inline-size:0}
+.project-export-options legend{padding:0 8px;font-size:12px;color:var(--muted)}
+.project-export-options label{display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.5;cursor:pointer}
+.project-export-options label+label{margin-top:16px}
+.project-export-options input{width:18px;height:18px;margin:2px 0 0;flex:none;accent-color:var(--color-highlight)}
+#project-export-dialog .project-export-summary{font-size:12px;line-height:1.5;margin-bottom:18px}
+.project-export-summary:empty{display:none}
+.project-export-preview{padding:0 0 18px;border-bottom:1px solid var(--line)}
+.project-export-preview summary{font-size:14px;line-height:1.5;cursor:pointer;min-height:36px;display:list-item;list-style-position:inside}
+.project-export-preview[open] summary{margin-bottom:18px}
+.project-export-preview label{font-size:12px;color:var(--muted)}
+#project-export-preview{box-sizing:border-box;width:100%;min-height:180px;resize:vertical;padding:14px;border:1px solid var(--line);border-radius:6px;background:var(--glass);color:var(--ink);font:13px/1.6 Motion,Arial,sans-serif}
+.project-export-copy{display:inline-flex;align-items:center;min-height:44px;padding:10px 0;border:0;background:transparent;color:var(--color-highlight);font:13px/1.4 Motion,Arial,sans-serif;cursor:pointer}
+.project-export-formats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0 16px}
+.project-export-formats button{flex-direction:column;gap:5px;min-height:76px;border-radius:10px;padding:16px}
+.project-export-formats strong{font-size:15px;font-weight:400}
+.project-export-formats span{font-size:11px;opacity:.75}
+#project-export-dialog button:disabled{opacity:.45;cursor:default}
+#project-export-dialog .project-export-help{font-size:12px;margin-bottom:10px}
+#project-export-dialog .brief-local-note{font-size:12px;margin:0}
+#project-export-dialog :is(button,input,summary,textarea):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+@media(max-width:600px){#project-export-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);padding:28px 20px}#project-export-dialog h2{font-size:28px}.project-export-options{padding:16px}.project-export-formats{grid-template-columns:1fr}.project-export-formats button{min-height:70px}#project-export-preview{font-size:16px}}
 
 
 .work-note-block select{box-sizing:border-box;width:100%;min-width:0;margin:0 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--color-bg,var(--chrome));color:inherit;padding:12px;font:16px/1.5 Motion,Arial,sans-serif}
