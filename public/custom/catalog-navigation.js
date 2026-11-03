@@ -1,17 +1,19 @@
 // Each history entry owns its catalogue position; URLs continue to own filters.
 (()=>{
-  const isCatalog=location.pathname.replace(/\/$/,'')==='/catalog', isAgency=/^\/agency\/[a-z0-9-]+\/?$/.test(location.pathname);
+  const normalizePath=pathname=>pathname.replace(/\/$/,'')||'/';
+  const route=value=>{const url=new URL(value,location.origin);return normalizePath(url.pathname)+url.search;};
+  const isCatalog=normalizePath(location.pathname)==='/catalog', isAgency=/^\/agency\/[a-z0-9-]+\/?$/.test(location.pathname);
   if(!isCatalog&&!isAgency)return;
   const storeKey='ea.catalog.positions.v1', pendingKey='ea.catalog.navigation.v1';
-  const path=()=>location.pathname+location.search;
+  const path=()=>normalizePath(location.pathname)+location.search;
   const read=key=>{try{return JSON.parse(sessionStorage.getItem(key)||'null');}catch{return null;}};
   const write=(key,value)=>{try{sessionStorage.setItem(key,JSON.stringify(value));}catch{}};
   const entryId=()=>history.state?.eaCatalogEntry;
   const historyData=()=>history.state&&typeof history.state==='object'?history.state:{};
   const positions=()=>read(storeKey)||{};
   const valid=context=>context&&context.route?.startsWith('/catalog')&&Date.now()-context.time<12*60*60*1000;
-  const getContext=id=>{const context=positions()[id];return valid(context)?context:null;};
-  const pending=read(pendingKey), arrival=pending?.to===path()&&Date.now()-pending.time<30000?pending:null;
+  const getContext=id=>{const context=positions()[id];return valid(context)?{...context,route:route(context.route)}:null;};
+  const pending=read(pendingKey), arrival=pending?.to&&route(pending.to)===path()&&Date.now()-pending.time<30000?pending:null;
   if(arrival){try{sessionStorage.removeItem(pendingKey);}catch{}}
   if(isCatalog){
     history.scrollRestoration='manual';
@@ -100,7 +102,7 @@
       if(token!==generation||leaving)return;
       if(context?.agency){
         const card=[...main.querySelectorAll('[data-catalog-key]')].find(node=>node.dataset.catalogKey===context.key);
-        const link=[...card?.querySelectorAll('a[href]')||[]].find(link=>new URL(link.href).pathname===context.agency);
+        const link=[...card?.querySelectorAll('a[href]')||[]].find(link=>normalizePath(new URL(link.href).pathname)===normalizePath(context.agency));
         link?.focus({preventScroll:true});
       }
       main.dataset.catalogReady='true';
@@ -109,11 +111,12 @@
   function catalogReturn(){
     const query=new URLSearchParams(location.search), context=getContext(query.get('catalogEntry'));
     let from=query.get('from');
-    try{const url=new URL(from,location.origin);if(url.origin!==location.origin||url.pathname!=='/catalog')return null;from=url.pathname+url.search;}catch{return null;}
+    try{const url=new URL(from,location.origin);if(url.origin!==location.origin||normalizePath(url.pathname)!=='/catalog')return null;from=route(url);}catch{return null;}
     return {route:from,entry:context?.route===from?query.get('catalogEntry'):null};
   }
   async function leave(to,entry){
     if(leaving)return;leaving=true;++generation;pageAnimation?.cancel();
+    to=route(to);
     write(pendingKey,{to,entry,time:Date.now()});
     const main=document.getElementById('content'), wasInert=main?.inert;
     if(main)main.inert=true;
@@ -128,10 +131,10 @@
     if(isCatalog&&/^\/agency\/[a-z0-9-]+\/?$/.test(url.pathname)){
       const card=link.closest('[data-catalog-key]');
       document.dispatchEvent(new Event('ea:catalog-flush'));
-      save(card,url.pathname);
+      save(card,normalizePath(url.pathname));
       url.searchParams.set('from',path());url.searchParams.set('catalogEntry',entryId());
       event.preventDefault();leave(url.pathname+url.search,null);
-    }else if(isAgency&&url.pathname==='/catalog'&&(link.hasAttribute('data-catalog-back')||!url.search)){
+    }else if(isAgency&&normalizePath(url.pathname)==='/catalog'&&(link.hasAttribute('data-catalog-back')||!url.search)){
       const destination=catalogReturn();
       event.preventDefault();leave(destination?.route||'/catalog',destination?.entry||null);
     }

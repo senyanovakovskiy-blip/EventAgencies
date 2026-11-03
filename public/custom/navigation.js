@@ -6,9 +6,10 @@ document.addEventListener('click',event=>{
  const from=new URLSearchParams(location.search).get('from');
  if(!from||!from.startsWith('/')||from.startsWith('//'))return;
  let target;try{target=new URL(from,location.origin);}catch{return;}
+ target.pathname=target.pathname.replace(/\/$/,'')||'/';
  if(target.origin!==location.origin||!(target.pathname==='/catalog'||target.pathname==='/my-project'||/^\/agency\/[a-z0-9-]+$/.test(target.pathname)))return;
  const close=control.getAttribute('aria-label')==='Закрыть проект';
- const agency=control.matches('.ea-company-link')&&target.pathname===new URL(control.href).pathname;
+ const agency=control.matches('.ea-company-link')&&target.pathname===new URL(control.href).pathname.replace(/\/$/,'');
  if(close||agency){event.preventDefault();event.stopPropagation();location.assign(target.pathname+target.search);}
 },true);
 

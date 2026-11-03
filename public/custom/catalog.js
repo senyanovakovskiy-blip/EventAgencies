@@ -5,7 +5,7 @@ const themeButton=document.querySelector('.theme-button');
 function syncTheme(){const dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'☀':'◐';themeButton.setAttribute('aria-label',dark?'Включить светлую тему':'Включить тёмную тему');}
 themeButton.addEventListener('click',()=>{const update=()=>{if(document.documentElement.dataset.theme==='dark')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme='dark';try{localStorage.setItem('zizi-theme',document.documentElement.dataset.theme||'light')}catch{}syncTheme();};if(document.startViewTransition&&!matchMedia('(prefers-reduced-motion:reduce)').matches)document.startViewTransition(update);else update();});syncTheme();
 const returnLink=document.querySelector('[data-catalog-back]');
-if(returnLink){try{const from=new URLSearchParams(location.search).get('from');if(from?.startsWith('/catalog')&&!from.startsWith('//')&&new URL(from,location.origin).pathname==='/catalog')returnLink.href=from;}catch{}}
+if(returnLink){try{const from=new URLSearchParams(location.search).get('from');const url=new URL(from,location.origin);if(url.origin===location.origin&&url.pathname.replace(/\/$/,'')==='/catalog')returnLink.href='/catalog'+url.search;}catch{}}
 document.querySelectorAll('[data-project-link]').forEach(a=>{a.href=new URL(a.getAttribute('href'),location.origin).pathname+'?from='+encodeURIComponent(location.pathname+location.search);});
 const results=document.getElementById('catalog-results');
 if(results&&matchMedia('(max-width:900px)').matches)document.querySelector('.filter-options').open=false;
