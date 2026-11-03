@@ -196,7 +196,7 @@ async function sendInquiry(){
 }
 function fillBrief(form){
  for(const [key,value]of Object.entries(draft.brief)){const field=form.elements.namedItem(key);if(field){if(field.type==='checkbox')field.checked=value;else field.value=value;}}
- syncUnknown(form);
+ syncUnknown(form);updateBriefDescriptionCount(form);
 }
 function openBrief(field){
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
@@ -258,10 +258,16 @@ async function openWishes(trigger){
  }catch{notice('Не удалось подготовить пожелание','Описание и личные заметки не изменены. Попробуйте ещё раз.');}
 }
 function syncUnknown(form){form.elements.budget.disabled=form.elements.budgetHelp.checked;form.elements.date.disabled=form.elements.dateUnknown.checked;}
+function updateBriefDescriptionCount(form){
+ const count=document.getElementById('brief-description-count');if(!count)return;
+ const length=form.elements.description.value.length,limit=form.elements.description.maxLength;
+ count.textContent=length.toLocaleString('ru-RU')+' / '+limit.toLocaleString('ru-RU');
+ count.classList.toggle('is-full',length>=limit);count.setAttribute('aria-label','Пожелания: '+length+' из '+limit+' символов');
+}
 const briefForm=document.getElementById('event-brief-form');
 if(briefForm){
  const saveForm=()=>{
-  syncUnknown(briefForm);
+  syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);
   const values={};for(const key of Object.keys(emptyDraft().brief)){const field=briefForm.elements.namedItem(key);values[key]=field.type==='checkbox'?field.checked:field.value;}
   const saved=persist(updateBrief(draft,values),{quiet:true});
   document.getElementById('brief-save-status').textContent=saved?'Изменения сохранены в этом браузере.':'Не удалось сохранить. Разрешите хранение данных сайта и попробуйте снова.';

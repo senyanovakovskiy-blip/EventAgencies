@@ -220,6 +220,30 @@ html:root .agency-save{margin:4px 0 22px}
 .project-handoff>button{justify-self:start}
 #brief-dialog input,#brief-dialog select,#brief-dialog textarea{font-size:16px}
 #brief-dialog label,.brief-local-note{font-size:14px}
+html:root #brief-dialog.brief-editor{padding:0;width:min(700px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:hidden}
+html:root #brief-dialog.brief-editor[open]{display:flex;flex-direction:column}
+.brief-editor-header{flex:none;padding:28px 32px 20px;border-bottom:1px solid var(--line)}
+html:root #brief-dialog.brief-editor h2{font-size:28px;margin:0 32px 12px 0;padding:0;line-height:1.15}
+.brief-editor #brief-note{margin:0;max-width:520px;font-size:13px}
+.brief-editor #event-brief-form{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.brief-editor-content{padding:24px 32px;min-height:0;overflow-y:auto;overscroll-behavior:contain;scroll-padding-block:24px}
+.brief-editor-group{min-inline-size:0;padding:0;margin:0;border:0}
+.brief-editor-group+ .brief-editor-group{margin-top:26px}
+.brief-editor-group legend{float:none;width:100%;padding:0 0 18px;font-size:16px;line-height:1.5;color:var(--ink)}
+.brief-editor-group legend span{margin-right:12px;font:11px/1.4 MotionMono,monospace;color:var(--muted)}
+.brief-editor .brief-fields{margin:0;gap:18px}
+.brief-editor-field{display:flex;flex-direction:column;gap:12px;min-width:0}
+.brief-editor .brief-check{align-self:flex-start;align-items:flex-start;font-size:12px;line-height:1.5;gap:9px}
+.brief-editor .brief-check input{margin-top:0;min-height:18px}
+.brief-editor .brief-fields textarea{min-height:150px;max-height:45dvh}
+.brief-description-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-top:12px;color:var(--muted)}
+.brief-description-meta p{font-size:12px;line-height:1.5;margin:0;max-width:390px}
+#brief-description-count{flex:none;font:11px/1.6 MotionMono,monospace;white-space:nowrap}
+#brief-description-count.is-full{color:var(--color-highlight)}
+.brief-editor-footer{flex:none;display:flex;align-items:center;gap:20px;padding:18px 32px;border-top:1px solid var(--line);background:var(--color-bg)}
+.brief-editor-footer .primary-action{flex:none}
+.brief-editor-footer .brief-local-note{font-size:11px;line-height:1.5;margin:0}
+@media(max-width:600px){html:root #brief-dialog.brief-editor{width:calc(100vw - 20px);max-height:calc(100dvh - 20px)}.brief-editor-header{padding:24px 20px 18px}.brief-editor-content{padding:22px 20px}.brief-editor-footer{padding:16px 20px;gap:10px;flex-direction:column;align-items:stretch}.brief-editor-footer .brief-local-note{text-align:center}.brief-description-meta{gap:12px}.brief-editor .brief-fields{grid-template-columns:1fr}.brief-editor .brief-wide{grid-column:1}}
 #replacement-dialog{width:min(520px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow:auto;border:1px solid var(--color-divider);border-radius:22px;background:var(--color-bg);color:var(--color-title);font-family:Motion,Arial,sans-serif;padding:36px}
 #replacement-dialog::backdrop{background:#07100dd9;backdrop-filter:blur(10px)}
 #replacement-dialog h2{font-size:30px;font-weight:400;line-height:1.15;letter-spacing:-.03em;margin:20px 0}
