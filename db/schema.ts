@@ -39,3 +39,16 @@ export const inquiryHistory = sqliteTable('inquiry_history', {
   uniqueIndex('inquiry_history_revision').on(table.inquiryId, table.revision),
   index('inquiry_history_owner_item').on(table.ownerId, table.inquiryId, table.id),
 ]);
+
+export const projectCopies = sqliteTable('project_copies', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  ownerId: text('owner_id').notNull(),
+  keyHash: text('key_hash').notNull(),
+  payloadHash: text('payload_hash').notNull(),
+  name: text('name').notNull(),
+  createdAt: text('created_at').notNull(),
+  snapshotJson: text('snapshot_json').notNull(),
+}, table => [
+  uniqueIndex('project_copies_owner_key').on(table.ownerId, table.keyHash),
+  index('project_copies_owner_id').on(table.ownerId, table.id),
+]);

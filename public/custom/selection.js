@@ -3,6 +3,7 @@ import {setupProjectSections} from './project-sections.js';
 import {setupBriefSummary} from './project-brief.js';
 import {setupProjectExport} from './project-export.js';
 import {setupProjectHistory} from './project-history.js';
+import {setupAccountProjectCopies} from './account-project-copies.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -368,6 +369,12 @@ function renderComparison(data,entries){
 setupSelectionShare({getState:()=>draft,getData});
 setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
 setupProjectHistory({briefRows,formatName});
+setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending});
+document.addEventListener('ea:project-copy-restored',()=>{
+ draft=readDraft(localStorage);available=true;removedAgency=null;lastReceipt=null;sendError='';focusRequest=false;orderStatus.textContent='';
+ document.getElementById('project-undo').hidden=true;
+ if(contactForm)fillContact();refresh();
+});
 setupProjectSections();
 
 document.addEventListener('change',async event=>{

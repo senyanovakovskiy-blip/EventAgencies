@@ -1,4 +1,5 @@
 import { createCloudStore, digest, problem } from './store.mjs';
+import { createProjectCopyStore } from './project-copies.mjs';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY' };
 const reply = (status, data) => new Response(JSON.stringify(data), { status, headers });
@@ -39,6 +40,22 @@ export async function handleCloudApi(request, env) {
     if (url.pathname === '/api/admin/session' && request.method === 'GET') return reply(200, { authenticated: true, username: 'Владелец', csrf });
     if (url.pathname === '/api/admin/logout' && request.method === 'POST') return reply(200, { ok: true, signOutUrl: '/signout-with-chatgpt?return_to=/admin' });
     if (url.pathname === '/api/admin/login') return reply(405, { error: 'sign_in_with_chatgpt_required' });
+    if (url.pathname === '/api/project-copies') {
+      const copies = createProjectCopyStore(env.DB, ownerId);
+      if (request.method === 'GET') return reply(200, await copies.list({ page: Number(url.searchParams.get('page') || 1) }));
+      if (request.method === 'POST') {
+        const result = await copies.save(await readBody(request, 1048576));
+        return reply(result.duplicate ? 200 : 201, { ok: true, ...result });
+      }
+      return reply(405, { error: 'method_not_allowed' });
+    }
+    const copyMatch = /^\/api\/project-copies\/([1-9]\d*)$/.exec(url.pathname);
+    if (copyMatch) {
+      const copies = createProjectCopyStore(env.DB, ownerId), id = Number(copyMatch[1]);
+      if (request.method === 'GET') return reply(200, await copies.detail(id));
+      if (request.method === 'DELETE') return reply(200, await copies.remove(id));
+      return reply(405, { error: 'method_not_allowed' });
+    }
     const store = createCloudStore(env.DB, ownerId);
     if (url.pathname === '/api/inquiries') {
       if (request.method === 'GET') return reply(200, await store.customerHistory({ page: Number(url.searchParams.get('page') || 1), q: url.searchParams.get('q') || '', status: url.searchParams.get('status') || '' }));

@@ -1,7 +1,7 @@
 import {readDraft,workNoteKey} from './project-store.js';
 import {escapeHtml as esc} from './work-presentation.js';
-export const REFERENCE_KEY='eventagencies-work-references-v1';
-export function normalizeReferences(value){return Array.isArray(value)?[...new Set(value.filter(s=>typeof s==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s)))].slice(0,200):[];}
+import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
+export {REFERENCE_KEY,normalizeReferences};
 let saved=[];try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));}catch{}
 const status=document.createElement('div');status.className='reference-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.append(status);
 let timer,removedReference=null;
@@ -118,6 +118,9 @@ document.addEventListener('click',async event=>{
  try{localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReference=remove?{slug,index}:null;sync();await renderReferences();announce(remove?'Пример убран.':'Работа сохранена в «Моём проекте». Агентство не добавлено.',remove);if(b.dataset.removeReference)status.querySelector('[data-undo-reference]')?.focus({preventScroll:true});}catch{announce('Не удалось сохранить пример. Проверьте доступ к хранилищу браузера.');}
 });
 addEventListener('storage',event=>{if(event.key===REFERENCE_KEY||event.key===null){try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));sync();renderReferences();}catch{}}});
+document.addEventListener('ea:project-copy-restored',()=>{
+ try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));removedReference=null;clearTimeout(timer);status.replaceChildren();referenceView={...referenceView,query:'',agency:'',onlyNotes:false};rememberView();sync();renderReferences();}catch{}
+});
 new MutationObserver(changes=>{if(changes.some(c=>[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-reference-work]')||n.querySelector?.('[data-reference-work]')))))sync();}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
 const back=document.querySelector('[data-case-back]');if(back){try{const from=new URLSearchParams(location.search).get('from');const url=new URL(from||'/catalog?view=projects',location.origin);url.pathname=url.pathname.replace(/\/$/,'')||'/';if(url.origin===location.origin&&(/^\/agency\/[a-z0-9-]+$/.test(url.pathname)||url.pathname==='/catalog'||url.pathname==='/my-project')){back.href=url.pathname+url.search+url.hash;back.textContent=url.pathname.startsWith('/agency/')?'← К работам агентства':url.pathname==='/my-project'?'← В мой проект':'← К работам';}}catch{}}
 sync();renderReferences();
