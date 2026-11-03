@@ -62,11 +62,20 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
   }
   return {
     detail,
-    async customerHistory({ page = 1 } = {}) {
+    async customerHistory({ page = 1, q = '', status = '' } = {}) {
       if (!Number.isSafeInteger(page) || page < 1) throw problem(400, 'invalid_page');
-      const total = (await stmt('SELECT COUNT(*) AS n FROM inquiries WHERE owner_id=?', ownerId).first()).n;
+      if (typeof q !== 'string' || q.length > 180 || typeof status !== 'string' || (status && status !== 'done' && !Object.hasOwn(statusLabels, status))) throw problem(400, 'invalid_filter');
+      const clauses = ['owner_id=?'], args = [ownerId];
+      if (status) { clauses.push('status=?'); args.push(status); }
+      if (q.trim()) {
+        const query = '%' + q.trim().toLocaleLowerCase('ru').replace(/[\\%_]/g, '\\$&') + '%';
+        clauses.push("(search_text LIKE ? ESCAPE '\\' OR printf('ea-%s-%06d',substr(created_at,1,4),id) LIKE ? ESCAPE '\\')");
+        args.push(query, query);
+      }
+      const where = ' WHERE ' + clauses.join(' AND ');
+      const total = (await stmt('SELECT COUNT(*) AS n FROM inquiries' + where, ...args).first()).n;
       const pages = Math.max(1, Math.ceil(total / 10)); page = Math.min(page, pages);
-      const result = await stmt('SELECT id,created_at,status,updated_at,snapshot_json FROM inquiries WHERE owner_id=? ORDER BY id DESC LIMIT 10 OFFSET ?', ownerId, (page - 1) * 10).all();
+      const result = await stmt('SELECT id,created_at,status,updated_at,snapshot_json FROM inquiries' + where + ' ORDER BY id DESC LIMIT 10 OFFSET ?', ...args, (page - 1) * 10).all();
       return {
         total, page, pages,
         items: rows(result).map(row => {
