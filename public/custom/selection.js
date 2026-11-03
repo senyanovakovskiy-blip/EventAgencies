@@ -7,7 +7,11 @@ import {createInquiryClient} from './inquiry-client.js';
 import {INQUIRY_KEY,contactError,validPayload,submissionPayload} from './inquiry-model.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let removedAgency=null;
-const expandedAgencies=new Set();
+const projectViewKey='eventagencies-project-view-v1';
+let projectView={};try{projectView=JSON.parse(sessionStorage.getItem(projectViewKey)||'{}')||{};}catch{}
+const expandedAgencies=new Set(Array.isArray(projectView.expandedAgencies)?projectView.expandedAgencies.filter(slug=>typeof slug==='string'&&/^[a-z0-9-]+$/.test(slug)).slice(-100):[]);
+let comparisonView=projectView.comparisonView==='table'?'table':'cards';
+function rememberProjectView(){try{sessionStorage.setItem(projectViewKey,JSON.stringify({comparisonView,expandedAgencies:[...expandedAgencies].slice(-100)}));}catch{}}
 const renderBriefSummary=setupBriefSummary(formatName);
 const orderStatus=document.createElement('p');orderStatus.className='project-order-status';orderStatus.setAttribute('role','status');orderStatus.setAttribute('aria-live','polite');
 document.querySelector('.comparison-toolbar')?.after(orderStatus);
@@ -56,7 +60,7 @@ document.addEventListener('click',async event=>{
  if(event.target.closest('[data-toggle-help-selection]')){setHelpSelection(!helpSelectionExpanded);return;}
  if(event.target.closest('[data-go-to-contact]')){event.preventDefault();focusContact();return;}
  const wishes=event.target.closest('[data-add-wishes-work]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
- const view=event.target.closest('[data-comparison-view]');if(view){comparisonView=view.dataset.comparisonView;renderProject();return;}
+ const view=event.target.closest('[data-comparison-view]');if(view){comparisonView=view.dataset.comparisonView;rememberProjectView();renderProject();return;}
  const move=event.target.closest('[data-move-agency]');if(move){
   const agencySlug=move.dataset.moveAgency,direction=Number(move.dataset.moveDirection),next=moveAgency(draft,agencySlug,direction);
   if(next===draft)return;
@@ -108,7 +112,7 @@ document.addEventListener('click',async event=>{
  const occasion=event.target.closest('[data-occasion]');if(occasion&&!draft.brief.format&&Object.hasOwn(occasions,occasion.dataset.occasion))persist(updateBrief(draft,{format:occasion.dataset.occasion}),{quiet:true});
  const editBrief=event.target.closest('[data-edit-brief]');if(editBrief)openBrief(editBrief.dataset.briefField);
  const editWork=event.target.closest('[data-review-work]');if(editWork){
-  event.preventDefault();setHelpSelection(true);comparisonView='cards';await renderProject();
+  event.preventDefault();setHelpSelection(true);comparisonView='cards';rememberProjectView();await renderProject();
   const field=document.getElementById('work-choice-'+editWork.dataset.reviewWork);
   if(field){field.scrollIntoView({block:'center'});field.focus({preventScroll:true});}
   else document.getElementById('project-comparison')?.focus();
@@ -141,7 +145,6 @@ function role(p){
 }
 function selectedWork(data,s){return data.projects.find(p=>p.slug===s.workSlug&&(p.agencySlug===s.agencySlug||p.agencySlugs?.includes(s.agencySlug)));}
 function briefRows(b){return [['Формат',formatName(b.format)],['Город',b.city||'Нужно уточнить'],['Дата или период',b.dateUnknown?'Дата пока неизвестна':b.date||'Нужно уточнить'],['Количество гостей',b.guests||'Нужно уточнить'],['Ориентировочный бюджет',b.budgetHelp?'Нужна помощь с оценкой бюджета':b.budget?b.budget+' ₽':'Нужно уточнить'],['Пожелания',b.description||'Пока не указаны']];}
-let comparisonView='cards';
 function agencyPriority(agency,index,total){
  return `<div class="agency-priority"><span class="agency-priority-label">Ваш приоритет <b>${String(index+1).padStart(2,'0')}</b></span>${total>1?`<div class="agency-priority-actions" role="group" aria-label="Приоритет ${esc(agency.name)}"><button type="button" data-move-agency="${agency.slug}" data-move-direction="-1" aria-label="Поднять приоритет ${esc(agency.name)}" title="Поднять приоритет"${index===0?' disabled':''}>↑</button><button type="button" data-move-agency="${agency.slug}" data-move-direction="1" aria-label="Опустить приоритет ${esc(agency.name)}" title="Опустить приоритет"${index===total-1?' disabled':''}>↓</button></div>`:''}</div>`;
 }
@@ -156,7 +159,7 @@ async function renderProject(){
   renderBriefSummary(b);
   document.getElementById('selection-total').textContent=entries.length+' / 3';
   host.innerHTML=entries.length?entries.map((s,index)=>{
-   const a=agencyMap.get(s.agencySlug),p=selectedWork(data,s),link=p?'/work/'+p.slug+'?from=%2Fmy-project':null;
+   const a=agencyMap.get(s.agencySlug),p=selectedWork(data,s),link=p?'/work/'+p.slug+'?from=%2Fmy-project%23project-comparison':null;
    const specialization=a.types.map(t=>data.types[t]).filter(Boolean).join(', ')||'Нужно уточнить';
    return `<article class="project-agency-card">
     ${agencyPriority(a,index,entries.length)}
@@ -169,10 +172,10 @@ async function renderProject(){
     <section class="comparison-block"><h4>Услуги и роль в кейсе</h4><p>Услуги: ${esc(a.services||'Нужно уточнить')}.</p><p>${p?'В выбранной работе: '+esc(role(p)): 'Роль в кейсе: нужно уточнить после выбора проекта.'}</p>${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer">Источник о работе ↗</a>`:''}</section>
     <section class="comparison-block"><h4>Бюджет</h4><p>${esc(a.budgetConditions||'Нужно уточнить')}</p></section></details>
     
-    <div class="comparison-actions"><a class="secondary-action" href="/agency/${a.slug}">Открыть профиль ↗</a><button data-remove-agency="${a.slug}" aria-label="Убрать ${esc(a.name)} из проекта">Убрать</button></div>
+    <div class="comparison-actions"><a class="secondary-action" href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison">Открыть профиль ↗</a><button data-remove-agency="${a.slug}" aria-label="Убрать ${esc(a.name)} из проекта">Убрать</button></div>
    </article>`;
   }).join(''):`<div class="project-empty"><h3>Команды можно выбрать позже.</h3><p>Добавьте до трёх агентств для сравнения.</p><a class="primary-action" href="/catalog">Добавить агентство ↗</a></div>`;
-  host.querySelectorAll('[data-agency-details]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open)expandedAgencies.add(details.dataset.agencyDetails);else expandedAgencies.delete(details.dataset.agencyDetails);}));
+  host.querySelectorAll('[data-agency-details]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open)expandedAgencies.add(details.dataset.agencyDetails);else expandedAgencies.delete(details.dataset.agencyDetails);rememberProjectView();}));
   renderComparison(data,entries);
   document.getElementById('project-review').innerHTML=reviewMarkup(draft,data,briefRows(b));
   document.getElementById('project-storage-note').hidden=available;
@@ -350,7 +353,7 @@ function renderComparison(data,entries){
  if(!tableMode)return;
  const picks=entries.map(s=>({s,a:data.agencies.find(a=>a.slug===s.agencySlug),p:selectedWork(data,s)}));
  const rows=[
- ['Выбранная работа',({p})=>p?`<a href="/work/${p.slug}?from=%2Fmy-project">${esc(p.fullTitle)} ↗</a><p>${esc(facts(p))}</p>`:'Кейс не выбран'],
+ ['Выбранная работа',({p})=>p?`<a href="/work/${p.slug}?from=%2Fmy-project%23project-comparison">${esc(p.fullTitle)} ↗</a><p>${esc(facts(p))}</p>`:'Кейс не выбран'],
  ['Моя заметка',({s,p})=>esc(p&&draft.workNotes[workNoteKey(s.agencySlug,p.slug)]||'Пока нет заметки')],
  ['Специализация',({a})=>esc(a.types.map(t=>data.types[t]).filter(Boolean).join(', ')||'Нужно уточнить')],
  ['Город команды',({a})=>esc(a.city||'Нужно уточнить')],
@@ -359,9 +362,9 @@ function renderComparison(data,entries){
  ['Роль в выбранной работе',({p})=>esc(p?role(p):'Кейс не выбран')],
  ['Опубликованные условия по бюджету',({a})=>esc(a.budgetConditions||'Нужно уточнить')],
  ['Дата и стоимость вашего события',()=> 'Нужно обсудить с командой'],
- ['Источники',({a,p})=>`${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer">Источник кейса ↗</a><br>`:''}<a href="/agency/${a.slug}">Профиль агентства ↗</a>`]
+ ['Источники',({a,p})=>`${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer">Источник кейса ↗</a><br>`:''}<a href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison">Профиль агентства ↗</a>`]
  ];
- host.innerHTML=`<p class="comparison-scroll-hint">Команды расположены в вашем порядке. На узком экране прокрутите таблицу вправо.</p><div class="comparison-scroll" role="region" aria-label="Сравнение выбранных агентств" tabindex="0"><table class="agency-compare-table"><caption>Сравнение ${entries.length} агентств</caption><thead><tr><th scope="col">Критерий</th>${picks.map(({a},index)=>`<th scope="col">${agencyPriority(a,index,entries.length)}<a href="/agency/${a.slug}">${esc(a.name)} ↗</a><button data-remove-agency="${a.slug}" aria-label="Убрать ${esc(a.name)} из сравнения">Убрать</button></th>`).join('')}</tr></thead><tbody>${rows.map(([label,render])=>`<tr><th scope="row">${label}</th>${picks.map(pick=>`<td>${render(pick)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-guide">Личные заметки можно изменить во вкладке «Работы и заметки». Условия нового мероприятия уточняются индивидуально.</p>`;
+ host.innerHTML=`<p class="comparison-scroll-hint">Команды расположены в вашем порядке. На узком экране прокрутите таблицу вправо.</p><div class="comparison-scroll" role="region" aria-label="Сравнение выбранных агентств" tabindex="0"><table class="agency-compare-table"><caption>Сравнение ${entries.length} агентств</caption><thead><tr><th scope="col">Критерий</th>${picks.map(({a},index)=>`<th scope="col">${agencyPriority(a,index,entries.length)}<a href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison">${esc(a.name)} ↗</a><button data-remove-agency="${a.slug}" aria-label="Убрать ${esc(a.name)} из сравнения">Убрать</button></th>`).join('')}</tr></thead><tbody>${rows.map(([label,render])=>`<tr><th scope="row">${label}</th>${picks.map(pick=>`<td>${render(pick)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-guide">Личные заметки можно изменить во вкладке «Работы и заметки». Условия нового мероприятия уточняются индивидуально.</p>`;
 }
 
 setupSelectionShare({getState:()=>draft,getData});
