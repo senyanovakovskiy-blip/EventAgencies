@@ -1,9 +1,10 @@
 import {copySummary,normalizeProjectCopy} from './project-copy-model.js';
 import {copyRequest,currentProjectCopy,saveAccountCopy,previousProject,restoreProjectCopy} from './project-copy-client.js';
+import {prepareCopyPreview,copyAvailabilityMarkup,copyTeamsMarkup,copyReferencesMarkup,copyReferenceCards} from './project-copy-preview.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
-const errorMessage=error=>({authentication_required:'Войдите в свой аккаунт, чтобы открыть сохранённые копии.',copy_limit:'В аккаунте уже 100 копий. Удалите ненужную копию и повторите сохранение.',copy_too_large:'Копия слишком большая. Сохраните её без заметок или уменьшите количество примеров.',too_large:'Копия слишком большая. Сохраните её без заметок или уменьшите количество примеров.',browser_storage_unavailable:'В браузере недоступно сохранение. Освободите место или разрешите хранение данных сайта и попробуйте снова.',restore_recovery_required:'Не удалось полностью восстановить данные браузера. Предыдущий вариант сохранён — освободите место и откройте его через кнопку возврата.',sending_in_progress:'Дождитесь завершения отправки заявки, затем загрузите копию.',not_found:'Этой копии уже нет в вашем аккаунте.'}[error?.code]||'Не удалось выполнить действие. Попробуйте ещё раз.');
+const errorMessage=error=>({authentication_required:'Войдите в свой аккаунт, чтобы открыть сохранённые копии.',catalog_unavailable:'Не удалось загрузить каталог для просмотра копии. Вернитесь к списку и откройте копию ещё раз.',copy_limit:'В аккаунте уже 100 копий. Удалите ненужную копию и повторите сохранение.',copy_too_large:'Копия слишком большая. Сохраните её без заметок или уменьшите количество примеров.',too_large:'Копия слишком большая. Сохраните её без заметок или уменьшите количество примеров.',browser_storage_unavailable:'В браузере недоступно сохранение. Освободите место или разрешите хранение данных сайта и попробуйте снова.',restore_recovery_required:'Не удалось полностью восстановить данные браузера. Предыдущий вариант сохранён — освободите место и откройте его через кнопку возврата.',sending_in_progress:'Дождитесь завершения отправки заявки, затем загрузите копию.',not_found:'Этой копии уже нет в вашем аккаунте.'}[error?.code]||'Не удалось выполнить действие. Попробуйте ещё раз.');
 const validItem=item=>item&&Number.isSafeInteger(item.id)&&item.id>0&&typeof item.name==='string'&&Number.isFinite(Date.parse(item.createdAt))&&['teams','references','notes'].every(key=>Number.isSafeInteger(item[key])&&item[key]>=0);
 
 export function setupAccountProjectCopies({getState,getData,briefRows,formatName,canRestore=()=>true}){
@@ -43,10 +44,15 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
    const item=typeof record==='number'?await copyRequest('/api/project-copies/'+record):record;
    if(version!==previewVersion||!dialog.open)return;
    const snapshot=item.localPrevious?item.snapshot:normalizeProjectCopy(item.snapshot);if(!snapshot)throw Error('invalid_copy');
-   active={...item,snapshot};const summary=copySummary(snapshot),data=await getData().catch(()=>null);if(version!==previewVersion||!dialog.open)return;
-   const teams=snapshot.draft.selection.map(selection=>data?.agencies.find(agency=>agency.slug===selection.agencySlug)?.name||'Название команды сейчас недоступно');
-   previewBody.innerHTML=`<h3>${esc(item.name)}</h3>${item.createdAt?`<p class="account-copy-date">${esc(dateLabel(item.createdAt))}</p>`:''}<p>Команд: ${summary.teams} · Примеров: ${summary.references} · Заметок: ${summary.notes}</p><dl class="review-brief">${briefRows(snapshot.draft.brief).filter(([label])=>label!=='Пожелания').map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><h4>Пожелания</h4><p class="account-copy-wishes">${esc(snapshot.draft.brief.description||'Пока не указаны.')}</p>${teams.length?'<h4>Выбранные команды</h4><p>'+teams.map(esc).join(' · ')+'</p>':''}<p class="account-copy-contact">${snapshot.includeContact?'Контакт в копии: '+esc(snapshot.draft.contact.name||'Имя не указано')+' · '+esc(snapshot.draft.contact.value||'Контакт не указан'):'Контакт в копию не включён. При загрузке сохранится текущий контакт в этом браузере.'}</p><p class="account-copy-effect">${action==='delete'?'Эта копия будет удалена из аккаунта. Текущий проект в браузере останется на месте.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'}${action!=='delete'&&!snapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':''}</p>`;
+   const summary=copySummary(snapshot),data=await getData().catch(()=>null);if(version!==previewVersion||!dialog.open)return;
+   const hasCatalog=Array.isArray(data?.agencies)&&Array.isArray(data?.projects);
+   if(!hasCatalog&&action==='restore'&&!item.localPrevious)throw Object.assign(new Error('catalog_unavailable'),{code:'catalog_unavailable'});
+   const prepared=hasCatalog?prepareCopyPreview(snapshot,data,{preserveAll:Boolean(item.localPrevious)}):null;
+   active={...item,snapshot,prepared,loadSnapshot:prepared?.loadSnapshot||snapshot,referencesShown:6,partial:Boolean(prepared?.hasMissing&&!item.localPrevious)};
+   if(action==='restore'&&active.partial)confirm.textContent='Загрузить доступное';
+   previewBody.innerHTML=`<h3 tabindex="-1">${esc(item.name)}</h3>${item.createdAt?`<p class="account-copy-date">${esc(dateLabel(item.createdAt))}</p>`:''}<p>Команд: ${summary.teams} · Примеров: ${summary.references} · Заметок: ${summary.notes}</p><dl class="review-brief">${briefRows(snapshot.draft.brief).filter(([label])=>label!=='Пожелания').map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><h4>Пожелания</h4><p class="account-copy-wishes">${esc(snapshot.draft.brief.description||'Пока не указаны.')}</p>${prepared?`<h4>Команды и работы</h4>${copyTeamsMarkup(prepared.teams)}<h4>Сохранённые примеры</h4>${copyReferencesMarkup(prepared.references)}`:'<p class="copy-preview-empty">Каталог сейчас недоступен, поэтому названия и фотографии не загружены.</p>'}${action==='restore'?copyAvailabilityMarkup(prepared):''}<p class="account-copy-contact">${snapshot.includeContact?'Контакт в копии: '+esc(snapshot.draft.contact.name||'Имя не указано')+' · '+esc(snapshot.draft.contact.value||'Контакт не указан'):'Контакт в копию не включён.'+(action==='restore'?' При загрузке сохранится текущий контакт в этом браузере.':'')}</p><p class="account-copy-effect">${action==='delete'?'Эта копия будет удалена из аккаунта. Текущий проект в браузере останется на месте.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'}${action!=='delete'&&!snapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':''}</p>`;
    syncBusy();
+   previewBody.querySelector('h3').focus({preventScroll:true});
   }catch(error){if(version===previewVersion){active=null;previewBody.textContent=errorMessage(error);syncBusy();}}
  }
  opener.addEventListener('click',()=>{if(!dialog.open)open();});
@@ -63,11 +69,18 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   finally{busy=false;syncBusy();currentSummary();}
  });
  list.addEventListener('click',event=>{if(busy)return;const open=event.target.closest('[data-preview-copy]'),remove=event.target.closest('[data-delete-copy]');if(open)showPreview(Number(open.dataset.previewCopy));if(remove)showPreview(Number(remove.dataset.deleteCopy),'delete');});
+ previewBody.addEventListener('click',event=>{
+  const button=event.target.closest('[data-more-copy-references]');if(!button||!active?.prepared||busy)return;
+  const references=active.prepared.references,start=active.referencesShown,grid=previewBody.querySelector('[data-copy-reference-grid]');
+  grid.insertAdjacentHTML('beforeend',copyReferenceCards(references,start));active.referencesShown=Math.min(start+6,references.length);
+  button.hidden=active.referencesShown>=references.length;button.textContent='Показать ещё '+Math.min(6,references.length-active.referencesShown);
+  const first=grid.querySelector('[data-copy-reference-index="'+start+'"]');first?.scrollIntoView({block:'nearest'});first?.focus({preventScroll:true});
+ });
  confirm.addEventListener('click',async()=>{
   if(busy||!active)return;const selected=active;busy=true;syncBusy();actionStatus.textContent=mode==='delete'?'Удаляем копию…':'Загружаем проект…';
   try{
    if(mode==='delete'){await copyRequest('/api/project-copies/'+selected.id,{method:'DELETE'});showManager();await loadList(page);saveStatus.textContent='Копия «'+selected.name+'» удалена.';}
-   else{if(!canRestore())throw Object.assign(new Error('sending_in_progress'),{code:'sending_in_progress'});restoreProjectCopy(selected.snapshot,getState);syncUndo();banner.querySelector('p').textContent='Загружен проект «'+selected.name+'». Предыдущий вариант доступен для возврата.';returnFocus=document.getElementById('project-overview');dialog.close();returnFocus.scrollIntoView({block:'start'});returnFocus.focus({preventScroll:true});}
+   else{if(!canRestore())throw Object.assign(new Error('sending_in_progress'),{code:'sending_in_progress'});restoreProjectCopy(selected.loadSnapshot,getState);syncUndo();banner.querySelector('p').textContent=(selected.partial?'Загружены доступные элементы копии «':'Загружен проект «')+selected.name+'». Предыдущий вариант доступен для возврата.';returnFocus=document.getElementById('project-overview');dialog.close();returnFocus.scrollIntoView({block:'start'});returnFocus.focus({preventScroll:true});}
   }catch(error){actionStatus.textContent=errorMessage(error);syncUndo();}
   finally{busy=false;syncBusy();}
  });

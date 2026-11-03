@@ -499,6 +499,33 @@ html:root .ea-save-button{pointer-events:auto}
 .account-copy-contact{color:var(--muted);margin:22px 0}
 .account-copy-effect{padding:18px 20px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--muted)}
 .account-copy-preview [data-confirm-copy]{margin-top:18px}
+.copy-preview-teams{display:grid;gap:18px;list-style:none;margin:0;padding:0}
+.copy-preview-teams>li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;padding:18px 0;border-bottom:1px solid var(--line)}
+.copy-preview-teams strong{display:block;font-size:17px;line-height:1.4;font-weight:400;overflow-wrap:anywhere}
+.copy-preview-priority{padding-top:3px;font:12px/1.5 MotionMono,monospace;color:var(--muted)}
+.copy-preview-work{display:flex;align-items:center;gap:14px;margin-top:12px;color:var(--color-highlight);text-decoration:none;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.copy-preview-work img{width:80px;height:60px;object-fit:cover;border-radius:4px;flex:none;background:var(--surface)}
+.account-copy-preview .copy-preview-empty{color:var(--muted);font-size:13px;margin:10px 0}
+.copy-preview-note{margin-top:12px;min-width:0}
+.copy-preview-note summary{font-size:12px;line-height:1.5;color:var(--color-highlight);cursor:pointer;min-height:28px;padding:6px 0}
+.account-copy-preview .copy-preview-note p{font-size:13px;white-space:pre-wrap;margin:6px 0 0;padding:12px;border-left:2px solid var(--line);color:var(--muted)}
+.copy-preview-references>summary{padding:12px 0;min-height:24px;color:var(--color-highlight);font-size:14px;line-height:1.5;cursor:pointer}
+.copy-reference-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
+.copy-reference-card{min-width:0;padding:10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);scroll-margin-block:16px}
+.copy-reference-card>a{color:var(--ink);text-decoration:none}
+.copy-reference-photo{display:flex;align-items:center;justify-content:center;aspect-ratio:4/3;background:var(--glass);border-radius:3px;overflow:hidden}
+.copy-reference-photo img{display:block;width:100%;height:100%;object-fit:cover}
+.copy-reference-photo span{padding:14px;color:var(--muted);text-align:center;font-size:11px;line-height:1.5}
+.copy-reference-card h5{font-size:13px;line-height:1.5;font-weight:400;margin:12px 0 4px;overflow-wrap:anywhere}
+.copy-reference-card .copy-preview-note summary{font-size:11px;overflow-wrap:anywhere}
+.copy-preview-references [data-more-copy-references]{display:block;margin:18px auto 0;min-height:44px;font-size:13px}
+.copy-preview-references [data-more-copy-references][hidden]{display:none}
+.copy-availability-note{margin-top:24px;padding:18px 20px;border:1px solid var(--color-highlight);border-radius:8px;background:var(--surface)}
+.copy-availability-note strong{font-size:14px;line-height:1.5;font-weight:400}
+.copy-availability-note ul{margin:12px 0;padding-left:20px;font-size:13px;line-height:1.7;color:var(--muted)}
+.account-copy-preview .copy-availability-note p{font-size:13px;margin:12px 0 0}
+#account-project-copies-dialog :is(a,summary,.copy-reference-card):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+@media(max-width:600px){.copy-reference-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.copy-preview-teams>li{grid-template-columns:24px minmax(0,1fr);gap:8px}.copy-preview-work{gap:10px}.copy-preview-work img{width:64px;height:48px}.copy-reference-card{padding:8px}.copy-availability-note{padding:16px}}
 #account-project-copies-dialog button:disabled{opacity:.45;cursor:default}
 #account-project-copies-dialog :is(button,input):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 @media(max-width:600px){#account-project-copies-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);padding:28px 20px}#account-project-copies-dialog h2{font-size:27px}.account-copy-form{padding:18px}.account-copies-list li{padding:16px;flex-direction:column;align-items:stretch;gap:14px}.account-copy-row-actions{justify-content:space-between}.account-copy-form .primary-action{width:100%}.account-copy-preview .review-brief{grid-template-columns:1fr}.account-copy-preview [data-confirm-copy]{width:100%}.project-copy-undo{align-items:stretch;flex-direction:column;gap:12px}.project-copy-undo button{align-self:flex-start}.account-copies-pages{gap:12px}.account-copies-pages button{padding:10px 14px}}
