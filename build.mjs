@@ -6,13 +6,23 @@ import {buildCatalog} from './build-catalog.mjs';
 import {refineExperience} from './refine-experience.mjs';
 import {harmonizeExperience} from './harmonize-experience.mjs';
 import {selectionExperience} from './selection-experience.mjs';
+import {polishExperience} from './polish-experience.mjs';
+import {entranceExperience} from './entrance-experience.mjs';
+import {projectRouteExperience} from './project-route-experience.mjs';
+import {galleryExperience} from './gallery-experience.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = process.env.EA_BUILD_DIR ? path.resolve(root, process.env.EA_BUILD_DIR) : path.join(root, 'local-dist');
 const readJSON = async name => JSON.parse(await fs.readFile(path.join(root, 'content', name + '.json'), 'utf8'));
 const [site, about, projects] = await Promise.all(['site','about','projects'].map(readJSON));
 if (process.env.EA_SITE_ORIGIN) site.url = new URL(process.env.EA_SITE_ORIGIN).origin;
+const catalogSummary = await readJSON('catalog');
+site.home.stats = [[String(catalogSummary.agencies.length),'агентств'],[String(catalogSummary.stats.cases),'реальных кейса']];
 const moments = await readJSON('moments');
+const featuredSlugs = await readJSON('home-projects');
+if(!Array.isArray(featuredSlugs)||!featuredSlugs.length||new Set(featuredSlugs).size!==featuredSlugs.length)throw Error('Invalid home selection');
+const featuredProjects=featuredSlugs.map(slug=>{const project=projects.find(p=>p.slug===slug);if(!project?.hasPhotos)throw Error('Home project needs a photograph: '+slug);return project;});
+const media = await readJSON('media');
 const assert = (ok, message) => { if (!ok) throw new Error(message); };
 const text = (value, label) => assert(typeof value === 'string' && value.trim(), label + ' must be a non-empty string');
 for (const key of ['name','shortName','title','description','contactLabel','contactUrl','location','url','language','ogImage','favicon','music','playgroundDescription']) text(site[key], 'site.' + key);
@@ -62,10 +72,14 @@ await fs.cp(path.join(root, 'public'), dist, {recursive:true});
 for (const filename of ['Home-LrP0Tb4r.js','index-CF3Ad5Zo.js']) {
   const target = path.join(dist, 'assets', filename);
   let code = await fs.readFile(target,'utf8');
-  code = adaptTemplate(code,filename,{site,moments});
+  code = adaptTemplate(code,filename,{site,moments,featuredSlugs});
   code = refineExperience(code,filename,{site});
   code = harmonizeExperience(code,filename);
   code = selectionExperience(code,filename,{site});
+  code = polishExperience(code,filename,media);
+  code = entranceExperience(code,filename);
+  code = projectRouteExperience(code,filename);
+  code = galleryExperience(code,filename);
   code = code.replace(/__TEMPLATE_([A-Z_]+)__/g, (_, key) => {
     assert(Object.hasOwn(tokens,key), 'Unknown template token: ' + key);
     return json(tokens[key]);
@@ -74,7 +88,7 @@ for (const filename of ['Home-LrP0Tb4r.js','index-CF3Ad5Zo.js']) {
 }
 const esc = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const absolute = value => new URL(value, origin).href;
-const projectList = projects.map(p=>`<article><h2><a href="/work/${p.slug}">${esc(p.title)}</a></h2><p>${esc(p.category)} · ${esc(p.year)}</p><p>${esc(p.description)}</p></article>`).join('');
+const projectList = featuredProjects.map(p=>`<article><h2><a href="/work/${p.slug}">${esc(p.title)}</a></h2><p>${esc(p.category)} · ${esc(p.year)}</p><p>${esc(p.description)}</p></article>`).join('');
 const pages = [
   {route:'/',title:site.title,description:site.description,body:projectList},
   {route:'/about',title:tokens.ABOUT_PAGE_TITLE,description:about.intro.join(' '),body:about.intro.map(x=>`<p>${esc(x)}</p>`).join('')},
@@ -84,17 +98,18 @@ const pages = [
 const schema = {'@context':'https://schema.org','@type':'WebSite',url:origin,name:site.name,description:site.description};
 for (const page of pages) {
   const url=absolute(page.route), cover=absolute(page.ogImage||site.ogImage);
-  const sceneProject=page.route==='/'?projects[0]:projects.find(p=>'/work/'+p.slug===page.route);
+  const sceneProject=page.route==='/'?featuredProjects[0]:projects.find(p=>'/work/'+p.slug===page.route);
   const scene=sceneProject?.hasPhotos?(sceneProject.reelMobile||sceneProject.image):'';
   const html = `<!doctype html>
-<html lang="${esc(site.language)}" style="--chrome:#070707">
+<html lang="${esc(site.language)}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
-<meta name="theme-color" content="#070707">
-<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#101310">
+<meta name="color-scheme" content="dark light">
 <title>${esc(page.title)}</title>
 <script src="/custom/visit.js"></script>
+${page.route==='/'?'<link rel="stylesheet" href="/custom/home-intro.css"><script type="module" src="/custom/home-intro.js"></script>':''}
 <meta name="description" content="${esc(page.description)}">
 <link rel="canonical" href="${esc(url)}">
 <meta property="og:type" content="website">
@@ -108,21 +123,23 @@ for (const page of pages) {
 <meta name="twitter:description" content="${esc(page.description)}">
 <meta name="twitter:image" content="${esc(cover)}">
 <link rel="icon" href="${esc(site.favicon)}">
+${page.route==='/'?`<link rel="preload" as="image" href="${esc(featuredProjects[0].reelMobile||featuredProjects[0].image)}" media="(max-width:600px)" fetchpriority="high"><link rel="preload" as="image" href="${esc(featuredProjects[0].reelImage||featuredProjects[0].image)}" media="(min-width:601px)" fetchpriority="high">`:''}
 <link rel="preload" href="/fonts/HelveticaNowDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/JetBrainsMono-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">${json(schema)}</script>
-<style>body{margin:0}html,body{background:var(--chrome)}.seo-page{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}</style>
+<style>body{margin:0}html,body{background:var(--chrome,#101310)}.seo-page{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}</style>
 <noscript><style>.seo-page{position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal;max-width:720px;padding:32px;color:#fef3ee;font:16px/1.5 system-ui}.seo-page img{max-width:100%}.seo-page a{color:inherit}</style></noscript>
 <script type="module" crossorigin src="/assets/index-CF3Ad5Zo.js"></script>
 <link rel="stylesheet" crossorigin href="/assets/index-Ci-2K9Cr.css">
 <link rel="modulepreload" crossorigin href="/assets/Home-LrP0Tb4r.js">
 <link rel="preload" as="style" crossorigin href="/assets/Home-CqJJnoUv.css">
 <link rel="stylesheet" href="/custom/theme.css">
-<link rel="stylesheet" href="/custom/cinema.css"><link rel="stylesheet" href="/custom/selection.css"><script type="module" src="/custom/selection.js"></script>
+<link rel="stylesheet" href="/custom/cinema.css"><link rel="stylesheet" href="/custom/selection.css"><link rel="stylesheet" href="/custom/polish.css"><link rel="stylesheet" href="/custom/site-atmosphere.css"><link rel="stylesheet" href="/custom/photo-viewer.css"><script defer src="/custom/polish.js"></script><script type="module" src="/custom/selection.js"></script>
+<link rel="stylesheet" href="/custom/home-atmosphere.css"><link rel="stylesheet" href="/custom/editorial.css">
 <script defer src="/custom/navigation.js"></script>
 <script defer src="/custom/atmosphere.js"></script>
 </head>
-<body data-scene="${esc(scene)}"><div id="root"><div class="seo-page"><nav><a href="/">Проекты</a> · <a href="/about">О проекте</a> · <a href="/playground">Атмосфера</a> · <a href="${esc(site.contactUrl)}">${esc(site.contactLabel)}</a></nav><main><h1>${esc(page.title)}</h1>${page.body}</main></div></div></body>
+<body data-scene="${esc(scene)}">${page.route==='/'?`<div id="ea-intro" role="dialog" aria-modal="true" aria-label="Знакомство с проектами"><header><span>EventAgencies ↗</span><button id="ea-intro-skip">Пропустить вступление ↗</button></header><div class="intro-stage" aria-hidden="true"></div><footer><span>События начинаются с впечатления</span><span id="ea-intro-status" role="status">Загружаем фотографии…</span></footer></div><script id="ea-intro-projects" type="application/json">${json(featuredProjects.slice(0,4).map(p=>({src:p.reelImage||p.image,mobile:p.reelMobile||p.image,title:p.fullTitle||p.title})))}</script>`:''}<div id="root"><div class="seo-page"><nav><a href="/">Проекты</a> · <a href="/about">О проекте</a> · <a href="/playground">Атмосфера</a> · <a href="${esc(site.contactUrl)}">${esc(site.contactLabel)}</a></nav><main><h1>${esc(page.title)}</h1>${page.body}</main></div></div></body>
 </html>`;
   const directory = path.join(dist, page.route.slice(1));
   await fs.mkdir(directory,{recursive:true});

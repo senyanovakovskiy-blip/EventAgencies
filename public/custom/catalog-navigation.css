@@ -1,0 +1,4 @@
+html[data-catalog-entering] #content{opacity:0}
+html[data-catalog-entering]{scroll-behavior:auto!important;overflow-anchor:none}
+#catalog-results{overflow-anchor:none}
+@media(prefers-reduced-motion:reduce){html[data-catalog-entering] #content{transform:none}}

@@ -1,9 +1,12 @@
 import {setupSelectionShare} from './share-selection.js';
-import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
-import {reviewMarkup,receiptMarkup} from './request-review.js';
+import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
+import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
 import {INQUIRY_KEY,contactError,validPayload,submissionPayload} from './inquiry-model.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let removedAgency=null;
+const helpMode=new URLSearchParams(location.search).has('help');
+let helpSelectionExpanded=false;
 let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',lastReceipt=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
 try{draft=readDraft(localStorage);}catch{available=false;}
@@ -30,12 +33,21 @@ async function offerReplacement(agencySlug,workSlug){
  }catch{notice('Не удалось загрузить варианты замены','Подборка не изменилась. Попробуйте ещё раз.');}
 }
 function refresh(){
- document.querySelectorAll('[data-save-agency]').forEach(button=>{const selected=draft.selection.some(s=>s.agencySlug===button.dataset.saveAgency);button.textContent=selected?'Добавлено':'В мой проект';button.setAttribute('aria-pressed',String(selected));});
+ document.querySelectorAll('[data-save-agency]').forEach(button=>{
+  const entry=draft.selection.find(s=>s.agencySlug===button.dataset.saveAgency),work=button.dataset.saveWork;
+  const selected=Boolean(entry&&(!work||entry.workSlug===work));
+  if(work){const name=button.dataset.agencyName;button.textContent=selected?(name?name+' и работа добавлены':'Команда и работа добавлены'):entry?'Выбрать эту работу':name?'Добавить '+name+' с этой работой':'Добавить команду с этой работой';}
+  else button.textContent=button.hasAttribute('data-agency-label')?(selected?'Агентство добавлено':'Добавить агентство'):(selected?'Добавлено':'В мой проект');
+  button.setAttribute('aria-pressed',String(selected));
+ });
  document.querySelectorAll('[data-project-count]').forEach(node=>node.textContent=draft.selection.length?String(draft.selection.length):'');
  document.querySelectorAll('[data-my-project-link]').forEach(node=>node.setAttribute('aria-label','Мой проект'+(draft.selection.length?', агентств: '+draft.selection.length:'')));
  if(document.getElementById('project-board'))renderProject();
 }
 document.addEventListener('click',async event=>{
+ if(event.target.closest('[data-toggle-help-selection]')){setHelpSelection(!helpSelectionExpanded);return;}
+ if(event.target.closest('[data-go-to-contact]')){event.preventDefault();focusContact();return;}
+ const wishes=event.target.closest('[data-add-wishes-work]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
  const view=event.target.closest('[data-comparison-view]');if(view){comparisonView=view.dataset.comparisonView;renderProject();return;}
  const save=event.target.closest('[data-save-agency]');
  if(save){
@@ -55,10 +67,26 @@ document.addEventListener('click',async event=>{
  }
  if(event.target.closest('[data-cancel-replacement]')){replacement.close();return;}
  if(event.target.closest('[data-continue],.ea-notice-close')){pop.hidden=true;return;}
- const remove=event.target.closest('[data-remove-agency]');if(remove){persist(removeAgency(draft,remove.dataset.removeAgency));return;}
+ const remove=event.target.closest('[data-remove-agency]');if(remove){
+  const index=draft.selection.findIndex(s=>s.agencySlug===remove.dataset.removeAgency);if(index<0)return;
+  const item={...draft.selection[index]};
+  const name=remove.closest('article')?.querySelector('h3')?.textContent||item.agencySlug;
+  if(persist(removeAgency(draft,item.agencySlug))){
+   removedAgency={item,index};const undo=document.getElementById('project-undo');
+   if(undo){undo.hidden=false;document.getElementById('project-undo-status').textContent=name+' убрано из подборки. Можно вернуть вместе с выбранным кейсом.';undo.querySelector('button').focus();}
+  }return;
+ }
+ if(event.target.closest('[data-undo-removal]')&&removedAgency){
+  const restored=restoreAgency(draft,removedAgency.item,removedAgency.index);
+  const status=document.getElementById('project-undo-status');
+  if(restored.result==='full'){status.textContent='В подборке уже три команды. Уберите одну, затем верните агентство.';return;}
+  if(restored.result==='existing'){status.textContent='Эта команда уже в подборке. Ваш текущий выбор кейса сохранён.';return;}
+  if(restored.result==='restored'&&persist(restored.state)){removedAgency=null;document.getElementById('project-undo').hidden=true;document.getElementById('project-comparison').focus();}
+  return;
+ }
  const occasion=event.target.closest('[data-occasion]');if(occasion&&!draft.brief.format&&Object.hasOwn(occasions,occasion.dataset.occasion))persist(updateBrief(draft,{format:occasion.dataset.occasion}),{quiet:true});
  const editBrief=event.target.closest('[data-edit-brief]');if(editBrief)openBrief(editBrief.dataset.briefField);
- if(event.target.closest('[data-edit-selection]')){event.preventDefault();const section=document.getElementById('project-comparison');section?.scrollIntoView({block:'start'});section?.focus({preventScroll:true});}
+ if(event.target.closest('[data-edit-selection]')){event.preventDefault();setHelpSelection(true);const section=document.getElementById('project-comparison');section?.scrollIntoView({block:'start'});section?.focus({preventScroll:true});}
  if(event.target.closest('[data-return-project]')){document.querySelector('.project-intro')?.scrollIntoView({block:'start'});document.querySelector('.project-intro [data-edit-brief]')?.focus({preventScroll:true});}
  if(event.target.closest('[data-submit-project]')){
   await sendInquiry();return;
@@ -74,7 +102,7 @@ document.addEventListener('click',async event=>{
 });
 addEventListener('storage',e=>{if(e.key===INQUIRY_KEY)refresh();if(e.key===KEY||e.key===null){try{draft=readDraft(localStorage);refresh();if(briefForm&&document.getElementById('brief-dialog').open)fillBrief(briefForm);if(contactForm)fillContact();}catch{}}});
 new MutationObserver(changes=>{if(changes.some(c=>c.type==='attributes'||[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-save-agency],[data-project-count]')||n.querySelector?.('[data-save-agency],[data-project-count]')))))refresh();}).observe(document.getElementById('root')||document.getElementById('content'),{childList:true,subtree:true,attributes:true,attributeFilter:['data-save-agency','data-save-work']});
-for(const type of ['wheel','pointerdown','touchstart'])document.addEventListener(type,event=>{if(matchMedia('(max-width:900px)').matches&&event.target.closest('.home.is-landing .ws'))event.stopPropagation();},{capture:true,passive:true});
+for(const type of ['wheel','pointerdown','touchstart'])document.addEventListener(type,event=>{if(matchMedia('(max-width:900px)').matches&&event.target.closest('.home.is-landing .ws:not(.ea-photo-reel)'))event.stopPropagation();},{capture:true,passive:true});
 function formatName(value){return occasions[value]||(value==='other'?'Другой формат':'Нужно уточнить');}
 function facts(p){return [p.category,p.eventCity,p.guestLabel].filter(Boolean).join(' · ');}
 function role(p){
@@ -103,16 +131,16 @@ async function renderProject(){
    const specialization=a.types.map(t=>data.types[t]).filter(Boolean).join(', ')||'Нужно уточнить';
    return `<article class="project-agency-card">
     <div class="project-agency-head"><h3>${esc(a.name)}</h3></div>
-    <div class="project-case-reason">${p?`${p.hasPhotos?`<a class="project-case-photo" href="${link}"><img src="${p.reelMobile||p.image}" alt="${esc(p.fullTitle)}" loading="lazy"></a>`:''}<span class="eyebrow">${p.kind==='case'?'Выбранный кейс':'Выбранная работа'}</span><h4><a href="${link}">${esc(p.fullTitle)} ↗</a></h4><p>${esc(facts(p))}</p>`:'<div class="project-no-case"><span>Кейс не выбран</span><p>Агентство добавлено без конкретного проекта.</p></div>'}</div>
-    <section class="work-note-block">${p?`<label for="note-${a.slug}">Что нравится в этой работе?</label><textarea id="note-${a.slug}" data-work-note="${a.slug}" data-note-work="${p.slug}" rows="3" maxlength="1000" aria-describedby="note-help-${a.slug} note-status-${a.slug}" placeholder="Например: тёплый свет, оформление сцены, живая музыка">${esc(draft.workNotes[workNoteKey(a.slug,p.slug)]||'')}</textarea><p id="note-help-${a.slug}">Личная заметка · только в этом браузере. В заявку не отправляется.</p><p id="note-status-${a.slug}" role="status"></p>`:'<p>Выберите работу в профиле агентства, чтобы оставить заметку.</p>'}</section>
+    <div class="project-case-reason">${p?`${p.hasPhotos?`<a class="project-case-photo" href="${link}"><img src="${p.preview||p.reelMobile||p.image}" srcset="${esc(p.previewSrcSet||'')}" sizes="(max-width:900px) 100vw, 33vw" width="${p.imageWidth||1500}" height="${p.imageHeight||1000}" decoding="async" alt="${esc(p.fullTitle)}" loading="lazy"></a>`:''}<span class="eyebrow">${p.kind==='case'?'Выбранный кейс':'Выбранная работа'}</span><h4><a href="${link}">${esc(p.fullTitle)} ↗</a></h4><p>${esc(facts(p))}</p>`:'<div class="project-no-case"><span>Кейс не выбран</span></div>'}</div>
+    <section class="work-note-block"><label for="work-choice-${a.slug}">Работа для сравнения</label><select id="work-choice-${a.slug}" data-selected-work="${a.slug}"><option value="">Без выбранной работы</option>${data.projects.filter(w=>w.agencySlug===a.slug||w.agencySlugs?.includes(a.slug)).map(w=>`<option value="${esc(w.slug)}" ${w.slug===s.workSlug?'selected':''}>${esc(w.fullTitle)}</option>`).join('')}</select>${p?`<label for="note-${a.slug}">Что нравится в этой работе?</label><textarea id="note-${a.slug}" data-work-note="${a.slug}" data-note-work="${p.slug}" rows="3" maxlength="1000" aria-describedby="note-help-${a.slug} note-status-${a.slug}" placeholder="Например: тёплый свет, оформление сцены, живая музыка">${esc(draft.workNotes[workNoteKey(a.slug,p.slug)]||'')}</textarea><p id="note-help-${a.slug}">Личная заметка · только в этом браузере. Передать её можно через «Добавить в пожелания».</p><button class="secondary-action" type="button" data-add-wishes-work="${p.slug}" data-add-wishes-agency="${a.slug}">Добавить в пожелания…</button><p id="note-status-${a.slug}" role="status"></p>`:'<p>Выберите работу выше, чтобы оставить заметку.</p>'}</section>
     <section class="comparison-block"><h4>Специализация</h4><p>${esc(specialization)}</p></section>
-    <section class="comparison-block"><h4>География работы</h4><p>${esc(a.geography||'Нужно уточнить')}</p><p class="comparison-detail">Город команды: ${esc(a.city||'Нужно уточнить')}. Это не ограничение географии работы.</p></section>
+    <section class="comparison-block"><h4>География работы</h4><p>${esc(a.geography||'Нужно уточнить')}</p><p class="comparison-detail">Город команды: ${esc(a.city||'Нужно уточнить')}</p></section>
     <section class="comparison-block"><h4>Услуги и роль в кейсе</h4><p>Услуги: ${esc(a.services||'Нужно уточнить')}.</p><p>${p?'В выбранной работе: '+esc(role(p)): 'Роль в кейсе: нужно уточнить после выбора проекта.'}</p>${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer">Источник о работе ↗</a>`:''}</section>
-    <section class="comparison-block"><h4>Опубликованные условия по бюджету</h4><p>${esc(a.budgetConditions||'Нужно уточнить')}</p><p class="comparison-detail">Стоимость нового мероприятия рассчитывается по вашей задаче.</p></section>
-    <section class="comparison-block questions"><h4>Что обсудить с командой</h4><ul><li>Свободна ли ваша дата?</li><li>Что входит в предложение?</li><li>Каковы стоимость и условия работы?</li></ul></section>
+    <section class="comparison-block"><h4>Бюджет</h4><p>${esc(a.budgetConditions||'Нужно уточнить')}</p></section>
+    
     <div class="comparison-actions"><a class="secondary-action" href="/agency/${a.slug}">Открыть профиль ↗</a><button data-remove-agency="${a.slug}" aria-label="Убрать ${esc(a.name)} из проекта">Убрать</button></div>
    </article>`;
-  }).join(''):`<div class="project-empty"><h3>Команды можно выбрать позже.</h3><p>Опишите мероприятие сейчас или добавьте до трёх агентств из каталога. Здесь появится сравнение их опыта и условий.</p><a class="primary-action" href="/catalog">Добавить агентство ↗</a></div>`;
+  }).join(''):`<div class="project-empty"><h3>Команды можно выбрать позже.</h3><p>Добавьте до трёх агентств для сравнения.</p><a class="primary-action" href="/catalog">Добавить агентство ↗</a></div>`;
   renderComparison(data,entries);
   document.getElementById('project-review').innerHTML=reviewMarkup(draft,data,briefRows(b));
   document.getElementById('project-storage-note').hidden=available;
@@ -120,7 +148,7 @@ async function renderProject(){
   const accepted=inquiries.accepted(draft),receipt=lastReceipt||accepted;
   result.hidden=!receipt&&(!draft.request||!available);
   if(receipt)result.innerHTML=receiptMarkup(receipt,briefRows(receipt.brief));
-  else if(draft.request&&available)result.innerHTML='<strong>Задача сохранена в этом браузере</strong><p>Этот черновик ещё не передан. Можно продолжить редактирование или передать задачу EventAgencies.</p><div class="draft-result-actions"><button class="secondary-action" data-return-project>Вернуться к моему проекту</button><button class="secondary-action" data-download-brief>Скачать черновик</button></div>';
+  else if(draft.request&&available)result.innerHTML='<strong>Задача сохранена в этом браузере</strong><p>Можно продолжить редактирование.</p><div class="draft-result-actions"><button class="secondary-action" data-return-project>Вернуться к моему проекту</button><button class="secondary-action" data-download-brief>Скачать черновик</button></div>';
   if(!result.hidden&&focusRequest){result.scrollIntoView({block:'start'});result.focus({preventScroll:true});focusRequest=false;}
   const submit=document.querySelector('[data-submit-project]');
   submit.textContent=sending?'Сохраняем заявку…':accepted?'Заявка принята ✓':'Передать задачу EventAgencies';
@@ -134,7 +162,7 @@ async function renderProject(){
 async function sendInquiry(){
  if(sending||inquiries.accepted(draft))return;
  const invalid=contactError(draft.contact);
- if(invalid){document.getElementById('contact-save-status').textContent=invalid.message;contactForm.elements.namedItem(invalid.field)?.focus();return;}
+ if(invalid){document.getElementById('contact-save-status').textContent=invalid.message;const field=contactForm.elements.namedItem(invalid.field);field?.setAttribute('aria-invalid','true');field?.setAttribute('aria-describedby','contact-save-status contact-purpose');field?.focus();return;}
  if(!validPayload(submissionPayload(draft))){openBrief();document.getElementById('brief-save-status').textContent='Проверьте количество гостей и бюджет: укажите целые неотрицательные числа, гостей — не меньше одного.';return;}
  sending=true;sendError='';const snapshot=submissionPayload(draft);refresh();
  try{lastReceipt=await inquiries.send(snapshot);focusRequest=true;}
@@ -149,6 +177,60 @@ function openBrief(field){
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
  fillBrief(dialog.querySelector('form'));dialog.showModal();if(field)dialog.querySelector('form').elements.namedItem(field)?.focus();
 }
+function focusContact(){
+ const form=document.getElementById('project-contact-form');if(!form)return;
+ const fields=['name','value'].map(name=>form.elements.namedItem(name));
+ const field=fields.find(node=>!node.value.trim())||fields[0];
+ document.getElementById('project-contact')?.scrollIntoView({block:'start'});field?.focus({preventScroll:true});
+}
+function setHelpSelection(expanded){
+ if(!helpMode)return;
+ helpSelectionExpanded=expanded;
+ const content=document.getElementById('project-selection-content'),button=document.querySelector('[data-toggle-help-selection]');
+ if(content)content.hidden=!expanded;
+ if(button){button.setAttribute('aria-expanded',String(expanded));button.textContent=expanded?'Свернуть подборку':'Посмотреть подборку (необязательно)';}
+}
+let wishesDialog=null,wishesTrigger=null,wishesBase='';
+function updateWishesPreview(message=''){
+ const addition=wishesDialog.querySelector('#wishes-addition').value;
+ wishesBase=draft.brief.description;
+ const merged=mergeWishes(wishesBase,addition);
+ wishesDialog.querySelector('#wishes-preview').value=merged.text;
+ wishesDialog.querySelector('[data-confirm-wishes]').disabled=merged.result!=='added';
+ const messages={empty:'Добавьте текст примера или заметки.',duplicate:'Этот текст уже есть в пожеланиях.', 'too-long':'В пожеланиях получится '+merged.text.length+' символов. Максимум — 3000; сократите добавляемый текст.'};
+ wishesDialog.querySelector('[data-wishes-status]').textContent=messages[merged.result]||message||'В пожеланиях будет '+merged.text.length+' из 3000 символов. Проверьте текст перед добавлением.';
+ return merged;
+}
+async function openWishes(trigger){
+ try{
+  const data=await getData(),agencySlug=trigger.dataset.addWishesAgency;
+  const work=data.projects.find(p=>p.slug===trigger.dataset.addWishesWork&&(p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));
+  if(!work)return;
+  if(!wishesDialog){
+   wishesDialog=document.createElement('dialog');wishesDialog.id='wishes-dialog';wishesDialog.setAttribute('aria-labelledby','wishes-title');
+   wishesDialog.innerHTML=`<button class="brief-close" type="button" data-cancel-wishes aria-label="Закрыть добавление в пожелания">×</button><h2 id="wishes-title">Добавить в пожелания?</h2><p>Этот текст войдёт в описание заявки после вашего подтверждения. Личная заметка и сохранённый пример останутся на месте. Сейчас ничего не отправляется.</p><label for="wishes-addition">Текст, который добавится</label><textarea id="wishes-addition" rows="5" aria-describedby="wishes-status"></textarea><label for="wishes-preview">Пожелания после добавления</label><textarea id="wishes-preview" rows="7" readonly></textarea><p id="wishes-status" data-wishes-status role="status"></p><div class="draft-result-actions"><button type="button" class="primary-action" data-confirm-wishes>Добавить в пожелания</button><button type="button" class="secondary-action" data-cancel-wishes>Отмена</button></div>`;
+   document.body.append(wishesDialog);
+   wishesDialog.querySelector('#wishes-addition').addEventListener('input',()=>updateWishesPreview());
+   wishesDialog.querySelectorAll('[data-cancel-wishes]').forEach(button=>button.addEventListener('click',()=>wishesDialog.close()));
+   wishesDialog.addEventListener('close',()=>{
+    const replacement=wishesTrigger&&document.querySelector(`[data-add-wishes-work="${wishesTrigger.dataset.addWishesWork}"][data-add-wishes-agency="${wishesTrigger.dataset.addWishesAgency}"]`);
+    (wishesTrigger?.isConnected?wishesTrigger:replacement)?.focus({preventScroll:true});
+   });
+   wishesDialog.querySelector('[data-confirm-wishes]').addEventListener('click',async()=>{
+    if(wishesBase!==draft.brief.description){updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
+    const merged=updateWishesPreview();if(merged.result!=='added')return;
+    try{draft=writeDraft(localStorage,updateBrief(draft,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
+    catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось сохранить пожелания. Разрешите хранение данных сайта и попробуйте снова.';return;}
+    await renderProject();wishesDialog.close();
+    const status=document.getElementById('project-wishes-status');status.textContent='Пример добавлен в пожелания. Заявка ещё не отправлена.';status.focus({preventScroll:true});
+   });
+  }
+  wishesTrigger=trigger;
+  const note=draft.workNotes[workNoteKey(agencySlug,work.slug)]||'';
+  wishesDialog.querySelector('#wishes-addition').value=wishesAddition(work,note,location.origin);
+  updateWishesPreview();wishesDialog.showModal();wishesDialog.querySelector('#wishes-addition').focus();
+ }catch{notice('Не удалось подготовить пожелание','Описание и личные заметки не изменены. Попробуйте ещё раз.');}
+}
 function syncUnknown(form){form.elements.budget.disabled=form.elements.budgetHelp.checked;form.elements.date.disabled=form.elements.dateUnknown.checked;}
 const briefForm=document.getElementById('event-brief-form');
 if(briefForm){
@@ -160,7 +242,7 @@ if(briefForm){
   return saved;
  };
  briefForm.addEventListener('input',saveForm);briefForm.addEventListener('change',saveForm);
- briefForm.addEventListener('submit',event=>{event.preventDefault();if(saveForm())document.getElementById('brief-dialog').close();});
+ briefForm.addEventListener('submit',event=>{event.preventDefault();if(saveForm()){document.getElementById('brief-dialog').close();if(helpMode)focusContact();}});
  document.querySelector('[data-close-brief]').addEventListener('click',()=>{if(saveForm())document.getElementById('brief-dialog').close();});
  if(new URLSearchParams(location.search).get('edit')==='1')openBrief();
 }
@@ -182,6 +264,7 @@ function fillContact(){
 if(contactForm){
  fillContact();
  const saveContact=()=>{
+  contactForm.querySelectorAll('[aria-invalid]').forEach(field=>field.removeAttribute('aria-invalid'));
   syncContact();
   const values={name:contactForm.elements.name.value,method:contactForm.elements.method.value,value:contactForm.elements.value.value};
   const saved=persist(updateContact(draft,values),{quiet:true});
@@ -195,13 +278,26 @@ async function downloadBrief(){
 }
 refresh();
 
+if(briefForm&&helpMode){
+ document.querySelector('.project-intro h1').textContent='Поможем подобрать агентство';
+ const aside=document.querySelector('.project-intro-note');aside.querySelector('span').textContent='Задача → контакт → уточнение';aside.querySelector('p').textContent='Расскажите о событии и оставьте контакт. Выбор команд можно обсудить с нами.';
+ const next=document.querySelector('.project-intro-actions a');next.href='#project-contact';next.textContent='Оставить контакт';next.setAttribute('data-go-to-contact','');
+ const asideLink=aside.querySelector('a');asideLink.href='#project-contact';asideLink.textContent='Оставить контакт ↗';asideLink.setAttribute('data-go-to-contact','');
+ document.querySelector('#project-comparison .project-section-heading>a').hidden=true;
+ document.querySelector('#project-comparison .comparison-guide').textContent='Выбирать команды сейчас необязательно. Уже выбранные агентства и работы сохранены.';
+ document.querySelector('[data-toggle-help-selection]').hidden=false;setHelpSelection(false);
+ briefForm.querySelector('[type="submit"]').textContent='Сохранить и перейти к контакту';
+ openBrief();document.getElementById('brief-note').textContent='Опишите задачу. Выбирать агентства заранее не нужно.';
+}
+
 document.addEventListener('input',event=>{
  const field=event.target.closest('[data-work-note]');if(!field)return;
  const next=updateWorkNote(draft,field.dataset.workNote,field.dataset.noteWork,field.value);
- const status=document.getElementById('note-status-'+field.dataset.workNote);
+ const status=field.closest('.work-note-block').querySelector('[role="status"]');
  try{draft=writeDraft(localStorage,next);available=true;status.textContent='Сохранено · '+field.value.length+' / 1000';}
  catch{draft=next;available=false;status.textContent='Не удалось сохранить. Не закрывайте страницу: разрешите хранение данных и повторите ввод.';}
  document.getElementById('project-storage-note').hidden=available;
+ document.querySelectorAll('[data-work-note]').forEach(other=>{if(other!==field&&other.dataset.workNote===field.dataset.workNote&&other.dataset.noteWork===field.dataset.noteWork)other.value=field.value;});
 });
 function renderComparison(data,entries){
  const host=document.getElementById('comparison-table');if(!host)return;
@@ -230,3 +326,12 @@ function renderComparison(data,entries){
 }
 
 setupSelectionShare({getState:()=>draft,getData});
+
+document.addEventListener('change',async event=>{
+ const field=event.target.closest('[data-selected-work]');if(!field)return;
+ const agencySlug=field.dataset.selectedWork,workSlug=field.value||null;
+ const data=await getData();
+ if(workSlug&&!data.projects.some(p=>p.slug===workSlug&&(p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug))))return;
+ persist({...draft,selection:draft.selection.map(s=>s.agencySlug===agencySlug?{...s,workSlug}:s),request:null});
+ await renderProject();document.getElementById('work-choice-'+agencySlug)?.focus({preventScroll:true});
+});

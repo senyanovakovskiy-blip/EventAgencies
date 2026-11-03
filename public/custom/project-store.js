@@ -28,6 +28,15 @@ export function addAgency(state,agencySlug,workSlug){
  return {state:{...state,selection,request:null},result:found?'updated':'added'};
 }
 export const removeAgency=(state,agencySlug)=>({...state,selection:state.selection.filter(s=>s.agencySlug!==agencySlug),request:null});
+export function restoreAgency(state,item,index){
+ if(!item||!slug(item.agencySlug)||(item.workSlug!==null&&!slug(item.workSlug)))return {state,result:'invalid'};
+ // A newer choice, including a different case for this team, takes precedence.
+ if(state.selection.some(s=>s.agencySlug===item.agencySlug))return {state,result:'existing'};
+ if(state.selection.length>=3)return {state,result:'full'};
+ const selection=[...state.selection];
+ selection.splice(Math.max(0,Math.min(Number.isInteger(index)?index:selection.length,selection.length)),0,{...item});
+ return {state:{...state,selection,request:null},result:'restored'};
+}
 export function updateBrief(state,brief){
  const next=normalizeDraft({...state,brief:{...state.brief,...brief},request:null});
  return JSON.stringify(next.brief)===JSON.stringify(state.brief)?state:next;

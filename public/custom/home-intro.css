@@ -1,0 +1,26 @@
+#ea-intro{display:none}
+html[data-ea-intro=pending]{overflow:hidden}
+html[data-ea-intro=pending] #ea-intro{display:flex;position:fixed;inset:0;z-index:10000;background:#f7f6f2;color:#242a24;flex-direction:column;padding:clamp(20px,3vw,48px);font-family:Motion,Arial,sans-serif}
+html[data-theme=dark][data-ea-intro=pending] #ea-intro{background:#141813;color:#f7f6f2}
+#ea-intro header,#ea-intro footer{display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:20}
+#ea-intro header>span{font-size:clamp(22px,2.5vw,34px);letter-spacing:-.05em}
+#ea-intro-skip{font:14px Motion,Arial,sans-serif;min-height:44px;padding:10px 16px;color:inherit;background:transparent;border:1px solid currentColor;border-radius:30px;cursor:pointer}
+#ea-intro-skip:focus-visible{outline:3px solid #b34427;outline-offset:4px}
+#ea-intro footer{font-size:14px;line-height:1.5}
+.intro-stage{position:relative;flex:1;display:grid;place-items:center;min-height:0;margin:28px 0}
+.intro-photo{position:absolute;margin:0;width:min(76vw,1100px);height:min(62vh,700px);max-height:100%;background:#18221d;border-radius:8px;overflow:hidden;box-shadow:0 18px 65px #0003}
+.intro-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.intro-photo figcaption{position:absolute;left:0;bottom:0;right:0;padding:50px 28px 24px;background:linear-gradient(transparent,#000b);color:white;font-size:clamp(20px,2.6vw,38px);line-height:1.15;letter-spacing:-.035em}
+@media(max-width:650px){.intro-photo{width:100%;height:54vh;border-radius:5px}.intro-stage{margin:24px 0}#ea-intro header{gap:12px;align-items:flex-start}#ea-intro-skip{font-size:12px;padding:8px 10px;max-width:140px}#ea-intro footer{font-size:12px;align-items:flex-end}#ea-intro footer>span:first-child{max-width:170px}.intro-photo figcaption{padding:40px 18px 20px;font-size:25px}}
+@media(prefers-reduced-motion:reduce){.intro-photo{transform:none!important}html{scroll-behavior:auto!important}}
+
+/* The photograph lights its surroundings; outgoing frames recede instead of piling up. */
+#ea-intro{isolation:isolate;overflow:hidden}
+.intro-ambient{position:absolute;inset:-12%;z-index:0;pointer-events:none;opacity:.27;filter:blur(90px) saturate(.65);transform:scale(1.15);mask-image:radial-gradient(ellipse at 52% 52%,#000 8%,transparent 69%)}
+.intro-ambient img{position:absolute;width:100%;height:100%;object-fit:cover}
+html[data-theme=dark] .intro-ambient{opacity:.38;filter:blur(90px) saturate(.8)}
+.intro-stage{z-index:1;perspective:1600px}
+.intro-stage::before{content:'';position:absolute;width:64%;height:10%;bottom:6%;border-radius:50%;background:#17251f;opacity:.16;filter:blur(34px);transform:rotate(-3deg);pointer-events:none}
+.intro-photo{border-radius:14px;box-shadow:0 2px 3px #111b1512,0 14px 24px -8px #111b1533,0 45px 75px -22px #111b1555,0 80px 120px -55px #111b1545;outline:1px solid #ffffff38;outline-offset:-1px;backface-visibility:hidden}
+.intro-photo::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;box-shadow:inset 0 1px 1px #ffffff55;background:linear-gradient(130deg,#fff1,transparent 38%,#00000008)}
+@media(max-width:650px){.intro-stage{perspective:1000px}.intro-photo{width:94%;border-radius:10px}.intro-ambient{filter:blur(50px)}.intro-stage::before{bottom:14%;width:75%;filter:blur(25px)}}

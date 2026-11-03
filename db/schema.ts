@@ -18,6 +18,7 @@ export const inquiries = sqliteTable('inquiries', {
   recommendationsJson: text('recommendations_json').notNull().default('[]'),
   replyText: text('reply_text').notNull().default(''),
   replyBasis: text('reply_basis').notNull().default(''),
+  workflowJson: text('workflow_json').notNull().default('{}'),
   lastMutation: text('last_mutation').notNull().default(''),
 }, table => [
   uniqueIndex('inquiries_owner_key').on(table.ownerId, table.keyHash),

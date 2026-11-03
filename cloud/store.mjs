@@ -1,6 +1,7 @@
 import catalogData from '../content/catalog.json' with { type: 'json' };
 import { submissionPayload, validPayload } from '../public/custom/inquiry-model.js';
-import { statusLabels, recommendationKey } from '../admin/manual-model.js';
+import { statusLabels, recommendationKey, replyKey } from '../admin/manual-model.js';
+import { normalizeWorkflow, validateWorkflow, nextAction } from '../admin/workflow-model.js';
 
 export const problem = (status, code) => Object.assign(new Error(code), { status, code });
 export async function digest(value) {
@@ -19,16 +20,16 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
   // D1 Sessions keep subsequent reads consistent when read replication is enabled.
   const db = binding.withSession ? binding.withSession('first-primary') : binding;
   const stmt = (sql, ...args) => db.prepare(sql).bind(...args);
-  const rowFor = id => stmt('SELECT * FROM inquiries WHERE owner_id=? AND id=?', ownerId, id).first();
-  const historyFor = id => stmt('SELECT created_at AS createdAt,actor,status,note,details_json FROM inquiry_history WHERE owner_id=? AND inquiry_id=? ORDER BY id DESC LIMIT 100', ownerId, id);
+  const historyFor = id => stmt('SELECT created_at AS createdAt,actor,status,note,details_json FROM inquiry_history WHERE owner_id=? AND inquiry_id=? ORDER BY id DESC', ownerId, id);
   const detailFrom = async (row, history) => {
     if (!row) throw problem(404, 'not_found');
     const recommendations = JSON.parse(row.recommendations_json);
+    const workflow = normalizeWorkflow(JSON.parse(row.workflow_json || '{}'), receipt(row).brief);
     return {
-      recordId: row.id, receipt: receipt(row), status: row.status, note: row.note,
+      workflow, recordId: row.id, receipt: receipt(row), status: row.status, note: row.note,
       revision: row.revision, updatedAt: row.updated_at, statusChangedAt: row.status_changed_at,
       closureReason: row.closure_reason, recommendations, replyText: row.reply_text, replyBasis: row.reply_basis,
-      replyStale: Boolean(row.reply_text && row.reply_basis !== await digest(recommendationKey(recommendations))),
+      replyStale: Boolean(row.reply_text && row.reply_basis !== await digest(replyKey(recommendations, workflow.brief, workflow.teams))),
       history: history.map(({ details_json, ...item }) => ({ ...item, details: JSON.parse(details_json) })),
     };
   };
@@ -51,9 +52,12 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
       return { agencySlug: agency.slug, name: agency.name, workSlug: work?.slug || null, work: work ? { slug: work.slug, title: work.fullTitle, source: work.source || '' } : null, reason: r.reason, questions: r.questions };
     });
   }
-  function changesBetween(current, values) {
+  function changesBetween(current, values, ignoreWorkflowTimes = false) {
     const changes = ['status', 'note', 'closureReason', 'replyText', 'replyBasis'].filter(key => current[key] !== values[key]);
     if (recommendationKey(current.recommendations) !== recommendationKey(values.recommendations)) changes.push('recommendations');
+    // Simultaneous identical saves may generate different server timestamps.
+    const workflowKey = value => JSON.stringify(value, ignoreWorkflowTimes ? (key, item) => ['confirmedAt', 'updatedAt', 'sharedAt', 'conversationAt'].includes(key) ? undefined : item : undefined);
+    if (workflowKey(current.workflow) !== workflowKey(values.workflow)) changes.push('workflow');
     return changes;
   }
   return {
@@ -114,7 +118,9 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
         total, page, pages, counts, statuses: statusLabels,
         items: rows(result[0]).map(row => {
           const r = receipt(row);
-          return { recordId: row.id, id: r.id, createdAt: r.createdAt, status: row.status, name: r.contact.name, format: r.brief.format, city: r.brief.city, date: r.brief.date, dateUnknown: r.brief.dateUnknown, budget: r.brief.budget, budgetHelp: r.brief.budgetHelp, guests: r.brief.guests, agencies: r.selection.map(s => s.name), test: /^\s*ТЕСТ(?:ОВАЯ ЗАЯВКА|\.)/.test(r.brief.description) };
+          const workflow = normalizeWorkflow(JSON.parse(row.workflow_json || '{}'), r.brief);
+          const next = nextAction({ status: row.status, workflow, recommendations: JSON.parse(row.recommendations_json) });
+          return { nextAction: next, recordId: row.id, id: r.id, createdAt: r.createdAt, status: row.status, name: r.contact.name, format: r.brief.format, city: r.brief.city, date: r.brief.date, dateUnknown: r.brief.dateUnknown, budget: r.brief.budget, budgetHelp: r.brief.budgetHelp, guests: r.brief.guests, agencies: r.selection.map(s => s.name), test: /^\s*ТЕСТ(?:ОВАЯ ЗАЯВКА|\.)/.test(r.brief.description) };
         }),
       };
     },
@@ -127,22 +133,24 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
       if (typeof closureReason !== 'string' || closureReason.length > 1500 || typeof replyText !== 'string' || replyText.length > 16000 || typeof replyBasis !== 'string' || (replyBasis !== '' && !/^[a-f0-9]{64}$/.test(replyBasis))) throw problem(400, 'invalid_update');
       const recommendations = input.recommendations === undefined ? current.recommendations : resolveRecommendations(input.recommendations);
       if (status === 'prepared' && (!recommendations.length || recommendations.some(r => !r.reason.trim() || !r.questions.trim()))) throw problem(400, 'shortlist_incomplete');
-      const values = { status, note, closureReason, replyText, replyBasis, recommendations }, changes = changesBetween(current, values);
+      const now = new Date().toISOString();
+      const workflow = input.workflow === undefined ? current.workflow : validateWorkflow(input.workflow, current.workflow, catalog, now);
+      const values = { status, note, closureReason, replyText, replyBasis, recommendations, workflow }, changes = changesBetween(current, values);
       if (!changes.length) return current;
       if (current.revision !== revision) throw problem(409, 'revision_conflict');
-      const now = new Date().toISOString(), mutation = crypto.randomUUID();
+      const mutation = crypto.randomUUID();
       const statusChangedAt = status === current.status ? current.statusChangedAt : now;
-      const details = JSON.stringify({ changes, closureReason, recommendations, replyText, replyBasis });
+      const details = JSON.stringify({ changes, closureReason, recommendations, replyText, replyBasis, workflow });
       // D1 executes the batch atomically. The random marker makes history insertion
       // conditional on THIS revision-guarded update, even under concurrent writers.
       const result = await db.batch([
-        stmt('UPDATE inquiries SET status=?,note=?,revision=revision+1,updated_at=?,status_changed_at=?,closure_reason=?,recommendations_json=?,reply_text=?,reply_basis=?,last_mutation=? WHERE owner_id=? AND id=? AND revision=? RETURNING id', status, note, now, statusChangedAt, closureReason, JSON.stringify(recommendations), replyText, replyBasis, mutation, ownerId, id, revision),
+        stmt('UPDATE inquiries SET status=?,note=?,revision=revision+1,updated_at=?,status_changed_at=?,closure_reason=?,recommendations_json=?,reply_text=?,reply_basis=?,workflow_json=?,last_mutation=? WHERE owner_id=? AND id=? AND revision=? RETURNING id', status, note, now, statusChangedAt, closureReason, JSON.stringify(recommendations), replyText, replyBasis, JSON.stringify(workflow), mutation, ownerId, id, revision),
         stmt("INSERT INTO inquiry_history(inquiry_id,owner_id,revision,created_at,actor,status,note,details_json) SELECT id,owner_id,revision,?,'admin',status,note,? FROM inquiries WHERE owner_id=? AND id=? AND last_mutation=?", now, details, ownerId, id, mutation),
         stmt('SELECT * FROM inquiries WHERE owner_id=? AND id=?', ownerId, id),
         historyFor(id),
       ]);
       const latest = await detailFrom(rows(result[2])[0], rows(result[3]));
-      if (!rows(result[0]).length && changesBetween(latest, values).length) throw problem(409, 'revision_conflict');
+      if (!rows(result[0]).length && changesBetween(latest, values, true).length) throw problem(409, 'revision_conflict');
       return latest;
     },
   };

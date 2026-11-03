@@ -6,7 +6,7 @@
  const layers=[...canvas.querySelectorAll('.ea-atmosphere-layer')];
  let current='',active=0,request=0,observer;
  let homeScene=location.pathname==='/'?(document.body.dataset.scene||''):null;
- const captionObserver=new ResizeObserver(entries=>{for(const entry of entries){const value=Math.ceil(entry.contentRect.height)+'px';if(document.documentElement.style.getPropertyValue('--ea-caption-height')===value)continue;document.documentElement.style.setProperty('--ea-caption-height',value);requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));}});
+ const captionObserver=new ResizeObserver(entries=>{for(const entry of entries){if(!entry.target.isConnected||!entry.contentRect.height)continue;const value=Math.ceil(entry.contentRect.height)+'px';if(document.documentElement.style.getPropertyValue('--ea-caption-height')===value)continue;document.documentElement.style.setProperty('--ea-caption-height',value);requestAnimationFrame(()=>window.dispatchEvent(new Event('resize')));}});
  function scene(src){
   if(src&&(/no-photo|placeholder/i.test(src)||!/^\/(?!\/)/.test(src)))src='';
   src=src||'';if(current===src)return;current=src;const token=++request;

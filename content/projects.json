@@ -22,21 +22,15 @@
     "description": "Фестиваль кибербезопасности в Лужниках. ARS COM отвечала за менеджмент проекта, работу с площадкой, безопасность, застройку и координацию активаций.",
     "seoDescription": "Фестиваль кибербезопасности в Лужниках. ARS COM отвечала за менеджмент проекта, работу с площадкой, безопасность, застройку и координацию активаций.",
     "source": "https://www.arscom.ru/projects/positive-hack-days-fest-2025/",
-    "image": "/custom/library/8cc9d08fbd.webp",
-    "imageMobile": "/custom/library/8cc9d08fbd.webp",
-    "ogImage": "/custom/library/8cc9d08fbd.webp",
-    "thumb": "/custom/library/8cc9d08fbd-thumb.webp",
+    "image": "/custom/library/7b580cf4f6.webp",
+    "imageMobile": "/custom/library/7b580cf4f6.webp",
+    "ogImage": "/custom/library/7b580cf4f6.webp",
+    "thumb": "/custom/optimized/38206d6d88092c-960.webp",
     "hasPhotos": true,
     "photoCount": 11,
     "caseId": "case-enriched-41",
     "kind": "case",
     "gallery": [
-      {
-        "type": "image",
-        "src": "/custom/library/7b580cf4f6.webp",
-        "ratio": 1.5,
-        "alt": "Positive Hack Days Fest 2025 — ARS COM"
-      },
       {
         "type": "image",
         "src": "/custom/library/cf5cb0f19a.webp",
@@ -90,18 +84,27 @@
         "src": "/custom/library/f5a5f464d8.webp",
         "ratio": 1.5,
         "alt": "Positive Hack Days Fest 2025 — ARS COM"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/8cc9d08fbd.webp",
+        "alt": "Positive Hack Days Fest 2025 — ARS COM"
       }
     ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": true,
     "reelTitle": "Positive Hack Days",
     "featured": true,
-    "reelImage": "/custom/reel/positive-hack-days-1600.webp",
-    "reelMobile": "/custom/reel/positive-hack-days-900.webp",
+    "reelImage": "/custom/optimized/38206d6d88092c-1600.webp",
+    "reelMobile": "/custom/optimized/38206d6d88092c-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "150 000 посетителей офлайн; 180 000 зрителей онлайн — показатели агентства",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/38206d6d88092c-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1600,
+    "previewSrcSet": "/custom/optimized/38206d6d88092c-640.webp 640w, /custom/optimized/38206d6d88092c-960.webp 960w, /custom/optimized/38206d6d88092c-1600.webp 1600w"
   },
   {
     "slug": "vk-cloud-conf",
@@ -125,21 +128,15 @@
     "description": "Два параллельных трека в одном пространстве. Гости VK Cloud Conf выбирали звук выступлений в наушниках и оставались частью общего события. Проект N:OW.",
     "seoDescription": "Два параллельных трека в одном пространстве. Гости VK Cloud Conf выбирали звук выступлений в наушниках и оставались частью общего события. Проект N:OW.",
     "source": "https://now-agency.ru/vk-cloud-conference-2025/",
-    "image": "/custom/library/ebdbe845ca.webp",
-    "imageMobile": "/custom/library/ebdbe845ca.webp",
-    "ogImage": "/custom/library/ebdbe845ca.webp",
-    "thumb": "/custom/library/ebdbe845ca-thumb.webp",
+    "image": "/custom/library/6b37101c77.webp",
+    "imageMobile": "/custom/library/6b37101c77.webp",
+    "ogImage": "/custom/library/6b37101c77.webp",
+    "thumb": "/custom/optimized/a0bc5b05703abe-960.webp",
     "hasPhotos": true,
     "photoCount": 8,
     "caseId": "case-4",
     "kind": "case",
     "gallery": [
-      {
-        "type": "image",
-        "src": "/custom/library/6b37101c77.webp",
-        "ratio": 1.9320754716981132,
-        "alt": "VK Cloud Conf — N:OW"
-      },
       {
         "type": "image",
         "src": "/custom/library/8795799197.webp",
@@ -175,20 +172,29 @@
         "src": "/custom/library/a9eab80104.webp",
         "ratio": 1.9320754716981132,
         "alt": "VK Cloud Conf — N:OW"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ebdbe845ca.webp",
+        "alt": "VK Cloud Conf — N:OW"
       }
     ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": true,
     "reelTitle": "VK Cloud Conf",
     "featured": true,
-    "reelImage": "/custom/reel/vk-cloud-conf-1600.webp",
-    "reelMobile": "/custom/reel/vk-cloud-conf-900.webp",
-    "imageRatio": 1.932075,
+    "reelImage": "/custom/optimized/a0bc5b05703abe-1600.webp",
+    "reelMobile": "/custom/optimized/a0bc5b05703abe-960.webp",
+    "imageRatio": 1.9320754716981132,
     "eventCity": "",
     "guestLabel": "950 гостей",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/a0bc5b05703abe-960.webp",
+    "imageWidth": 2048,
+    "imageHeight": 1060,
+    "previewSrcSet": "/custom/optimized/a0bc5b05703abe-640.webp 640w, /custom/optimized/a0bc5b05703abe-960.webp 960w, /custom/optimized/a0bc5b05703abe-1600.webp 1600w"
   },
   {
     "slug": "vkusy-rossii",
@@ -268,12 +274,16 @@
     "curated": true,
     "reelTitle": "Вкусы России",
     "featured": true,
-    "reelImage": "/custom/reel/vkusy-rossii-1600.webp",
-    "reelMobile": "/custom/reel/vkusy-rossii-900.webp",
+    "reelImage": "/custom/optimized/f58e938e476b0f-1600.webp",
+    "reelMobile": "/custom/optimized/f58e938e476b0f-960.webp",
     "imageRatio": 1.5,
     "eventCity": "Москва",
     "guestLabel": "Более 1,5 млн посещений за фестиваль; не одновременная аудитория",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/f58e938e476b0f-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/f58e938e476b0f-640.webp 640w, /custom/optimized/f58e938e476b0f-960.webp 960w, /custom/optimized/f58e938e476b0f-1600.webp 1600w"
   },
   {
     "slug": "t-dvor",
@@ -297,21 +307,15 @@
     "description": "Летний городской фестиваль в Никольских рядах Санкт-Петербурга. Т-Двор собрал более 30 000 гостей суммарно за четыре дня. Проект Eventum Premo.",
     "seoDescription": "Летний городской фестиваль в Никольских рядах Санкт-Петербурга. Т-Двор собрал более 30 000 гостей суммарно за четыре дня. Проект Eventum Premo.",
     "source": "https://eventum-premo.ru/projects/t-dvor-letniy-festival-v-sankt-peterburge",
-    "image": "/custom/library/266c2d65c4.webp",
-    "imageMobile": "/custom/library/266c2d65c4.webp",
-    "ogImage": "/custom/library/266c2d65c4.webp",
-    "thumb": "/custom/library/266c2d65c4-thumb.webp",
+    "image": "/custom/library/48d4ad8b2b.webp",
+    "imageMobile": "/custom/library/48d4ad8b2b.webp",
+    "ogImage": "/custom/library/48d4ad8b2b.webp",
+    "thumb": "/custom/optimized/67ec62825db3d1-960.webp",
     "hasPhotos": true,
     "photoCount": 7,
     "caseId": "case-7",
     "kind": "case",
     "gallery": [
-      {
-        "type": "image",
-        "src": "/custom/library/48d4ad8b2b.webp",
-        "ratio": 1.5005861664712778,
-        "alt": "Т-Двор — Eventum Premo"
-      },
       {
         "type": "image",
         "src": "/custom/library/f94f09e147.webp",
@@ -341,18 +345,27 @@
         "src": "/custom/library/a5de16d0ac.webp",
         "ratio": 0.6671875,
         "alt": "Т-Двор — Eventum Premo"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/266c2d65c4.webp",
+        "alt": "Т-Двор — Eventum Premo"
       }
     ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": true,
     "reelTitle": "Т-Двор",
     "featured": true,
-    "reelImage": "/custom/reel/t-dvor-1600.webp",
-    "reelMobile": "/custom/reel/t-dvor-900.webp",
-    "imageRatio": 1.500586,
+    "reelImage": "/custom/optimized/67ec62825db3d1-1280.webp",
+    "reelMobile": "/custom/optimized/67ec62825db3d1-960.webp",
+    "imageRatio": 1.5005861664712778,
     "eventCity": "Санкт-Петербург",
     "guestLabel": "Более 30 000 гостей суммарно за 4 дня",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/67ec62825db3d1-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/67ec62825db3d1-640.webp 640w, /custom/optimized/67ec62825db3d1-960.webp 960w, /custom/optimized/67ec62825db3d1-1280.webp 1280w"
   },
   {
     "slug": "vk-team-ranch",
@@ -420,14 +433,18 @@
     "curated": true,
     "reelTitle": "VK Team на ранчо",
     "featured": true,
-    "reelImage": "/custom/reel/vk-team-ranch-1600.webp",
-    "reelMobile": "/custom/reel/vk-team-ranch-900.webp",
-    "imageRatio": 1.932075,
+    "reelImage": "/custom/optimized/edac250e4f2a04-1600.webp",
+    "reelMobile": "/custom/optimized/edac250e4f2a04-960.webp",
+    "imageRatio": 1.9320754716981132,
     "eventCity": "Москва",
     "guestLabel": "200 гостей",
     "occasions": [
       "teambuilding"
-    ]
+    ],
+    "preview": "/custom/optimized/edac250e4f2a04-960.webp",
+    "imageWidth": 2048,
+    "imageHeight": 1060,
+    "previewSrcSet": "/custom/optimized/edac250e4f2a04-640.webp 640w, /custom/optimized/edac250e4f2a04-960.webp 960w, /custom/optimized/edac250e4f2a04-1600.webp 1600w"
   },
   {
     "slug": "sber-golf-cup",
@@ -483,12 +500,16 @@
     "curated": true,
     "reelTitle": "Sber Golf Cup",
     "featured": true,
-    "reelImage": "/custom/reel/sber-golf-cup-1600.webp",
-    "reelMobile": "/custom/reel/sber-golf-cup-900.webp",
-    "imageRatio": 1.500586,
+    "reelImage": "/custom/optimized/1029fbb0623a8e-1280.webp",
+    "reelMobile": "/custom/optimized/1029fbb0623a8e-960.webp",
+    "imageRatio": 1.5005861664712778,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/1029fbb0623a8e-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/1029fbb0623a8e-640.webp 640w, /custom/optimized/1029fbb0623a8e-960.webp 960w, /custom/optimized/1029fbb0623a8e-1280.webp 1280w"
   },
   {
     "slug": "lada-conference",
@@ -562,14 +583,18 @@
     "curated": true,
     "reelTitle": "Конференция LADA",
     "featured": true,
-    "reelImage": "/custom/reel/lada-conference-1600.webp",
-    "reelMobile": "/custom/reel/lada-conference-900.webp",
+    "reelImage": "/custom/optimized/186c0cd5422a53-1600.webp",
+    "reelMobile": "/custom/optimized/186c0cd5422a53-960.webp",
     "imageRatio": 1.5,
     "eventCity": "Тольятти",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/186c0cd5422a53-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1600,
+    "previewSrcSet": "/custom/optimized/186c0cd5422a53-640.webp 640w, /custom/optimized/186c0cd5422a53-960.webp 960w, /custom/optimized/186c0cd5422a53-1600.webp 1600w"
   },
   {
     "slug": "gac-family-house",
@@ -644,12 +669,16 @@
     "curated": true,
     "reelTitle": "GAC Family House",
     "featured": true,
-    "reelImage": "/custom/reel/gac-family-house-1600.webp",
-    "reelMobile": "/custom/reel/gac-family-house-900.webp",
-    "imageRatio": 1.500586,
+    "reelImage": "/custom/optimized/6e62e71300df4a-1280.webp",
+    "reelMobile": "/custom/optimized/6e62e71300df4a-960.webp",
+    "imageRatio": 1.5005861664712778,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/6e62e71300df4a-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/6e62e71300df4a-640.webp 640w, /custom/optimized/6e62e71300df4a-960.webp 960w, /custom/optimized/6e62e71300df4a-1280.webp 1280w"
   },
   {
     "slug": "mts-sport",
@@ -718,14 +747,18 @@
     "curated": true,
     "reelTitle": "Спорт МТС",
     "featured": false,
-    "reelImage": "/custom/reel/mts-sport-1600.webp",
-    "reelMobile": "/custom/reel/mts-sport-900.webp",
+    "reelImage": "/custom/optimized/f6bb3fb511da15-1600.webp",
+    "reelMobile": "/custom/optimized/f6bb3fb511da15-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "Более 10 000 участников за программу; более 1500 на финале",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/f6bb3fb511da15-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1600,
+    "previewSrcSet": "/custom/optimized/f6bb3fb511da15-640.webp 640w, /custom/optimized/f6bb3fb511da15-960.webp 960w, /custom/optimized/f6bb3fb511da15-1600.webp 1600w"
   },
   {
     "slug": "tbank-hoteliers",
@@ -806,14 +839,18 @@
     "curated": true,
     "reelTitle": "Т-Банк · отельеры",
     "featured": false,
-    "reelImage": "/custom/reel/tbank-hoteliers-1600.webp",
-    "reelMobile": "/custom/reel/tbank-hoteliers-900.webp",
-    "imageRatio": 1.500938,
+    "reelImage": "/custom/optimized/2ae1e3f9526faf-1600.webp",
+    "reelMobile": "/custom/optimized/2ae1e3f9526faf-960.webp",
+    "imageRatio": 1.5009380863039399,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/2ae1e3f9526faf-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1599,
+    "previewSrcSet": "/custom/optimized/2ae1e3f9526faf-640.webp 640w, /custom/optimized/2ae1e3f9526faf-960.webp 960w, /custom/optimized/2ae1e3f9526faf-1600.webp 1600w"
   },
   {
     "slug": "tmh-league",
@@ -906,14 +943,18 @@
     "curated": true,
     "reelTitle": "Лига ТМХ",
     "featured": false,
-    "reelImage": "/custom/reel/tmh-league-1600.webp",
-    "reelMobile": "/custom/reel/tmh-league-900.webp",
-    "imageRatio": 1.499531,
+    "reelImage": "/custom/optimized/e363949b576ac7-1600.webp",
+    "reelMobile": "/custom/optimized/e363949b576ac7-960.webp",
+    "imageRatio": 1.499531396438613,
     "eventCity": "",
     "guestLabel": "5000 участников офлайн; 6000 зрителей онлайн — показатели кейса",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/e363949b576ac7-960.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1067,
+    "previewSrcSet": "/custom/optimized/e363949b576ac7-640.webp 640w, /custom/optimized/e363949b576ac7-960.webp 960w, /custom/optimized/e363949b576ac7-1600.webp 1600w"
   },
   {
     "slug": "energy-a101",
@@ -987,14 +1028,18 @@
     "curated": true,
     "reelTitle": "Энергия А101",
     "featured": false,
-    "reelImage": "/custom/reel/energy-a101-1600.webp",
-    "reelMobile": "/custom/reel/energy-a101-900.webp",
-    "imageRatio": 1.50134,
+    "reelImage": "/custom/optimized/a7be1a5f71d7aa-1600.webp",
+    "reelMobile": "/custom/optimized/a7be1a5f71d7aa-960.webp",
+    "imageRatio": 1.5013404825737264,
     "eventCity": "",
     "guestLabel": "1 600 гостей",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/a7be1a5f71d7aa-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1119,
+    "previewSrcSet": "/custom/optimized/a7be1a5f71d7aa-640.webp 640w, /custom/optimized/a7be1a5f71d7aa-960.webp 960w, /custom/optimized/a7be1a5f71d7aa-1600.webp 1600w"
   },
   {
     "slug": "case-2",
@@ -1031,12 +1076,16 @@
     "curated": true,
     "reelTitle": "СберКарта × Arive Makeup",
     "featured": false,
-    "reelImage": "/custom/reel/case-2-1600.webp",
-    "reelMobile": "/custom/reel/case-2-900.webp",
-    "imageRatio": 1.725358,
+    "reelImage": "/custom/optimized/84395937dbb1aa-1600.webp",
+    "reelMobile": "/custom/optimized/84395937dbb1aa-960.webp",
+    "imageRatio": 1.725358045492839,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/84395937dbb1aa-960.webp",
+    "imageWidth": 2048,
+    "imageHeight": 1187,
+    "previewSrcSet": "/custom/optimized/84395937dbb1aa-640.webp 640w, /custom/optimized/84395937dbb1aa-960.webp 960w, /custom/optimized/84395937dbb1aa-1600.webp 1600w"
   },
   {
     "slug": "case-8",
@@ -1110,14 +1159,18 @@
     "curated": true,
     "reelTitle": "Запуск Redmi Note",
     "featured": false,
-    "reelImage": "/custom/reel/case-8-1600.webp",
-    "reelMobile": "/custom/reel/case-8-900.webp",
+    "reelImage": "/custom/optimized/6e8cf5a001cab7-1600.webp",
+    "reelMobile": "/custom/optimized/6e8cf5a001cab7-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "presentation"
-    ]
+    ],
+    "preview": "/custom/optimized/6e8cf5a001cab7-960.webp",
+    "imageWidth": 1920,
+    "imageHeight": 1280,
+    "previewSrcSet": "/custom/optimized/6e8cf5a001cab7-640.webp 640w, /custom/optimized/6e8cf5a001cab7-960.webp 960w, /custom/optimized/6e8cf5a001cab7-1600.webp 1600w"
   },
   {
     "slug": "case-12",
@@ -1168,14 +1221,18 @@
     "curated": true,
     "reelTitle": "Вокруг света с Лигой",
     "featured": false,
-    "reelImage": "/custom/reel/case-12-1600.webp",
-    "reelMobile": "/custom/reel/case-12-900.webp",
+    "reelImage": "/custom/optimized/b88deee7734c89-1600.webp",
+    "reelMobile": "/custom/optimized/b88deee7734c89-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "11 мероприятий; численность не приводим из-за неоднозначности текста источника",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/b88deee7734c89-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1600,
+    "previewSrcSet": "/custom/optimized/b88deee7734c89-640.webp 640w, /custom/optimized/b88deee7734c89-960.webp 960w, /custom/optimized/b88deee7734c89-1600.webp 1600w"
   },
   {
     "slug": "case-13",
@@ -1213,12 +1270,16 @@
     "curated": true,
     "reelTitle": "Yandex E-com сфера",
     "featured": false,
-    "reelImage": "/custom/reel/case-13-1600.webp",
-    "reelMobile": "/custom/reel/case-13-900.webp",
+    "reelImage": "/custom/optimized/b13abb29d52c12-1600.webp",
+    "reelMobile": "/custom/optimized/b13abb29d52c12-960.webp",
     "imageRatio": 1.5,
     "eventCity": "Иваново",
     "guestLabel": "3 000 участников за двухдневный проект",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/b13abb29d52c12-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1600,
+    "previewSrcSet": "/custom/optimized/b13abb29d52c12-640.webp 640w, /custom/optimized/b13abb29d52c12-960.webp 960w, /custom/optimized/b13abb29d52c12-1600.webp 1600w"
   },
   {
     "slug": "case-14",
@@ -1256,14 +1317,18 @@
     "curated": true,
     "reelTitle": "Яндекс Реклама · #rekonfa",
     "featured": false,
-    "reelImage": "/custom/reel/case-14-1600.webp",
-    "reelMobile": "/custom/reel/case-14-900.webp",
-    "imageRatio": 1.702128,
+    "reelImage": "/custom/optimized/fbfc9178835881-1280.webp",
+    "reelMobile": "/custom/optimized/fbfc9178835881-960.webp",
+    "imageRatio": 1.702127659574468,
     "eventCity": "",
     "guestLabel": "5 300 гостей; источник не разделяет очную и онлайн-аудиторию",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/fbfc9178835881-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 752,
+    "previewSrcSet": "/custom/optimized/fbfc9178835881-640.webp 640w, /custom/optimized/fbfc9178835881-960.webp 960w, /custom/optimized/fbfc9178835881-1280.webp 1280w"
   },
   {
     "slug": "portfolio-larnilane-2c8968d",
@@ -1282,8 +1347,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио LARNILANE. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио LARNILANE. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио LARNILANE. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио LARNILANE. Роль команды — в первоисточнике.",
     "source": "https://larnilane.com/projects",
     "image": "/custom/library/188f2d25bc.webp",
     "imageMobile": "/custom/library/188f2d25bc.webp",
@@ -1329,12 +1394,16 @@
     "curated": true,
     "reelTitle": "JETOUR T1. Безгранично…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-larnilane-2c8968d-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-larnilane-2c8968d-900.webp",
-    "imageRatio": 1.537054,
+    "reelImage": "/custom/optimized/70f6afdeaa8fe5-1600.webp",
+    "reelMobile": "/custom/optimized/70f6afdeaa8fe5-960.webp",
+    "imageRatio": 1.5370539798719123,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/70f6afdeaa8fe5-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1093,
+    "previewSrcSet": "/custom/optimized/70f6afdeaa8fe5-640.webp 640w, /custom/optimized/70f6afdeaa8fe5-960.webp 960w, /custom/optimized/70f6afdeaa8fe5-1600.webp 1600w"
   },
   {
     "slug": "portfolio-imagine-group-fd77444",
@@ -1353,8 +1422,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Imagine Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Imagine Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Imagine Group. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Imagine Group. Роль команды — в первоисточнике.",
     "source": "https://imgevent.ru/case#rec1055611251",
     "image": "/custom/library/3a9f81bf87.webp",
     "imageMobile": "/custom/library/3a9f81bf87.webp",
@@ -1400,14 +1469,18 @@
     "curated": true,
     "reelTitle": "Конференция «Импульс»",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-imagine-group-fd77444-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-imagine-group-fd77444-900.webp",
-    "imageRatio": 1.498829,
+    "reelImage": "/custom/optimized/5b4583716af61a-1280.webp",
+    "reelMobile": "/custom/optimized/5b4583716af61a-960.webp",
+    "imageRatio": 1.4988290398126465,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/5b4583716af61a-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 854,
+    "previewSrcSet": "/custom/optimized/5b4583716af61a-640.webp 640w, /custom/optimized/5b4583716af61a-960.webp 960w, /custom/optimized/5b4583716af61a-1280.webp 1280w"
   },
   {
     "slug": "case-enriched-37",
@@ -1452,14 +1525,18 @@
     "curated": true,
     "reelTitle": "Джет: CyberCamp",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-37-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-37-900.webp",
-    "imageRatio": 1.333333,
+    "reelImage": "/custom/optimized/d44b2f0aaeefde-1280.webp",
+    "reelMobile": "/custom/optimized/d44b2f0aaeefde-960.webp",
+    "imageRatio": 1.3333333333333333,
     "eventCity": "",
     "guestLabel": "Более 6 000 соло-участников и 138 команд; 25 000 подключений к эфиру ежедневно",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/d44b2f0aaeefde-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 960,
+    "previewSrcSet": "/custom/optimized/d44b2f0aaeefde-640.webp 640w, /custom/optimized/d44b2f0aaeefde-960.webp 960w, /custom/optimized/d44b2f0aaeefde-1280.webp 1280w"
   },
   {
     "slug": "portfolio-skc-agency-43c22a0",
@@ -1525,12 +1602,16 @@
     "curated": true,
     "reelTitle": "Проекты SKC Agency ·…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-skc-agency-43c22a0-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-skc-agency-43c22a0-900.webp",
-    "imageRatio": 1.500366,
+    "reelImage": "/custom/optimized/1391ee95936e26-1600.webp",
+    "reelMobile": "/custom/optimized/1391ee95936e26-960.webp",
+    "imageRatio": 1.5003663003663004,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/1391ee95936e26-960.webp",
+    "imageWidth": 2048,
+    "imageHeight": 1365,
+    "previewSrcSet": "/custom/optimized/1391ee95936e26-640.webp 640w, /custom/optimized/1391ee95936e26-960.webp 960w, /custom/optimized/1391ee95936e26-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-47",
@@ -1575,14 +1656,18 @@
     "curated": true,
     "reelTitle": "RED FINCH —…",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-47-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-47-900.webp",
+    "reelImage": "/custom/optimized/a64fe13992798d-1524.webp",
+    "reelMobile": "/custom/optimized/a64fe13992798d-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "3450 участников всей серии",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/a64fe13992798d-960.webp",
+    "imageWidth": 1524,
+    "imageHeight": 1016,
+    "previewSrcSet": "/custom/optimized/a64fe13992798d-640.webp 640w, /custom/optimized/a64fe13992798d-960.webp 960w, /custom/optimized/a64fe13992798d-1524.webp 1524w"
   },
   {
     "slug": "portfolio-event-agency-good-brand-8c60f78",
@@ -1601,8 +1686,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Event Agency Good Brand. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Event Agency Good Brand. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Event Agency Good Brand. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Event Agency Good Brand. Роль команды — в первоисточнике.",
     "source": "https://gbnn.ru/portfolio#summer-corporate-festival",
     "image": "/custom/library/6e0a3153c1.webp",
     "imageMobile": "/custom/library/6e0a3153c1.webp",
@@ -1642,12 +1727,16 @@
     "curated": true,
     "reelTitle": "Летний корпоративный…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-event-agency-good-brand-8c60f78-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-event-agency-good-brand-8c60f78-900.webp",
+    "reelImage": "/custom/optimized/27521db8b754fe-1600.webp",
+    "reelMobile": "/custom/optimized/27521db8b754fe-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/27521db8b754fe-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/27521db8b754fe-640.webp 640w, /custom/optimized/27521db8b754fe-960.webp 960w, /custom/optimized/27521db8b754fe-1600.webp 1600w"
   },
   {
     "slug": "portfolio-doctorteam-211cd87",
@@ -1666,8 +1755,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио DoctorTeam. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио DoctorTeam. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио DoctorTeam. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио DoctorTeam. Роль команды — в первоисточнике.",
     "source": "https://doctorteam.ru/blog/portfolios/coca-cola-private-night-privatnaya-vecherinka-inflyuenserov-v-dubae/",
     "image": "/custom/library/54767e86f2.webp",
     "imageMobile": "/custom/library/54767e86f2.webp",
@@ -1695,12 +1784,16 @@
     "curated": true,
     "reelTitle": "Coca-Cola Private Night…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-doctorteam-211cd87-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-doctorteam-211cd87-900.webp",
+    "reelImage": "/custom/optimized/2eb780670791cd-1600.webp",
+    "reelMobile": "/custom/optimized/2eb780670791cd-960.webp",
     "imageRatio": 0.75,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/2eb780670791cd-960.webp",
+    "imageWidth": 1800,
+    "imageHeight": 2400,
+    "previewSrcSet": "/custom/optimized/2eb780670791cd-640.webp 640w, /custom/optimized/2eb780670791cd-960.webp 960w, /custom/optimized/2eb780670791cd-1600.webp 1600w"
   },
   {
     "slug": "portfolio-avm-media-d9af9bf",
@@ -1719,8 +1812,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио AVM Media. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио AVM Media. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио AVM Media. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио AVM Media. Роль команды — в первоисточнике.",
     "source": "https://avmmedia.ru/projects/vii-czeremoniya-nagrazhdeniya-premii-tefi-kids/",
     "image": "/custom/library/714d7d087a.webp",
     "imageMobile": "/custom/library/714d7d087a.webp",
@@ -1766,12 +1859,16 @@
     "curated": true,
     "reelTitle": "VII церемония премии…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-avm-media-d9af9bf-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-avm-media-d9af9bf-900.webp",
-    "imageRatio": 1.482397,
+    "reelImage": "/custom/optimized/da864b68f0aa86-1600.webp",
+    "reelMobile": "/custom/optimized/da864b68f0aa86-960.webp",
+    "imageRatio": 1.4823965410747375,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/da864b68f0aa86-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1619,
+    "previewSrcSet": "/custom/optimized/da864b68f0aa86-640.webp 640w, /custom/optimized/da864b68f0aa86-960.webp 960w, /custom/optimized/da864b68f0aa86-1600.webp 1600w"
   },
   {
     "slug": "portfolio-lyudi-dobrye-ba9ea67",
@@ -1790,8 +1887,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Люди Добрые. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Люди Добрые. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Люди Добрые. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Люди Добрые. Роль команды — в первоисточнике.",
     "source": "https://ludidobrie.com/dodo-brands-premiya-dodo-prime-2026",
     "image": "/custom/library/cf602ef23f.webp",
     "imageMobile": "/custom/library/cf602ef23f.webp",
@@ -1837,12 +1934,16 @@
     "curated": true,
     "reelTitle": "Dodo Brands · Премия…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-lyudi-dobrye-ba9ea67-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-lyudi-dobrye-ba9ea67-900.webp",
-    "imageRatio": 1.49926,
+    "reelImage": "/custom/optimized/ad354d9f80acac-1600.webp",
+    "reelMobile": "/custom/optimized/ad354d9f80acac-960.webp",
+    "imageRatio": 1.4992603550295858,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/ad354d9f80acac-960.webp",
+    "imageWidth": 2027,
+    "imageHeight": 1352,
+    "previewSrcSet": "/custom/optimized/ad354d9f80acac-640.webp 640w, /custom/optimized/ad354d9f80acac-960.webp 960w, /custom/optimized/ad354d9f80acac-1600.webp 1600w"
   },
   {
     "slug": "portfolio-be-in-event-fbe0bbe",
@@ -1861,8 +1962,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио BE IN EVENT. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио BE IN EVENT. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио BE IN EVENT. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио BE IN EVENT. Роль команды — в первоисточнике.",
     "source": "https://beinevent.ru/#popup:tech",
     "image": "/custom/library/4a4bf89ec6.webp",
     "imageMobile": "/custom/library/4a4bf89ec6.webp",
@@ -1908,12 +2009,16 @@
     "curated": true,
     "reelTitle": "Лемана Про · Tech Days",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-be-in-event-fbe0bbe-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-be-in-event-fbe0bbe-900.webp",
+    "reelImage": "/custom/optimized/b103043b2310fc-1600.webp",
+    "reelMobile": "/custom/optimized/b103043b2310fc-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/b103043b2310fc-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/b103043b2310fc-640.webp 640w, /custom/optimized/b103043b2310fc-960.webp 960w, /custom/optimized/b103043b2310fc-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-64",
@@ -1963,14 +2068,18 @@
     "curated": true,
     "reelTitle": "Открытие нового офиса…",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-64-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-64-900.webp",
+    "reelImage": "/custom/optimized/0d94d18f0efb10-1600.webp",
+    "reelMobile": "/custom/optimized/0d94d18f0efb10-960.webp",
     "imageRatio": 1.5,
     "eventCity": "Алматы",
     "guestLabel": "",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/0d94d18f0efb10-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1600,
+    "previewSrcSet": "/custom/optimized/0d94d18f0efb10-640.webp 640w, /custom/optimized/0d94d18f0efb10-960.webp 960w, /custom/optimized/0d94d18f0efb10-1600.webp 1600w"
   },
   {
     "slug": "portfolio-ars-communications-a53f55b",
@@ -1989,8 +2098,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио ARS Communications. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио ARS Communications. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио ARS Communications. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио ARS Communications. Роль команды — в первоисточнике.",
     "source": "https://www.arscom.ru/projects/ixcellerate-rockin-russia-2026/",
     "image": "/custom/library/9e713b0fc7.webp",
     "imageMobile": "/custom/library/9e713b0fc7.webp",
@@ -2048,12 +2157,16 @@
     "curated": true,
     "reelTitle": "IXcellerate Rockin’…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-ars-communications-a53f55b-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-ars-communications-a53f55b-900.webp",
+    "reelImage": "/custom/optimized/4deba6f0553736-1600.webp",
+    "reelMobile": "/custom/optimized/4deba6f0553736-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/4deba6f0553736-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1600,
+    "previewSrcSet": "/custom/optimized/4deba6f0553736-640.webp 640w, /custom/optimized/4deba6f0553736-960.webp 960w, /custom/optimized/4deba6f0553736-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-66",
@@ -2122,12 +2235,16 @@
     "curated": true,
     "reelTitle": "Стенд BASF на ЮГАГРО 2021",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-66-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-66-900.webp",
-    "imageRatio": 1.333333,
+    "reelImage": "/custom/optimized/55b343018e710d-1280.webp",
+    "reelMobile": "/custom/optimized/55b343018e710d-960.webp",
+    "imageRatio": 1.3333333333333333,
     "eventCity": "Краснодар",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/55b343018e710d-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 960,
+    "previewSrcSet": "/custom/optimized/55b343018e710d-640.webp 640w, /custom/optimized/55b343018e710d-960.webp 960w, /custom/optimized/55b343018e710d-1280.webp 1280w"
   },
   {
     "slug": "portfolio-dream-laser-15dd06e",
@@ -2146,8 +2263,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Dream Laser. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Dream Laser. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Dream Laser. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Dream Laser. Роль команды — в первоисточнике.",
     "source": "https://www.dreamlaser.ru/news/kak-proshyol-festival-intervals-2026",
     "image": "/custom/library/423c7c2c36.webp",
     "imageMobile": "/custom/library/423c7c2c36.webp",
@@ -2205,12 +2322,16 @@
     "curated": true,
     "reelTitle": "Фестиваль INTERVALS 2026",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-dream-laser-15dd06e-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-dream-laser-15dd06e-900.webp",
+    "reelImage": "/custom/optimized/a9d2185ff86d77-1600.webp",
+    "reelMobile": "/custom/optimized/a9d2185ff86d77-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/a9d2185ff86d77-960.webp",
+    "imageWidth": 1800,
+    "imageHeight": 1200,
+    "previewSrcSet": "/custom/optimized/a9d2185ff86d77-640.webp 640w, /custom/optimized/a9d2185ff86d77-960.webp 960w, /custom/optimized/a9d2185ff86d77-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-77",
@@ -2272,14 +2393,18 @@
     "curated": true,
     "reelTitle": "Семейный корпоратив…",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-77-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-77-900.webp",
+    "reelImage": "/custom/optimized/436a3a9457f520-1200.webp",
+    "reelMobile": "/custom/optimized/436a3a9457f520-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/436a3a9457f520-960.webp",
+    "imageWidth": 1200,
+    "imageHeight": 800,
+    "previewSrcSet": "/custom/optimized/436a3a9457f520-640.webp 640w, /custom/optimized/436a3a9457f520-960.webp 960w, /custom/optimized/436a3a9457f520-1200.webp 1200w"
   },
   {
     "slug": "case-enriched-81",
@@ -2349,15 +2474,19 @@
     "curated": true,
     "reelTitle": "Итоговая конференция…",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-81-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-81-900.webp",
-    "imageRatio": 1.500938,
+    "reelImage": "/custom/optimized/549afd552fe218-1600.webp",
+    "reelMobile": "/custom/optimized/549afd552fe218-960.webp",
+    "imageRatio": 1.5009380863039399,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference",
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/549afd552fe218-960.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1066,
+    "previewSrcSet": "/custom/optimized/549afd552fe218-640.webp 640w, /custom/optimized/549afd552fe218-960.webp 960w, /custom/optimized/549afd552fe218-1600.webp 1600w"
   },
   {
     "slug": "portfolio-inkapri-b5282b9",
@@ -2435,12 +2564,16 @@
     "curated": true,
     "reelTitle": "Корпоративные события ·…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-inkapri-b5282b9-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-inkapri-b5282b9-900.webp",
+    "reelImage": "/custom/optimized/dde967a8640720-1600.webp",
+    "reelMobile": "/custom/optimized/dde967a8640720-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/dde967a8640720-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/dde967a8640720-640.webp 640w, /custom/optimized/dde967a8640720-960.webp 960w, /custom/optimized/dde967a8640720-1600.webp 1600w"
   },
   {
     "slug": "case-17",
@@ -2503,14 +2636,18 @@
     "curated": true,
     "reelTitle": "Летний фестиваль для…",
     "featured": false,
-    "reelImage": "/custom/reel/case-17-1600.webp",
-    "reelMobile": "/custom/reel/case-17-900.webp",
+    "reelImage": "/custom/optimized/fa1430c6fbfea8-1600.webp",
+    "reelMobile": "/custom/optimized/fa1430c6fbfea8-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "В подробном описании: 1 800 мероприятий и 39 000 участников за лето. В краткой карточке: 30 000 гостей. Показатели расходятся.",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/fa1430c6fbfea8-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/fa1430c6fbfea8-640.webp 640w, /custom/optimized/fa1430c6fbfea8-960.webp 960w, /custom/optimized/fa1430c6fbfea8-1600.webp 1600w"
   },
   {
     "slug": "case-25",
@@ -2572,14 +2709,18 @@
     "curated": true,
     "reelTitle": "Супер 90-е · А101",
     "featured": false,
-    "reelImage": "/custom/reel/case-25-1600.webp",
-    "reelMobile": "/custom/reel/case-25-900.webp",
+    "reelImage": "/custom/optimized/3ea956fdc19081-1500.webp",
+    "reelMobile": "/custom/optimized/3ea956fdc19081-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "650 гостей",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/3ea956fdc19081-960.webp",
+    "imageWidth": 1500,
+    "imageHeight": 1000,
+    "previewSrcSet": "/custom/optimized/3ea956fdc19081-640.webp 640w, /custom/optimized/3ea956fdc19081-960.webp 960w, /custom/optimized/3ea956fdc19081-1500.webp 1500w"
   },
   {
     "slug": "case-26",
@@ -2624,14 +2765,18 @@
     "curated": true,
     "reelTitle": "Онлайн-конференция INDITEX",
     "featured": false,
-    "reelImage": "/custom/reel/case-26-1600.webp",
-    "reelMobile": "/custom/reel/case-26-900.webp",
-    "imageRatio": 1.764339,
+    "reelImage": "/custom/optimized/29c9a55925d5a3-1415.webp",
+    "reelMobile": "/custom/optimized/29c9a55925d5a3-960.webp",
+    "imageRatio": 1.7643391521197007,
     "eventCity": "",
     "guestLabel": "3 500 участников",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/29c9a55925d5a3-960.webp",
+    "imageWidth": 1415,
+    "imageHeight": 802,
+    "previewSrcSet": "/custom/optimized/29c9a55925d5a3-640.webp 640w, /custom/optimized/29c9a55925d5a3-960.webp 960w, /custom/optimized/29c9a55925d5a3-1415.webp 1415w"
   },
   {
     "slug": "case-round2-86",
@@ -2693,14 +2838,18 @@
     "curated": true,
     "reelTitle": "А101 — вечеринка «Супер…",
     "featured": false,
-    "reelImage": "/custom/reel/case-round2-86-1600.webp",
-    "reelMobile": "/custom/reel/case-round2-86-900.webp",
+    "reelImage": "/custom/optimized/3ea956fdc19081-1500.webp",
+    "reelMobile": "/custom/optimized/3ea956fdc19081-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "650 гостей",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/3ea956fdc19081-960.webp",
+    "imageWidth": 1500,
+    "imageHeight": 1000,
+    "previewSrcSet": "/custom/optimized/3ea956fdc19081-640.webp 640w, /custom/optimized/3ea956fdc19081-960.webp 960w, /custom/optimized/3ea956fdc19081-1500.webp 1500w"
   },
   {
     "slug": "portfolio-install-profi-8349af5",
@@ -2772,12 +2921,16 @@
     "curated": true,
     "reelTitle": "Событийный продакшн ·…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-install-profi-8349af5-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-install-profi-8349af5-900.webp",
+    "reelImage": "/custom/optimized/5d3fa3b69935f4-1600.webp",
+    "reelMobile": "/custom/optimized/5d3fa3b69935f4-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/5d3fa3b69935f4-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/5d3fa3b69935f4-640.webp 640w, /custom/optimized/5d3fa3b69935f4-960.webp 960w, /custom/optimized/5d3fa3b69935f4-1600.webp 1600w"
   },
   {
     "slug": "case-round2-89",
@@ -2834,14 +2987,18 @@
     "curated": true,
     "reelTitle": "Выставка ледяных…",
     "featured": false,
-    "reelImage": "/custom/reel/case-round2-89-1600.webp",
-    "reelMobile": "/custom/reel/case-round2-89-900.webp",
-    "imageRatio": 1.420676,
+    "reelImage": "/custom/optimized/e386c40f997e35-1388.webp",
+    "reelMobile": "/custom/optimized/e386c40f997e35-960.webp",
+    "imageRatio": 1.420675537359263,
     "eventCity": "Мурманск",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/e386c40f997e35-960.webp",
+    "imageWidth": 1388,
+    "imageHeight": 977,
+    "previewSrcSet": "/custom/optimized/e386c40f997e35-640.webp 640w, /custom/optimized/e386c40f997e35-960.webp 960w, /custom/optimized/e386c40f997e35-1388.webp 1388w"
   },
   {
     "slug": "case-enriched-79",
@@ -2891,14 +3048,18 @@
     "curated": true,
     "reelTitle": "Евразийский…",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-79-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-79-900.webp",
-    "imageRatio": 1.501305,
+    "reelImage": "/custom/optimized/3460de1d2945e2-1600.webp",
+    "reelMobile": "/custom/optimized/3460de1d2945e2-960.webp",
+    "imageRatio": 1.5013054830287207,
     "eventCity": "",
     "guestLabel": "Более 5 000 участников из 50 стран",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/3460de1d2945e2-960.webp",
+    "imageWidth": 2300,
+    "imageHeight": 1532,
+    "previewSrcSet": "/custom/optimized/3460de1d2945e2-640.webp 640w, /custom/optimized/3460de1d2945e2-960.webp 960w, /custom/optimized/3460de1d2945e2-1600.webp 1600w"
   },
   {
     "slug": "case-5",
@@ -2935,14 +3096,18 @@
     "curated": false,
     "reelTitle": "Альфа-Конфа в Москве",
     "featured": false,
-    "reelImage": "/custom/reel/case-5-1600.webp",
-    "reelMobile": "/custom/reel/case-5-900.webp",
+    "reelImage": "/custom/optimized/6fc917a0895a0d-1600.webp",
+    "reelMobile": "/custom/optimized/6fc917a0895a0d-960.webp",
     "imageRatio": 1.5,
     "eventCity": "Москва",
     "guestLabel": "Более 5 000 участников московского события",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/6fc917a0895a0d-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/6fc917a0895a0d-640.webp 640w, /custom/optimized/6fc917a0895a0d-960.webp 960w, /custom/optimized/6fc917a0895a0d-1600.webp 1600w"
   },
   {
     "slug": "case-10",
@@ -2980,14 +3145,18 @@
     "curated": false,
     "reelTitle": "Дизайн-выходные",
     "featured": false,
-    "reelImage": "/custom/reel/case-10-1600.webp",
-    "reelMobile": "/custom/reel/case-10-900.webp",
+    "reelImage": "/custom/optimized/c54e5996d34cf4-1600.webp",
+    "reelMobile": "/custom/optimized/c54e5996d34cf4-960.webp",
     "imageRatio": 1.5,
     "eventCity": "Казань",
     "guestLabel": "Более 6 000 очных участников",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/c54e5996d34cf4-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/c54e5996d34cf4-640.webp 640w, /custom/optimized/c54e5996d34cf4-960.webp 960w, /custom/optimized/c54e5996d34cf4-1600.webp 1600w"
   },
   {
     "slug": "case-11",
@@ -3025,14 +3194,18 @@
     "curated": false,
     "reelTitle": "Samsung SOSCON Russia",
     "featured": false,
-    "reelImage": "/custom/reel/case-11-1600.webp",
-    "reelMobile": "/custom/reel/case-11-900.webp",
-    "imageRatio": 1.787946,
+    "reelImage": "/custom/optimized/1d7796ed43fbea-801.webp",
+    "reelMobile": "/custom/optimized/1d7796ed43fbea-801.webp",
+    "imageRatio": 1.7879464285714286,
     "eventCity": "",
     "guestLabel": "До 2 000 одновременных участников",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/1d7796ed43fbea-801.webp",
+    "imageWidth": 801,
+    "imageHeight": 448,
+    "previewSrcSet": "/custom/optimized/1d7796ed43fbea-640.webp 640w, /custom/optimized/1d7796ed43fbea-801.webp 801w"
   },
   {
     "slug": "portfolio-be-brand-people-25d27b5",
@@ -3051,8 +3224,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Be Brand People. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Be Brand People. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Be Brand People. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Be Brand People. Роль команды — в первоисточнике.",
     "source": "https://bebrand.ru/event/cases/nashevremya_gazprom",
     "image": "/custom/library/68bedd6061.png",
     "imageMobile": "/custom/library/68bedd6061.png",
@@ -3067,14 +3240,18 @@
     "curated": false,
     "reelTitle": "Газпромбанк Автолизинг…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-be-brand-people-25d27b5-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-be-brand-people-25d27b5-900.webp",
-    "imageRatio": 1.777778,
+    "reelImage": "/custom/optimized/298bfb00d17b4b-640.webp",
+    "reelMobile": "/custom/optimized/298bfb00d17b4b-640.webp",
+    "imageRatio": 1.7777777777777777,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/298bfb00d17b4b-640.webp",
+    "imageWidth": 640,
+    "imageHeight": 360,
+    "previewSrcSet": "/custom/optimized/298bfb00d17b4b-640.webp 640w"
   },
   {
     "slug": "portfolio-diversity-group-c25e54a",
@@ -3093,8 +3270,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Diversity Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Diversity Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Diversity Group. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Diversity Group. Роль команды — в первоисточнике.",
     "source": "https://thediversity.ru/stoloto.html",
     "image": "/custom/library/8eb28c0e4e.jpg",
     "imageMobile": "/custom/library/8eb28c0e4e.jpg",
@@ -3109,12 +3286,16 @@
     "curated": false,
     "reelTitle": "Столото · Инсталляция…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-diversity-group-c25e54a-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-diversity-group-c25e54a-900.webp",
+    "reelImage": "/custom/optimized/6cc14cf0d1afee-560.webp",
+    "reelMobile": "/custom/optimized/6cc14cf0d1afee-560.webp",
     "imageRatio": 1,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/6cc14cf0d1afee-560.webp",
+    "imageWidth": 560,
+    "imageHeight": 560,
+    "previewSrcSet": "/custom/optimized/6cc14cf0d1afee-560.webp 560w"
   },
   {
     "slug": "portfolio-emg-81e8fff",
@@ -3133,8 +3314,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио emg. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио emg. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио emg. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио emg. Роль команды — в первоисточнике.",
     "source": "https://emg.ru/#popup:ikea",
     "image": "/custom/library/2955e8b016.png",
     "imageMobile": "/custom/library/2955e8b016.png",
@@ -3149,14 +3330,18 @@
     "curated": false,
     "reelTitle": "IKEA · Virgil Abloh…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-emg-81e8fff-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-emg-81e8fff-900.webp",
-    "imageRatio": 1.736031,
+    "reelImage": "/custom/optimized/abccc2818886ec-901.webp",
+    "reelMobile": "/custom/optimized/abccc2818886ec-901.webp",
+    "imageRatio": 1.7360308285163777,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "presentation"
-    ]
+    ],
+    "preview": "/custom/optimized/abccc2818886ec-901.webp",
+    "imageWidth": 901,
+    "imageHeight": 519,
+    "previewSrcSet": "/custom/optimized/abccc2818886ec-640.webp 640w, /custom/optimized/abccc2818886ec-901.webp 901w"
   },
   {
     "slug": "portfolio-oggi-by-twiga-cg-9977eb9",
@@ -3175,8 +3360,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио OGGI by TWIGA CG. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио OGGI by TWIGA CG. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио OGGI by TWIGA CG. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио OGGI by TWIGA CG. Роль команды — в первоисточнике.",
     "source": "https://twiga.ru/oggi/tcl2025/",
     "image": "/custom/library/0655094bfb.webp",
     "imageMobile": "/custom/library/0655094bfb.webp",
@@ -3191,14 +3376,18 @@
     "curated": false,
     "reelTitle": "TCL · Презентация…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-oggi-by-twiga-cg-9977eb9-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-oggi-by-twiga-cg-9977eb9-900.webp",
+    "reelImage": "/custom/optimized/ab1b7ce5fde7f8-1600.webp",
+    "reelMobile": "/custom/optimized/ab1b7ce5fde7f8-960.webp",
     "imageRatio": 1.25,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "presentation"
-    ]
+    ],
+    "preview": "/custom/optimized/ab1b7ce5fde7f8-960.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1280,
+    "previewSrcSet": "/custom/optimized/ab1b7ce5fde7f8-640.webp 640w, /custom/optimized/ab1b7ce5fde7f8-960.webp 960w, /custom/optimized/ab1b7ce5fde7f8-1600.webp 1600w"
   },
   {
     "slug": "portfolio-ivs-group-3a30833",
@@ -3217,8 +3406,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио IVS Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио IVS Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио IVS Group. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио IVS Group. Роль команды — в первоисточнике.",
     "source": "https://ivsgroup.ru/portfolio/bolshoj-partnjorskij-sammit-r7-moskva",
     "image": "/custom/library/71192a6c34.jpg",
     "imageMobile": "/custom/library/71192a6c34.jpg",
@@ -3233,14 +3422,18 @@
     "curated": false,
     "reelTitle": "Партнёрский саммит R7",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-ivs-group-3a30833-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-ivs-group-3a30833-900.webp",
+    "reelImage": "/custom/optimized/9a62545c3b9236-900.webp",
+    "reelMobile": "/custom/optimized/9a62545c3b9236-900.webp",
     "imageRatio": 1.8,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/9a62545c3b9236-900.webp",
+    "imageWidth": 900,
+    "imageHeight": 500,
+    "previewSrcSet": "/custom/optimized/9a62545c3b9236-640.webp 640w, /custom/optimized/9a62545c3b9236-900.webp 900w"
   },
   {
     "slug": "case-enriched-36",
@@ -3278,12 +3471,16 @@
     "curated": false,
     "reelTitle": "Modest Fashion Day",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-36-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-36-900.webp",
-    "imageRatio": 1.651917,
+    "reelImage": "/custom/optimized/3f5534643ee8b7-1600.webp",
+    "reelMobile": "/custom/optimized/3f5534643ee8b7-960.webp",
+    "imageRatio": 1.6519174041297935,
     "eventCity": "Казань",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/3f5534643ee8b7-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1017,
+    "previewSrcSet": "/custom/optimized/3f5534643ee8b7-640.webp 640w, /custom/optimized/3f5534643ee8b7-960.webp 960w, /custom/optimized/3f5534643ee8b7-1600.webp 1600w"
   },
   {
     "slug": "portfolio-people-8eb01c9",
@@ -3302,8 +3499,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио People. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио People. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио People. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио People. Роль команды — в первоисточнике.",
     "source": "https://people.moscow/formula-molodezhi/",
     "image": "/custom/library/c488f00416.jpg",
     "imageMobile": "/custom/library/c488f00416.jpg",
@@ -3318,12 +3515,16 @@
     "curated": false,
     "reelTitle": "Уралхим · Формула молодёжи",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-people-8eb01c9-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-people-8eb01c9-900.webp",
-    "imageRatio": 1.006711,
+    "reelImage": "/custom/optimized/74cc65c2cd10b8-1200.webp",
+    "reelMobile": "/custom/optimized/74cc65c2cd10b8-960.webp",
+    "imageRatio": 1.0067114093959733,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/74cc65c2cd10b8-960.webp",
+    "imageWidth": 1200,
+    "imageHeight": 1192,
+    "previewSrcSet": "/custom/optimized/74cc65c2cd10b8-640.webp 640w, /custom/optimized/74cc65c2cd10b8-960.webp 960w, /custom/optimized/74cc65c2cd10b8-1200.webp 1200w"
   },
   {
     "slug": "case-22",
@@ -3360,12 +3561,16 @@
     "curated": false,
     "reelTitle": "Adidas Base Moscow",
     "featured": false,
-    "reelImage": "/custom/reel/case-22-1600.webp",
-    "reelMobile": "/custom/reel/case-22-900.webp",
-    "imageRatio": 1.663586,
+    "reelImage": "/custom/optimized/70bf69ed9d3a59-900.webp",
+    "reelMobile": "/custom/optimized/70bf69ed9d3a59-900.webp",
+    "imageRatio": 1.6635859519408502,
     "eventCity": "Москва",
     "guestLabel": "Показатель посещаемости отдельного кейса здесь не подтверждён",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/70bf69ed9d3a59-900.webp",
+    "imageWidth": 900,
+    "imageHeight": 541,
+    "previewSrcSet": "/custom/optimized/70bf69ed9d3a59-640.webp 640w, /custom/optimized/70bf69ed9d3a59-900.webp 900w"
   },
   {
     "slug": "portfolio-inzhenery-sobytiya-d6fdacf",
@@ -3384,8 +3589,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Инженеры события. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Инженеры события. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Инженеры события. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Инженеры события. Роль команды — в первоисточнике.",
     "source": "https://www.engineers.spb.ru/rok-i-kino",
     "image": "/custom/library/784430b0fb.jpg",
     "imageMobile": "/custom/library/784430b0fb.jpg",
@@ -3400,12 +3605,16 @@
     "curated": false,
     "reelTitle": "Global Ports ·…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-inzhenery-sobytiya-d6fdacf-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-inzhenery-sobytiya-d6fdacf-900.webp",
+    "reelImage": "/custom/optimized/d63166d1824e54-1600.webp",
+    "reelMobile": "/custom/optimized/d63166d1824e54-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/d63166d1824e54-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/d63166d1824e54-640.webp 640w, /custom/optimized/d63166d1824e54-960.webp 960w, /custom/optimized/d63166d1824e54-1600.webp 1600w"
   },
   {
     "slug": "portfolio-ars-com-3c46f1a",
@@ -3424,8 +3633,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио ARS COM. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио ARS COM. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио ARS COM. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио ARS COM. Роль команды — в первоисточнике.",
     "source": "https://www.arscom.ru/projects/ixcellerate-rockin-russia-2026/",
     "image": "/custom/library/7838f36ee6.png",
     "imageMobile": "/custom/library/7838f36ee6.png",
@@ -3440,12 +3649,16 @@
     "curated": false,
     "reelTitle": "IXcellerate Rockin’…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-ars-com-3c46f1a-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-ars-com-3c46f1a-900.webp",
-    "imageRatio": 0.777778,
+    "reelImage": "/custom/optimized/2b981c4393c713-350.webp",
+    "reelMobile": "/custom/optimized/2b981c4393c713-350.webp",
+    "imageRatio": 0.7777777777777778,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/2b981c4393c713-350.webp",
+    "imageWidth": 350,
+    "imageHeight": 450,
+    "previewSrcSet": "/custom/optimized/2b981c4393c713-350.webp 350w"
   },
   {
     "slug": "case-enriched-42",
@@ -3482,14 +3695,18 @@
     "curated": false,
     "reelTitle": "S7 SUMMER FEST",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-42-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-42-900.webp",
-    "imageRatio": 1.49925,
+    "reelImage": "/custom/optimized/ec2f9565191393-1000.webp",
+    "reelMobile": "/custom/optimized/ec2f9565191393-960.webp",
+    "imageRatio": 1.4992503748125936,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/ec2f9565191393-960.webp",
+    "imageWidth": 1000,
+    "imageHeight": 667,
+    "previewSrcSet": "/custom/optimized/ec2f9565191393-640.webp 640w, /custom/optimized/ec2f9565191393-960.webp 960w, /custom/optimized/ec2f9565191393-1000.webp 1000w"
   },
   {
     "slug": "portfolio-oxygen-b9f344d",
@@ -3508,8 +3725,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио OXYGEN. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио OXYGEN. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио OXYGEN. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио OXYGEN. Роль команды — в первоисточнике.",
     "source": "https://oxygen-agency.ru/gdrive-silkway",
     "image": "/custom/library/ee6905e651.jpg",
     "imageMobile": "/custom/library/ee6905e651.jpg",
@@ -3524,12 +3741,16 @@
     "curated": false,
     "reelTitle": "G-Drive · Шёлковый путь",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-oxygen-b9f344d-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-oxygen-b9f344d-900.webp",
-    "imageRatio": 1.777778,
+    "reelImage": "/custom/optimized/405f6aa95f8de4-1600.webp",
+    "reelMobile": "/custom/optimized/405f6aa95f8de4-960.webp",
+    "imageRatio": 1.7777777777777777,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/405f6aa95f8de4-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 945,
+    "previewSrcSet": "/custom/optimized/405f6aa95f8de4-640.webp 640w, /custom/optimized/405f6aa95f8de4-960.webp 960w, /custom/optimized/405f6aa95f8de4-1600.webp 1600w"
   },
   {
     "slug": "portfolio-sobytie-165ef1d",
@@ -3548,8 +3769,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Sobytie. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Sobytie. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Sobytie. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Sobytie. Роль команды — в первоисточнике.",
     "source": "https://so-bytie.ru/",
     "image": "/custom/library/2cae0a41b2.png",
     "imageMobile": "/custom/library/2cae0a41b2.png",
@@ -3564,12 +3785,16 @@
     "curated": false,
     "reelTitle": "Поезд Деда Мороза",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-sobytie-165ef1d-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-sobytie-165ef1d-900.webp",
+    "reelImage": "/custom/optimized/108e7b6375173b-1200.webp",
+    "reelMobile": "/custom/optimized/108e7b6375173b-960.webp",
     "imageRatio": 1.2,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/108e7b6375173b-960.webp",
+    "imageWidth": 1200,
+    "imageHeight": 1000,
+    "previewSrcSet": "/custom/optimized/108e7b6375173b-640.webp 640w, /custom/optimized/108e7b6375173b-960.webp 960w, /custom/optimized/108e7b6375173b-1200.webp 1200w"
   },
   {
     "slug": "portfolio-red-agency-31aa228",
@@ -3588,8 +3813,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио RED Agency. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио RED Agency. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио RED Agency. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио RED Agency. Роль команды — в первоисточнике.",
     "source": "https://red-agency.ru/all-cases",
     "image": "/custom/library/1151d50706.png",
     "imageMobile": "/custom/library/1151d50706.png",
@@ -3604,12 +3829,16 @@
     "curated": false,
     "reelTitle": "Звёзды EXEED · Финал…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-red-agency-31aa228-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-red-agency-31aa228-900.webp",
-    "imageRatio": 1.24805,
+    "reelImage": "/custom/optimized/464c8dbbbf72c1-800.webp",
+    "reelMobile": "/custom/optimized/464c8dbbbf72c1-800.webp",
+    "imageRatio": 1.24804992199688,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/464c8dbbbf72c1-800.webp",
+    "imageWidth": 800,
+    "imageHeight": 641,
+    "previewSrcSet": "/custom/optimized/464c8dbbbf72c1-640.webp 640w, /custom/optimized/464c8dbbbf72c1-800.webp 800w"
   },
   {
     "slug": "portfolio-kreativnoe-agentstvo-mel-e966ab4",
@@ -3628,8 +3857,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Креативное агентство МЕЛ. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Креативное агентство МЕЛ. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Креативное агентство МЕЛ. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Креативное агентство МЕЛ. Роль команды — в первоисточнике.",
     "source": "https://mel-creative.ru/cases/sport-v-letnuu-noch-qiwi",
     "image": "/custom/library/955a110b10.png",
     "imageMobile": "/custom/library/955a110b10.png",
@@ -3644,12 +3873,16 @@
     "curated": false,
     "reelTitle": "QIWI · Спорт в летнюю ночь",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-kreativnoe-agentstvo-mel-e966ab4-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-kreativnoe-agentstvo-mel-e966ab4-900.webp",
-    "imageRatio": 1.777778,
+    "reelImage": "/custom/optimized/3e24d9a968af43-1600.webp",
+    "reelMobile": "/custom/optimized/3e24d9a968af43-960.webp",
+    "imageRatio": 1.7777777777777777,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/3e24d9a968af43-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 945,
+    "previewSrcSet": "/custom/optimized/3e24d9a968af43-640.webp 640w, /custom/optimized/3e24d9a968af43-960.webp 960w, /custom/optimized/3e24d9a968af43-1600.webp 1600w"
   },
   {
     "slug": "portfolio-skc-agency-3b82bf4",
@@ -3668,8 +3901,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио SKC Agency. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио SKC Agency. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио SKC Agency. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио SKC Agency. Роль команды — в первоисточнике.",
     "source": "https://www.skc-agency.ru/",
     "image": "/custom/library/da1e209c19.webp",
     "imageMobile": "/custom/library/da1e209c19.webp",
@@ -3684,12 +3917,16 @@
     "curated": false,
     "reelTitle": "Финал конкурса «Лидеры…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-skc-agency-3b82bf4-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-skc-agency-3b82bf4-900.webp",
-    "imageRatio": 1.777778,
+    "reelImage": "/custom/optimized/c910074c0a05d1-1600.webp",
+    "reelMobile": "/custom/optimized/c910074c0a05d1-960.webp",
+    "imageRatio": 1.7777777777777777,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/c910074c0a05d1-960.webp",
+    "imageWidth": 2400,
+    "imageHeight": 1350,
+    "previewSrcSet": "/custom/optimized/c910074c0a05d1-640.webp 640w, /custom/optimized/c910074c0a05d1-960.webp 960w, /custom/optimized/c910074c0a05d1-1600.webp 1600w"
   },
   {
     "slug": "portfolio-like-group-6c45117",
@@ -3708,8 +3945,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Like Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Like Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Like Group. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Like Group. Роль команды — в первоисточнике.",
     "source": "https://like-group.agency/",
     "image": "/custom/library/70444a977d.jpg",
     "imageMobile": "/custom/library/70444a977d.jpg",
@@ -3724,12 +3961,16 @@
     "curated": false,
     "reelTitle": "Red Finch · Road Show 2025",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-like-group-6c45117-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-like-group-6c45117-900.webp",
+    "reelImage": "/custom/optimized/efd96233614d82-1524.webp",
+    "reelMobile": "/custom/optimized/efd96233614d82-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/efd96233614d82-960.webp",
+    "imageWidth": 1524,
+    "imageHeight": 1016,
+    "previewSrcSet": "/custom/optimized/efd96233614d82-640.webp 640w, /custom/optimized/efd96233614d82-960.webp 960w, /custom/optimized/efd96233614d82-1524.webp 1524w"
   },
   {
     "slug": "portfolio-likes-group-ff5c327",
@@ -3748,8 +3989,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио LIKES GROUP. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио LIKES GROUP. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио LIKES GROUP. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио LIKES GROUP. Роль команды — в первоисточнике.",
     "source": "https://likesgroup.ru/",
     "image": "/custom/library/8adf2a8761.jpg",
     "imageMobile": "/custom/library/8adf2a8761.jpg",
@@ -3764,12 +4005,16 @@
     "curated": false,
     "reelTitle": "СТС · Фестиваль «Это…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-likes-group-ff5c327-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-likes-group-ff5c327-900.webp",
-    "imageRatio": 1.504029,
+    "reelImage": "/custom/optimized/0b9cb75ea70409-1600.webp",
+    "reelMobile": "/custom/optimized/0b9cb75ea70409-960.webp",
+    "imageRatio": 1.504028648164727,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/0b9cb75ea70409-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1117,
+    "previewSrcSet": "/custom/optimized/0b9cb75ea70409-640.webp 640w, /custom/optimized/0b9cb75ea70409-960.webp 960w, /custom/optimized/0b9cb75ea70409-1600.webp 1600w"
   },
   {
     "slug": "portfolio-studiya-syurpriz-eadad22",
@@ -3788,8 +4033,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Студия Сюрприз. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Студия Сюрприз. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Студия Сюрприз. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Студия Сюрприз. Роль команды — в первоисточнике.",
     "source": "https://surpriznn.ru/portfolio/detail?id=399",
     "image": "/custom/library/e6eaf1ddf4.jpg",
     "imageMobile": "/custom/library/e6eaf1ddf4.jpg",
@@ -3804,12 +4049,16 @@
     "curated": false,
     "reelTitle": "Юбилей STM Labs",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-studiya-syurpriz-eadad22-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-studiya-syurpriz-eadad22-900.webp",
-    "imageRatio": 1.184896,
+    "reelImage": "/custom/optimized/4ef1611caba0cd-1365.webp",
+    "reelMobile": "/custom/optimized/4ef1611caba0cd-960.webp",
+    "imageRatio": 1.1848958333333333,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/4ef1611caba0cd-960.webp",
+    "imageWidth": 1365,
+    "imageHeight": 1152,
+    "previewSrcSet": "/custom/optimized/4ef1611caba0cd-640.webp 640w, /custom/optimized/4ef1611caba0cd-960.webp 960w, /custom/optimized/4ef1611caba0cd-1365.webp 1365w"
   },
   {
     "slug": "portfolio-insayt-lyudi-b7da2ad",
@@ -3828,8 +4077,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Инсайт люди. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Инсайт люди. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Инсайт люди. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Инсайт люди. Роль команды — в первоисточнике.",
     "source": "https://event.insightpeople.ru/den_rossii23",
     "image": "/custom/library/2a52491ba9.jpg",
     "imageMobile": "/custom/library/2a52491ba9.jpg",
@@ -3844,12 +4093,16 @@
     "curated": false,
     "reelTitle": "День России ·…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-insayt-lyudi-b7da2ad-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-insayt-lyudi-b7da2ad-900.webp",
+    "reelImage": "/custom/optimized/a2c2cc729dea46-1600.webp",
+    "reelMobile": "/custom/optimized/a2c2cc729dea46-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/a2c2cc729dea46-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/a2c2cc729dea46-640.webp 640w, /custom/optimized/a2c2cc729dea46-960.webp 960w, /custom/optimized/a2c2cc729dea46-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-53",
@@ -3887,12 +4140,16 @@
     "curated": false,
     "reelTitle": "Поезд Деда Мороза",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-53-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-53-900.webp",
+    "reelImage": "/custom/optimized/108e7b6375173b-1200.webp",
+    "reelMobile": "/custom/optimized/108e7b6375173b-960.webp",
     "imageRatio": 1.2,
     "eventCity": "",
     "guestLabel": "Более 200 000 гостей за проект; не одновременная аудитория",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/108e7b6375173b-960.webp",
+    "imageWidth": 1200,
+    "imageHeight": 1000,
+    "previewSrcSet": "/custom/optimized/108e7b6375173b-640.webp 640w, /custom/optimized/108e7b6375173b-960.webp 960w, /custom/optimized/108e7b6375173b-1200.webp 1200w"
   },
   {
     "slug": "portfolio-c4-b609814",
@@ -3911,8 +4168,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио C4. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио C4. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио C4. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио C4. Роль команды — в первоисточнике.",
     "source": "https://c4group.ru/portfolio/avtomobilnye-meropriyatiya/obuchenie-dlya-dilerov-toyota-po-novomu-lc300/",
     "image": "/custom/library/3290f8ad50.jpg",
     "imageMobile": "/custom/library/3290f8ad50.jpg",
@@ -3927,12 +4184,16 @@
     "curated": false,
     "reelTitle": "Обучение дилеров Toyota…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-c4-b609814-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-c4-b609814-900.webp",
-    "imageRatio": 3.428571,
+    "reelImage": "/custom/optimized/b635c0522a1bc2-1600.webp",
+    "reelMobile": "/custom/optimized/b635c0522a1bc2-960.webp",
+    "imageRatio": 3.4285714285714284,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/b635c0522a1bc2-960.webp",
+    "imageWidth": 1920,
+    "imageHeight": 560,
+    "previewSrcSet": "/custom/optimized/b635c0522a1bc2-640.webp 640w, /custom/optimized/b635c0522a1bc2-960.webp 960w, /custom/optimized/b635c0522a1bc2-1600.webp 1600w"
   },
   {
     "slug": "portfolio-progression-group-f824c9b",
@@ -3951,8 +4212,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Progression group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Progression group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Progression group. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Progression group. Роль команды — в первоисточнике.",
     "source": "http://progressiongroup.ru/cases/event/3/",
     "image": "/custom/library/0567fe400a.webp",
     "imageMobile": "/custom/library/0567fe400a.webp",
@@ -3967,12 +4228,16 @@
     "curated": false,
     "reelTitle": "Лови закаты с El…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-progression-group-f824c9b-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-progression-group-f824c9b-900.webp",
+    "reelImage": "/custom/optimized/cf5c757641a0b0-1180.webp",
+    "reelMobile": "/custom/optimized/cf5c757641a0b0-960.webp",
     "imageRatio": 1,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/cf5c757641a0b0-960.webp",
+    "imageWidth": 1180,
+    "imageHeight": 1180,
+    "previewSrcSet": "/custom/optimized/cf5c757641a0b0-640.webp 640w, /custom/optimized/cf5c757641a0b0-960.webp 960w, /custom/optimized/cf5c757641a0b0-1180.webp 1180w"
   },
   {
     "slug": "portfolio-era-6c166b2",
@@ -3991,8 +4256,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио ЭРА. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио ЭРА. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио ЭРА. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио ЭРА. Роль команды — в первоисточнике.",
     "source": "https://eraevent.ru/cases/alye-parusa-2025/",
     "image": "/custom/library/d943477d57.jpg",
     "imageMobile": "/custom/library/d943477d57.jpg",
@@ -4007,12 +4272,16 @@
     "curated": false,
     "reelTitle": "Алые паруса 2025",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-era-6c166b2-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-era-6c166b2-900.webp",
+    "reelImage": "/custom/optimized/8fcd5d370d2f12-1200.webp",
+    "reelMobile": "/custom/optimized/8fcd5d370d2f12-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/8fcd5d370d2f12-960.webp",
+    "imageWidth": 1200,
+    "imageHeight": 800,
+    "previewSrcSet": "/custom/optimized/8fcd5d370d2f12-640.webp 640w, /custom/optimized/8fcd5d370d2f12-960.webp 960w, /custom/optimized/8fcd5d370d2f12-1200.webp 1200w"
   },
   {
     "slug": "case-enriched-65",
@@ -4049,12 +4318,16 @@
     "curated": false,
     "reelTitle": "Кубок Главы…",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-65-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-65-900.webp",
-    "imageRatio": 2.071006,
+    "reelImage": "/custom/optimized/3edf025f8938d5-700.webp",
+    "reelMobile": "/custom/optimized/3edf025f8938d5-700.webp",
+    "imageRatio": 2.0710059171597632,
     "eventCity": "Екатеринбург",
     "guestLabel": "83 участника и 1000 зрителей за проект",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/3edf025f8938d5-700.webp",
+    "imageWidth": 700,
+    "imageHeight": 338,
+    "previewSrcSet": "/custom/optimized/3edf025f8938d5-640.webp 640w, /custom/optimized/3edf025f8938d5-700.webp 700w"
   },
   {
     "slug": "portfolio-marcon-9981c71",
@@ -4073,8 +4346,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио MARCON. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио MARCON. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио MARCON. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио MARCON. Роль команды — в первоисточнике.",
     "source": "https://mar-con.ru/project/rg-newyear/",
     "image": "/custom/library/06bdd65067.webp",
     "imageMobile": "/custom/library/06bdd65067.webp",
@@ -4089,12 +4362,16 @@
     "curated": false,
     "reelTitle": "Новогоднее мероприятие…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-marcon-9981c71-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-marcon-9981c71-900.webp",
-    "imageRatio": 1.419355,
+    "reelImage": "/custom/optimized/2a046abcab4752-1320.webp",
+    "reelMobile": "/custom/optimized/2a046abcab4752-960.webp",
+    "imageRatio": 1.4193548387096775,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/2a046abcab4752-960.webp",
+    "imageWidth": 1320,
+    "imageHeight": 930,
+    "previewSrcSet": "/custom/optimized/2a046abcab4752-640.webp 640w, /custom/optimized/2a046abcab4752-960.webp 960w, /custom/optimized/2a046abcab4752-1320.webp 1320w"
   },
   {
     "slug": "portfolio-uts-88e9f9e",
@@ -4113,8 +4390,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио UTS. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио UTS. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио UTS. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио UTS. Роль команды — в первоисточнике.",
     "source": "https://uts-event.ru/case-invitro",
     "image": "/custom/library/55dc4b0cc1.jpg",
     "imageMobile": "/custom/library/55dc4b0cc1.jpg",
@@ -4129,14 +4406,18 @@
     "curated": false,
     "reelTitle": "Партнёрская конференция…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-uts-88e9f9e-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-uts-88e9f9e-900.webp",
+    "reelImage": "/custom/optimized/118e432925350c-1600.webp",
+    "reelMobile": "/custom/optimized/118e432925350c-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/118e432925350c-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/118e432925350c-640.webp 640w, /custom/optimized/118e432925350c-960.webp 960w, /custom/optimized/118e432925350c-1600.webp 1600w"
   },
   {
     "slug": "portfolio-alef-0b8aa8d",
@@ -4155,8 +4436,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Алеф. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Алеф. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Алеф. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Алеф. Роль команды — в первоисточнике.",
     "source": "https://alef-group.com/wp-content/uploads/2024/05/90b0fe48-ae9b-3fdd-f72a-09a91ac4f3e9.jpg",
     "image": "/custom/library/fc0fbd224e.jpg",
     "imageMobile": "/custom/library/fc0fbd224e.jpg",
@@ -4171,14 +4452,18 @@
     "curated": false,
     "reelTitle": "Вимм-Билль-Данн ·…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-alef-0b8aa8d-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-alef-0b8aa8d-900.webp",
+    "reelImage": "/custom/optimized/282b9b26711d67-450.webp",
+    "reelMobile": "/custom/optimized/282b9b26711d67-450.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/282b9b26711d67-450.webp",
+    "imageWidth": 450,
+    "imageHeight": 300,
+    "previewSrcSet": "/custom/optimized/282b9b26711d67-450.webp 450w"
   },
   {
     "slug": "case-enriched-69",
@@ -4216,14 +4501,18 @@
     "curated": false,
     "reelTitle": "Забег корпораций",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-69-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-69-900.webp",
+    "reelImage": "/custom/optimized/d44468d08d1125-540.webp",
+    "reelMobile": "/custom/optimized/d44468d08d1125-540.webp",
     "imageRatio": 1.35,
     "eventCity": "Москва",
     "guestLabel": "3600 участников события; 963 участника забегов",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/d44468d08d1125-540.webp",
+    "imageWidth": 540,
+    "imageHeight": 400,
+    "previewSrcSet": "/custom/optimized/d44468d08d1125-540.webp 540w"
   },
   {
     "slug": "portfolio-maksimays-b84093d",
@@ -4242,8 +4531,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио МАКСИМАЙС. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио МАКСИМАЙС. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио МАКСИМАЙС. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио МАКСИМАЙС. Роль команды — в первоисточнике.",
     "source": "https://maximice.ru/",
     "image": "/custom/library/d24c371d27.jpg",
     "imageMobile": "/custom/library/d24c371d27.jpg",
@@ -4258,14 +4547,18 @@
     "curated": false,
     "reelTitle": "Форум инновационных…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-maksimays-b84093d-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-maksimays-b84093d-900.webp",
-    "imageRatio": 1.772152,
+    "reelImage": "/custom/optimized/633be6e48b0e2b-700.webp",
+    "reelMobile": "/custom/optimized/633be6e48b0e2b-700.webp",
+    "imageRatio": 1.7721518987341771,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/633be6e48b0e2b-700.webp",
+    "imageWidth": 700,
+    "imageHeight": 395,
+    "previewSrcSet": "/custom/optimized/633be6e48b0e2b-640.webp 640w, /custom/optimized/633be6e48b0e2b-700.webp 700w"
   },
   {
     "slug": "portfolio-intelsport-bb868-8bf1feb",
@@ -4284,8 +4577,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио ИнтелСпорт. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио ИнтелСпорт. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио ИнтелСпорт. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио ИнтелСпорт. Роль команды — в первоисточнике.",
     "source": "https://intelsport.ru/portfolio/federalnyj-sportivnyj-festival-mts",
     "image": "/custom/library/a3fe26bc78.jpg",
     "imageMobile": "/custom/library/a3fe26bc78.jpg",
@@ -4300,12 +4593,16 @@
     "curated": false,
     "reelTitle": "Федеральный спортивный…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-intelsport-bb868-8bf1feb-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-intelsport-bb868-8bf1feb-900.webp",
-    "imageRatio": 1.501502,
+    "reelImage": "/custom/optimized/3a6b0f5e84c5cd-500.webp",
+    "reelMobile": "/custom/optimized/3a6b0f5e84c5cd-500.webp",
+    "imageRatio": 1.5015015015015014,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/3a6b0f5e84c5cd-500.webp",
+    "imageWidth": 500,
+    "imageHeight": 333,
+    "previewSrcSet": "/custom/optimized/3a6b0f5e84c5cd-500.webp 500w"
   },
   {
     "slug": "portfolio-letuchiy-korabl-072b729",
@@ -4324,8 +4621,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Летучий корабль. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Летучий корабль. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Летучий корабль. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Летучий корабль. Роль команды — в первоисточнике.",
     "source": "https://www.korabl-kirov.ru/korporativnyj_otdyh/sezonnye-korporativ-nye-proekty",
     "image": "/custom/library/ee14da6976.webp",
     "imageMobile": "/custom/library/ee14da6976.webp",
@@ -4340,12 +4637,16 @@
     "curated": false,
     "reelTitle": "Сезонные корпоративные…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-letuchiy-korabl-072b729-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-letuchiy-korabl-072b729-900.webp",
+    "reelImage": "/custom/optimized/a3d49a61aa7698-602.webp",
+    "reelMobile": "/custom/optimized/a3d49a61aa7698-602.webp",
     "imageRatio": 1.505,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/a3d49a61aa7698-602.webp",
+    "imageWidth": 602,
+    "imageHeight": 400,
+    "previewSrcSet": "/custom/optimized/a3d49a61aa7698-602.webp 602w"
   },
   {
     "slug": "portfolio-citymetria-group-8a0bb7d",
@@ -4364,8 +4665,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Citymetria Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Citymetria Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Citymetria Group. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Citymetria Group. Роль команды — в первоисточнике.",
     "source": "https://citymetria.com/case/yota-x-year/",
     "image": "/custom/library/7e7350678c.jpg",
     "imageMobile": "/custom/library/7e7350678c.jpg",
@@ -4380,12 +4681,16 @@
     "curated": false,
     "reelTitle": "YOTA · 10 лет",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-citymetria-group-8a0bb7d-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-citymetria-group-8a0bb7d-900.webp",
-    "imageRatio": 1.777778,
+    "reelImage": "/custom/optimized/160c59dcd3eb64-960.webp",
+    "reelMobile": "/custom/optimized/160c59dcd3eb64-960.webp",
+    "imageRatio": 1.7777777777777777,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/160c59dcd3eb64-960.webp",
+    "imageWidth": 960,
+    "imageHeight": 540,
+    "previewSrcSet": "/custom/optimized/160c59dcd3eb64-640.webp 640w, /custom/optimized/160c59dcd3eb64-960.webp 960w"
   },
   {
     "slug": "portfolio-big-jack-00de466",
@@ -4404,8 +4709,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Big Jack. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Big Jack. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Big Jack. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Big Jack. Роль команды — в первоисточнике.",
     "source": "https://bigjack24.ru/proekty/novogodnij-korporativ-zakryitaya-vecherinka-getsbi-sber.html",
     "image": "/custom/library/d5582fd97e.jpg",
     "imageMobile": "/custom/library/d5582fd97e.jpg",
@@ -4420,12 +4725,16 @@
     "curated": false,
     "reelTitle": "Сбер · Закрытая…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-big-jack-00de466-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-big-jack-00de466-900.webp",
+    "reelImage": "/custom/optimized/44af489d4d68ff-600.webp",
+    "reelMobile": "/custom/optimized/44af489d4d68ff-600.webp",
     "imageRatio": 1,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/44af489d4d68ff-600.webp",
+    "imageWidth": 600,
+    "imageHeight": 600,
+    "previewSrcSet": "/custom/optimized/44af489d4d68ff-600.webp 600w"
   },
   {
     "slug": "portfolio-ryzhaya-vorona-8ef7912",
@@ -4444,8 +4753,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Рыжая Ворона. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Рыжая Ворона. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Рыжая Ворона. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Рыжая Ворона. Роль команды — в первоисточнике.",
     "source": "https://r-vorona.ru/",
     "image": "/custom/library/33a592420b.jpg",
     "imageMobile": "/custom/library/33a592420b.jpg",
@@ -4460,12 +4769,16 @@
     "curated": false,
     "reelTitle": "Семейное корпоративное…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-ryzhaya-vorona-8ef7912-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-ryzhaya-vorona-8ef7912-900.webp",
+    "reelImage": "/custom/optimized/39005bb6a6efe7-720.webp",
+    "reelMobile": "/custom/optimized/39005bb6a6efe7-720.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/39005bb6a6efe7-720.webp",
+    "imageWidth": 720,
+    "imageHeight": 480,
+    "previewSrcSet": "/custom/optimized/39005bb6a6efe7-640.webp 640w, /custom/optimized/39005bb6a6efe7-720.webp 720w"
   },
   {
     "slug": "portfolio-kolesnitsa-sudeb-600ef3f",
@@ -4484,8 +4797,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Колесница Судеб. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Колесница Судеб. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Колесница Судеб. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Колесница Судеб. Роль команды — в первоисточнике.",
     "source": "https://www.prazdnik-ks.ru/proekty/tematika/vikingi",
     "image": "/custom/library/daaadfa418.jpg",
     "imageMobile": "/custom/library/daaadfa418.jpg",
@@ -4500,12 +4813,16 @@
     "curated": false,
     "reelTitle": "Викинги-байкеры",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-kolesnitsa-sudeb-600ef3f-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-kolesnitsa-sudeb-600ef3f-900.webp",
+    "reelImage": "/custom/optimized/ed5c8f4a3ddca9-1500.webp",
+    "reelMobile": "/custom/optimized/ed5c8f4a3ddca9-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/ed5c8f4a3ddca9-960.webp",
+    "imageWidth": 1500,
+    "imageHeight": 1000,
+    "previewSrcSet": "/custom/optimized/ed5c8f4a3ddca9-640.webp 640w, /custom/optimized/ed5c8f4a3ddca9-960.webp 960w, /custom/optimized/ed5c8f4a3ddca9-1500.webp 1500w"
   },
   {
     "slug": "portfolio-evraziyskiy-ivent-forum-c28bd78",
@@ -4524,8 +4841,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Евразийский ивент форум. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Евразийский ивент форум. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Евразийский ивент форум. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Евразийский ивент форум. Роль команды — в первоисточнике.",
     "source": "https://euras-forum.com/2026",
     "image": "/custom/library/d1d21ce1c3.jpg",
     "imageMobile": "/custom/library/d1d21ce1c3.jpg",
@@ -4540,14 +4857,18 @@
     "curated": false,
     "reelTitle": "Евразийский Ивент Форум",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-evraziyskiy-ivent-forum-c28bd78-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-evraziyskiy-ivent-forum-c28bd78-900.webp",
+    "reelImage": "/custom/optimized/c91bf763ca5ce1-1600.webp",
+    "reelMobile": "/custom/optimized/c91bf763ca5ce1-960.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/c91bf763ca5ce1-960.webp",
+    "imageWidth": 1680,
+    "imageHeight": 1120,
+    "previewSrcSet": "/custom/optimized/c91bf763ca5ce1-640.webp 640w, /custom/optimized/c91bf763ca5ce1-960.webp 960w, /custom/optimized/c91bf763ca5ce1-1600.webp 1600w"
   },
   {
     "slug": "portfolio-scarlet-star-62f5a8b",
@@ -4566,8 +4887,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Scarlet Star. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Scarlet Star. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Scarlet Star. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Scarlet Star. Роль команды — в первоисточнике.",
     "source": "https://scarletstar.ru/reports/report/svadba-v-stile-glamour-en-francais",
     "image": "/custom/library/8b84446915.avif",
     "imageMobile": "/custom/library/8b84446915.avif",
@@ -4582,14 +4903,18 @@
     "curated": false,
     "reelTitle": "Свадьба Glamour en…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-scarlet-star-62f5a8b-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-scarlet-star-62f5a8b-900.webp",
+    "reelImage": "/custom/optimized/21019693670359-600.webp",
+    "reelMobile": "/custom/optimized/21019693670359-600.webp",
     "imageRatio": 1.5,
     "eventCity": "",
     "guestLabel": "",
     "occasions": [
       "private"
-    ]
+    ],
+    "preview": "/custom/optimized/21019693670359-600.webp",
+    "imageWidth": 600,
+    "imageHeight": 400,
+    "previewSrcSet": "/custom/optimized/21019693670359-600.webp 600w"
   },
   {
     "slug": "portfolio-c4-group-dfe5050",
@@ -4608,8 +4933,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио C4 Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио C4 Group. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио C4 Group. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио C4 Group. Роль команды — в первоисточнике.",
     "source": "https://c4group.ru/portfolio/avtomobilnye-meropriyatiya/obuchenie-dlya-dilerov-toyota-po-novomu-lc300/",
     "image": "/custom/library/3290f8ad50.jpg",
     "imageMobile": "/custom/library/3290f8ad50.jpg",
@@ -4624,12 +4949,16 @@
     "curated": false,
     "reelTitle": "Обучение дилеров Toyota…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-c4-group-dfe5050-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-c4-group-dfe5050-900.webp",
-    "imageRatio": 3.428571,
+    "reelImage": "/custom/optimized/b635c0522a1bc2-1600.webp",
+    "reelMobile": "/custom/optimized/b635c0522a1bc2-960.webp",
+    "imageRatio": 3.4285714285714284,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/b635c0522a1bc2-960.webp",
+    "imageWidth": 1920,
+    "imageHeight": 560,
+    "previewSrcSet": "/custom/optimized/b635c0522a1bc2-640.webp 640w, /custom/optimized/b635c0522a1bc2-960.webp 960w, /custom/optimized/b635c0522a1bc2-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-80",
@@ -4666,14 +4995,18 @@
     "curated": false,
     "reelTitle": "Конференция Code/R",
     "featured": false,
-    "reelImage": "/custom/reel/case-enriched-80-1600.webp",
-    "reelMobile": "/custom/reel/case-enriched-80-900.webp",
-    "imageRatio": 1.498029,
+    "reelImage": "/custom/optimized/8cf190cf86c2d5-1140.webp",
+    "reelMobile": "/custom/optimized/8cf190cf86c2d5-960.webp",
+    "imageRatio": 1.4980289093298291,
     "eventCity": "",
     "guestLabel": "500 человек",
     "occasions": [
       "conference"
-    ]
+    ],
+    "preview": "/custom/optimized/8cf190cf86c2d5-960.webp",
+    "imageWidth": 1140,
+    "imageHeight": 761,
+    "previewSrcSet": "/custom/optimized/8cf190cf86c2d5-640.webp 640w, /custom/optimized/8cf190cf86c2d5-960.webp 960w, /custom/optimized/8cf190cf86c2d5-1140.webp 1140w"
   },
   {
     "slug": "portfolio-direktoriya-8ff370f",
@@ -4692,8 +5025,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио Директория. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио Директория. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио Директория. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио Директория. Роль команды — в первоисточнике.",
     "source": "https://directevent.ru/portfolio/millionnii-avtomobil-hundai/",
     "image": "/custom/library/e0988e151f.jpg",
     "imageMobile": "/custom/library/e0988e151f.jpg",
@@ -4708,12 +5041,16 @@
     "curated": false,
     "reelTitle": "Церемония выпуска…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-direktoriya-8ff370f-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-direktoriya-8ff370f-900.webp",
-    "imageRatio": 1.502347,
+    "reelImage": "/custom/optimized/707ee08faa8723-1280.webp",
+    "reelMobile": "/custom/optimized/707ee08faa8723-960.webp",
+    "imageRatio": 1.5023474178403755,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/707ee08faa8723-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 852,
+    "previewSrcSet": "/custom/optimized/707ee08faa8723-640.webp 640w, /custom/optimized/707ee08faa8723-960.webp 960w, /custom/optimized/707ee08faa8723-1280.webp 1280w"
   },
   {
     "slug": "portfolio-inkapri-c086bd1",
@@ -4732,8 +5069,8 @@
     "types": [],
     "role": "",
     "industry": "Место не указано",
-    "description": "Фотографии из портфолио ИНКАПРИ. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
-    "seoDescription": "Фотографии из портфолио ИНКАПРИ. Описание задачи и подробности работы команды можно посмотреть на странице проекта в первоисточнике.",
+    "description": "Работа из портфолио ИНКАПРИ. Роль команды — в первоисточнике.",
+    "seoDescription": "Работа из портфолио ИНКАПРИ. Роль команды — в первоисточнике.",
     "source": "https://inkapri.com/",
     "image": "/custom/library/b04138f9b3.jpg",
     "imageMobile": "/custom/library/b04138f9b3.jpg",
@@ -4748,12 +5085,16 @@
     "curated": false,
     "reelTitle": "Лови момент! · Летний…",
     "featured": false,
-    "reelImage": "/custom/reel/portfolio-inkapri-c086bd1-1600.webp",
-    "reelMobile": "/custom/reel/portfolio-inkapri-c086bd1-900.webp",
-    "imageRatio": 1.500536,
+    "reelImage": "/custom/optimized/65327fae9e2913-1400.webp",
+    "reelMobile": "/custom/optimized/65327fae9e2913-960.webp",
+    "imageRatio": 1.5005359056806002,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/65327fae9e2913-960.webp",
+    "imageWidth": 1400,
+    "imageHeight": 933,
+    "previewSrcSet": "/custom/optimized/65327fae9e2913-640.webp 640w, /custom/optimized/65327fae9e2913-960.webp 960w, /custom/optimized/65327fae9e2913-1400.webp 1400w"
   },
   {
     "slug": "case-6",

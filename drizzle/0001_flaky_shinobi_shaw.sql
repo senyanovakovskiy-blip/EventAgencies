@@ -1,0 +1,1 @@
+ALTER TABLE `inquiries` ADD `workflow_json` text DEFAULT '{}' NOT NULL;

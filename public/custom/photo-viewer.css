@@ -1,0 +1,22 @@
+.ea-gallery{position:fixed;inset:0;z-index:20000;color:#fff;isolation:isolate;overscroll-behavior:none;font-family:Motion,Arial,sans-serif;touch-action:pan-y pinch-zoom}
+.ea-case-photo{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.ea-case-photo:focus-visible{outline:2px solid var(--color-highlight,#b34427);outline-offset:5px}
+.case-gallery a{display:block}
+.ea-gallery-backdrop{position:absolute;inset:0;background:#111411}
+.ea-gallery-stage{position:absolute;inset:max(72px,env(safe-area-inset-top)) 72px max(96px,env(safe-area-inset-bottom))}
+.ea-gallery-photo{position:absolute;display:block;max-width:none;max-height:none;object-fit:contain;transform-origin:0 0;will-change:transform,opacity;z-index:1;border-radius:3px}
+.ea-gallery button{appearance:none;border:1px solid #ffffff40;background:#20251f;color:#fff;font:14px/1 Motion,Arial,sans-serif;min-height:48px;cursor:pointer;border-radius:28px;padding:0 20px;touch-action:manipulation}
+.ea-gallery button:hover{background:#333c31;border-color:#ffffff80}
+.ea-gallery button:focus-visible{outline:2px solid white;outline-offset:4px}
+.ea-gallery button[hidden]{display:none}
+.ea-gallery-close{position:absolute;z-index:3;right:max(24px,env(safe-area-inset-right));top:max(20px,env(safe-area-inset-top))}
+.ea-gallery-bar{position:absolute;z-index:3;bottom:max(24px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:24px}
+.ea-gallery-bar button{width:52px;padding:0;font-size:23px}
+.ea-gallery-count{font:13px/1.4 MotionMono,monospace;min-width:54px;text-align:center;font-variant-numeric:tabular-nums}
+.ea-gallery-status{position:absolute;bottom:max(82px,calc(env(safe-area-inset-bottom) + 60px));left:16px;right:16px;z-index:3;text-align:center;font-size:13px;color:#e1e6dd;pointer-events:none}
+@media(max-width:900px){
+ .ea-gallery-stage{inset:max(82px,calc(env(safe-area-inset-top) + 62px)) 12px max(112px,calc(env(safe-area-inset-bottom) + 88px))}
+ .ea-gallery-close{right:max(16px,env(safe-area-inset-right));top:max(16px,env(safe-area-inset-top));min-height:44px}
+ .ea-gallery-bar{bottom:max(20px,calc(env(safe-area-inset-bottom) + 12px));gap:28px}
+}
+@media(prefers-reduced-motion:reduce){.ea-gallery-photo{will-change:auto}}

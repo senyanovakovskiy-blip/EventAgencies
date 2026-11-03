@@ -1,11 +1,15 @@
 // Content-only adaptations of the retained public browser build.
 // Exact anchors make a future template change fail visibly instead of corrupting it.
-export function adaptTemplate(code,filename,{site,moments}) {
+export function adaptTemplate(code,filename,{site,moments,featuredSlugs}) {
  if(filename==='index-CF3Ad5Zo.js'){
   for(const [from,to] of Object.entries({'SEE DETAILS':'О ПРОЕКТЕ',CLOSE:'ЗАКРЫТЬ',INFO:'О СОБЫТИИ',FOCUS:'СМОТРЕТЬ',SCROLL:'ЛИСТАТЬ','CLICK TO ENABLE SOUND':'ВКЛЮЧИТЬ ЗВУК'}))code=code.replaceAll(JSON.stringify(from),JSON.stringify(to));
   return code;
  }
  if(filename!=='Home-LrP0Tb4r.js')return code;
+ code=code.replaceAll('z1.find(', 'eaAllProjects.find(').replaceAll('z1.some(', 'eaAllProjects.some(');
+ const original='const z1=S7.map(e=>e.gallery?{...e,gallery:F4(e.title,e.gallery)}:e);';
+ if(!code.includes(original))throw Error('Home selection anchor missing');
+ code=code.replace(original,'const eaAllProjects=S7.map(e=>e.gallery?{...e,gallery:F4(e.title,e.gallery)}:e);const z1='+JSON.stringify(featuredSlugs)+'.map(slug=>eaAllProjects.find(p=>p.slug===slug));');
  const replace=(from,to)=>{if(!code.includes(from))throw new Error('Template anchor missing: '+from.slice(0,70));code=code.replaceAll(from,to);};
  replace('href:`mailto:${n}`','href:'+JSON.stringify(site.contactUrl));
  replace('href:`mailto:${Et}`','href:'+JSON.stringify(site.contactUrl));

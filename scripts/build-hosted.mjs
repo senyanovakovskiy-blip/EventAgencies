@@ -10,10 +10,10 @@ if(path.dirname(target)!==path.join(root,'.sites-build'))throw Error('Invalid bu
 await fs.rm(target,{recursive:true,force:true});
 const build=spawnSync(process.execPath,['build.mjs'],{cwd:root,stdio:'inherit',env:{...process.env,EA_BUILD_DIR:target,EA_SITE_ORIGIN:'https://eventagencies-motion.racinggiant1.chatgpt.site'}});
 if(build.status!==0)process.exit(build.status??1);
-// These seven demo galleries belong to the retained template, not to the
+// These demo galleries belong to the retained template, not to the
 // EventAgencies catalogue. Keep the original files in source/local builds while
 // excluding them from the hosted archive (Sites limits input to 256 MiB).
-const templateGalleries=['yamaha-revzone','chat-artify','run-x-ring','hyundai-tc-motor','trip-social','monster-chat-app','travala-travel'];
+const templateGalleries=['yamaha-revzone','chat-artify','run-x-ring','hyundai-tc-motor','trip-social','monster-chat-app','travala-travel','playground'];
 const currentContent=(await Promise.all(['site','about','projects','moments','catalog'].map(name=>fs.readFile(path.join(root,'content',name+'.json'),'utf8')))).join('\n');
 for(const slug of templateGalleries){
  if(currentContent.includes('/media/'+slug+'/')||new RegExp('"slug"\\s*:\\s*"'+slug+'"').test(currentContent))throw Error('Template gallery is now in use: '+slug);
@@ -29,6 +29,7 @@ const rewrite=async(file,replacements)=>{
 };
 await rewrite('my-project/index.html',[
  ['Сейчас заявки сохраняются на локальном сервере этого сайта.','Заявки сохраняются в вашем закрытом рабочем пространстве.'],
+ ['Заявка сохранится локально. Агентствам ничего не отправляется.','Заявка сохранится в вашем закрытом рабочем пространстве. Агентствам ничего не отправляется.'],
 ]);
 await rewrite('admin/index.html',[
  ['<body>','<body data-hosted="true">'],

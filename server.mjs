@@ -42,7 +42,7 @@ export function createLocalServer({databasePath=path.join(directory,'private-dat
  return server;
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const port=Number(process.env.PORT||8780);
+ const port=Number(process.env.PORT||8781);
  const server=createLocalServer({databasePath:process.env.EA_INQUIRIES_DB||path.join(directory,'private-data','inquiries.sqlite3')});
  server.listen(port,'127.0.0.1',()=>console.log(`Local: http://127.0.0.1:${port} — inquiries saved locally; no notifications`));
  for(const signal of ['SIGINT','SIGTERM'])process.once(signal,()=>server.close(()=>process.exit(0)));

@@ -6,7 +6,7 @@ if (-not (Test-Path -LiteralPath $nodePath)) { throw 'Install Node.js 24 or newe
 if ([int]((& $nodePath --version).TrimStart('v').Split('.')[0]) -lt 24) { throw 'Node.js 24 or newer is required for local inquiry storage.' }
 & $nodePath (Join-Path $PSScriptRoot 'build.mjs')
 if ($LASTEXITCODE -ne 0) { throw 'Build failed. Check content/*.json.' }
-$previewPort = if ($env:PORT) { [int]$env:PORT } else { 8780 }
+$previewPort = if ($env:PORT) { [int]$env:PORT } else { 8781 }
 $listener = Get-NetTCPConnection -LocalPort $previewPort -State Listen -ErrorAction SilentlyContinue
 if ($listener) {
   $owner = Get-CimInstance Win32_Process -Filter ('ProcessId = ' + $listener[0].OwningProcess)

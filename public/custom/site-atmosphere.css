@@ -1,0 +1,83 @@
+/* Shared photographic palette and controls for every public route. */
+html:root,html:root[data-theme=light]{
+ --canvas:#d6cdbf;--chrome:#d6cdbf;--color-ground:#d6cdbf;--color-bg:#e9e3d8;
+ --ink:#292721;--color-title:#292721;--color-page-ink:#292721;
+ --muted:#5e5b53;--color-body:#5e5b53;--color-page-ink-60:#5e5b53;
+ --accent:#98603c;--color-highlight:#98603c;--color-highlight-invert:#98603c;
+ --line:#746b5e40;--color-divider:#746b5e40;--tile:#c2b6a340;--glass:#f3ecdf70;
+ --surface:#eee8ddb8;--field-line:#81796c;--ambient-warm:#98603c17;--ambient-cool:#52746b20;
+ --scene-opacity:.37;--shade-a:#eee8dd9c;--shade-b:#e2dbd1d9;--radius:4px;color-scheme:light;
+}
+html:root[data-theme=dark]{
+ --canvas:#101310;--chrome:#101310;--color-ground:#101310;--color-bg:#171916;
+ --ink:#f2eee5;--color-title:#f2eee5;--color-page-ink:#f2eee5;
+ --muted:#c3c1b8;--color-body:#c3c1b8;--color-page-ink-60:#c3c1b8;
+ --accent:#d4ac81;--color-highlight:#d4ac81;--color-highlight-invert:#d4ac81;
+ --line:#d5dcc52c;--color-divider:#d5dcc52c;--tile:#242a253f;--glass:#141a166b;
+ --surface:#171c18d6;--field-line:#687164;--ambient-warm:#8d583927;--ambient-cool:#285a5438;
+ --scene-opacity:.63;--shade-a:#0d15115c;--shade-b:#111510e6;color-scheme:dark;
+}
+html:root .ea-atmosphere-layer{filter:blur(32px) saturate(.65)}
+html:root{background:var(--canvas)}
+/* Lists carry more text than the home stage: keep reflected colour quieter. */
+body:has(.catalog-layout){--scene-opacity:.26}
+html:root[data-theme=dark] body:has(.catalog-layout){--scene-opacity:.42}
+body:has(.my-project) .ea-atmosphere{background:radial-gradient(ellipse at 80% 8%,var(--ambient-warm),transparent 60%),radial-gradient(ellipse at 15% 40%,var(--ambient-cool),transparent 70%),var(--canvas)}
+html:root .catalog-header{min-height:84px;padding-top:20px;padding-bottom:20px}
+html:root .catalog-header .brand{font-size:22px;line-height:1.4}
+html:root .catalog-header .brand span{font-size:17px}
+html:root .catalog-header nav{font-size:13px}
+html:root .catalog-header nav [aria-current=page]{text-decoration-color:var(--accent)}
+html:root .theme-button{background:var(--glass);border-color:var(--line)}
+html:root .catalog-aside h1{font-size:clamp(34px,3vw,44px);line-height:1.08}
+html:root .catalog-layout .ea-help-link{justify-content:flex-start;align-self:flex-start;min-height:44px;margin:0 0 20px;padding:6px 0;border:0;border-radius:0;color:var(--accent);font-size:14px;text-decoration:underline;text-underline-offset:5px;text-decoration-color:var(--line)}
+html:root .catalog-layout .ea-help-link:hover{text-decoration-color:currentColor}
+html:root :is(.filters input[type=search],.filters select,.brief-fields input:not([type=checkbox]),.brief-fields select,.brief-fields textarea,.work-note-block select,.work-note-block textarea,#share-selection-preview){background:var(--glass);border-color:var(--field-line);border-radius:6px;color:var(--ink)}
+html:root :is(input,textarea)::placeholder{color:var(--muted);opacity:.8}
+html:root select option{background:var(--color-bg);color:var(--ink)}
+html:root :is(.secondary-action,.ea-save-button,.catalog-tabs button,.reference-button){background:var(--glass);border:1px solid var(--line);color:var(--ink);border-radius:999px;box-shadow:none;min-height:44px}
+html:root :is(.secondary-action,.ea-save-button,.reference-button):hover{background:var(--glass);border-color:var(--accent);color:var(--ink)}
+html:root :is(.ea-save-button,.reference-button)[aria-pressed=true]{background:var(--glass);border-color:var(--accent);color:var(--accent)}
+html:root :is(.catalog-tabs button,.comparison-toolbar button)[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--canvas)}
+html:root .primary-action,html:root[data-theme=dark] .primary-action,html:root .ea-notice-actions a{background:var(--ink);border-color:var(--ink);color:var(--canvas);font-size:15px}
+html:root .primary-action:hover,html:root .ea-notice-actions a:hover{background:var(--ink);filter:brightness(.94)}
+html:root .work-cover{background:transparent;border-radius:3px;border:0}
+html:root .work-cover.is-empty{background:var(--glass);border:1px solid var(--line)}
+html:root .open-arrow{background:var(--color-bg);border-color:var(--line);color:var(--ink)}
+html:root .company-credit{color:var(--accent)}
+html:root .agency-formats span{background:transparent}
+html:root :is(.agency-site,.back-link,.agency-heading .text-link){color:var(--muted)}
+html:root :is(.agency-site,.back-link,.agency-heading .text-link):hover{color:var(--accent)}
+html:root :is(.project-intro-note,.project-agency-card,#project-review,.project-empty,.empty-state,.saved-references){background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:none}
+html:root .project-intro h1{font-size:clamp(38px,4vw,56px)}
+html:root .project-intro-note{align-self:start;margin-top:18px}
+html:root .project-case-photo{background:transparent;border-radius:3px}
+html:root .project-case-photo img{border-radius:3px}
+html:root .brief-summary span{background:var(--glass)}
+html:root :is(#brief-dialog,#replacement-dialog,#share-selection-dialog,.ea-selection-notice){background:var(--color-bg);border-color:var(--line);color:var(--ink);border-radius:12px;box-shadow:0 20px 70px #0003}
+html:root :is(#brief-dialog,#replacement-dialog,#share-selection-dialog)::backdrop{background:#07100dc9;backdrop-filter:blur(8px)}
+html:root .comparison-scroll{background:var(--surface);border-radius:8px}
+html:root .agency-compare-table thead{background:var(--color-bg)}
+html:root .agency-compare-table thead th{color:var(--ink)}
+html:root #project-request-result{background:var(--surface);border-color:var(--accent);border-radius:8px}
+html:root .case-page{width:min(calc(100% - 2 * var(--page-gutter)),var(--content-width));max-width:none;margin:0 auto;padding:36px 0;background:transparent;border-radius:0}
+html:root .case-source{background:var(--surface);border:1px solid var(--line);border-radius:8px}
+@media(max-width:900px){
+ html:root .filter-options{background:var(--glass);border-color:var(--line);border-radius:8px}
+ html:root .project-intro-note{margin-top:0}
+}
+@media(max-width:600px){
+ html:root .catalog-header{padding-top:18px;padding-bottom:12px;min-height:0}
+ html:root .catalog-header nav{font-size:13px}
+ html:root .catalog-aside h1{font-size:36px}
+ html:root .project-intro h1{font-size:40px}
+ html:root .case-page{padding-top:24px}
+}
+
+/* The guide shares the catalogue grid, rhythm and controls. */
+.choice-guide{width:min(calc(100% - 2 * var(--page-gutter)),var(--content-width));margin:0 auto;padding:48px 0 64px;position:relative;z-index:1}
+.guide-intro{max-width:780px}.guide-intro h1{font-size:clamp(38px,5vw,72px);line-height:1.06;letter-spacing:-.045em;margin:20px 0}.guide-intro p{font-size:20px;line-height:1.55;color:var(--muted);max-width:630px}
+.guide-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin:48px 0}.guide-steps section{border-top:1px solid var(--line);padding-top:24px}.guide-steps h2{font-size:26px;line-height:1.2;margin:16px 0}.guide-steps p,.guide-next p{font-size:17px;line-height:1.6;color:var(--muted)}
+.guide-next{border-top:1px solid var(--line);padding-top:28px}.guide-next h2{font-size:28px;line-height:1.2}.guide-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}.guide-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 20px;text-decoration:none}
+@media(max-width:760px){.choice-guide{padding:28px 0 40px}.guide-intro p{font-size:18px}.guide-steps{grid-template-columns:1fr;gap:24px;margin:32px 0}.guide-steps h2{font-size:24px}.guide-actions{flex-direction:column}.guide-actions a{width:100%;box-sizing:border-box}.agency-layout{padding-top:28px!important}.agency-aside .agency-description{font-size:17px;line-height:1.55}}
+@media(max-width:360px){html:root .catalog-header nav{font-size:11px;gap:8px}.case-facts dl{grid-template-columns:1fr}.catalog-header .brand{font-size:20px!important}}

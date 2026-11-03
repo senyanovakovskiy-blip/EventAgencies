@@ -15,7 +15,7 @@ export function createAdminHandler(admin){
  const failures=new Map();
  return async(req,res)=>{
   const url=new URL(req.url,'http://localhost'),isApi=url.pathname.startsWith('/api/admin/');
-  const files={'/admin':'index.html','/admin/':'index.html','/admin/admin.js':'admin.js','/admin/admin.css':'admin.css','/admin/manual-model.js':'manual-model.js','/admin/manual-ui.js':'manual-ui.js'};
+  const files={'/admin/workflow-model.js':'workflow-model.js','/admin/workflow-ui.js':'workflow-ui.js','/admin':'index.html','/admin/':'index.html','/admin/admin.js':'admin.js','/admin/admin.css':'admin.css','/admin/manual-model.js':'manual-model.js','/admin/manual-ui.js':'manual-ui.js'};
   if(!isApi&&!Object.hasOwn(files,url.pathname))return false;
   const port=req.socket.localPort,host=req.headers.host;
   if(![`localhost:${port}`,`127.0.0.1:${port}`].includes(host)||req.headers.origin&&req.headers.origin!==`http://${host}`||req.headers['sec-fetch-site']==='cross-site'){reply(res,403,{error:'forbidden_origin'});return true;}
@@ -34,7 +34,7 @@ export function createAdminHandler(admin){
     const input=await body(req),session=admin.login(input?.username,input?.password);
     if(!session){failures.set(address,{since:failure?.since||now,count:(failure?.count||0)+1});reply(res,401,{error:'invalid_credentials'});return true;}
     failures.delete(address);if(token)admin.logout(token);
-    reply(res,200,{authenticated:true,username:'admin',csrf:session.csrf},{'Set-Cookie':`${cookieName}=${session.token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=28800`});return true;
+    reply(res,200,{authenticated:true,username:'admin',csrf:session.csrf},{'Set-Cookie':`${cookieName}=${session.token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${Math.max(0,Math.floor((session.expiresAt-Date.now())/1000))}`});return true;
    }
    const session=admin.session(token);
    if(url.pathname==='/api/admin/session'&&req.method==='GET'){reply(res,200,session?{authenticated:true,username:'admin',csrf:session.csrf}:{authenticated:false});return true;}

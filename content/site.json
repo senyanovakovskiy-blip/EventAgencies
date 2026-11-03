@@ -7,7 +7,7 @@
   "contactLabel": "Каталог агентств",
   "contactUrl": "/catalog",
   "location": "EventAgencies",
-  "url": "http://127.0.0.1:8780",
+  "url": "http://127.0.0.1:8781",
   "language": "ru",
   "ogImage": "/custom/events/positive-hack-days-01.webp",
   "favicon": "/custom/favicon.svg",
@@ -16,7 +16,7 @@
   "home": {
     "kicker": "Агентства и их проекты",
     "title": "Команда для вашего события",
-    "copy": "Выбирайте агентство по реальным проектам.",
+    "copy": "Сравните реальные проекты. Найдите команду, которой близка ваша идея.",
     "cta": "Смотреть проекты"
   }
 }

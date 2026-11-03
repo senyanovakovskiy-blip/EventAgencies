@@ -11,3 +11,6 @@ document.addEventListener('click',event=>{
  const agency=control.matches('.ea-company-link')&&target.pathname===new URL(control.href).pathname;
  if(close||agency){event.preventDefault();event.stopPropagation();location.assign(target.pathname+target.search);}
 },true);
+
+// Work links from the animated home use the same detailed pages as the catalogue.
+document.addEventListener('click',event=>{const a=event.target.closest('a[href]');if(!a||event.defaultPrevented||event.button!==0||event.ctrlKey||event.metaKey||event.shiftKey||event.altKey||a.target==='_blank')return;const u=new URL(a.href,location.origin);if(u.origin===location.origin&&(/\/work\/[a-z0-9-]+\/?$/.test(u.pathname)||/^\/about\/?$/.test(u.pathname))&&document.getElementById('root')){event.preventDefault();event.stopPropagation();location.assign(u.href);}},true);

@@ -331,7 +331,7 @@ html:root .ea-save-button{pointer-events:auto}
 .agency-compare-table td{color:var(--muted)}.agency-compare-table a{color:var(--color-highlight)}.agency-compare-table p{margin:10px 0 0}
 .agency-compare-table button{display:block;background:none;border:0;padding:10px 0 0;color:var(--muted);font:13px/1.5 Motion,Arial,sans-serif;cursor:pointer;text-decoration:underline}
 .comparison-scroll-hint{font:13px/1.5 Motion,Arial,sans-serif;color:var(--muted)}
-@media(min-width:901px){.project-agency-card{grid-row:span 9}}
+@media(min-width:901px){.project-agency-card{grid-row:span 8}}
 @media(max-width:600px){.comparison-toolbar .secondary-action{padding:12px}.comparison-toolbar span{flex-basis:100%}.agency-compare-table{min-width:850px}.agency-compare-table th:first-child{width:130px}.agency-compare-table th,.agency-compare-table td{padding:14px}}
 #share-selection-dialog{box-sizing:border-box;width:min(720px,calc(100vw - 32px));max-height:90dvh;overflow:auto;padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--chrome);color:var(--color-body)}
 #share-selection-dialog::backdrop{background:rgba(0,0,0,.65)}
@@ -344,3 +344,23 @@ html:root .ea-save-button{pointer-events:auto}
 #share-selection-dialog button{cursor:pointer}#share-selection-dialog button:disabled{opacity:.45;cursor:default}
 @media(max-width:600px){#share-selection-dialog{padding:24px 18px}#share-selection-dialog h2{font-size:27px}#share-selection-preview{font-size:16px}}
 #share-selection-dialog .draft-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+
+
+.work-note-block select{box-sizing:border-box;width:100%;min-width:0;margin:0 0 22px;border:1px solid var(--line);border-radius:10px;background:var(--color-bg,var(--chrome));color:inherit;padding:12px;font:16px/1.5 Motion,Arial,sans-serif}
+.work-note-block select:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+#project-selection-content{margin-top:20px}
+#project-contact{scroll-margin-top:24px}
+#project-wishes-status:empty{display:none}
+#project-wishes-status{font-size:14px;line-height:1.5}
+.ea-save-button[data-save-work]{white-space:normal}
+#wishes-dialog{box-sizing:border-box;width:min(720px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--chrome);color:var(--color-body);font-family:Motion,Arial,sans-serif}
+#wishes-dialog::backdrop{background:rgba(0,0,0,.65)}
+#wishes-dialog h2{font-size:30px;line-height:1.15;font-weight:400;margin:20px 28px 16px 0}
+#wishes-dialog p{font-size:14px;line-height:1.6}
+#wishes-dialog label{display:block;margin:20px 0 10px;font-size:15px}
+#wishes-dialog textarea{box-sizing:border-box;display:block;width:100%;resize:vertical;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--color-bg,var(--chrome));color:inherit;font:16px/1.5 Motion,Arial,sans-serif}
+#wishes-dialog textarea:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+#wishes-dialog .draft-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+#wishes-dialog button:disabled{opacity:.45;cursor:default}
+@media(max-width:600px){#wishes-dialog{padding:24px 18px}#wishes-dialog h2{font-size:27px}}
+@media(max-width:360px){html:root .catalog-header nav{gap:8px!important}}

@@ -1,7 +1,8 @@
+import {normalizeWorkflow,validateWorkflow,nextAction} from './admin/workflow-model.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import {randomBytes,createHash,scryptSync,timingSafeEqual} from 'node:crypto';
-import {statusLabels,recommendationKey} from './admin/manual-model.js';
+import {statusLabels,recommendationKey,replyKey} from './admin/manual-model.js';
 
 export const statuses=statusLabels;
 const hash=text=>createHash('sha256').update(text).digest('hex');
@@ -20,7 +21,7 @@ export function createAdminStore(db,receipt,accessFile,catalog){
   token_hash TEXT PRIMARY KEY, csrf TEXT NOT NULL, expires_at INTEGER NOT NULL);
  CREATE INDEX IF NOT EXISTS inquiry_history_item ON inquiry_history(inquiry_id,id);`);
  const columns=new Set(db.prepare('PRAGMA table_info(inquiry_management)').all().map(c=>c.name));
- for(const [name,definition]of Object.entries({closure_reason:"TEXT NOT NULL DEFAULT ''",status_changed_at:"TEXT NOT NULL DEFAULT ''",recommendations_json:"TEXT NOT NULL DEFAULT '[]'",reply_text:"TEXT NOT NULL DEFAULT ''",reply_basis:"TEXT NOT NULL DEFAULT ''"}))if(!columns.has(name))db.exec(`ALTER TABLE inquiry_management ADD COLUMN ${name} ${definition}`);
+ for(const [name,definition]of Object.entries({workflow_json:"TEXT NOT NULL DEFAULT '{}'",closure_reason:"TEXT NOT NULL DEFAULT ''",status_changed_at:"TEXT NOT NULL DEFAULT ''",recommendations_json:"TEXT NOT NULL DEFAULT '[]'",reply_text:"TEXT NOT NULL DEFAULT ''",reply_basis:"TEXT NOT NULL DEFAULT ''"}))if(!columns.has(name))db.exec(`ALTER TABLE inquiry_management ADD COLUMN ${name} ${definition}`);
  if(!db.prepare('PRAGMA table_info(inquiry_history)').all().some(c=>c.name==='details_json'))db.exec("ALTER TABLE inquiry_history ADD COLUMN details_json TEXT NOT NULL DEFAULT '{}'");
  const register=(id,snapshot,createdAt)=>db.prepare('INSERT OR IGNORE INTO inquiry_management(inquiry_id,updated_at,search_text) VALUES(?,?,?)').run(id,createdAt,(`${receipt({id,created_at:createdAt,snapshot_json:JSON.stringify(snapshot)}).id} ${JSON.stringify(snapshot)}`).toLocaleLowerCase('ru'));
  for(const row of db.prepare('SELECT i.* FROM inquiries i LEFT JOIN inquiry_management m ON i.id=m.inquiry_id WHERE m.inquiry_id IS NULL').all())register(row.id,JSON.parse(row.snapshot_json),row.created_at);
@@ -39,10 +40,11 @@ export function createAdminStore(db,receipt,accessFile,catalog){
   db.prepare('INSERT INTO admin_account VALUES(?,?,?)').run('admin',salt,scryptSync(password,salt,64).toString('hex'));
  }
  const detail=id=>{
-  const row=db.prepare('SELECT i.*,m.status,m.note,m.revision,m.updated_at,m.status_changed_at,m.closure_reason,m.recommendations_json,m.reply_text,m.reply_basis FROM inquiries i JOIN inquiry_management m ON m.inquiry_id=i.id WHERE i.id=?').get(id);
+  const row=db.prepare('SELECT i.*,m.status,m.note,m.revision,m.updated_at,m.status_changed_at,m.closure_reason,m.recommendations_json,m.reply_text,m.reply_basis,m.workflow_json FROM inquiries i JOIN inquiry_management m ON m.inquiry_id=i.id WHERE i.id=?').get(id);
   if(!row)throw problem(404,'not_found');
   const recommendations=JSON.parse(row.recommendations_json);
-  return {recordId:row.id,receipt:receipt(row),status:row.status,note:row.note,revision:row.revision,updatedAt:row.updated_at,statusChangedAt:row.status_changed_at||row.created_at,closureReason:row.closure_reason,recommendations,replyText:row.reply_text,replyBasis:row.reply_basis,replyStale:Boolean(row.reply_text&&row.reply_basis!==hash(recommendationKey(recommendations))),history:db.prepare('SELECT created_at AS createdAt,actor,status,note,details_json FROM inquiry_history WHERE inquiry_id=? ORDER BY id DESC LIMIT 100').all(id).map(({details_json,...h})=>({...h,details:JSON.parse(details_json)}))};
+  const storedWorkflow=normalizeWorkflow(JSON.parse(row.workflow_json),receipt(row).brief);
+  return {workflow:storedWorkflow,recordId:row.id,receipt:receipt(row),status:row.status,note:row.note,revision:row.revision,updatedAt:row.updated_at,statusChangedAt:row.status_changed_at||row.created_at,closureReason:row.closure_reason,recommendations,replyText:row.reply_text,replyBasis:row.reply_basis,replyStale:Boolean(row.reply_text&&row.reply_basis!==hash(replyKey(recommendations,storedWorkflow.brief,storedWorkflow.teams))),history:db.prepare('SELECT created_at AS createdAt,actor,status,note,details_json FROM inquiry_history WHERE inquiry_id=? ORDER BY id DESC').all(id).map(({details_json,...h})=>({...h,details:JSON.parse(details_json)}))};
  };
  const resolveRecommendations=value=>{
   if(!Array.isArray(value)||value.length>3)throw problem(400,'invalid_recommendations');
@@ -63,7 +65,7 @@ export function createAdminStore(db,receipt,accessFile,catalog){
    if(typeof password!=='string'||password.length>512||!account)return null;
    const candidate=scryptSync(password,account.salt,64);
    if(!timingSafeEqual(candidate,Buffer.from(account.password_hash,'hex'))||username!==account.username)return null;
-   const token=randomBytes(32).toString('base64url'),csrf=randomBytes(24).toString('base64url'),expiresAt=Date.now()+8*60*60*1000;
+   const token=randomBytes(32).toString('base64url'),csrf=randomBytes(24).toString('base64url'),expiresAt=Date.now()+30*24*60*60*1000;
    db.prepare('DELETE FROM admin_sessions WHERE expires_at < ?').run(Date.now());
    db.prepare('INSERT INTO admin_sessions VALUES(?,?,?)').run(hash(token),csrf,expiresAt);
    return {token,csrf,expiresAt};
@@ -79,10 +81,10 @@ export function createAdminStore(db,receipt,accessFile,catalog){
    const where=clauses.length?' WHERE '+clauses.join(' AND '):'';
    const total=db.prepare('SELECT COUNT(*) AS n FROM inquiry_management m'+where).get(...params).n;
    const pages=Math.max(1,Math.ceil(total/25));page=Math.min(page,pages);
-   const rows=db.prepare("SELECT i.*,m.status,m.updated_at FROM inquiries i JOIN inquiry_management m ON m.inquiry_id=i.id"+where+" ORDER BY CASE WHEN m.status='new' THEN 0 ELSE 1 END,i.id DESC LIMIT 25 OFFSET ?").all(...params,(page-1)*25);
+   const rows=db.prepare("SELECT i.*,m.status,m.updated_at,m.workflow_json,m.recommendations_json FROM inquiries i JOIN inquiry_management m ON m.inquiry_id=i.id"+where+" ORDER BY CASE WHEN m.status='new' THEN 0 ELSE 1 END,i.id DESC LIMIT 25 OFFSET ?").all(...params,(page-1)*25);
    const counts=Object.fromEntries(Object.keys(statuses).map(s=>[s,0]));
    for(const row of db.prepare('SELECT status,COUNT(*) AS n FROM inquiry_management GROUP BY status').all())counts[row.status]=row.n;
-   return {total,page,pages,counts,statuses,items:rows.map(row=>{const r=receipt(row);return {recordId:row.id,id:r.id,createdAt:r.createdAt,status:row.status,name:r.contact.name,format:r.brief.format,city:r.brief.city,date:r.brief.date,dateUnknown:r.brief.dateUnknown,budget:r.brief.budget,budgetHelp:r.brief.budgetHelp,guests:r.brief.guests,agencies:r.selection.map(s=>s.name),test:/^\s*ТЕСТ(?:ОВАЯ ЗАЯВКА|\.)/.test(r.brief.description)};})};
+   return {total,page,pages,counts,statuses,items:rows.map(row=>{const r=receipt(row);const workflow=normalizeWorkflow(JSON.parse(row.workflow_json),r.brief);const next=nextAction({status:row.status,workflow,recommendations:JSON.parse(row.recommendations_json)});return {nextAction:next,recordId:row.id,id:r.id,createdAt:r.createdAt,status:row.status,name:r.contact.name,format:r.brief.format,city:r.brief.city,date:r.brief.date,dateUnknown:r.brief.dateUnknown,budget:r.brief.budget,budgetHelp:r.brief.budgetHelp,guests:r.brief.guests,agencies:r.selection.map(s=>s.name),test:/^\s*ТЕСТ(?:ОВАЯ ЗАЯВКА|\.)/.test(r.brief.description)};})};
   },
   detail,
   update(id,input){
@@ -95,14 +97,16 @@ export function createAdminStore(db,receipt,accessFile,catalog){
     if(typeof closureReason!=='string'||closureReason.length>1500||typeof replyText!=='string'||replyText.length>16000||typeof replyBasis!=='string'||replyBasis!==''&&!/^[a-f0-9]{64}$/.test(replyBasis))throw problem(400,'invalid_update');
     const recommendations=input.recommendations===undefined?current.recommendations:resolveRecommendations(input.recommendations);
     if(status==='prepared'&&(!recommendations.length||recommendations.some(r=>!r.reason.trim()||!r.questions.trim())))throw problem(400,'shortlist_incomplete');
+    const now=new Date().toISOString();
+    const workflow=input.workflow===undefined?current.workflow:validateWorkflow(input.workflow,current.workflow,catalog,now);
     const changes=Object.keys({status,note,closureReason,replyText,replyBasis}).filter(k=>current[k]!==({status,note,closureReason,replyText,replyBasis})[k]);
     if(recommendationKey(current.recommendations)!==recommendationKey(recommendations))changes.push('recommendations');
+    if(JSON.stringify(workflow)!==JSON.stringify(current.workflow))changes.push('workflow');
     if(!changes.length){db.exec('COMMIT');return current;}
     if(current.revision!==revision)throw problem(409,'revision_conflict');
-    const now=new Date().toISOString();
     const statusChangedAt=status===current.status?current.statusChangedAt:now;
-    db.prepare('UPDATE inquiry_management SET status=?,note=?,revision=revision+1,updated_at=?,status_changed_at=?,closure_reason=?,recommendations_json=?,reply_text=?,reply_basis=? WHERE inquiry_id=?').run(status,note,now,statusChangedAt,closureReason,JSON.stringify(recommendations),replyText,replyBasis,id);
-    db.prepare('INSERT INTO inquiry_history(inquiry_id,created_at,actor,status,note,details_json) VALUES(?,?,?,?,?,?)').run(id,now,'admin',status,note,JSON.stringify({changes,closureReason,recommendations,replyText,replyBasis}));
+    db.prepare('UPDATE inquiry_management SET status=?,note=?,revision=revision+1,updated_at=?,status_changed_at=?,closure_reason=?,recommendations_json=?,reply_text=?,reply_basis=?,workflow_json=? WHERE inquiry_id=?').run(status,note,now,statusChangedAt,closureReason,JSON.stringify(recommendations),replyText,replyBasis,JSON.stringify(workflow),id);
+    db.prepare('INSERT INTO inquiry_history(inquiry_id,created_at,actor,status,note,details_json) VALUES(?,?,?,?,?,?)').run(id,now,'admin',status,note,JSON.stringify({changes,closureReason,recommendations,replyText,replyBasis,workflow}));
     const updated=detail(id);db.exec('COMMIT');return updated;
    }catch(error){if(db.isTransaction)db.exec('ROLLBACK');throw error;}
   }
