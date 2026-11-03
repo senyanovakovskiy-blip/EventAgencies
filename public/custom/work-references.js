@@ -4,16 +4,31 @@ export const REFERENCE_KEY='eventagencies-work-references-v1';
 export function normalizeReferences(value){return Array.isArray(value)?[...new Set(value.filter(s=>typeof s==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(s)))].slice(0,200):[];}
 let saved=[];try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));}catch{}
 const status=document.createElement('div');status.className='reference-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.append(status);
-let timer;
-function announce(text){status.textContent=text;clearTimeout(timer);timer=setTimeout(()=>status.textContent='',4500);}
+let timer,removedReference=null;
+function announce(text,undo=false){
+ clearTimeout(timer);status.replaceChildren();
+ const copy=document.createElement('span');copy.textContent=text;status.append(copy);
+ if(undo){
+  const restore=document.createElement('button');restore.type='button';restore.dataset.undoReference='';restore.textContent='Вернуть пример';status.append(restore);
+  const close=document.createElement('button');close.type='button';close.dataset.dismissReference='';close.setAttribute('aria-label','Закрыть уведомление');close.textContent='×';status.append(close);
+ }else timer=setTimeout(()=>status.replaceChildren(),4500);
+}
 function sync(){document.querySelectorAll('[data-workspace-reference-count]').forEach(node=>node.textContent=String(saved.length));document.querySelectorAll('[data-reference-work]').forEach(b=>{const active=saved.includes(b.dataset.referenceWork);const label=active?'Пример сохранён ✓':'Сохранить как пример';if(b.textContent!==label)b.textContent=label;b.setAttribute('aria-pressed',String(active));});}
 let data,renderVersion=0,shownReferences=false;
 const VIEW_KEY='eventagencies-reference-view-v1';
-let referenceView={query:'',agency:'',mode:'photos'};
-try{const view=JSON.parse(sessionStorage.getItem(VIEW_KEY)||'null');if(view)referenceView={query:typeof view.query==='string'?view.query.slice(0,200):'',agency:typeof view.agency==='string'?view.agency:'',mode:view.mode==='notes'?'notes':'photos'};}catch{}
+let referenceView={query:'',agency:'',mode:'photos',sort:'recent',onlyNotes:false};
+try{const view=JSON.parse(sessionStorage.getItem(VIEW_KEY)||'null');if(view)referenceView={query:typeof view.query==='string'?view.query.slice(0,200):'',agency:typeof view.agency==='string'?view.agency:'',mode:view.mode==='notes'?'notes':'photos',sort:['earliest','title','agency'].includes(view.sort)?view.sort:'recent',onlyNotes:view.onlyNotes===true};}catch{}
 const normalizeSearch=value=>String(value||'').toLocaleLowerCase('ru').replace(/ё/g,'е');
 const workAgencies=work=>work.agencySlugs?.length?work.agencySlugs:[work.agencySlug];
 function rememberView(){try{sessionStorage.setItem(VIEW_KEY,JSON.stringify(referenceView));}catch{}}
+function sortReferences(host,works){
+ const sorted=[...works];
+ if(referenceView.sort==='recent')sorted.reverse();
+ if(referenceView.sort==='title')sorted.sort((a,b)=>a.fullTitle.localeCompare(b.fullTitle,'ru'));
+ if(referenceView.sort==='agency')sorted.sort((a,b)=>String(a.client||'').localeCompare(String(b.client||''),'ru')||a.fullTitle.localeCompare(b.fullTitle,'ru'));
+ const grid=host.querySelector('#saved-reference-grid'),cards=new Map([...grid.querySelectorAll('[data-saved-reference]')].map(card=>[card.dataset.savedReference,card]));
+ const fragment=document.createDocumentFragment();sorted.forEach(work=>fragment.append(cards.get(work.slug)));grid.append(fragment);
+}
 function showReferenceMode(host){
  host.dataset.referenceMode=referenceView.mode;
  host.querySelectorAll('[data-reference-view]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.referenceView===referenceView.mode)));
@@ -28,13 +43,14 @@ function filterReferences(host,works){
  let visible=0;
  host.querySelectorAll('[data-saved-reference]').forEach(card=>{
   const work=works.find(work=>work.slug===card.dataset.savedReference);
-  const text=normalizeSearch([work.fullTitle,work.client,work.category,work.eventCity,card.querySelector('[data-work-note]')?.value].join(' '));
-  const matches=(!referenceView.agency||workAgencies(work).includes(referenceView.agency))&&words.every(word=>text.includes(word));
+  const note=card.querySelector('[data-work-note]')?.value||'';
+  const text=normalizeSearch([work.fullTitle,work.client,work.category,work.eventCity,note].join(' '));
+  const matches=(!referenceView.agency||workAgencies(work).includes(referenceView.agency))&&(!referenceView.onlyNotes||Boolean(note.trim()))&&words.every(word=>text.includes(word));
   card.hidden=!matches;if(matches)visible++;
  });
  host.querySelector('[data-reference-count]').textContent=`Показано ${visible} из ${works.length}`;
  host.querySelector('[data-reference-empty]').hidden=visible!==0;
- host.querySelector('[data-clear-references]').disabled=!referenceView.query&&!referenceView.agency;
+ host.querySelector('[data-clear-references]').disabled=!referenceView.query&&!referenceView.agency&&!referenceView.onlyNotes;
 }
 async function renderReferences(){
  if(location.pathname.replace(/\/$/,'')!=='/my-project')return;
@@ -55,15 +71,16 @@ async function renderReferences(){
    <label>Агентство<select id="reference-agency" aria-controls="saved-reference-grid"><option value="">Все агентства</option>${agencies.map(agency=>`<option value="${esc(agency.slug)}"${agency.slug===referenceView.agency?' selected':''}>${esc(agency.name)}</option>`).join('')}</select></label>
    <button type="button" class="text-button" data-clear-references>Сбросить</button>
   </div>
-  <div class="reference-view-bar"><div class="reference-view-switch" role="group" aria-label="Вид сохранённых примеров"><button type="button" data-reference-view="photos" aria-controls="saved-reference-grid">Фотосетка</button><button type="button" data-reference-view="notes" aria-controls="saved-reference-grid">С заметками</button></div><p class="reference-count" data-reference-count role="status" aria-live="polite" aria-atomic="true"></p></div>
+  <div class="reference-view-bar"><div class="reference-view-switch" role="group" aria-label="Вид сохранённых примеров"><button type="button" data-reference-view="photos" aria-controls="saved-reference-grid">Фотосетка</button><button type="button" data-reference-view="notes" aria-controls="saved-reference-grid">С заметками</button></div><label class="reference-sort">Порядок<select id="reference-sort" aria-controls="saved-reference-grid">${[['recent','Сначала новые'],['earliest','Сначала добавленные'],['title','По названию'],['agency','По агентству']].map(([value,label])=>`<option value="${value}"${referenceView.sort===value?' selected':''}>${label}</option>`).join('')}</select></label><label class="reference-notes-filter"><input id="reference-only-notes" type="checkbox"${referenceView.onlyNotes?' checked':''} aria-controls="saved-reference-grid">Только с моими заметками</label><p class="reference-count" data-reference-count role="status" aria-live="polite" aria-atomic="true"></p></div>
   <div class="reference-grid" id="saved-reference-grid">${works.map(p=>`<article data-saved-reference="${esc(p.slug)}"><a class="reference-cover${p.hasPhotos?'':' reference-cover-empty'}" href="${workLink(p)}">${p.hasPhotos?`<img src="${esc(p.preview||p.thumb||p.image)}" alt="${esc(p.fullTitle)}" loading="lazy">`:'<span aria-hidden="true">↗</span><span>Работа без фотографий</span>'}</a><h3><a href="${workLink(p)}">${esc(p.fullTitle)}</a></h3><p class="reference-team">${esc(p.client)}</p><button type="button" class="reference-note-toggle" data-toggle-reference-note aria-controls="reference-note-block-${esc(p.slug)}" aria-expanded="false">Моя заметка <span data-reference-note-mark>${notes[workNoteKey(p.agencySlug,p.slug)]?'· есть заметка':'+'}</span></button>${noteMarkup(p)}<button class="reference-remove" data-remove-reference="${esc(p.slug)}">Убрать пример</button></article>`).join('')}</div>
-  <div class="reference-empty" data-reference-empty hidden><h3>Таких примеров пока нет</h3><p>Попробуйте другое слово или выберите все агентства.</p><button class="secondary-action" type="button" data-reset-references>Показать все сохранённые</button></div>`:
+  <div class="reference-empty" data-reference-empty hidden><h3>Таких примеров пока нет</h3><p>Попробуйте другое слово, выберите все агентства или снимите фильтр заметок.</p><button class="secondary-action" type="button" data-reset-references>Показать все сохранённые</button></div>`:
   '<div class="reference-empty"><h3>Начните с того, что нравится</h3><p>Откройте любую работу в каталоге и нажмите «Сохранить как пример». Она появится здесь вместе с вашей личной заметкой.</p><a class="secondary-action" href="/catalog?view=projects">Выбрать первый пример ↗</a></div>');
  if(works.length){
-  const search=host.querySelector('#reference-search'),agency=host.querySelector('#reference-agency');
-  const apply=()=>{referenceView={...referenceView,query:search.value,agency:agency.value};rememberView();filterReferences(host,works);};
-  search.addEventListener('input',apply);agency.addEventListener('change',apply);
-  const reset=()=>{search.value='';agency.value='';apply();search.focus({preventScroll:true});};
+  const search=host.querySelector('#reference-search'),agency=host.querySelector('#reference-agency'),sort=host.querySelector('#reference-sort'),onlyNotes=host.querySelector('#reference-only-notes');
+  const apply=()=>{referenceView={...referenceView,query:search.value,agency:agency.value,sort:sort.value,onlyNotes:onlyNotes.checked};rememberView();filterReferences(host,works);};
+  search.addEventListener('input',apply);agency.addEventListener('change',apply);onlyNotes.addEventListener('change',apply);
+  sort.addEventListener('change',()=>{apply();sortReferences(host,works);});
+  const reset=()=>{search.value='';agency.value='';onlyNotes.checked=false;apply();search.focus({preventScroll:true});};
   host.querySelector('[data-clear-references]').addEventListener('click',reset);
   host.querySelector('[data-reset-references]').addEventListener('click',reset);
   host.querySelectorAll('[data-reference-view]').forEach(button=>button.addEventListener('click',()=>{referenceView.mode=button.dataset.referenceView;rememberView();showReferenceMode(host);}));
@@ -72,7 +89,9 @@ async function renderReferences(){
    if(card.dataset.noteOpen==='true')card.querySelector('[data-work-note]').focus({preventScroll:true});
   }));
   host.querySelector('#saved-reference-grid').addEventListener('input',event=>{const field=event.target.closest('[data-work-note]');if(field)field.closest('[data-saved-reference]').querySelector('[data-reference-note-mark]').textContent=field.value.trim()?'· есть заметка':'+';});
+  host.querySelector('#saved-reference-grid').addEventListener('focusout',event=>{const card=event.target.closest('[data-saved-reference]');if(card&&!card.contains(event.relatedTarget)&&(referenceView.onlyNotes||referenceView.query))filterReferences(host,works);});
   showReferenceMode(host);
+  sortReferences(host,works);
   filterReferences(host,works);
  }
  if(!shownReferences&&location.hash==='#work-references')host.scrollIntoView({block:'start'});
@@ -80,11 +99,23 @@ async function renderReferences(){
  }catch{host.innerHTML='<h2 id="reference-title">Примеры для моего события</h2><p>Не удалось загрузить работы.</p><button data-retry-references>Попробовать снова</button>';}
 }
 document.addEventListener('click',async event=>{
+ if(event.target.closest('[data-dismiss-reference]')){clearTimeout(timer);status.replaceChildren();removedReference=null;return;}
+ if(event.target.closest('[data-undo-reference]')&&removedReference){
+  const removed=removedReference;
+  if(saved.includes(removed.slug)){removedReference=null;announce('Этот пример уже сохранён.');return;}
+  if(saved.length>=200){announce('В подборке уже 200 примеров. Уберите один, чтобы вернуть этот.',true);return;}
+  const next=[...saved];next.splice(Math.min(removed.index,next.length),0,removed.slug);
+  try{
+   localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReference=null;sync();await renderReferences();announce('Пример возвращён вместе с личной заметкой.');
+   const heading=document.querySelector('#work-references h2');heading?.setAttribute('tabindex','-1');heading?.focus({preventScroll:true});
+  }catch{announce('Не удалось вернуть пример. Попробуйте ещё раз.',true);}
+  return;
+ }
  if(event.target.closest('[data-retry-references]')){renderReferences();return;}
  const b=event.target.closest('[data-reference-work],[data-remove-reference]');if(!b)return;
- event.preventDefault();const slug=b.dataset.referenceWork||b.dataset.removeReference;const remove=saved.includes(slug);const next=remove?saved.filter(s=>s!==slug):normalizeReferences([...saved,slug]);
+ event.preventDefault();const slug=b.dataset.referenceWork||b.dataset.removeReference,index=saved.indexOf(slug);const remove=index>=0;const next=remove?saved.filter(s=>s!==slug):normalizeReferences([...saved,slug]);
  if(!remove&&!next.includes(slug)){announce('Сохранено 200 примеров. Уберите один, чтобы добавить новый.');return;}
- try{localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;sync();await renderReferences();announce(remove?'Пример убран.':'Работа сохранена в «Моём проекте». Агентство не добавлено.');if(b.dataset.removeReference)document.querySelector('#work-references h2')?.setAttribute('tabindex','-1');if(b.dataset.removeReference)document.querySelector('#work-references h2')?.focus();}catch{announce('Не удалось сохранить пример. Проверьте доступ к хранилищу браузера.');}
+ try{localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReference=remove?{slug,index}:null;sync();await renderReferences();announce(remove?'Пример убран.':'Работа сохранена в «Моём проекте». Агентство не добавлено.',remove);if(b.dataset.removeReference)status.querySelector('[data-undo-reference]')?.focus({preventScroll:true});}catch{announce('Не удалось сохранить пример. Проверьте доступ к хранилищу браузера.');}
 });
 addEventListener('storage',event=>{if(event.key===REFERENCE_KEY||event.key===null){try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));sync();renderReferences();}catch{}}});
 new MutationObserver(changes=>{if(changes.some(c=>[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-reference-work]')||n.querySelector?.('[data-reference-work]')))))sync();}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
