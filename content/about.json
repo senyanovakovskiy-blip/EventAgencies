@@ -1,0 +1,145 @@
+{
+  "title": [
+    "Выбирайте",
+    "по опыту."
+  ],
+  "intro": [
+    "EventAgencies — каталог агентств и их работ. Здесь можно посмотреть фотографии событий, узнать формат, площадку и роль команды, а затем перейти к её портфолио.",
+    "Начните с проектов, похожих на вашу задачу: по числу гостей, формату и месту проведения. Фотографии помогают оценить оформление, а описание — понять, за что отвечало агентство.",
+    "Перед обращением подготовьте дату, город, число гостей и ориентир по бюджету. Попросите команду показать похожий проект и объяснить, как она решит вашу задачу."
+  ],
+  "experiences": [
+    [
+      "01",
+      "Найдите похожие события"
+    ],
+    [
+      "02",
+      "Изучите роль агентства"
+    ],
+    [
+      "03",
+      "Обсудите задачу и бюджет"
+    ]
+  ],
+  "capabilities": [
+    [
+      "Конференции",
+      "Городские фестивали",
+      "Корпоративные события"
+    ],
+    [
+      "Тимбилдинги",
+      "Бренд-активации",
+      "Спортивные программы"
+    ]
+  ],
+  "trustedBy": [
+    [
+      "ARS COM",
+      "N:OW",
+      "LYRA",
+      "Eventum Premo",
+      "TVIN"
+    ],
+    [
+      "DPG Russia",
+      "OGGI by TWIGA CG",
+      "Интелспорт",
+      "Team for Dream",
+      "People",
+      "hq.events"
+    ]
+  ],
+  "portfolio": [
+    [
+      "Выбрать агентство",
+      "/catalog"
+    ],
+    [
+      "Посмотреть все работы",
+      "/catalog?view=projects"
+    ],
+    [
+      "Найти идеи в фотографиях",
+      "/playground"
+    ]
+  ],
+  "social": [
+    [
+      "ARS COM",
+      "https://www.arscom.ru/"
+    ],
+    [
+      "N:OW",
+      "https://now-agency.ru/"
+    ],
+    [
+      "LYRA",
+      "https://lyra-agency.ru/"
+    ]
+  ],
+  "profile": {
+    "src": "/custom/events/vkusy-rossii-03.webp",
+    "alt": "Гастрономический фестиваль «Вкусы России» · LYRA",
+    "fit": {
+      "mode": "fill",
+      "y": 0.5
+    }
+  },
+  "scene": {
+    "opener": "Смотрите на то, как устроено событие.",
+    "beats": [
+      {
+        "text": "Как организованы потоки гостей и зоны фестиваля.",
+        "label": "Фестивали",
+        "images": [
+          "/custom/events/positive-hack-days-02.webp",
+          "/custom/events/positive-hack-days-03.webp",
+          "/custom/events/positive-hack-days-04.webp",
+          "/custom/events/positive-hack-days-05.webp"
+        ]
+      },
+      {
+        "text": "Как оформлены сцена, экраны и места для общения.",
+        "label": "Конференции",
+        "images": [
+          "/custom/events/vk-cloud-conf-02.webp",
+          "/custom/events/vk-cloud-conf-03.webp",
+          "/custom/events/vk-cloud-conf-04.webp",
+          "/custom/events/vk-cloud-conf-05.webp"
+        ]
+      },
+      {
+        "text": "Чем заняты участники и как они взаимодействуют.",
+        "label": "Для команды",
+        "images": [
+          "/custom/events/vk-team-ranch-02.webp",
+          "/custom/events/vk-team-ranch-03.webp",
+          "/custom/events/vk-team-ranch-04.webp",
+          "/custom/events/vk-team-ranch-05.webp"
+        ]
+      },
+      {
+        "text": "Как устроены соревнования и поддержка команд.",
+        "label": "Спорт",
+        "images": [
+          "/custom/events/tmh-league-02.webp",
+          "/custom/events/tmh-league-03.webp",
+          "/custom/events/tmh-league-04.webp",
+          "/custom/events/tmh-league-05.webp"
+        ]
+      },
+      {
+        "text": "Как оформление помогает создать нужное настроение.",
+        "label": "Впечатления",
+        "images": [
+          "/custom/events/vkusy-rossii-02.webp",
+          "/custom/events/vkusy-rossii-03.webp",
+          "/custom/events/vkusy-rossii-04.webp",
+          "/custom/events/vkusy-rossii-05.webp"
+        ]
+      }
+    ]
+  }
+}
