@@ -62,6 +62,25 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
   }
   return {
     detail,
+    async customerHistory({ page = 1 } = {}) {
+      if (!Number.isSafeInteger(page) || page < 1) throw problem(400, 'invalid_page');
+      const total = (await stmt('SELECT COUNT(*) AS n FROM inquiries WHERE owner_id=?', ownerId).first()).n;
+      const pages = Math.max(1, Math.ceil(total / 10)); page = Math.min(page, pages);
+      const result = await stmt('SELECT id,created_at,status,updated_at,snapshot_json FROM inquiries WHERE owner_id=? ORDER BY id DESC LIMIT 10 OFFSET ?', ownerId, (page - 1) * 10).all();
+      return {
+        total, page, pages,
+        items: rows(result).map(row => {
+          const r = receipt(row);
+          return { recordId: row.id, id: r.id, createdAt: r.createdAt, updatedAt: row.updated_at, status: row.status, statusLabel: statusLabels[row.status] || (row.status === 'done' ? 'Завершена' : 'Статус уточняется'), format: r.brief.format, city: r.brief.city, date: r.brief.date, dateUnknown: r.brief.dateUnknown, agencies: r.selection.map(item => item.name) };
+        }),
+      };
+    },
+    async customerReceipt(id) {
+      if (!Number.isSafeInteger(id) || id < 1) throw problem(404, 'not_found');
+      const row = await stmt('SELECT id,created_at,status,updated_at,snapshot_json FROM inquiries WHERE owner_id=? AND id=?', ownerId, id).first();
+      if (!row) throw problem(404, 'not_found');
+      return { recordId: row.id, receipt: receipt(row), status: row.status, statusLabel: statusLabels[row.status] || (row.status === 'done' ? 'Завершена' : 'Статус уточняется'), updatedAt: row.updated_at };
+    },
     catalog() {
       return {
         types: catalog.types,

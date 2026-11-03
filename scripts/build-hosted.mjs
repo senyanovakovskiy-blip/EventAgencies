@@ -28,6 +28,7 @@ const rewrite=async(file,replacements)=>{
  await fs.writeFile(path.join(target,file),text);
 };
 await rewrite('my-project/index.html',[
+ ['data-cloud-history hidden','data-cloud-history'],
  ['Сейчас заявки сохраняются на локальном сервере этого сайта.','Заявки сохраняются в вашем закрытом рабочем пространстве.'],
  ['Заявка сохранится локально. Агентствам ничего не отправляется.','Заявка сохранится в вашем закрытом рабочем пространстве. Агентствам ничего не отправляется.'],
 ]);

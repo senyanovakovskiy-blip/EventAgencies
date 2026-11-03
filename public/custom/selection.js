@@ -2,6 +2,7 @@ import {setupSelectionShare} from './share-selection.js';
 import {setupProjectSections} from './project-sections.js';
 import {setupBriefSummary} from './project-brief.js';
 import {setupProjectExport} from './project-export.js';
+import {setupProjectHistory} from './project-history.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -200,7 +201,7 @@ async function sendInquiry(){
  if(invalid){document.getElementById('contact-save-status').textContent=invalid.message;const field=contactForm.elements.namedItem(invalid.field);field?.setAttribute('aria-invalid','true');field?.setAttribute('aria-describedby','contact-save-status contact-purpose');field?.focus();return;}
  if(!validPayload(submissionPayload(draft))){openBrief();document.getElementById('brief-save-status').textContent='Проверьте количество гостей и бюджет: укажите целые неотрицательные числа, гостей — не меньше одного.';return;}
  sending=true;sendError='';const snapshot=submissionPayload(draft);refresh();
- try{lastReceipt=await inquiries.send(snapshot);focusRequest=true;}
+ try{lastReceipt=await inquiries.send(snapshot);focusRequest=true;document.dispatchEvent(new Event('ea:inquiry-accepted'));}
  catch(error){sendError=error.message==='retry_storage_unavailable'?'Не удалось отправить. Разрешите сохранение данных этого сайта и попробуйте ещё раз.':'Не удалось отправить. Попробуйте ещё раз';}
  finally{sending=false;await renderProject();if(sendError){const node=document.getElementById('project-send-error');node.focus();}}
 }
@@ -366,6 +367,7 @@ function renderComparison(data,entries){
 
 setupSelectionShare({getState:()=>draft,getData});
 setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
+setupProjectHistory({briefRows,formatName});
 setupProjectSections();
 
 document.addEventListener('change',async event=>{

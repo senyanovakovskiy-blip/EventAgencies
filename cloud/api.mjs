@@ -41,9 +41,15 @@ export async function handleCloudApi(request, env) {
     if (url.pathname === '/api/admin/login') return reply(405, { error: 'sign_in_with_chatgpt_required' });
     const store = createCloudStore(env.DB, ownerId);
     if (url.pathname === '/api/inquiries') {
+      if (request.method === 'GET') return reply(200, await store.customerHistory({ page: Number(url.searchParams.get('page') || 1) }));
       if (request.method !== 'POST') return reply(405, { error: 'method_not_allowed' });
       const input = await readBody(request, 32768), result = await store.save(input?.requestId, input?.payload);
       return reply(result.duplicate ? 200 : 201, { ok: true, ...result });
+    }
+    const customerMatch = /^\/api\/inquiries\/([1-9]\d*)$/.exec(url.pathname);
+    if (customerMatch) {
+      if (request.method !== 'GET') return reply(405, { error: 'method_not_allowed' });
+      return reply(200, await store.customerReceipt(Number(customerMatch[1])));
     }
     if (url.pathname === '/api/admin/catalog' && request.method === 'GET') return reply(200, store.catalog());
     if (url.pathname === '/api/admin/inquiries' && request.method === 'GET') return reply(200, await store.list({ q: url.searchParams.get('q') || '', status: url.searchParams.get('status') || '', page: Number(url.searchParams.get('page') || 1) }));
