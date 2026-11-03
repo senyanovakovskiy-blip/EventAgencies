@@ -10,6 +10,17 @@ if(path.dirname(target)!==path.join(root,'.sites-build'))throw Error('Invalid bu
 await fs.rm(target,{recursive:true,force:true});
 const build=spawnSync(process.execPath,['build.mjs'],{cwd:root,stdio:'inherit',env:{...process.env,EA_BUILD_DIR:target,EA_SITE_ORIGIN:'https://eventagencies-motion.racinggiant1.chatgpt.site'}});
 if(build.status!==0)process.exit(build.status??1);
+// These seven demo galleries belong to the retained template, not to the
+// EventAgencies catalogue. Keep the original files in source/local builds while
+// excluding them from the hosted archive (Sites limits input to 256 MiB).
+const templateGalleries=['yamaha-revzone','chat-artify','run-x-ring','hyundai-tc-motor','trip-social','monster-chat-app','travala-travel'];
+const currentContent=(await Promise.all(['site','about','projects','moments','catalog'].map(name=>fs.readFile(path.join(root,'content',name+'.json'),'utf8')))).join('\n');
+for(const slug of templateGalleries){
+ if(currentContent.includes('/media/'+slug+'/')||new RegExp('"slug"\\s*:\\s*"'+slug+'"').test(currentContent))throw Error('Template gallery is now in use: '+slug);
+ const gallery=path.resolve(target,'media',slug);
+ if(path.dirname(gallery)!==path.join(target,'media'))throw Error('Invalid generated gallery path');
+ await fs.rm(gallery,{recursive:true,force:true});
+}
 await fs.cp(path.join(root,'admin'),path.join(target,'admin'),{recursive:true});
 const rewrite=async(file,replacements)=>{
  let text=await fs.readFile(path.join(target,file),'utf8');
