@@ -374,3 +374,30 @@ html:root .ea-save-button{pointer-events:auto}
 #wishes-dialog button:disabled{opacity:.45;cursor:default}
 @media(max-width:600px){#wishes-dialog{padding:24px 18px}#wishes-dialog h2{font-size:27px}}
 @media(max-width:360px){html:root .catalog-header nav{gap:8px!important}}
+
+/* The chosen work stays in view; supporting agency facts open on demand. */
+.my-project .project-agency-card{display:block;grid-row:auto}
+.agency-priority{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px;margin-bottom:16px}
+.agency-priority-label{display:inline-flex;align-items:center;gap:10px;font:10px/1.4 MotionMono,monospace;color:var(--muted)}
+.agency-priority-label b{font-weight:400;font-size:14px;color:var(--color-highlight)}
+.agency-priority-actions{display:flex;gap:6px;flex:none}
+.agency-priority-actions button{display:inline-flex;align-items:center;justify-content:center;width:40px;min-width:40px;height:40px;margin:0;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--glass);color:var(--ink);font:20px/1 Motion,Arial,sans-serif;text-decoration:none;cursor:pointer}
+.agency-priority-actions button:hover:not(:disabled){border-color:var(--color-highlight);color:var(--color-highlight)}
+.agency-priority-actions button:disabled{opacity:.25;cursor:default}
+.agency-priority-actions button:focus-visible,.project-agency-details summary:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.project-agency-head{margin-bottom:20px}
+.project-agency-head h3{margin-top:0}
+.project-agency-location{font-size:12px;line-height:1.5;color:var(--muted);margin:8px 0 0}
+.project-agency-details{margin-top:22px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.project-agency-details summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:56px;padding:14px 0;box-sizing:border-box;font:14px/1.4 Motion,Arial,sans-serif;color:var(--ink);cursor:pointer;list-style:none}
+.project-agency-details summary::-webkit-details-marker{display:none}
+.agency-details-sign{font-size:23px;font-weight:300;color:var(--color-highlight);transition:transform .2s}
+.project-agency-details[open] .agency-details-sign{transform:rotate(45deg)}
+.project-agency-details .comparison-block{padding-top:16px;margin-top:0;margin-bottom:18px}
+.project-agency-details .comparison-block:first-of-type{border-top:0;padding-top:4px}
+.project-agency-details .comparison-block h4{font-size:15px;margin-bottom:8px}
+.project-agency-card>.comparison-actions{margin-top:20px}
+.project-order-status{font:13px/1.5 Motion,Arial,sans-serif;color:var(--color-highlight);margin:10px 0 18px}
+.project-order-status:empty{display:none}
+.agency-compare-table .agency-priority{margin-bottom:14px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){.agency-details-sign{transition:none}}

@@ -28,6 +28,14 @@ export function addAgency(state,agencySlug,workSlug){
  return {state:{...state,selection,request:null},result:found?'updated':'added'};
 }
 export const removeAgency=(state,agencySlug)=>({...state,selection:state.selection.filter(s=>s.agencySlug!==agencySlug),request:null});
+export function moveAgency(state,agencySlug,direction){
+ if(direction!==-1&&direction!==1)return state;
+ const index=state.selection.findIndex(item=>item.agencySlug===agencySlug),target=index+direction;
+ if(index<0||target<0||target>=state.selection.length)return state;
+ const selection=[...state.selection];
+ [selection[index],selection[target]]=[selection[target],selection[index]];
+ return {...state,selection,request:null};
+}
 export function restoreAgency(state,item,index){
  if(!item||!slug(item.agencySlug)||(item.workSlug!==null&&!slug(item.workSlug)))return {state,result:'invalid'};
  // A newer choice, including a different case for this team, takes precedence.
