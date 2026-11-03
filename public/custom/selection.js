@@ -107,6 +107,13 @@ document.addEventListener('click',async event=>{
  }
  const occasion=event.target.closest('[data-occasion]');if(occasion&&!draft.brief.format&&Object.hasOwn(occasions,occasion.dataset.occasion))persist(updateBrief(draft,{format:occasion.dataset.occasion}),{quiet:true});
  const editBrief=event.target.closest('[data-edit-brief]');if(editBrief)openBrief(editBrief.dataset.briefField);
+ const editWork=event.target.closest('[data-review-work]');if(editWork){
+  event.preventDefault();setHelpSelection(true);comparisonView='cards';await renderProject();
+  const field=document.getElementById('work-choice-'+editWork.dataset.reviewWork);
+  if(field){field.scrollIntoView({block:'center'});field.focus({preventScroll:true});}
+  else document.getElementById('project-comparison')?.focus();
+  return;
+ }
  if(event.target.closest('[data-edit-selection]')){event.preventDefault();setHelpSelection(true);const section=document.getElementById('project-comparison');section?.scrollIntoView({block:'start'});section?.focus({preventScroll:true});}
  if(event.target.closest('[data-return-project]')){document.querySelector('.project-intro')?.scrollIntoView({block:'start'});document.querySelector('.project-intro-actions [data-edit-brief]')?.focus({preventScroll:true});}
  if(event.target.closest('[data-submit-project]')){

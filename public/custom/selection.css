@@ -268,7 +268,7 @@ html:root #brief-dialog.brief-editor h2{font-size:28px;margin:0 32px 12px 0;padd
 
 /* Request review reuses the project layout and its existing form controls. */
 .my-project .project-intro-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
-.my-project #project-handoff{scroll-margin-top:24px}
+.my-project #project-handoff{scroll-margin-top:100px}
 .my-project .request-review-heading,.my-project .request-case-heading{display:flex;align-items:baseline;justify-content:space-between;gap:16px}
 .my-project .request-review-heading{margin-bottom:16px}
 .my-project .request-review-heading h3{margin:0;font-size:18px;font-weight:400;line-height:1.35}
@@ -278,6 +278,32 @@ html:root #brief-dialog.brief-editor h2{font-size:28px;margin:0 32px 12px 0;padd
 .my-project .request-review-block .review-brief{grid-template-columns:1fr;gap:16px}
 .my-project .request-case-heading>span{margin:0;font-size:14px}
 .my-project .request-wishes{white-space:pre-wrap}
+html:root .my-project #project-review{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px 40px;align-items:start}
+.my-project .request-review-teams{grid-column:2;grid-row:1/span 2}
+.my-project .request-review-wishes{grid-column:1;padding-top:24px;border-top:1px solid var(--line)}
+.my-project .request-review-event .review-brief{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.my-project .request-review-block .request-team-order{margin:-4px 0 18px;font-size:12px;color:var(--muted)}
+.request-team-list{list-style:none;margin:0;padding:0;display:grid;gap:20px}
+.request-team{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.request-team:last-child{padding-bottom:0;border:0}
+.request-team-priority{padding-top:5px;font:11px/1.5 MotionMono,monospace;color:var(--muted)}
+.request-team-content{min-width:0}
+.request-team h4{margin:0 0 14px;font-size:18px;line-height:1.35;font-weight:400;overflow-wrap:anywhere}
+.request-team h4 a{color:var(--ink);text-decoration:none}
+.request-team h4 a:hover{color:var(--color-highlight)}
+.request-team-work{display:flex;align-items:center;gap:14px;color:var(--ink);text-decoration:none}
+.request-team-work img{width:88px;height:66px;object-fit:cover;border-radius:4px;flex:none}
+.request-team-work>span{display:block;min-width:0}
+.request-team-work small{display:block;margin-bottom:6px;font-size:11px;color:var(--muted)}
+.request-team-work strong{font-size:14px;line-height:1.5;font-weight:400;overflow-wrap:anywhere}
+.request-team-work:hover strong{text-decoration:underline;text-underline-offset:3px}
+.my-project .request-team-content .request-edit{display:inline-flex;align-items:center;margin-top:4px;font-size:12px;cursor:pointer}
+.my-project .request-team-empty,.my-project .request-team-help p{color:var(--muted);font-size:14px;line-height:1.5}
+.request-team-help a{display:inline-flex;align-items:center;margin-top:10px;min-height:44px;font-size:13px;color:var(--color-highlight)}
+.my-project .request-review-scope{grid-column:1/-1;margin:0;padding-top:20px;border-top:1px solid var(--line);font-size:12px;line-height:1.6;color:var(--muted)}
+.request-review-scope a{color:var(--color-highlight);text-underline-offset:3px}
+@media(max-width:900px){html:root .my-project #project-review{grid-template-columns:1fr;gap:26px}.my-project .request-review-teams{grid-column:1;grid-row:auto;padding-top:22px;border-top:1px solid var(--line)}.my-project .request-review-wishes{grid-column:1}}
+@media(max-width:440px){.my-project .request-review-event .review-brief{grid-template-columns:1fr;gap:16px}.request-team{grid-template-columns:22px minmax(0,1fr);gap:8px}.request-team-work{align-items:flex-start;gap:10px}.request-team-work img{width:72px;height:60px}.request-team h4{font-size:17px}}
 .my-project .project-contact{grid-column:1/-1;width:100%;max-width:720px}
 .my-project .project-contact h3{font-size:24px;font-weight:400;letter-spacing:-.025em;margin:0 0 14px}
 .my-project .project-contact .brief-fields{margin:24px 0 0}
@@ -288,7 +314,7 @@ html:root #brief-dialog.brief-editor h2{font-size:28px;margin:0 32px 12px 0;padd
 .my-project .project-delivery-note{margin-top:16px}
 .my-project .draft-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
 .my-project [data-submit-project]:disabled{opacity:.65;cursor:default;background:var(--ink);border-color:var(--line)}
-.my-project #project-comparison{scroll-margin-top:24px}
+.my-project #project-comparison{scroll-margin-top:100px}
 @media(max-width:600px){
  .my-project .project-contact .brief-fields{grid-template-columns:1fr}
  .my-project .request-review-heading{gap:12px}
