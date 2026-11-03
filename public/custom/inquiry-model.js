@@ -29,5 +29,5 @@ export function validPayload(input){
  return true;
 }
 export function validReceipt(value){
- return Boolean(value&&/^EA-\d{4}-\d{6,}$/.test(value.id)&&typeof value.createdAt==='string'&&Number.isFinite(Date.parse(value.createdAt))&&value.recipient==='EventAgencies'&&value.localServer===true&&validPayload(value)&&value.selection.every(s=>typeof s.name==='string'&&s.name.length<300&&(s.work===null||s.work?.slug===s.workSlug&&typeof s.work.title==='string'&&s.work.title.length<1000)));
+ return Boolean(value&&/^EA-\d{4}-\d{6,}$/.test(value.id)&&typeof value.createdAt==='string'&&Number.isFinite(Date.parse(value.createdAt))&&value.recipient==='EventAgencies'&&typeof value.localServer==='boolean'&&validPayload(value)&&value.selection.every(s=>typeof s.name==='string'&&s.name.length<300&&(s.work===null||s.work?.slug===s.workSlug&&typeof s.work.title==='string'&&s.work.title.length<1000)));
 }

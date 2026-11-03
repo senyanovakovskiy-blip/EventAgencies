@@ -8,9 +8,10 @@ import {harmonizeExperience} from './harmonize-experience.mjs';
 import {selectionExperience} from './selection-experience.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const dist = path.join(root, 'dist');
+const dist = process.env.EA_BUILD_DIR ? path.resolve(root, process.env.EA_BUILD_DIR) : path.join(root, 'local-dist');
 const readJSON = async name => JSON.parse(await fs.readFile(path.join(root, 'content', name + '.json'), 'utf8'));
 const [site, about, projects] = await Promise.all(['site','about','projects'].map(readJSON));
+if (process.env.EA_SITE_ORIGIN) site.url = new URL(process.env.EA_SITE_ORIGIN).origin;
 const moments = await readJSON('moments');
 const assert = (ok, message) => { if (!ok) throw new Error(message); };
 const text = (value, label) => assert(typeof value === 'string' && value.trim(), label + ' must be a non-empty string');

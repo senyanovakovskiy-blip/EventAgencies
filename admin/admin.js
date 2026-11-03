@@ -16,7 +16,7 @@ addEventListener('beforeunload',event=>{if(dirty()){event.preventDefault();event
 async function api(url,options={}){
  let response;
  try{response=await fetch(url,{credentials:'same-origin',cache:'no-store',...options,headers:{...(options.body?{'Content-Type':'application/json'}:{}),...(csrf?{'X-CSRF-Token':csrf}:{}),...options.headers}});}
- catch{throw Error('Нет связи с локальным сервером. Попробуйте ещё раз.');}
+ catch{throw Error('Нет связи с сервером. Попробуйте ещё раз.');}
  let data;try{data=await response.json();}catch{throw Error('Не удалось получить ответ сервера. Попробуйте ещё раз.');}
  if(!response.ok){
   if(response.status===401&&url!=='/api/admin/login')$('#reauth').hidden=false;
@@ -32,11 +32,11 @@ $('#logout').addEventListener('click',async()=>{
  if(loggingOut||saving||!allowLeave())return;
  loggingOut=true;++detailVersion;++listVersion;
  setEditorBusy($('#operator-form'),true);$('#logout').disabled=true;
- try{await api('/api/admin/logout',{method:'POST'});csrf='';current=null;$('#request-detail').innerHTML=emptyDetail;$('#request-list').replaceChildren();$('.inbox-layout').classList.remove('has-detail');history.replaceState(null,'','/admin');showLogin();}
+ try{const result=await api('/api/admin/logout',{method:'POST'});csrf='';current=null;$('#request-detail').innerHTML=emptyDetail;$('#request-list').replaceChildren();$('.inbox-layout').classList.remove('has-detail');history.replaceState(null,'','/admin');showLogin();if(result.signOutUrl==='/signout-with-chatgpt?return_to=/admin')location.assign(result.signOutUrl);}
  catch(error){$('#workspace-status').textContent=error.message;}
  finally{loggingOut=false;setEditorBusy($('#operator-form'),false);$('#logout').disabled=false;}
 });
-$('#reauth').addEventListener('click',()=>{showLogin();$('#login-form').elements.password.focus();});
+$('#reauth').addEventListener('click',()=>{if(document.body.dataset.hosted==='true'){location.assign('/signin-with-chatgpt?return_to=/admin');return;}showLogin();$('#login-form').elements.password.focus();});
 async function loadList(){
  const version=++listVersion,params=new URLSearchParams({q:$('#filters').elements.q.value,status:$('#filters').elements.status.value,page:String(page)});
  $('#workspace-status').textContent='Обновляем список…';
