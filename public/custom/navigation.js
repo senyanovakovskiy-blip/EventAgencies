@@ -10,7 +10,7 @@ document.addEventListener('click',event=>{
  if(target.origin!==location.origin||!(target.pathname==='/catalog'||target.pathname==='/my-project'||/^\/agency\/[a-z0-9-]+$/.test(target.pathname)))return;
  const close=control.getAttribute('aria-label')==='Закрыть проект';
  const agency=control.matches('.ea-company-link')&&target.pathname===new URL(control.href).pathname.replace(/\/$/,'');
- if(close||agency){event.preventDefault();event.stopPropagation();location.assign(target.pathname+target.search);}
+ if(close||agency){event.preventDefault();event.stopPropagation();location.assign(target.pathname+target.search+target.hash);}
 },true);
 
 // Work links from the animated home use the same detailed pages as the catalogue.
