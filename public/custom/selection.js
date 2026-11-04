@@ -5,6 +5,7 @@ import {setupProjectExport} from './project-export.js';
 import {setupProjectHistory} from './project-history.js';
 import {setupAccountProjectCopies} from './account-project-copies.js';
 import {normalizeReferences} from './reference-store.js';
+import {referenceNotesForWork} from './reference-note-model.js';
 import {setupWishesUndo} from './wishes-undo.js';
 import {setupReplacementUndo} from './replacement-undo.js';
 import {setupProjectWorkPicker} from './project-work-picker.js';
@@ -246,13 +247,14 @@ function syncWishesOptions(){
  const changed=wishesDialog.querySelector('#wishes-addition').value!==wishesGenerated,hasNotes=wishesWorks.some(item=>item.note.trim());
  wishesDialog.querySelector('[data-wishes-notes]').disabled=changed||!hasNotes;
  wishesDialog.querySelector('[data-reset-wishes-text]').hidden=!changed;
- wishesDialog.querySelector('[data-wishes-options-help]').textContent=changed?'Вы изменили текст. Чтобы переключить заметки, сначала нажмите «Сбросить правки».':hasNotes?'Включите заметки, если хотите передать их вместе с примерами.':'У выбранных примеров пока нет личных заметок.';
+ wishesDialog.querySelector('[data-wishes-options-help]').textContent=changed?'Вы изменили текст. Чтобы переключить заметки, сначала нажмите «Сбросить правки».':hasNotes?(wishesTrigger?.hasAttribute('data-add-wishes-selection')?'Можно включить все личные заметки к выбранным примерам, в том числе записи для разных команд. Текст будет показан перед добавлением.':'Включите заметку, если хотите передать её вместе с примером.'):'У выбранных примеров пока нет личных заметок.';
 }
 function regenerateWishes(){
  const includeNotes=wishesDialog.querySelector('[data-wishes-notes]').checked;
  const fragments=wishesWorks.map(item=>wishesAddition(item.work,includeNotes?item.note:'',location.origin)),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
  wishesSkipped=fragments.length-fresh.length;wishesGenerated=fresh.join('\n\n');wishesDialog.querySelector('#wishes-addition').value=wishesGenerated;
- wishesDialog.querySelector('[data-wishes-source-count]').textContent='Примеров: '+wishesWorks.length+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
+ const noteCount=wishesWorks.reduce((total,item)=>total+item.noteCount,0);
+ wishesDialog.querySelector('[data-wishes-source-count]').textContent='Примеров: '+wishesWorks.length+' · Личных заметок: '+noteCount+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
  syncWishesOptions();updateWishesPreview();
 }
 function updateWishesPreview(message=''){
@@ -270,7 +272,13 @@ async function openWishes(trigger){
  try{
   const data=await getData(),agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');
   const slugs=batch?normalizeReferences(JSON.parse(trigger.dataset.addWishesSelection)):[trigger.dataset.addWishesWork];
-  wishesWorks=slugs.flatMap(slug=>{const work=data.projects.find(p=>p.slug===slug&&(batch||p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));return work?[{work,note:draft.workNotes[workNoteKey(batch?work.agencySlug:agencySlug,work.slug)]||''}]:[];});
+  wishesWorks=slugs.flatMap(slug=>{
+   const work=data.projects.find(p=>p.slug===slug&&(batch||p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));if(!work)return [];
+   if(!batch){const note=draft.workNotes[workNoteKey(agencySlug,work.slug)]||'';return [{work,note,noteCount:note.trim()?1:0}];}
+   const entries=referenceNotesForWork(work,draft.workNotes,data.agencies).filter(entry=>entry.note.trim());
+   const note=entries.length===1&&entries[0].isPrimary?entries[0].note:entries.map(entry=>'Моя заметка для «'+entry.agencyName+'»: '+entry.note).join('\n\n');
+   return [{work,note,noteCount:entries.length}];
+  });
   wishesUnavailable=slugs.length-wishesWorks.length;
   if(!wishesWorks.length){notice('Примеры сейчас недоступны','Откройте сохранённые примеры и выберите работы заново.');return;}
   if(!wishesDialog){

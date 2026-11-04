@@ -95,3 +95,24 @@ html[data-theme=dark] .case-page .case-photo-depth{box-shadow:0 3px 8px #0002,0 
 @media(max-width:900px){.reference-filters{grid-template-columns:minmax(0,1fr) auto}.reference-filters .reference-search{grid-column:1/-1}.reference-heading{align-items:flex-start;flex-direction:column;gap:8px}.reference-heading>.text-link{align-self:flex-start}.reference-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.reference-grid{grid-template-columns:minmax(0,1fr)}.reference-filters{gap:16px}.reference-heading h2{font-size:30px}}
 @media(max-width:760px){.case-heading{padding:24px 0;gap:16px}.case-heading h1{font-size:clamp(32px,9vw,42px);line-height:1.08}.case-team{padding-top:20px}.case-lead{font-size:18px}.case-gallery{margin-top:32px}}
+
+/* Keep each team's note readable within the same saved example. */
+.saved-references .reference-notes{min-width:0;max-width:100%;overflow-wrap:anywhere}
+.saved-references .reference-notes>.reference-note-entry{min-width:0;margin-top:16px;padding-top:16px}
+.saved-references .reference-notes>.reference-note-entry:first-child{margin-top:0}
+.saved-references[data-reference-mode=notes] .reference-notes{margin-top:20px}
+.saved-references[data-reference-mode=photos] .reference-notes>.reference-note-entry:first-child{padding-top:12px;border-top:0}
+.saved-references .reference-note-entry>label{margin-bottom:8px;color:var(--ink);font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.saved-references .reference-note-entry>textarea{min-width:0;max-width:100%;white-space:pre-wrap;overflow-wrap:anywhere}
+.saved-references .reference-note-entry>.reference-note-context{min-height:0;margin:8px 0 10px;color:var(--muted);font-size:11px;line-height:1.6;overflow-wrap:anywhere}
+.saved-references .reference-note-entry>[role=status]{min-height:20px;margin:8px 0 0;color:var(--muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.saved-references .reference-note-entry>.secondary-action,.saved-references .reference-notes .reference-note-actions>.secondary-action{min-height:44px;max-width:100%;font-size:12px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.saved-references .reference-notes .reference-note-actions{display:flex;flex-wrap:wrap;gap:8px;min-width:0;margin-top:10px}
+.saved-references .reference-notes .reference-note-actions>.secondary-action{box-sizing:border-box;flex:1 1 150px;min-width:0}
+.saved-references .reference-notes .reference-note-actions>button:disabled{opacity:.45;cursor:default}
+.saved-references .reference-notes .reference-note-actions>button:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.saved-references .reference-notes [data-reference-note-copy-status]{min-height:0;margin:6px 0 0;overflow-wrap:anywhere}
+.saved-references .reference-notes [data-reference-note-copy-status]:empty{margin:0}
+.saved-references .reference-note-toggle [data-reference-note-mark]{flex:none;max-width:100%;font-size:11px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.saved-references .reference-notes[hidden],.saved-references .reference-notes [hidden]{display:none}
+@media(max-width:600px){.saved-references .reference-notes>.reference-note-entry{margin-top:14px;padding-top:14px}.saved-references .reference-note-entry>.secondary-action,.saved-references .reference-notes .reference-note-actions>.secondary-action{width:100%}.saved-references .reference-notes .reference-note-actions{flex-direction:column;align-items:stretch}.saved-references .reference-notes .reference-note-actions>.secondary-action{flex:0 1 auto}}
