@@ -600,15 +600,25 @@ html:root .ea-save-button{pointer-events:auto}
 @media(max-width:600px){.comparison-toolbar .secondary-action{padding:12px}.comparison-toolbar span{flex-basis:100%}}
 #share-selection-dialog{box-sizing:border-box;width:min(720px,calc(100vw - 32px));max-height:90dvh;overflow:auto;padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--chrome);color:var(--color-body)}
 #share-selection-dialog::backdrop{background:rgba(0,0,0,.65)}
+#share-selection-dialog>.eyebrow{display:block;padding-right:36px}
+#share-selection-dialog .brief-close{width:44px;height:44px}
 #share-selection-dialog h2{font-size:32px;line-height:1.15;letter-spacing:-.03em;font-weight:400;margin:24px 0 16px}
 #share-selection-dialog p{font:14px/1.6 Motion,Arial,sans-serif}
-.share-note-option{display:flex;align-items:flex-start;gap:12px;margin:22px 0;font:15px/1.5 Motion,Arial,sans-serif}
-.share-note-option input{margin-top:5px;flex-shrink:0}
+#share-selection-dialog .share-options{min-inline-size:0;margin:24px 0;padding:12px 16px;border:1px solid var(--line);border-radius:10px}
+#share-selection-dialog .share-options legend{padding:0 6px;font:13px/1.5 Motion,Arial,sans-serif}
+.share-note-option{box-sizing:border-box;display:flex;align-items:flex-start;gap:12px;min-height:44px;padding:8px 0;font:15px/1.5 Motion,Arial,sans-serif;cursor:pointer}
+.share-note-option input{width:18px;height:18px;margin:3px 0 0;flex-shrink:0}
+.share-note-option>span{min-width:0;overflow-wrap:anywhere}
+#share-selection-dialog #share-presentation-help{margin:0 0 8px 30px;font-size:13px;line-height:1.5;color:var(--muted)}
+#share-selection-dialog .share-options:disabled .share-note-option{opacity:.6;cursor:default}
 .share-preview-label{display:block;margin-bottom:10px;font-size:14px}
 #share-selection-preview{box-sizing:border-box;width:100%;resize:vertical;min-height:180px;border:1px solid var(--line);border-radius:10px;background:var(--glass);color:inherit;padding:14px;font:14px/1.6 Motion,Arial,sans-serif}
+#share-selection-dialog .share-preview-help{margin:8px 0 0;font-size:13px;color:var(--muted)}
+#share-selection-dialog :is(button,input,textarea,h2):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 #share-selection-dialog button{cursor:pointer}#share-selection-dialog button:disabled{opacity:.45;cursor:default}
-@media(max-width:600px){#share-selection-dialog{padding:24px 18px}#share-selection-dialog h2{font-size:27px}#share-selection-preview{font-size:16px}}
 #share-selection-dialog .draft-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}
+#share-selection-dialog .draft-result-actions button{min-height:44px;min-width:0;max-width:100%;overflow-wrap:anywhere}
+@media(max-width:600px){#share-selection-dialog{padding:24px 18px}#share-selection-dialog h2{font-size:27px}#share-selection-preview{font-size:16px}#share-selection-dialog .share-options{padding:10px 12px}#share-selection-dialog .draft-result-actions button{width:100%}}
 #project-export-dialog{box-sizing:border-box;width:min(740px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:32px;border:1px solid var(--line);border-radius:12px;background:var(--color-bg);color:var(--ink);font-family:Motion,Arial,sans-serif;box-shadow:0 20px 70px #0003}
 #project-export-dialog::backdrop{background:#07100dc9;backdrop-filter:blur(8px)}
 #project-export-dialog>.eyebrow{display:block;padding-right:32px;margin-top:4px}
