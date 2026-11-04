@@ -3,8 +3,8 @@ import {normalizeReferences} from './reference-store.js';
 import {mergeCopyReferences} from './project-copy-reference-merge.js';
 
 /** Build an effective snapshot for restoreProjectCopy without changing either source. */
-export function copyForLoad({current,currentReferences,incoming,scope='full',referenceSelection=null,includeReferenceNotes=true}){
- if(scope==='references')return mergeCopyReferences({current,currentReferences,incoming,referenceSelection,includeReferenceNotes});
+export function copyForLoad({current,currentReferences,incoming,scope='full',referenceSelection=null,includeReferenceNotes=true,referenceNoteSelection=null}){
+ if(scope==='references')return mergeCopyReferences({current,currentReferences,incoming,referenceSelection,includeReferenceNotes,referenceNoteSelection});
  const source=normalizeDraft(incoming?.draft);
  source.request=null;
  const references=normalizeReferences(incoming?.references);

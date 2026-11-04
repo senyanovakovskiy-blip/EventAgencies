@@ -740,6 +740,43 @@ html:root .ea-save-button{pointer-events:auto}
 .copy-reference-notes-choice[hidden],.copy-reference-notes-choice [hidden]{display:none}
 @media(max-width:600px){.copy-reference-notes-choice{padding:12px}}
 
+/* Review individual notes and their current versions before importing. */
+.copy-load-mode>[data-copy-note-picker],.copy-load-mode>.copy-note-picker{grid-column:1/-1;min-width:0}
+.copy-note-picker{min-width:0;border:1px solid var(--line);border-radius:6px;background:var(--color-bg);overflow-wrap:anywhere}
+.copy-note-picker>.copy-note-heading{box-sizing:border-box;display:list-item;list-style-position:inside;min-height:44px;padding:14px;color:var(--ink);font-size:13px;line-height:1.5;cursor:pointer}
+.copy-note-picker>.copy-note-heading::marker{color:var(--color-highlight)}
+.copy-note-picker[open]>.copy-note-heading{border-bottom:1px solid var(--line)}
+.account-copy-preview .copy-note-help{margin:14px 14px 10px;color:var(--muted);font-size:12px;line-height:1.6}
+.copy-note-tools{display:flex;flex-wrap:wrap;gap:8px;margin:0 14px 10px}
+.copy-note-tools>button,.copy-note-more{box-sizing:border-box;min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:6px;background:transparent;color:var(--ink);font:12px/1.5 Motion,Arial,sans-serif;cursor:pointer;white-space:normal;overflow-wrap:anywhere}
+.copy-note-tools>button{flex:1 1 150px}
+.account-copy-preview .copy-note-count{margin:10px 14px 14px;color:var(--muted);font-size:12px;line-height:1.6}
+.copy-note-list{display:grid;gap:10px;min-width:0;margin:0 14px 14px}
+.copy-note-card{min-width:0;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--color-bg);color:var(--ink)}
+.copy-note-card.is-selected{border-color:var(--color-highlight);background:var(--surface)}
+.copy-note-choice{display:flex;align-items:flex-start;gap:10px;min-width:0;min-height:44px;cursor:pointer}
+.copy-note-choice>input{width:18px;height:18px;flex:none;margin:2px 0 0;accent-color:var(--color-highlight);cursor:inherit}
+.copy-note-choice>span{display:block;min-width:0}
+.copy-note-choice strong{display:block;color:var(--ink);font-size:13px;font-weight:400;line-height:1.5;overflow-wrap:anywhere}
+.copy-note-choice small{display:block;margin-top:5px;color:var(--muted);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.copy-note-choice:has(input:disabled){cursor:default}
+.copy-note-state{display:inline-block;box-sizing:border-box;max-width:calc(100% - 28px);margin:4px 0 0 28px;padding:3px 6px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--muted);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.copy-note-text{min-width:0;margin-top:10px}
+.copy-note-text>summary{box-sizing:border-box;display:list-item;list-style-position:inside;min-height:44px;padding:12px 0;color:var(--color-highlight);font-size:12px;line-height:1.5;cursor:pointer;overflow-wrap:anywhere}
+.copy-note-text[open]>summary{margin-bottom:6px}
+.copy-note-versions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;min-width:0}
+.copy-note-versions>div{min-width:0;padding:12px;border:1px solid var(--line);border-radius:4px;background:var(--glass)}
+.copy-note-versions>div:only-child,.copy-note-versions>div[hidden]+div{grid-column:1/-1}
+.copy-note-versions>div>strong{display:block;color:var(--muted);font-size:11px;font-weight:400;line-height:1.5}
+.account-copy-preview .copy-note-versions p{margin:8px 0 0;color:var(--ink);font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.account-copy-preview .copy-note-empty{margin:14px;color:var(--muted);font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.copy-note-more{display:block;max-width:calc(100% - 28px);margin:0 auto 14px}
+.copy-note-picker button:disabled,.copy-note-choice>input:disabled{opacity:.45;cursor:default}
+.copy-note-picker :is(button,input,summary):focus-visible,.copy-note-choice:has(input:focus-visible){outline:2px solid var(--color-highlight);outline-offset:3px}
+.copy-load-mode>[data-copy-note-picker][hidden],.copy-note-picker[hidden],.copy-note-picker [hidden]{display:none}
+@media(hover:hover){.copy-note-tools>button:not(:disabled):hover,.copy-note-more:not(:disabled):hover{border-color:var(--color-highlight)}}
+@media(max-width:600px){.copy-note-versions{grid-template-columns:minmax(0,1fr)}.copy-note-card{padding:10px}.copy-note-more{width:calc(100% - 28px)}}
+
 .project-history{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:100px}
 .project-history>details>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;list-style:none;cursor:pointer;padding:20px 0}
 .project-history>details>summary::-webkit-details-marker{display:none}

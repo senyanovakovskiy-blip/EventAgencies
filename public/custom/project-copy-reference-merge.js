@@ -6,7 +6,7 @@ const REFERENCE_LIMIT=200;
 const allReferences=value=>Array.isArray(value)?[...new Set(value.flatMap(slug=>normalizeReferences([slug])))]:[];
 
 /** Add available copy references and missing notes without replacing current work. */
-export function mergeCopyReferences({current,currentReferences,incoming,referenceSelection=null,includeReferenceNotes=true}){
+export function mergeCopyReferences({current,currentReferences,incoming,referenceSelection=null,includeReferenceNotes=true,referenceNoteSelection=null}){
  const draft=normalizeDraft(current),source=normalizeDraft(incoming?.draft);
  const references=allReferences(currentReferences),sourceReferences=allReferences(incoming?.references);
  const selectedSlugs=referenceSelection==null?null:new Set(allReferences(referenceSelection));
@@ -20,8 +20,9 @@ export function mergeCopyReferences({current,currentReferences,incoming,referenc
   addedReferences++;
  }
  if(includeReferenceNotes===true&&incoming?.includeNotes===true){
+  const selectedNoteKeys=referenceNoteSelection==null?null:new Set(Array.isArray(referenceNoteSelection)?referenceNoteSelection.filter(key=>typeof key==='string'&&Object.hasOwn(source.workNotes,key)):[]);
   for(const [key,note] of Object.entries(source.workNotes)){
-   if(!note.trim()||!incomingSlugs.has(key.split('/')[1]))continue;
+   if(!note.trim()||!incomingSlugs.has(key.split('/')[1])||(selectedNoteKeys&&!selectedNoteKeys.has(key)))continue;
    if(Object.hasOwn(draft.workNotes,key)){
     if(draft.workNotes[key]!==note)conflictingNotes++;
     continue;
