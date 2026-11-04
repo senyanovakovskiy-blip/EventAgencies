@@ -525,6 +525,9 @@ html:root .ea-save-button{pointer-events:auto}
 .project-intro-note .account-copy-opener{display:flex;width:100%;margin-top:22px;padding:12px 16px;font-size:13px}
 .project-intro-note .account-copy-status{font-size:11px;line-height:1.5;margin:12px 0 0;overflow-wrap:anywhere}
 .project-intro-note .account-copy-status:empty{display:none}
+.account-copy-preview-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.account-copy-download-hint{font-size:12px;line-height:1.5;color:var(--muted);margin:12px 0 0}
+@media(max-width:540px){.account-copy-preview-actions{align-items:stretch;flex-direction:column}.account-copy-preview-actions button{width:100%}}
 .project-new-opener{display:block;margin:8px 0 0;padding:10px 0;min-height:44px;border:0;background:transparent;color:var(--muted);font:12px/1.5 Motion,Arial,sans-serif;cursor:pointer}
 .project-new-opener:hover{color:var(--color-highlight)}
 .project-new-opener:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}

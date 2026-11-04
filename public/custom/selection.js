@@ -398,7 +398,7 @@ function renderComparison(data,entries){
 }
 
 setupSelectionShare({getState:()=>draft,getData});
-setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
+const projectExporter=setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
 wishesUndo=setupWishesUndo({getDescription:()=>draft.brief.description,canUndo:()=>!sending,restore:description=>{
  try{draft=writeDraft(localStorage,updateBrief(draft,{description}));available=true;lastReceipt=null;sendError='';if(briefForm&&document.getElementById('brief-dialog').open)fillBrief(briefForm);refresh();return true;}
  catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return false;}
@@ -430,7 +430,7 @@ setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onErro
   return 'saved';
  }catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return 'failed';}
 }});
-const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending});
+const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending,onExportCopy:projectExporter?.openSavedCopy});
 setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
 document.addEventListener('ea:project-copy-restored',()=>{
  draft=readDraft(localStorage);available=true;removedAgency=null;lastReceipt=null;sendError='';focusRequest=false;orderStatus.textContent='';
