@@ -11,6 +11,7 @@ const complete=values=>values.every(value=>value!==null)?values:null;
 const availableWork=({s,p})=>Boolean(p&&p.slug===s.workSlug&&(p.agencySlug===s.agencySlug||p.agencySlugs?.includes(s.agencySlug)));
 function valueFor(id,pick,{types,notes}){
  const {s,a,p}=pick;
+ if(!a)return null;
  switch(id){
   case 'work':
    // Include every displayed fact, not just a possibly repeated work title.

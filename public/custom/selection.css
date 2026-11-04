@@ -199,6 +199,19 @@ html:root .agency-save{margin:4px 0 22px}
 .project-case-photo img{height:210px;max-height:none;object-fit:contain;background:var(--glass)}
 .project-no-case{min-height:210px;padding:26px 20px;border:1px dashed var(--line);border-radius:8px;display:flex;flex-direction:column;justify-content:center}
 .project-no-case>span{font-size:22px;color:var(--ink);line-height:1.2;margin-bottom:12px}
+.project-agency-unavailable{border-style:dashed}
+.project-unavailable-description,.project-unavailable-work{font:14px/1.6 Motion,Arial,sans-serif;color:var(--muted);overflow-wrap:anywhere}
+.project-unavailable-work{padding:16px;border:1px dashed var(--line);border-radius:8px;margin:16px 0}
+.project-unavailable-work p{margin:0 0 10px}.project-unavailable-work p:last-child{margin-bottom:0}
+.project-saved-id,.project-preserved-note>small{font:12px/1.6 Motion,Arial,sans-serif;color:var(--muted);overflow-wrap:anywhere;white-space:normal}
+.project-saved-id code{font:inherit;color:var(--ink);overflow-wrap:anywhere}
+.project-preserved-note{margin:16px 0;padding-top:14px;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.project-preserved-note>p:first-child{font:13px/1.5 Motion,Arial,sans-serif;color:var(--ink);margin:0 0 10px}
+.project-preserved-note>.comparison-note-text{font:14px/1.65 Motion,Arial,sans-serif;color:var(--ink);white-space:pre-wrap}
+.project-preserved-note>small{display:block;margin-top:10px}
+.comparison-team-unavailable,.comparison-team-catalog{grid-column:1/-1;min-width:0;overflow-wrap:anywhere}
+.comparison-team-unavailable>p,.agency-compare-table .comparison-team-catalog{font:13px/1.5 Motion,Arial,sans-serif;color:var(--muted)}
+.agency-compare-table .comparison-team-catalog{display:block;min-height:44px;box-sizing:border-box;padding-top:10px;color:var(--color-highlight)}
 .project-case-reason p,.comparison-block p,.comparison-block li,.comparison-block dd{font-size:14px;line-height:1.6}
 .comparison-block h4{font:400 17px/1.35 Motion,Arial,sans-serif;letter-spacing:-.02em;margin:0 0 14px}
 .comparison-block .comparison-detail{font-size:13px}
@@ -300,6 +313,15 @@ html:root .my-project #project-review{grid-template-columns:minmax(0,1fr) minmax
 .my-project .request-team-content .request-edit{display:inline-flex;align-items:center;margin-top:4px;font-size:12px;cursor:pointer}
 .my-project .request-team-empty,.my-project .request-team-help p{color:var(--muted);font-size:14px;line-height:1.5}
 .request-team-help a{display:inline-flex;align-items:center;margin-top:10px;min-height:44px;font-size:13px;color:var(--color-highlight)}
+.my-project .request-review-teams .request-selection-warning{margin:0 0 22px;padding:14px;border:1px solid var(--line);border-left:3px solid var(--color-highlight);border-radius:6px;background:var(--glass);font-size:13px;line-height:1.6;color:var(--ink)}
+.request-selection-warning>a,#project-send-error>a{display:inline-flex;align-items:center;min-height:44px;color:var(--color-highlight);text-underline-offset:3px}
+.my-project .request-team-content .request-unavailable-id{margin:8px 0 12px;font-size:12px;line-height:1.6;color:var(--muted);overflow-wrap:anywhere}
+.request-unavailable-id code{font-size:inherit;white-space:normal;overflow-wrap:anywhere}
+.request-unavailable-work{padding:12px 14px;border:1px solid var(--line);border-radius:6px;font-size:13px;line-height:1.6;color:var(--muted)}
+.my-project .request-unavailable-work>p+p{margin-top:8px}
+.request-unavailable-actions{display:flex;flex-wrap:wrap;gap:4px 16px}
+.my-project .request-team-content .request-edit{max-width:100%;white-space:normal;text-align:left;overflow-wrap:anywhere}
+.request-selection-warning>a:focus-visible,#project-send-error>a:focus-visible,.request-unavailable-actions>a:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 .my-project .request-review-scope{grid-column:1/-1;margin:0;padding-top:20px;border-top:1px solid var(--line);font-size:12px;line-height:1.6;color:var(--muted)}
 .request-review-scope a{color:var(--color-highlight);text-underline-offset:3px}
 @media(max-width:900px){html:root .my-project #project-review{grid-template-columns:1fr;gap:26px}.my-project .request-review-teams{grid-column:1;grid-row:auto;padding-top:22px;border-top:1px solid var(--line)}.my-project .request-review-wishes{grid-column:1}}
