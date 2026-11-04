@@ -430,6 +430,9 @@ html:root .ea-save-button{pointer-events:auto}
 .project-export-options label{display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.5;cursor:pointer}
 .project-export-options label+label{margin-top:16px}
 .project-export-options input{width:18px;height:18px;margin:2px 0 0;flex:none;accent-color:var(--color-highlight)}
+.project-export-reference-help{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
+.project-export-reference-help:empty{display:none}
+.project-export-options input:disabled{opacity:.45;cursor:default}
 #project-export-dialog .project-export-summary{font-size:12px;line-height:1.5;margin-bottom:18px}
 .project-export-summary:empty{display:none}
 .project-export-preview{padding:0 0 18px;border-bottom:1px solid var(--line)}
