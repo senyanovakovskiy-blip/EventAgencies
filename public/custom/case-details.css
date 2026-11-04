@@ -70,6 +70,15 @@ html[data-theme=dark] .case-page .case-photo-depth{box-shadow:0 3px 8px #0002,0 
 .reference-cover-empty>span:first-child{font-size:42px;line-height:1;color:var(--color-highlight)}
 .reference-grid h3{font-size:19px;line-height:1.25;letter-spacing:-.02em;margin:14px 0 8px;overflow-wrap:anywhere}
 .reference-team{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 8px}
+.reference-team-choice{margin:14px 0 16px}
+.reference-team-choice label{display:block;font-size:11px;line-height:1.5;color:var(--muted);margin-bottom:7px}
+.reference-team-choice select{box-sizing:border-box;width:100%;min-width:0;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--color-bg);color:var(--ink);font:13px/1.5 Motion,Arial,sans-serif;margin:0 0 9px}
+.reference-grid .reference-team-add{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:12px/1.45 Motion,Arial,sans-serif;text-decoration:none;cursor:pointer}
+.reference-grid .reference-team-add[aria-pressed=true]{border-color:var(--color-highlight);color:var(--color-highlight)}
+.reference-grid .reference-team-add:hover:not(:disabled){border-color:var(--color-highlight)}
+.reference-grid .reference-team-add:disabled{opacity:.4;cursor:default}
+.saved-references[data-reference-selecting=true] .reference-team-choice{display:none}
+@media(max-width:600px){.reference-team-choice select{font-size:16px}.reference-grid .reference-team-add{font-size:11px;padding:9px 10px}}
 .reference-grid .reference-note-toggle{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;width:100%;padding:12px 0;border-top:1px solid var(--line);color:var(--ink);text-align:left;text-decoration:none;font:13px/1.4 Motion,Arial,sans-serif;cursor:pointer}
 .reference-note-toggle span{font-size:11px;color:var(--color-highlight)}
 .reference-grid .reference-remove{min-height:44px;font-size:12px;color:var(--muted);text-underline-offset:4px}

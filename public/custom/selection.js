@@ -35,13 +35,14 @@ function persist(next,{quiet=false}={}){
  catch{draft=normalizeDraft({...next,request:null});available=false;refresh();document.getElementById('project-storage-note')?.removeAttribute('hidden');if(!quiet)notice('Не удалось сохранить изменения','В браузере недоступно сохранение. Разрешите хранение данных сайта и попробуйте ещё раз.');return false;}
 }
 const pop=document.createElement('aside');pop.className='ea-selection-notice';pop.hidden=true;pop.setAttribute('aria-label','Ваша подборка');document.body.append(pop);
-function notice(title,copy){pop.innerHTML=`<button class="ea-notice-close" aria-label="Закрыть уведомление">×</button><div role="status"><strong>${esc(title)}</strong><p>${esc(copy)}</p></div><div class="ea-notice-actions"><button data-continue>Продолжить выбор</button><a href="/my-project">Мой проект${draft.selection.length?' · '+draft.selection.length:''} ↗</a></div>`;pop.hidden=false;}
+function notice(title,copy){const inProject=Boolean(document.getElementById('project-board'));pop.innerHTML=`<button class="ea-notice-close" aria-label="Закрыть уведомление">×</button><div role="status"><strong>${esc(title)}</strong><p>${esc(copy)}</p></div><div class="ea-notice-actions"><button data-continue>Продолжить выбор</button><a href="${inProject?'#project-comparison':'/my-project'}"${inProject?' data-edit-selection':''}>${inProject?'К сравнению':'Мой проект'}${draft.selection.length?' · '+draft.selection.length:''} ↗</a></div>`;pop.hidden=false;}
+function withReferenceNote(state,agencySlug,workSlug,note){return workSlug&&note?.trim()&&!Object.hasOwn(state.workNotes,workNoteKey(agencySlug,workSlug))?updateWorkNote(state,agencySlug,workSlug,note):state;}
 const replacement=document.createElement('dialog');replacement.id='replacement-dialog';replacement.setAttribute('aria-labelledby','replacement-title');document.body.append(replacement);
 replacement.addEventListener('close',()=>{pendingReplacement=null;});
-async function offerReplacement(agencySlug,workSlug){
+async function offerReplacement(agencySlug,workSlug,note=''){
  try{
   const data=await getData(),candidate=data.agencies.find(a=>a.slug===agencySlug);if(!candidate)return;
-  pendingReplacement={agencySlug,workSlug};
+  pendingReplacement={agencySlug,workSlug,note};
   replacement.innerHTML=`<button class="brief-close" data-cancel-replacement aria-label="Закрыть замену агентства">×</button><span class="eyebrow">До трёх команд в одном проекте</span><h2 id="replacement-title">Кого заменить на ${esc(candidate.name)}?</h2><p>Описание мероприятия сохранится. Вместо выбранной ниже команды появится ${esc(candidate.name)}${workSlug?' с выбранной работой':''}.</p><div class="replacement-options">${draft.selection.map(s=>{const a=data.agencies.find(a=>a.slug===s.agencySlug);return `<button class="secondary-action" data-replace-agency="${esc(s.agencySlug)}">Заменить ${esc(a?.name||s.agencySlug)}</button>`;}).join('')}</div><button class="replacement-cancel" data-cancel-replacement>Оставить подборку</button>`;
   pop.hidden=true;replacement.showModal();
  }catch{notice('Не удалось загрузить варианты замены','Подборка не изменилась. Попробуйте ещё раз.');}
@@ -51,7 +52,8 @@ function refresh(){
  document.querySelectorAll('[data-save-agency]').forEach(button=>{
   const entry=draft.selection.find(s=>s.agencySlug===button.dataset.saveAgency),work=button.dataset.saveWork;
   const selected=Boolean(entry&&(!work||entry.workSlug===work));
-  if(work){const name=button.dataset.agencyName;button.textContent=selected?(name?name+' и работа добавлены':'Команда и работа добавлены'):entry?'Выбрать эту работу':name?'Добавить '+name+' с этой работой':'Добавить команду с этой работой';}
+  if(work&&button.hasAttribute('data-reference-team')){button.textContent=selected?'В сравнении ✓':entry?'Сравнить с этой работой':'Добавить в сравнение';button.setAttribute('aria-label',button.dataset.agencyName?button.textContent+' · '+button.dataset.agencyName:'Выберите команду для сравнения');}
+  else if(work){const name=button.dataset.agencyName;button.textContent=selected?(name?name+' и работа добавлены':'Команда и работа добавлены'):entry?'Выбрать эту работу':name?'Добавить '+name+' с этой работой':'Добавить команду с этой работой';}
   else button.textContent=button.hasAttribute('data-agency-label')?(selected?'Агентство добавлено':'Добавить агентство'):(selected?'Добавлено':'В мой проект');
   button.setAttribute('aria-pressed',String(selected));
  });
@@ -79,17 +81,17 @@ document.addEventListener('click',async event=>{
  }
  const save=event.target.closest('[data-save-agency]');
  if(save){
-  event.preventDefault();const result=addAgency(draft,save.dataset.saveAgency,save.dataset.saveWork||null);
-  if(result.result==='full'){await offerReplacement(save.dataset.saveAgency,save.dataset.saveWork||null);return;}
+  event.preventDefault();const result=addAgency(draft,save.dataset.saveAgency,save.dataset.saveWork||null),referenceNote=save.dataset.referenceNoteAgency?draft.workNotes[workNoteKey(save.dataset.referenceNoteAgency,save.dataset.saveWork)]||'':'';
+  if(result.result==='full'){await offerReplacement(save.dataset.saveAgency,save.dataset.saveWork||null,referenceNote);return;}
   if(result.result==='invalid')return;
-  if(result.result!=='existing'&&!persist(result.state))return;
+  if(result.result!=='existing'&&!persist(withReferenceNote(result.state,save.dataset.saveAgency,save.dataset.saveWork,referenceNote)))return;
   const left=3-draft.selection.length;
   notice(result.result==='updated'?'Выбранная работа обновлена':result.result==='existing'?'Агентство уже в вашем проекте':'Агентство добавлено в ваш проект',left===2?'Можно добавить ещё две команды для сравнения или перейти к описанию мероприятия.':left===1?'Можно добавить ещё одну команду для сравнения или перейти к описанию мероприятия.':'Три команды выбраны. Перейдите к сравнению и описанию мероприятия.');return;
  }
  const replace=event.target.closest('[data-replace-agency]');
  if(replace&&pendingReplacement){
   const next=replaceAgency(draft,replace.dataset.replaceAgency,pendingReplacement.agencySlug,pendingReplacement.workSlug);
-  if(next.result==='replaced'&&persist(next.state)){replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.');}
+  if(next.result==='replaced'&&persist(withReferenceNote(next.state,pendingReplacement.agencySlug,pendingReplacement.workSlug,pendingReplacement.note))){replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.');}
   else if(next.result!=='replaced'){replacement.close();notice('Подборка уже изменилась','Проверьте выбранные команды в «Моём проекте».');}
   return;
  }
@@ -121,7 +123,7 @@ document.addEventListener('click',async event=>{
   else document.getElementById('project-comparison')?.focus();
   return;
  }
- if(event.target.closest('[data-edit-selection]')){event.preventDefault();setHelpSelection(true);const section=document.getElementById('project-comparison');section?.scrollIntoView({block:'start'});section?.focus({preventScroll:true});}
+ if(event.target.closest('[data-edit-selection]')){event.preventDefault();pop.hidden=true;setHelpSelection(true);const section=document.getElementById('project-comparison');section?.scrollIntoView({block:'start'});section?.focus({preventScroll:true});}
  if(event.target.closest('[data-return-project]')){document.querySelector('.project-intro')?.scrollIntoView({block:'start'});document.querySelector('.project-intro-actions [data-edit-brief]')?.focus({preventScroll:true});}
  if(event.target.closest('[data-submit-project]')){
   await sendInquiry();return;
