@@ -429,6 +429,8 @@ html:root .ea-save-button{pointer-events:auto}
 .project-export-options legend{padding:0 8px;font-size:12px;color:var(--muted)}
 .project-export-options label{display:flex;align-items:flex-start;gap:12px;font-size:14px;line-height:1.5;cursor:pointer}
 .project-export-options label+label{margin-top:16px}
+.project-export-options label[hidden]{display:none}
+.project-export-options label[hidden]+label{margin-top:0}
 .project-export-options input{width:18px;height:18px;margin:2px 0 0;flex:none;accent-color:var(--color-highlight)}
 .project-export-reference-help{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
 .project-export-reference-help:empty{display:none}

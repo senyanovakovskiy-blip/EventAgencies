@@ -1,6 +1,6 @@
 import {normalizeDraft,contactMethods,workNoteKey} from './project-store.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
-import {exportReferenceSection} from './project-export-references.js';
+import {exportReferenceSection,referenceExport} from './project-export-references.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const safeUrl=value=>{try{const url=new URL(value);return ['https:','http:'].includes(url.protocol)?url.href:'';}catch{return '';}};
@@ -41,27 +41,37 @@ export function setupProjectExport({getState,getData,briefRows,workRole}){
  dialog.querySelector('[data-export-notes]').nextElementSibling.textContent='Личные заметки к работам в файле';
  const references=dialog.querySelector('[data-export-references]'),referenceCount=dialog.querySelector('[data-export-reference-count]');
  const notes=dialog.querySelector('[data-export-notes]'),contact=dialog.querySelector('[data-export-contact]'),preview=dialog.querySelector('textarea'),status=dialog.querySelector('[data-project-export-status]'),summary=dialog.querySelector('[data-project-export-summary]'),actions=[...dialog.querySelectorAll('[data-project-export-format],[data-copy-project]')];
- let snapshot=null,data=null,prepared=null,createdAt=null,trigger=null,version=0,savedReferences=[];
+ const title=dialog.querySelector('#project-export-title'),intro=title.nextElementSibling;
+ let snapshot=null,data=null,prepared=null,createdAt=null,trigger=null,version=0,savedReferences=[],referencesOnly=false,referenceWarning='';
  function render(){
   if(!snapshot||!data)return;
-  prepared=projectExport(snapshot,data,{rows:briefRows(snapshot.brief),workRole,includeNotes:notes.checked,includeContact:contact.checked,includeReferences:references.checked,referenceSlugs:savedReferences,origin:location.origin,createdAt});
+  const options={rows:briefRows(snapshot.brief),workRole,includeNotes:notes.checked,includeContact:contact.checked,includeReferences:references.checked,referenceSlugs:savedReferences,origin:location.origin,createdAt};
+  prepared=referencesOnly?referenceExport(snapshot,data,options):projectExport(snapshot,data,options);
   preview.value=prepared.text;actions.forEach(button=>button.disabled=false);
-  summary.textContent='Команд: '+prepared.teamCount+(references.checked?' · Примеров: '+prepared.referenceCount:'')+' · '+(notes.checked?'Заметок: '+prepared.noteCount:'Без личных заметок')+' · '+(contact.checked?'С контактом':'Без контакта')+(prepared.unavailableReferenceCount?'. Недоступных в каталоге примеров: '+prepared.unavailableReferenceCount+' — они отмечены в файле.':'');
-  status.textContent='Файл содержит копию текущего черновика. Скачивание не отправляет заявку.';
+  summary.textContent=(referencesOnly?'Примеров: '+prepared.referenceCount:'Команд: '+prepared.teamCount+(references.checked?' · Примеров: '+prepared.referenceCount:''))+' · '+(notes.checked?'Заметок: '+prepared.noteCount:'Без личных заметок')+' · '+(contact.checked?'С контактом':'Без контакта')+(prepared.unavailableReferenceCount?'. Недоступных в каталоге примеров: '+prepared.unavailableReferenceCount+' — они отмечены в файле.':'');
+  status.textContent=referenceWarning+(referencesOnly?'Файл содержит только отмеченные примеры и выбранные дополнения.':'Файл содержит копию текущего черновика.')+' Скачивание не отправляет заявку.';
  }
  document.addEventListener('click',async event=>{
   const button=event.target.closest('[data-download-brief]');if(!button)return;
   event.preventDefault();if(dialog.open)return;
   trigger=button;notes.checked=false;contact.checked=false;references.checked=false;references.disabled=true;referenceCount.textContent='';savedReferences=[];snapshot=null;data=null;prepared=null;createdAt=new Date();
+  referencesOnly=button.hasAttribute('data-export-reference-selection');referenceWarning='';referenceOption.hidden=referencesOnly;
+  title.textContent=referencesOnly?'Скачать выбранные примеры':'Скачать мой проект';intro.textContent=referencesOnly?'В файл войдут только отмеченные примеры в текущем порядке. Выберите, что добавить к ним.':'Описание события и выбранные команды входят в каждый файл. Выберите, что добавить к ним.';
+  notes.nextElementSibling.textContent=referencesOnly?'Личные заметки к выбранным примерам':'Личные заметки к работам в файле';
   preview.value='';dialog.querySelector('details').open=false;actions.forEach(action=>action.disabled=true);summary.textContent='';status.textContent='Готовим копию проекта…';dialog.showModal();
   const current=++version;
   try{
    const loaded=await getData();if(current!==version||!dialog.open)return;data=loaded;snapshot=normalizeDraft(getState());
-   try{const stored=JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]');if(!Array.isArray(stored))throw Error('invalid_references');savedReferences=normalizeReferences(stored);references.disabled=!savedReferences.length;referenceCount.textContent=savedReferences.length?'Примеров: '+savedReferences.length+'. В файл войдут названия, команды и ссылки.':'Сохранённых примеров пока нет.';}
-   catch{references.disabled=true;referenceCount.textContent='Не удалось прочитать примеры в этом браузере. Откройте окно заново, чтобы повторить.';}
+   try{
+    const stored=JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]');if(!Array.isArray(stored))throw Error('invalid_references');const available=normalizeReferences(stored);
+    if(referencesOnly){const requested=normalizeReferences(JSON.parse(button.dataset.exportReferenceSelection));savedReferences=requested.filter(slug=>available.includes(slug));if(!savedReferences.length)throw Object.assign(new Error('selection_empty'),{code:'selection_empty'});if(savedReferences.length<requested.length)referenceWarning='Часть отмеченных примеров уже убрана из проекта. В файл войдут оставшиеся: '+savedReferences.length+'. ';references.checked=true;}
+    else savedReferences=available;
+    references.disabled=referencesOnly||!savedReferences.length;referenceCount.textContent=savedReferences.length?'Примеров: '+savedReferences.length+'. В файл войдут названия, команды и ссылки.':'Сохранённых примеров пока нет.';
+   }
+   catch(error){if(referencesOnly)throw error;references.disabled=true;referenceCount.textContent='Не удалось прочитать примеры в этом браузере. Откройте окно заново, чтобы повторить.';}
    render();
   }
-  catch{if(current===version&&dialog.open)status.textContent='Не удалось подготовить файл. Закройте окно и попробуйте снова.';}
+  catch(error){if(current===version&&dialog.open){snapshot=null;prepared=null;savedReferences=[];actions.forEach(action=>action.disabled=true);status.textContent=error.code==='selection_empty'?'Отмеченных примеров уже нет в проекте. Закройте окно и выберите примеры заново.':'Не удалось подготовить файл. Закройте окно и попробуйте снова.';}}
  });
  notes.addEventListener('change',render);contact.addEventListener('change',render);references.addEventListener('change',render);
  dialog.querySelector('[data-close-project-export]').addEventListener('click',()=>dialog.close());
@@ -69,12 +79,12 @@ export function setupProjectExport({getState,getData,briefRows,workRole}){
  dialog.querySelectorAll('[data-project-export-format]').forEach(button=>button.addEventListener('click',()=>{
   if(!prepared)return;const html=button.dataset.projectExportFormat==='html';
   const url=URL.createObjectURL(new Blob([html?prepared.html:'\ufeff'+prepared.text],{type:html?'text/html;charset=utf-8':'text/plain;charset=utf-8'}));
-  const anchor=document.createElement('a');anchor.href=url;anchor.download='EventAgencies — мой проект.'+(html?'html':'txt');anchor.hidden=true;document.body.append(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+  const anchor=document.createElement('a');anchor.href=url;anchor.download='EventAgencies — '+(referencesOnly?'выбранные примеры':'мой проект')+'.'+(html?'html':'txt');anchor.hidden=true;document.body.append(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
   status.textContent=html?'Оформленный файл подготовлен для скачивания. Откройте его в браузере для чтения или печати.':'Текстовый файл подготовлен для скачивания.';
  }));
  dialog.querySelector('[data-copy-project]').addEventListener('click',async()=>{
   if(!prepared)return;const current=version,text=prepared.text;
-  try{await navigator.clipboard.writeText(text);if(dialog.open&&current===version)status.textContent='Текст проекта скопирован.';}
+  try{await navigator.clipboard.writeText(text);if(dialog.open&&current===version)status.textContent=referencesOnly?'Текст подборки скопирован.':'Текст проекта скопирован.';}
   catch{if(dialog.open&&current===version){dialog.querySelector('details').open=true;preview.focus();preview.select();status.textContent='Скопируйте выделенный текст через меню браузера или клавиатуру.';}}
  });
 }
