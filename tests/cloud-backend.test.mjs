@@ -51,14 +51,14 @@ function payload() {
 }
 const origin = 'https://eventagencies.test';
 async function call(db, path, { owner = 'owner-a', method = 'GET', body, headers = {}, csrf = true } = {}) {
-  const requestHeaders = { ...(owner === null ? {} : { 'oai-authenticated-user-id': owner }), ...headers };
+  const requestHeaders = { ...(owner === null ? {} : { 'oai-authenticated-user-id': owner, 'oai-authenticated-user-email': owner === 'owner-a' ? 'admin@example.invalid' : 'visitor@example.invalid' }), ...headers };
   if (method !== 'GET' && method !== 'HEAD') {
     requestHeaders.Origin ??= origin;
     if (csrf && path.startsWith('/api/admin/')) requestHeaders['X-CSRF-Token'] ??= await csrfFor(owner, origin);
   }
   if (body !== undefined) requestHeaders['Content-Type'] ??= 'application/json';
   const request = new Request(origin + path, { method, headers: requestHeaders, ...(body === undefined ? {} : { body: typeof body === 'string' ? body : JSON.stringify(body) }) });
-  const response = await handleCloudApi(request, { DB: db });
+  const response = await handleCloudApi(request, { DB: db, EA_ADMIN_EMAIL: 'admin@example.invalid' });
   return { response, data: response ? await response.json() : null };
 }
 
@@ -69,7 +69,7 @@ test('cloud identity, CSRF, origin and health contract', async t => {
   const session = await call(db, '/api/admin/session');
   assert.equal(session.data.authenticated, true);assert.equal(session.data.username, 'Владелец');
   assert.equal(session.data.csrf, (await call(db, '/api/admin/session')).data.csrf);
-  assert.notEqual(session.data.csrf, (await call(db, '/api/admin/session', { owner: 'owner-b' })).data.csrf);
+  assert.equal((await call(db, '/api/admin/session', { owner: 'owner-b' })).response.status, 403);
   assert.notEqual(session.data.csrf, await csrfFor('owner-a', 'https://other.test'));
   assert.equal(session.response.headers.get('cache-control'), 'no-store');
   const health = await call(db, '/api/health');
@@ -93,12 +93,12 @@ test('cloud submission retries, owner isolation and immutable receipts', async t
   for (const retry of retries) { assert.equal(retry.response.status, 200);assert.deepEqual(retry.data.receipt, first.data.receipt); }
   assert.equal((await call(db, '/api/inquiries', { method: 'POST', body: { requestId: key.toUpperCase(), payload: input } })).response.status, 200);
   assert.equal((await submit({ body: { requestId: key, payload: { ...input, brief: { ...input.brief, city: 'Москва' } } } })).response.status, 409);
-  assert.equal((await call(db, '/api/admin/inquiries', { owner: 'owner-b' })).data.total, 0);
-  assert.equal((await call(db, '/api/admin/inquiries/1', { owner: 'owner-b' })).response.status, 404);
-  assert.equal((await call(db, '/api/admin/inquiries/1', { owner: 'owner-b', method: 'PATCH', body: { status: 'closed', note: '', revision: 0 } })).response.status, 404);
+  assert.equal((await call(db, '/api/admin/inquiries', { owner: 'owner-b' })).response.status, 403);
+  assert.equal((await call(db, '/api/admin/inquiries/1', { owner: 'owner-b' })).response.status, 403);
+  assert.equal((await call(db, '/api/admin/inquiries/1', { owner: 'owner-b', method: 'PATCH', body: { status: 'closed', note: '', revision: 0 } })).response.status, 403);
   const other = await submit({ owner: 'owner-b' });assert.equal(other.response.status, 201);assert.notEqual(other.data.receipt.id, first.data.receipt.id);
-  assert.equal((await call(db, '/api/admin/inquiries')).data.total, 1);
-  assert.equal((await call(db, '/api/admin/inquiries', { owner: 'owner-b' })).data.total, 1);
+  assert.equal((await call(db, '/api/admin/inquiries')).data.total, 2);
+  assert.equal((await call(db, '/api/inquiries', { owner: 'owner-b' })).data.total, 1);
   const saved = (await call(db, '/api/admin/inquiries/1')).data;
   assert.deepEqual(saved.receipt, first.data.receipt);assert.equal(saved.statusChangedAt, first.data.receipt.createdAt);
   await call(db, '/api/admin/inquiries/1', { method: 'PATCH', body: { status: 'working', note: 'PRIVATE-NOTE', revision: 0 } });

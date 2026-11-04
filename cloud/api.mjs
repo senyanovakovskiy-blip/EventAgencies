@@ -1,5 +1,7 @@
 import { createCloudStore, digest, problem } from './store.mjs';
 import { createProjectCopyStore } from './project-copies.mjs';
+import { isAdministrator } from './admin-access.mjs';
+import { createCloudAdminStore } from './admin-store.mjs';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY' };
 const reply = (status, data) => new Response(JSON.stringify(data), { status, headers });
@@ -34,6 +36,7 @@ export async function handleCloudApi(request, env) {
     const mutation = !['GET', 'HEAD'].includes(request.method);
     if (request.headers.get('sec-fetch-site') === 'cross-site' || (request.headers.has('origin') && request.headers.get('origin') !== url.origin) || (mutation && request.headers.get('origin') !== url.origin)) throw problem(403, 'forbidden_origin');
     const isAdmin = url.pathname.startsWith('/api/admin/');
+    if (isAdmin && !isAdministrator(request, env)) throw problem(403, 'admin_required');
     const csrf = isAdmin ? await csrfFor(ownerId, url.origin) : null;
     if (isAdmin && mutation && request.headers.get('x-csrf-token') !== csrf) throw problem(403, 'csrf_required');
     if (url.pathname === '/api/health' && request.method === 'GET') return reply(200, { service: 'eventagencies-cloud-inquiries', storage: 'd1', notifications: false });
@@ -70,10 +73,11 @@ export async function handleCloudApi(request, env) {
       return reply(200, await store.customerReceipt(Number(customerMatch[1])));
     }
     if (url.pathname === '/api/admin/catalog' && request.method === 'GET') return reply(200, store.catalog());
-    if (url.pathname === '/api/admin/inquiries' && request.method === 'GET') return reply(200, await store.list({ q: url.searchParams.get('q') || '', status: url.searchParams.get('status') || '', page: Number(url.searchParams.get('page') || 1) }));
+    const adminStore = isAdmin ? createCloudAdminStore(env.DB) : null;
+    if (url.pathname === '/api/admin/inquiries' && request.method === 'GET') return reply(200, await adminStore.list({ q: url.searchParams.get('q') || '', status: url.searchParams.get('status') || '', page: Number(url.searchParams.get('page') || 1) }));
     const match = /^\/api\/admin\/inquiries\/([1-9]\d*)$/.exec(url.pathname);
-    if (match && request.method === 'GET') return reply(200, await store.detail(Number(match[1])));
-    if (match && request.method === 'PATCH') return reply(200, await store.update(Number(match[1]), await readBody(request, 262144)));
+    if (match && request.method === 'GET') return reply(200, await adminStore.detail(Number(match[1])));
+    if (match && request.method === 'PATCH') return reply(200, await adminStore.update(Number(match[1]), await readBody(request, 262144)));
     return reply(404, { error: 'not_found' });
   } catch (error) {
     return reply(error.status || 503, { error: error.status ? error.code : 'storage_unavailable' });

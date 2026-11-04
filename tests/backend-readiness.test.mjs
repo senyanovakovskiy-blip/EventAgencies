@@ -22,12 +22,12 @@ import catalog from '../content/catalog.json' with { type: 'json' };
 const origin = 'https://eventagencies.test';
 async function api(db, pathname, { owner = 'owner-a', method = 'GET', body, headers = {}, withOrigin = true, csrf = true } = {}) {
   const h = new Headers(headers);
-  if (owner !== null) h.set('oai-authenticated-user-id', owner);
+  if (owner !== null) { h.set('oai-authenticated-user-id', owner); h.set('oai-authenticated-user-email', owner === 'owner-a' ? 'admin@example.invalid' : 'visitor@example.invalid'); }
   if (!['GET', 'HEAD'].includes(method) && withOrigin && !h.has('origin')) h.set('origin', origin);
   if (!['GET', 'HEAD'].includes(method) && csrf && pathname.startsWith('/api/admin/') && !h.has('x-csrf-token')) h.set('x-csrf-token', await csrfFor(owner, origin));
   if (body !== undefined && !h.has('content-type')) h.set('content-type', 'application/json');
   const request = new Request(origin + pathname, { method, headers: h, ...(body === undefined ? {} : { body: typeof body === 'string' ? body : JSON.stringify(body) }) });
-  const response = await handleCloudApi(request, { DB: db });
+  const response = await handleCloudApi(request, { DB: db, EA_ADMIN_EMAIL: 'admin@example.invalid' });
   return { status: response.status, headers: response.headers, data: await response.json() };
 }
 function inquiry() {
@@ -200,7 +200,7 @@ test('follow-up fields survive older clients, distinguish omission from clearing
     assert(!JSON.stringify((await api(db, '/api/inquiries')).data).includes(value));
     assert(!JSON.stringify((await api(db, '/api/inquiries/1')).data).includes(value));
   }
-  assert.equal((await api(db, '/api/admin/inquiries/1', { owner: 'owner-b' })).status, 404);
+  assert.equal((await api(db, '/api/admin/inquiries/1', { owner: 'owner-b' })).status, 403);
 });
 
 test('preparation rejects invalid fields and protects retained pair history and limits', async t => {

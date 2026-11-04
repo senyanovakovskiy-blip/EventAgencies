@@ -2,6 +2,7 @@ import handler from "vinext/server/fetch-handler";
 import { runWithConnectorBinding } from "../lib/connector-context";
 import type { ConnectorBinding } from "../lib/connector-contract.mjs";
 import { handleCloudApi } from '../cloud/api.mjs';
+import { protectAdminPage } from '../cloud/admin-access.mjs';
 
 const worker = {
   fetch(request: Request, env: Cloudflare.Env, ctx: ExecutionContext<{ CONNECTORS?: ConnectorBinding }>) {
@@ -30,11 +31,8 @@ const worker = {
       const url = new URL(request.url);
       if (url.pathname.startsWith('/api/')) return new Response('Not found', {status:404});
       if (!['GET','HEAD'].includes(request.method)) return new Response('Method not allowed', {status:405});
-      if (url.pathname === '/admin' || url.pathname.startsWith('/admin/')) {
-        if (!request.headers.get('oai-authenticated-user-id')) {
-          return Response.redirect(url.origin + '/signin-with-chatgpt?return_to=/admin', 302);
-        }
-      }
+      const adminResponse = protectAdminPage(request, env);
+      if (adminResponse) return adminResponse;
       if (env.ASSETS) {
         // The asset binding maps directory index files to clean URLs.
         const asset = await env.ASSETS.fetch(new Request(url, request));
