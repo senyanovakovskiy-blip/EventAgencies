@@ -566,6 +566,18 @@ html:root .ea-save-button{pointer-events:auto}
 .agency-compare-table .comparison-cell-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;white-space:normal}
 .agency-compare-table .comparison-cell-actions>button{box-sizing:border-box;max-width:100%;min-height:44px;padding:10px 14px;border:1px solid var(--line);border-radius:6px;color:var(--color-highlight);font:13px/1.5 Motion,Arial,sans-serif;text-decoration:none;white-space:normal;overflow-wrap:anywhere;text-align:left}
 .comparison-note-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.project-presentation{min-width:0;white-space:normal;overflow-wrap:anywhere;color:var(--ink);font:14px/1.65 Motion,Arial,sans-serif}
+.project-agency-card>.project-presentation{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.project-presentation .project-presentation-context{margin:0}
+.project-presentation-context>strong{display:block;color:var(--muted);font-size:12px;line-height:1.5;font-weight:500}
+.project-presentation-title{display:block;margin-top:6px;white-space:pre-wrap}
+.project-presentation .project-presentation-copy{margin:12px 0 0;white-space:pre-wrap}
+.project-presentation-details{display:grid;gap:14px;margin:14px 0 0}
+.project-presentation-details>div{min-width:0}
+.project-presentation-details dt{color:var(--muted);font-size:12px;line-height:1.5;font-weight:500}
+.project-presentation-details dd{margin:5px 0 0;white-space:pre-wrap}
+.project-presentation-empty{color:var(--muted);font:13px/1.6 Motion,Arial,sans-serif;overflow-wrap:anywhere}
+.project-presentation .project-presentation-empty{margin:12px 0 0}
 #project-note-editor{box-sizing:border-box;width:min(620px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:28px;border:1px solid var(--line);border-radius:16px;background:var(--color-bg);color:var(--ink);font-family:Motion,Arial,sans-serif}
 #project-note-editor::backdrop{background:#07100dd9;backdrop-filter:blur(8px)}
 #project-note-editor>.eyebrow{display:block;margin-right:32px;font-size:11px}

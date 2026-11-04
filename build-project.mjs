@@ -1,5 +1,19 @@
+const publicText=value=>typeof value==='string'?value:'';
+
 export function projectBody(data){
-const reference={types:data.types,agencies:data.agencies.map(({slug,name,types,city,geography,services,budgetConditions,website})=>({slug,name,types,city,geography,services,budgetConditions,website})),projects:data.projects.map(({slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source})=>({slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source}))};
+// data is the public catalogue from presentCatalog. Keep the embedded copy
+// explicit so future presentation fields cannot enter the project implicitly.
+const reference={
+ types:data.types,
+ agencies:data.agencies.map(({slug,name,types,city,geography,services,budgetConditions,website,presentation})=>({
+  slug,name,types,city,geography,services,budgetConditions,website,
+  presentation:{lead:publicText(presentation?.lead),fit:publicText(presentation?.fit)}
+ })),
+ projects:data.projects.map(({slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source,presentation})=>({
+  slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source,
+  presentation:{lead:publicText(presentation?.lead),fit:publicText(presentation?.fit),participation:publicText(presentation?.participation)}
+ }))
+};
 return `<main class="my-project" id="content">
 <section class="project-intro" id="project-overview" tabindex="-1"><div><span class="eyebrow">Мой проект</span><h1>Ваше мероприятие</h1><p>Нажмите на поле, чтобы дополнить событие. Команды можно выбрать позже.</p><div id="project-summary" class="brief-summary" role="group" aria-label="Описание вашего события"></div><section class="project-wishes" aria-labelledby="project-wishes-title"><div class="project-wishes-heading"><h2 id="project-wishes-title">Пожелания</h2><button type="button" data-edit-brief data-brief-field="description" data-edit-wishes aria-label="Изменить пожелания к событию">Добавить</button></div><p id="project-description"></p><button class="project-wishes-toggle" type="button" data-toggle-wishes-summary aria-controls="project-description" aria-expanded="false" hidden>Читать пожелания полностью ↓</button></section><p id="project-wishes-status" role="status" tabindex="-1"></p><div class="project-intro-actions"><button class="primary-action" data-edit-brief>Описать мероприятие</button><a class="secondary-action" href="#project-handoff">Перейти к заявке</a><button class="secondary-action" type="button" data-download-brief>Скачать мой черновик</button></div></div><aside class="project-intro-note"><span>До трёх команд для сравнения</span><p>Подборка сохраняется в этом браузере.</p><a href="/catalog?view=projects">Продолжить выбор ↗</a><button class="secondary-action account-copy-opener" type="button" data-open-account-copies data-cloud-copy hidden>Копии в аккаунте…</button><p class="account-copy-status" data-account-copy-status data-cloud-copy hidden role="status"></p></aside></section>
 <nav class="project-section-nav" aria-label="Разделы моего проекта"><a href="#project-overview" aria-current="location">Событие</a><a href="#project-comparison">Команды <span data-workspace-team-count aria-label="Количество выбранных команд">0</span></a><a href="#work-references">Примеры <span data-workspace-reference-count aria-label="Количество сохранённых примеров">0</span></a><a href="#project-handoff">Заявка <span aria-hidden="true">↗</span></a></nav>
