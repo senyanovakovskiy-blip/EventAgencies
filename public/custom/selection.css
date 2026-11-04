@@ -653,6 +653,14 @@ html:root .ea-save-button{pointer-events:auto}
 #wishes-dialog h2{font-size:30px;line-height:1.15;font-weight:400;margin:20px 28px 16px 0}
 #wishes-dialog p{font-size:14px;line-height:1.6}
 #wishes-dialog label{display:block;margin:20px 0 10px;font-size:15px}
+#wishes-dialog .wishes-notes-choice{display:flex;align-items:flex-start;gap:10px;margin:18px 0 8px;font-size:14px;line-height:1.5;cursor:pointer}
+.wishes-notes-choice input{width:18px;height:18px;flex:none;margin:2px 0 0;accent-color:var(--color-highlight)}
+.wishes-notes-choice input:disabled{opacity:.4;cursor:default}
+#wishes-dialog .wishes-source-count{font-size:12px;color:var(--muted);line-height:1.5;margin:18px 0 12px}
+#wishes-dialog .wishes-options-help{font-size:12px;color:var(--muted);line-height:1.5;margin:8px 0}
+.wishes-reset-text{display:inline-flex;align-items:center;min-height:40px;padding:8px 0;border:0;background:transparent;color:var(--color-highlight);font:12px/1.5 Motion,Arial,sans-serif;cursor:pointer}
+.wishes-reset-text[hidden]{display:none}
+#wishes-dialog :is(button,input):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 #wishes-dialog textarea{box-sizing:border-box;display:block;width:100%;resize:vertical;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--color-bg,var(--chrome));color:inherit;font:16px/1.5 Motion,Arial,sans-serif}
 #wishes-dialog textarea:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 #wishes-dialog .draft-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:18px}

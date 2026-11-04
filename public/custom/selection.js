@@ -4,6 +4,7 @@ import {setupBriefSummary} from './project-brief.js';
 import {setupProjectExport} from './project-export.js';
 import {setupProjectHistory} from './project-history.js';
 import {setupAccountProjectCopies} from './account-project-copies.js';
+import {normalizeReferences} from './reference-store.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -64,7 +65,7 @@ function refresh(){
 document.addEventListener('click',async event=>{
  if(event.target.closest('[data-toggle-help-selection]')){setHelpSelection(!helpSelectionExpanded);return;}
  if(event.target.closest('[data-go-to-contact]')){event.preventDefault();focusContact();return;}
- const wishes=event.target.closest('[data-add-wishes-work]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
+ const wishes=event.target.closest('[data-add-wishes-work],[data-add-wishes-selection]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
  const view=event.target.closest('[data-comparison-view]');if(view){comparisonView=view.dataset.comparisonView;rememberProjectView();renderProject();return;}
  const move=event.target.closest('[data-move-agency]');if(move){
   const agencySlug=move.dataset.moveAgency,direction=Number(move.dataset.moveDirection),next=moveAgency(draft,agencySlug,direction);
@@ -230,46 +231,64 @@ function setHelpSelection(expanded){
  if(content)content.hidden=!expanded;
  if(button){button.setAttribute('aria-expanded',String(expanded));button.textContent=expanded?'Свернуть подборку':'Посмотреть подборку (необязательно)';}
 }
-let wishesDialog=null,wishesTrigger=null,wishesBase='';
+let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesSkipped=0,wishesUnavailable=0,wishesOpening=false;
+function syncWishesOptions(){
+ const changed=wishesDialog.querySelector('#wishes-addition').value!==wishesGenerated,hasNotes=wishesWorks.some(item=>item.note.trim());
+ wishesDialog.querySelector('[data-wishes-notes]').disabled=changed||!hasNotes;
+ wishesDialog.querySelector('[data-reset-wishes-text]').hidden=!changed;
+ wishesDialog.querySelector('[data-wishes-options-help]').textContent=changed?'Вы изменили текст. Чтобы переключить заметки, сначала нажмите «Сбросить правки».':hasNotes?'Включите заметки, если хотите передать их вместе с примерами.':'У выбранных примеров пока нет личных заметок.';
+}
+function regenerateWishes(){
+ const includeNotes=wishesDialog.querySelector('[data-wishes-notes]').checked;
+ const fragments=wishesWorks.map(item=>wishesAddition(item.work,includeNotes?item.note:'',location.origin)),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
+ wishesSkipped=fragments.length-fresh.length;wishesGenerated=fresh.join('\n\n');wishesDialog.querySelector('#wishes-addition').value=wishesGenerated;
+ wishesDialog.querySelector('[data-wishes-source-count]').textContent='Примеров: '+wishesWorks.length+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
+ syncWishesOptions();updateWishesPreview();
+}
 function updateWishesPreview(message=''){
  const addition=wishesDialog.querySelector('#wishes-addition').value;
  wishesBase=draft.brief.description;
  const merged=mergeWishes(wishesBase,addition);
  wishesDialog.querySelector('#wishes-preview').value=merged.text;
  wishesDialog.querySelector('[data-confirm-wishes]').disabled=merged.result!=='added';
- const messages={empty:'Добавьте текст примера или заметки.',duplicate:'Этот текст уже есть в пожеланиях.', 'too-long':'В пожеланиях получится '+merged.text.length+' символов. Максимум — 3000; сократите добавляемый текст.'};
+ const messages={empty:wishesSkipped===wishesWorks.length?'Выбранный текст примеров уже есть в пожеланиях.':'Добавьте текст примера или заметки.',duplicate:'Этот текст уже есть в пожеланиях.', 'too-long':'В пожеланиях получится '+merged.text.length+' символов. Максимум — 3000; сократите добавляемый текст или выберите меньше примеров.'};
  wishesDialog.querySelector('[data-wishes-status]').textContent=messages[merged.result]||message||'В пожеланиях будет '+merged.text.length+' из 3000 символов. Проверьте текст перед добавлением.';
  return merged;
 }
 async function openWishes(trigger){
+ if(wishesOpening||wishesDialog?.open)return;wishesOpening=true;
  try{
-  const data=await getData(),agencySlug=trigger.dataset.addWishesAgency;
-  const work=data.projects.find(p=>p.slug===trigger.dataset.addWishesWork&&(p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));
-  if(!work)return;
+  const data=await getData(),agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');
+  const slugs=batch?normalizeReferences(JSON.parse(trigger.dataset.addWishesSelection)):[trigger.dataset.addWishesWork];
+  wishesWorks=slugs.flatMap(slug=>{const work=data.projects.find(p=>p.slug===slug&&(batch||p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));return work?[{work,note:draft.workNotes[workNoteKey(batch?work.agencySlug:agencySlug,work.slug)]||''}]:[];});
+  wishesUnavailable=slugs.length-wishesWorks.length;
+  if(!wishesWorks.length){notice('Примеры сейчас недоступны','Откройте сохранённые примеры и выберите работы заново.');return;}
   if(!wishesDialog){
    wishesDialog=document.createElement('dialog');wishesDialog.id='wishes-dialog';wishesDialog.setAttribute('aria-labelledby','wishes-title');
-   wishesDialog.innerHTML=`<button class="brief-close" type="button" data-cancel-wishes aria-label="Закрыть добавление в пожелания">×</button><h2 id="wishes-title">Добавить в пожелания?</h2><p>Этот текст войдёт в описание заявки после вашего подтверждения. Личная заметка и сохранённый пример останутся на месте. Сейчас ничего не отправляется.</p><label for="wishes-addition">Текст, который добавится</label><textarea id="wishes-addition" rows="5" aria-describedby="wishes-status"></textarea><label for="wishes-preview">Пожелания после добавления</label><textarea id="wishes-preview" rows="7" readonly></textarea><p id="wishes-status" data-wishes-status role="status"></p><div class="draft-result-actions"><button type="button" class="primary-action" data-confirm-wishes>Добавить в пожелания</button><button type="button" class="secondary-action" data-cancel-wishes>Отмена</button></div>`;
+   wishesDialog.innerHTML=`<button class="brief-close" type="button" data-cancel-wishes aria-label="Закрыть добавление в пожелания">×</button><h2 id="wishes-title">Добавить в пожелания?</h2><p>Этот текст войдёт в описание заявки после вашего подтверждения. Личные заметки и сохранённые примеры останутся на месте. Сейчас ничего не отправляется.</p><p class="wishes-source-count" data-wishes-source-count></p><label class="wishes-notes-choice"><input type="checkbox" data-wishes-notes> Включить личные заметки</label><p class="wishes-options-help" data-wishes-options-help></p><button class="wishes-reset-text" type="button" data-reset-wishes-text hidden>Сбросить правки</button><label for="wishes-addition">Текст, который добавится</label><textarea id="wishes-addition" rows="5" aria-describedby="wishes-status"></textarea><label for="wishes-preview">Пожелания после добавления</label><textarea id="wishes-preview" rows="7" readonly></textarea><p id="wishes-status" data-wishes-status role="status"></p><div class="draft-result-actions"><button type="button" class="primary-action" data-confirm-wishes>Добавить в пожелания</button><button type="button" class="secondary-action" data-cancel-wishes>Отмена</button></div>`;
    document.body.append(wishesDialog);
-   wishesDialog.querySelector('#wishes-addition').addEventListener('input',()=>updateWishesPreview());
+   wishesDialog.querySelector('#wishes-addition').addEventListener('input',()=>{syncWishesOptions();updateWishesPreview();});
+   wishesDialog.querySelector('[data-wishes-notes]').addEventListener('change',regenerateWishes);
+   wishesDialog.querySelector('[data-reset-wishes-text]').addEventListener('click',()=>{regenerateWishes();wishesDialog.querySelector('#wishes-addition').focus({preventScroll:true});});
    wishesDialog.querySelectorAll('[data-cancel-wishes]').forEach(button=>button.addEventListener('click',()=>wishesDialog.close()));
    wishesDialog.addEventListener('close',()=>{
-    const replacement=wishesTrigger&&document.querySelector(`[data-add-wishes-work="${wishesTrigger.dataset.addWishesWork}"][data-add-wishes-agency="${wishesTrigger.dataset.addWishesAgency}"]`);
+    const replacement=wishesTrigger?.hasAttribute('data-add-wishes-selection')?document.querySelector('.reference-batch-open'):wishesTrigger&&document.querySelector(`[data-add-wishes-work="${wishesTrigger.dataset.addWishesWork}"][data-add-wishes-agency="${wishesTrigger.dataset.addWishesAgency}"]`);
     (wishesTrigger?.isConnected?wishesTrigger:replacement)?.focus({preventScroll:true});
    });
    wishesDialog.querySelector('[data-confirm-wishes]').addEventListener('click',async()=>{
-    if(wishesBase!==draft.brief.description){updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
+    if(wishesBase!==draft.brief.description){if(wishesDialog.querySelector('#wishes-addition').value===wishesGenerated)regenerateWishes();updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
     const merged=updateWishesPreview();if(merged.result!=='added')return;
     try{draft=writeDraft(localStorage,updateBrief(draft,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
     catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось сохранить пожелания. Разрешите хранение данных сайта и попробуйте снова.';return;}
     await renderProject();wishesDialog.close();
-    const status=document.getElementById('project-wishes-status');status.textContent='Пример добавлен в пожелания. Заявка ещё не отправлена.';status.focus({preventScroll:true});
+    const status=document.getElementById('project-wishes-status');status.textContent='Пожелания дополнены. Заявка ещё не отправлена.';status.focus({preventScroll:true});
    });
   }
   wishesTrigger=trigger;
-  const note=draft.workNotes[workNoteKey(agencySlug,work.slug)]||'';
-  wishesDialog.querySelector('#wishes-addition').value=wishesAddition(work,note,location.origin);
-  updateWishesPreview();wishesDialog.showModal();wishesDialog.querySelector('#wishes-addition').focus();
+  wishesDialog.querySelector('[data-wishes-notes]').checked=!batch&&wishesWorks.some(item=>item.note.trim());
+  regenerateWishes();wishesDialog.showModal();wishesDialog.querySelector('#wishes-addition').focus();
  }catch{notice('Не удалось подготовить пожелание','Описание и личные заметки не изменены. Попробуйте ещё раз.');}
+ finally{wishesOpening=false;}
 }
 function syncUnknown(form){form.elements.budget.disabled=form.elements.budgetHelp.checked;form.elements.date.disabled=form.elements.dateUnknown.checked;}
 function updateBriefDescriptionCount(form){
