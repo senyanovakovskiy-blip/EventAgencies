@@ -1,10 +1,11 @@
 import {preparationFields} from './preparation-model.js';
 import {PREPARATION_COMPARISON_LIMIT as LIMIT,getPreparationComparisonOptions,buildPreparationComparison} from './preparation-comparison.js';
+import {discussionPlanMarkup} from './discussion-plan-ui.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const setText=(node,value)=>{if(node.textContent!==value)node.textContent=value;};
 export function preparationComparisonMarkup(){
- return `<section class="preparation-comparison" data-preparation-comparison><button type="button" class="secondary" data-comparison-toggle aria-expanded="false" aria-controls="preparation-comparison-panel">Сравнить варианты подготовки</button><div id="preparation-comparison-panel" hidden><h4>Сравнение подготовки</h4><p class="small muted">Выберите до трёх вариантов. Здесь показан ваш текст с этой страницы, включая несохранённые правки. Выбор для сравнения не меняет заявку и не означает интерес клиента.</p><div class="preparation-comparison-picker"><label>Вариант для сравнения<select data-comparison-picker aria-describedby="preparation-comparison-count"><option value="">Выберите вариант</option></select></label><button type="button" class="secondary" data-comparison-add disabled>Добавить в сравнение</button></div><p id="preparation-comparison-count" class="small muted" data-comparison-count role="status" aria-atomic="true"></p><ul class="preparation-comparison-selection" data-comparison-selection></ul><p class="small muted" data-comparison-empty></p><div data-comparison-table></div><details class="preparation-comparison-presentation" data-comparison-presentation hidden><summary>Текущая подача сайта</summary><p class="small muted" data-comparison-notice></p><div class="preparation-comparison-presentations" data-comparison-presentations></div></details></div></section>`;
+ return `<section class="preparation-comparison" data-preparation-comparison><button type="button" class="secondary" data-comparison-toggle aria-expanded="false" aria-controls="preparation-comparison-panel">Сравнить варианты подготовки</button><div id="preparation-comparison-panel" hidden><h4>Сравнение подготовки</h4><p class="small muted">Выберите до трёх вариантов. Здесь показан ваш текст с этой страницы, включая несохранённые правки. Выбор для сравнения не меняет заявку и не означает интерес клиента.</p><div class="preparation-comparison-picker"><label>Вариант для сравнения<select data-comparison-picker aria-describedby="preparation-comparison-count"><option value="">Выберите вариант</option></select></label><button type="button" class="secondary" data-comparison-add disabled>Добавить в сравнение</button></div><p id="preparation-comparison-count" class="small muted" data-comparison-count role="status" aria-atomic="true"></p><ul class="preparation-comparison-selection" data-comparison-selection></ul><p class="small muted" data-comparison-empty></p>${discussionPlanMarkup('preparation-comparison-plan',{comparison:true})}<div data-comparison-table></div><details class="preparation-comparison-presentation" data-comparison-presentation hidden><summary>Текущая подача сайта</summary><p class="small muted" data-comparison-notice></p><div class="preparation-comparison-presentations" data-comparison-presentations></div></details></div></section>`;
 }
 function pageCopy(copy,label,empty){
  return `<section><h6>${label}</h6>${copy?`<dl>${Object.entries({lead:'Краткое описание',intro:'Описание',fit:'Если вам близко',participation:'Участие команды'}).filter(([key])=>copy[key]?.trim()).map(([key,title])=>`<div><dt>${title}</dt><dd>${esc(copy[key])}</dd></div>`).join('')}</dl>`:`<p class="muted">${empty}</p>`}</section>`;
@@ -18,12 +19,13 @@ function tableMarkup(columns){
 
 // View state only. The caller supplies fresh contexts and preparation on sync.
 // No persistence, draft generation or editable preparation controls live here.
-export function wirePreparationComparison(form,{catalog,receipt,getContexts,getPreparation,onEdit}){
+export function wirePreparationComparison(form,{catalog,receipt,getContexts,getPreparation,onEdit,onViewChange=()=>{}}){
  const root=form.querySelector('[data-preparation-comparison]'),toggle=root.querySelector('[data-comparison-toggle]'),panel=root.querySelector('#preparation-comparison-panel');
  const picker=root.querySelector('[data-comparison-picker]'),add=root.querySelector('[data-comparison-add]'),count=root.querySelector('[data-comparison-count]'),selection=root.querySelector('[data-comparison-selection]'),empty=root.querySelector('[data-comparison-empty]');
  const table=root.querySelector('[data-comparison-table]'),presentation=root.querySelector('[data-comparison-presentation]'),presentations=root.querySelector('[data-comparison-presentations]');
- let selectedKeys=[],options=[],model=null,optionsKey='',selectionKey='',structureKey='';const labels=new Map();
+ let selectedKeys=[],options=[],model=null,optionsKey='',selectionKey='',structureKey='',notifiedView='';const labels=new Map();
  const busy=()=>form.dataset.busy==='true';
+ function notifyView(){const next=JSON.stringify([selectedKeys,!panel.hidden]);if(next!==notifiedView){notifiedView=next;onViewChange();}}
  function controls(){
   const candidates=options.filter(option=>!selectedKeys.includes(option.key));
   toggle.disabled=busy();picker.disabled=busy()||selectedKeys.length>=LIMIT||!candidates.length;
@@ -52,14 +54,15 @@ export function wirePreparationComparison(form,{catalog,receipt,getContexts,getP
   presentation.hidden=!model.columns.length;
   setText(count,'Выбрано для сравнения: '+selectedKeys.length+' / '+LIMIT+'.'+(model.unknownKeys.length?' Доступных вариантов: '+model.columns.length+'. Уберите недоступные вручную.':selectedKeys.length===LIMIT?' Чтобы добавить другой вариант, сначала уберите один из выбранных.':''));
   setText(empty,!options.length&&!selectedKeys.length?'Пока нет вариантов для сравнения. Добавьте рекомендацию или откройте работу для обсуждения.':!selectedKeys.length?'Выберите варианты выше. Сравнение начнётся только после добавления.':model.columns.length===1?'Добавьте ещё один вариант, чтобы сопоставить подготовку.':!model.columns.length?'Выбранные контексты сейчас недоступны. Их можно убрать и выбрать другие.':'');
-  empty.hidden=!empty.textContent;setOpen(!panel.hidden);controls();
+  empty.hidden=!empty.textContent;setOpen(!panel.hidden);controls();notifyView();
  }
  // These controls affect only the view and must not enter the editor's change flow.
  root.addEventListener('input',event=>event.stopPropagation());
  root.addEventListener('change',event=>{event.stopPropagation();if(busy())return;controls();});
  root.addEventListener('click',event=>{
+  if(event.target.closest('[data-discussion-plan]'))return;
   const button=event.target.closest('button');if(!button||!root.contains(button)||busy())return;
-  if(button===toggle){setOpen(panel.hidden);return;}
+  if(button===toggle){setOpen(panel.hidden);notifyView();return;}
   if(button===add){
    const option=options.find(item=>item.key===picker.value);if(!option||selectedKeys.includes(option.key)||selectedKeys.length>=LIMIT)return;
    selectedKeys.push(option.key);picker.value='';sync();
