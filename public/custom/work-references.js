@@ -1,7 +1,8 @@
 import {readDraft,workNoteKey} from './project-store.js';
 import {escapeHtml as esc} from './work-presentation.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
-import {setupReferenceBatch,syncReferenceBatch} from './reference-batch.js';
+import {setupReferenceBatch,syncReferenceBatch,resetReferenceBatch} from './reference-batch.js';
+import {PREVIOUS_PROJECT_KEY} from './project-copy-client.js';
 import {referenceNotesForWork,referenceNoteForTeam} from './reference-note-model.js';
 import {setupReferenceNoteCopy} from './reference-note-copy.js';
 import {setupReferenceNoteClear} from './reference-note-clear.js';
@@ -98,6 +99,7 @@ function sortReferences(host,works){
  if(referenceView.sort==='agency')sorted.sort((a,b)=>String(a.client||'').localeCompare(String(b.client||''),'ru')||a.fullTitle.localeCompare(b.fullTitle,'ru'));
  const grid=host.querySelector('#saved-reference-grid'),cards=new Map([...grid.querySelectorAll('[data-saved-reference]')].map(card=>[card.dataset.savedReference,card]));
  const fragment=document.createDocumentFragment();sorted.forEach(work=>fragment.append(cards.get(work.slug)));grid.append(fragment);
+ syncReferenceBatch(host);
 }
 function showReferenceMode(host){
  host.dataset.referenceMode=referenceView.mode;
@@ -256,8 +258,15 @@ document.addEventListener('click',async event=>{
  if(!remove&&!next.includes(slug)){announce('Сохранено 200 примеров. Уберите один, чтобы добавить новый.');return;}
  try{localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReferences=remove?[{slug,index}]:null;sync();await renderReferences();announce(remove?'Пример убран.':'Работа сохранена в «Моём проекте». Агентство не добавлено.',remove);if(b.dataset.removeReference)status.querySelector('[data-undo-reference]')?.focus({preventScroll:true});}catch{announce('Не удалось сохранить пример. Проверьте доступ к хранилищу браузера.');}
 });
-addEventListener('storage',event=>{if(event.key===REFERENCE_KEY||event.key===null){try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));sync();renderReferences();}catch{}}});
+addEventListener('storage',event=>{
+ // The backup record marks project replacement in another tab, even when the
+ // new project retains exactly the same saved references.
+ if(event.key===PREVIOUS_PROJECT_KEY||event.key===null)resetReferenceBatch(document.getElementById('work-references'));
+ if(event.key===REFERENCE_KEY||event.key===PREVIOUS_PROJECT_KEY||event.key===null){try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));sync();renderReferences();}catch{}}
+});
+document.addEventListener('ea:project-started',()=>resetReferenceBatch(document.getElementById('work-references')));
 document.addEventListener('ea:project-copy-restored',()=>{
+ resetReferenceBatch(document.getElementById('work-references'));
  try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));removedReferences=null;clearTimeout(timer);status.replaceChildren();referenceView={...referenceView,query:'',agency:'',onlyNotes:false};rememberView();sync();renderReferences();}catch{}
 });
 new MutationObserver(changes=>{if(changes.some(c=>[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-reference-work]')||n.querySelector?.('[data-reference-work]')))))sync();}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});

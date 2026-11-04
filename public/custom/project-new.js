@@ -60,6 +60,7 @@ export function setupNewProject({anchor,getState,canStart,onStarted,onStorageIss
    if(JSON.stringify(current)!==JSON.stringify(source)){source=current;render();status.textContent='Проект изменился. Описание изменений обновлено — нажмите кнопку ещё раз, чтобы продолжить.';return;}
    const copy=nextCopy();
    if(changesProject(copy)){restoreProjectCopy(copy,getState);onStarted();}
+   document.dispatchEvent(new Event('ea:project-started'));
    continueToBrief=true;dialog.close();
   }catch(error){status.textContent=errorText(error);onStorageIssue();}
  });
