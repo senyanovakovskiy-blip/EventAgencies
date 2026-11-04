@@ -4,7 +4,10 @@ import {getPreparationComparisonOptions,buildPreparationComparison} from './prep
 
 const title='Внутренний план разговора';
 const comparisonTitle='Внутренний план обсуждения вариантов';
+const agendaTitle='Повестка разговора';
+const comparisonAgendaTitle='Повестка обсуждения вариантов';
 const planNotice='Собрано из текущих данных страницы, включая возможные несохранённые правки. Это внутренний рабочий план, не подтверждённый сценарий и не сообщение клиенту.';
+const agendaNotice='Повестка собрана из текущих записей страницы, включая несохранённые правки. Выбранные поля приведены целиком; полный бриф, описания и остальные записи доступны в полном плане. Это внутренний материал для обсуждения. Статусы согласования остаются в соответствующих разделах заявки.';
 const presentationFields={lead:'Краткое описание',intro:'Описание',fit:'Если вам близко',participation:'Участие команды и его границы'};
 const valueBlock=(label,value,empty='Не заполнено.')=>label+'\n'+(typeof value==='string'&&value.length?value:empty);
 
@@ -24,6 +27,16 @@ function pageSection(heading,copy){
 function requireCurrentInputs(preparation,workflow){
  if(!Array.isArray(preparation))throw new TypeError('Pass current readPreparation(form) values as preparation');
  if(!workflow||!workflow.brief||typeof workflow.brief!=='object'||Array.isArray(workflow.brief))throw new TypeError('Pass current readEditor(form).workflow as workflow');
+}
+function comparisonSelection({selectedKeys,contexts,preparation,catalog,receipt}){
+ const iterable=selectedKeys&&typeof selectedKeys!=='string'&&typeof selectedKeys[Symbol.iterator]==='function'?selectedKeys:[];
+ const requestedKeys=[...new Set([...iterable].filter(key=>typeof key==='string'))];
+ const comparison=buildPreparationComparison({selectedKeys:requestedKeys,contexts,preparation,catalog,receipt});
+ const reasons=[];
+ if(!requestedKeys.length)reasons.push('empty_selection');
+ if(comparison.unknownKeys.length)reasons.push('unknown_context');
+ if(requestedKeys.length>comparison.limit)reasons.push('too_many_variants');
+ return {requestedKeys,comparison,reasons};
 }
 const formatSections=sections=>sections.filter(section=>section!=='').join('\n\n');
 function briefSection(workflow){
@@ -52,6 +65,18 @@ function variantSections(column){
   ...Object.entries(preparationDraftFields).map(([key,{label}])=>valueBlock(label,column.fields[key],'Пока не записано.')),
   'После обсуждения — записи оператора\nРучные записи отдельно от исходных гипотез. Они не меняют отметки подтверждения брифа, согласий сторон и состоявшегося разговора. Условия и изменения сценария согласуются отдельно.',
   ...Object.entries(preparationFollowUpFields).map(([key,{label}])=>valueBlock(label,column.fields[key],'Пока не записано.'))
+ ];
+}
+function agendaBriefSection(workflow){
+ return 'Ориентиры из рабочего брифа\n\n'+['goal','expectations'].map(key=>valueBlock(briefFields[key],workflow.brief[key])).join('\n\n');
+}
+function agendaVariantSections(column){
+ return [
+  'Перед разговором — записи и гипотезы оператора',
+  ...['attraction','questions'].map(key=>valueBlock(preparationDraftFields[key].label,column.fields[key],'Пока не записано.')),
+  'После обсуждения — ручные записи оператора',
+  ...['clientFeedback','scenarioChanges'].map(key=>valueBlock(preparationFollowUpFields[key].label,column.fields[key],'Пока не записано.')),
+  valueBlock(preparationDraftFields.nextStep.label,column.fields.nextStep,'Пока не записано.')
  ];
 }
 
@@ -114,14 +139,8 @@ export function buildDiscussionPlan({entry,preparation,workflow,catalog,receipt,
  */
 export function buildComparisonDiscussionPlan({selectedKeys=[],contexts,preparation,workflow,catalog,receipt,siteOrigin}={}){
  requireCurrentInputs(preparation,workflow);
- const iterable=selectedKeys&&typeof selectedKeys!=='string'&&typeof selectedKeys[Symbol.iterator]==='function'?selectedKeys:[];
- const requestedKeys=[...new Set([...iterable].filter(key=>typeof key==='string'))];
- const comparison=buildPreparationComparison({selectedKeys:requestedKeys,contexts,preparation,catalog,receipt});
+ const {requestedKeys,comparison,reasons}=comparisonSelection({selectedKeys,contexts,preparation,catalog,receipt});
  const {selectedKeys:resolvedKeys,unknownKeys,overflowKeys,limit}=comparison;
- const reasons=[];
- if(!requestedKeys.length)reasons.push('empty_selection');
- if(unknownKeys.length)reasons.push('unknown_context');
- if(requestedKeys.length>limit)reasons.push('too_many_variants');
  const result={
   status:reasons.length?'unavailable':'ready',reason:reasons[0]||null,reasons,message:'',
   key:'comparison:'+JSON.stringify(requestedKeys),title:comparisonTitle,contextTitle:'План вариантов недоступен',
@@ -145,6 +164,79 @@ export function buildComparisonDiscussionPlan({selectedKeys=[],contexts,preparat
   ...comparison.columns.flatMap((column,index)=>[
    'Вариант '+(index+1)+' — '+column.label,
    ...contextSections(column,result.variants[index].links),...variantSections(column)
+  ])
+ ]);
+ return result;
+}
+
+/**
+ * Separate plain-text agenda for ONE active agency/work pair. Arguments,
+ * freshness requirements, invalid-pair null result, exact-pair receipt fallback,
+ * warnings and safe page links match buildDiscussionPlan.
+ *
+ * Returns {kind:'agenda', key:'agenda:'+pairKey, title, contextTitle, text,
+ *          warnings, links}. Only brief.goal / brief.expectations and the pair's
+ * attraction, questions, clientFeedback, scenarioChanges and nextStep strings
+ * enter the agenda. Included strings are carried verbatim, including line breaks
+ * and whitespace; missing/empty values receive explicit labels. Other brief,
+ * preparation and editorial fields remain available in the separate full plan.
+ *
+ * No summaries, questions, interest, next steps or scenario changes are inferred.
+ * No contact, consent, history or private-dossier properties are selected; explicit
+ * free text is not inspected or redacted. UI must render text as plain text.
+ * Use key AND text for stale detection in a separate agenda snapshot: changes to
+ * omitted fields do not change this projection. No storage or side effects.
+ */
+export function buildDiscussionAgenda({entry,preparation,workflow,catalog,receipt,siteOrigin}={}){
+ requireCurrentInputs(preparation,workflow);
+ const option=getPreparationComparisonOptions([entry],catalog,receipt)[0];
+ if(!option)return null;
+ const comparison=buildPreparationComparison({selectedKeys:[option.key],contexts:[entry],preparation,catalog,receipt});
+ const column=comparison.columns[0],links=planLinks(column,safeOrigin(siteOrigin));
+ return {
+  kind:'agenda',key:'agenda:'+column.key,title:agendaTitle,contextTitle:column.label,
+  text:formatSections([agendaTitle,agendaNotice,...contextSections(column,links),agendaBriefSection(workflow),...agendaVariantSections(column)]),
+  warnings:column.warnings,links
+ };
+}
+
+/**
+ * Agenda for 1–3 explicitly selected contexts in first-selected order. Inputs
+ * and result diagnostics match buildComparisonDiscussionPlan; kind:'agenda' and
+ * key:'comparison-agenda:'+JSON.stringify(requestedKeys) keep its snapshot distinct.
+ * The two brief fields appear once, followed by the five agenda fields per pair.
+ * Unknown contexts, empty selection and overflow make the ENTIRE agenda unavailable
+ * with text:'' and variants:[]; no partial or replacement selection is exposed.
+ * Missing/unlinked catalogue entries remain usable with the original warnings.
+ * Verbatim-field, privacy and staleness guarantees match buildDiscussionAgenda.
+ */
+export function buildComparisonDiscussionAgenda({selectedKeys=[],contexts,preparation,workflow,catalog,receipt,siteOrigin}={}){
+ requireCurrentInputs(preparation,workflow);
+ const {requestedKeys,comparison,reasons}=comparisonSelection({selectedKeys,contexts,preparation,catalog,receipt});
+ const {selectedKeys:resolvedKeys,unknownKeys,overflowKeys,limit}=comparison;
+ const result={
+  status:reasons.length?'unavailable':'ready',reason:reasons[0]||null,reasons,message:'',
+  kind:'agenda',key:'comparison-agenda:'+JSON.stringify(requestedKeys),title:comparisonAgendaTitle,contextTitle:'Повестка вариантов недоступна',
+  requestedKeys,selectedKeys:resolvedKeys,unknownKeys,overflowKeys,limit,text:'',variants:[]
+ };
+ if(reasons.length){
+  const messages={
+   empty_selection:'Выберите от одного до трёх вариантов для общей повестки.',
+   unknown_context:'Часть выбранных контекстов больше недоступна в сравнении. Обновите выбор; общая повестка не составлена.',
+   too_many_variants:'Выбрано больше трёх разных вариантов. Сократите выбор; общая повестка не составлена.'
+  };
+  result.message=reasons.map(reason=>messages[reason]).join(' ');return result;
+ }
+ const origin=safeOrigin(siteOrigin);
+ result.variants=comparison.columns.map(column=>({key:column.key,contextTitle:column.label,warnings:column.warnings,links:planLinks(column,origin)}));
+ result.contextTitle=result.variants.map((variant,index)=>(index+1)+'. '+variant.contextTitle).join(' | ');
+ result.text=formatSections([
+  comparisonAgendaTitle,agendaNotice,
+  'Варианты перечислены в порядке выбора в сравнении. Включение в повестку не подтверждает согласие клиента или команды.',
+  agendaBriefSection(workflow),
+  ...comparison.columns.flatMap((column,index)=>[
+   'Вариант '+(index+1)+' — '+column.label,
+   ...contextSections(column,result.variants[index].links),...agendaVariantSections(column)
   ])
  ]);
  return result;
