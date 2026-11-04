@@ -370,6 +370,33 @@ if(briefForm&&helpMode){
  openBrief();document.getElementById('brief-note').textContent='Опишите задачу. Выбирать агентства заранее не нужно.';
 }
 
+// Clear and undo use the latest saved project and require the displayed note to match.
+document.addEventListener('ea:reference-note-edit',event=>{
+ const field=event.target.closest?.('.reference-note-entry textarea[data-work-note]'),change=event.detail;
+ if(!field||!change||typeof change!=='object')return;
+ change.result={ok:false,code:'invalid'};
+ const agencySlug=field.dataset.workNote,workSlug=field.dataset.noteWork,slug=/^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+ if(!slug.test(agencySlug||'')||!slug.test(workSlug||'')||typeof change.expected!=='string'||typeof change.value!=='string'||change.value.length>1000)return;
+ if(!available){change.result={ok:false,code:'unsaved'};return;}
+ const status=field.closest('.work-note-block').querySelector('[role="status"]'),key=workNoteKey(agencySlug,workSlug);
+ const syncFields=value=>document.querySelectorAll('[data-work-note]').forEach(other=>{if(other.dataset.workNote===agencySlug&&other.dataset.noteWork===workSlug&&other.value!==value)other.value=value;});
+ try{
+  const current=readDraft(localStorage),currentText=current.workNotes[key]||'';
+  if(currentText!==change.expected){
+   draft=current;syncFields(currentText);if(status)status.textContent='Показан актуальный текст заметки.';
+   change.result={ok:false,code:'changed'};
+  }else{
+   draft=writeDraft(localStorage,updateWorkNote(current,agencySlug,workSlug,change.value));available=true;
+   syncFields(change.value);if(status)status.textContent='Сохранено · '+change.value.length+' / 1000';
+   change.result={ok:true};
+  }
+ }catch{
+  available=false;if(status)status.textContent='Не удалось сохранить. Текст заметки не изменён. Разрешите хранение данных и повторите действие.';
+  change.result={ok:false,code:'storage_error'};
+ }
+ const storageNote=document.getElementById('project-storage-note');if(storageNote)storageNote.hidden=available;
+ if(change.result.ok||change.result.code==='changed')field.dispatchEvent(new CustomEvent('ea:work-note-updated',{bubbles:true,detail:{agencySlug,workSlug}}));
+});
 document.addEventListener('input',event=>{
  const field=event.target.closest('[data-work-note]');if(!field)return;
  const next=updateWorkNote(draft,field.dataset.workNote,field.dataset.noteWork,field.value);

@@ -114,6 +114,13 @@ html[data-theme=dark] .case-page .case-photo-depth{box-shadow:0 3px 8px #0002,0 
 .saved-references .reference-notes [data-reference-note-copy-status]{min-height:0;margin:6px 0 0;overflow-wrap:anywhere}
 .saved-references .reference-notes [data-reference-note-copy-status]:empty{margin:0}
 
+/* Clear a note and restore its text with the same compact action row. */
+.saved-references .reference-notes .reference-note-actions>[data-clear-reference-note]{border-color:var(--line);color:var(--muted)}
+.saved-references .reference-notes .reference-note-actions>[data-undo-reference-note-clear]{border-color:var(--color-highlight);color:var(--color-highlight)}
+.saved-references .reference-notes .reference-note-actions>:is([data-clear-reference-note],[data-undo-reference-note-clear])[hidden]{display:none}
+.saved-references .reference-notes [data-reference-note-clear-status]{min-height:0;margin:6px 0 0;overflow-wrap:anywhere}
+.saved-references .reference-notes [data-reference-note-clear-status]:empty{margin:0}
+
 /* Add another team's note without leaving the saved example. */
 .saved-references .reference-notes .reference-note-add{display:flex;flex-wrap:wrap;gap:10px;min-width:0;margin-top:16px;padding-top:16px;border-top:1px solid var(--line)}
 .saved-references .reference-notes .reference-note-add>label{flex:1 1 100%;min-width:0;color:var(--ink);font-size:13px;line-height:1.5;overflow-wrap:anywhere}

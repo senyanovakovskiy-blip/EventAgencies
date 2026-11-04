@@ -16,10 +16,11 @@ export function referenceNoteForTeam(work,agencySlug,notes,agencies=[]){
 }
 
 /** Describe personal notes without removing entries missing from today's catalog. */
-export function referenceNotesForWork(work,notes,agencies=[]){
+export function referenceNotesForWork(work,notes,agencies=[],{includeEmptyKeys=[]}={}){
  const workSlug=work?.slug;
  if(!validSlug(workSlug))return [];
  const workNotes=normalizeDraft({version:1,workNotes:notes}).workNotes;
+ const retainedKeys=new Set(Array.isArray(includeEmptyKeys)?includeEmptyKeys:[]);
  const primarySlug=validSlug(work.agencySlug)?work.agencySlug:null;
  const primaryKey=primarySlug?workNoteKey(primarySlug,workSlug):null;
  const agencyMap=new Map((Array.isArray(agencies)?agencies:[]).filter(agency=>validSlug(agency?.slug)).map(agency=>[agency.slug,agency]));
@@ -31,7 +32,7 @@ export function referenceNotesForWork(work,notes,agencies=[]){
   return {key,agencySlug,workSlug,note,agencyName,isPrimary:key===primaryKey,canUseForWishes:Boolean(agency&&linkedAgencies.has(agencySlug))};
  };
  const others=Object.entries(workNotes)
-  .filter(([key,note])=>key!==primaryKey&&key.split('/')[1]===workSlug&&note.trim())
+  .filter(([key,note])=>key!==primaryKey&&key.split('/')[1]===workSlug&&(note.trim()||retainedKeys.has(key)))
   .map(([key,note])=>describe(key,note))
   .sort((left,right)=>left.agencyName.localeCompare(right.agencyName,'ru')||left.key.localeCompare(right.key,'ru'));
  return primaryKey?[describe(primaryKey,workNotes[primaryKey]??''),...others]:others;

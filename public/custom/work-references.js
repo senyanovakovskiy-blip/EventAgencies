@@ -4,8 +4,10 @@ import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
 import {setupReferenceBatch,syncReferenceBatch} from './reference-batch.js';
 import {referenceNotesForWork,referenceNoteForTeam} from './reference-note-model.js';
 import {setupReferenceNoteCopy} from './reference-note-copy.js';
+import {setupReferenceNoteClear} from './reference-note-clear.js';
 export {REFERENCE_KEY,normalizeReferences};
 const noteCopyController=setupReferenceNoteCopy();
+const noteClearController=setupReferenceNoteClear();
 let saved=[];try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));}catch{}
 const status=document.createElement('div');status.className='reference-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.append(status);
 let timer,removedReferences=null;
@@ -29,7 +31,7 @@ function noteEntryMarkup(entry){
  const id='reference-note-'+entry.workSlug+(entry.isPrimary?'':'--'+entry.agencySlug);
  const label=entry.isPrimary?'Моя заметка к примеру':'Моя заметка · '+entry.agencyName;
  const context=entry.isPrimary?'Личная заметка · сохраняется в этом браузере.':'Личная запись для команды «'+entry.agencyName+'». Сохраняется в этом браузере.';
- return `<section class="work-note-block reference-note-entry" data-reference-note-entry="${esc(entry.key)}" data-reference-note-agency-name="${esc(entry.agencyName)}"><label for="${esc(id)}">${esc(label)}</label><textarea id="${esc(id)}" data-work-note="${esc(entry.agencySlug)}" data-note-work="${esc(entry.workSlug)}" rows="3" maxlength="1000" aria-describedby="${esc(id)}-help ${esc(id)}-status" placeholder="Что нравится в этой работе?">${esc(entry.note)}</textarea><p class="reference-note-context" id="${esc(id)}-help">${esc(context)}</p><div class="reference-note-actions">${entry.canUseForWishes?`<button class="secondary-action" type="button" data-add-wishes-work="${esc(entry.workSlug)}" data-add-wishes-agency="${esc(entry.agencySlug)}">Добавить в пожелания…</button>`:''}<button class="secondary-action" type="button" data-copy-reference-note aria-describedby="${esc(id)}-copy-status"${entry.note.trim()?'':' disabled'}>Скопировать заметку</button></div><p id="${esc(id)}-status" role="status"></p><p id="${esc(id)}-copy-status" data-reference-note-copy-status role="status"></p></section>`;
+ return `<section class="work-note-block reference-note-entry" data-reference-note-entry="${esc(entry.key)}" data-reference-note-agency-name="${esc(entry.agencyName)}"><label for="${esc(id)}">${esc(label)}</label><textarea id="${esc(id)}" data-work-note="${esc(entry.agencySlug)}" data-note-work="${esc(entry.workSlug)}" rows="3" maxlength="1000" aria-describedby="${esc(id)}-help ${esc(id)}-status" placeholder="Что нравится в этой работе?">${esc(entry.note)}</textarea><p class="reference-note-context" id="${esc(id)}-help">${esc(context)}</p><div class="reference-note-actions">${entry.canUseForWishes?`<button class="secondary-action" type="button" data-add-wishes-work="${esc(entry.workSlug)}" data-add-wishes-agency="${esc(entry.agencySlug)}">Добавить в пожелания…</button>`:''}<button class="secondary-action" type="button" data-copy-reference-note aria-describedby="${esc(id)}-copy-status"${entry.note.trim()?'':' disabled'}>Скопировать заметку</button><button class="secondary-action" type="button" data-clear-reference-note aria-describedby="${esc(id)}-clear-status"${entry.note.length?'':' disabled'}>Очистить заметку</button><button class="secondary-action" type="button" data-undo-reference-note-clear aria-describedby="${esc(id)}-clear-status" hidden>Вернуть текст</button></div><p id="${esc(id)}-status" role="status"></p><p id="${esc(id)}-copy-status" data-reference-note-copy-status role="status"></p><p id="${esc(id)}-clear-status" data-reference-note-clear-status role="status"></p></section>`;
 }
 function noteFields(card){return [...card.querySelectorAll('.reference-notes [data-work-note]')];}
 function syncReferenceNoteMark(card){
@@ -116,7 +118,9 @@ async function renderReferences(){
  try{data ||= await fetch('/custom/catalog-data.json').then(r=>{if(!r.ok)throw Error();return r.json();});
  if(version!==renderVersion)return;
  let notes={},selection=[];try{const draft=readDraft(localStorage);notes=draft.workNotes;selection=draft.selection;}catch{}
- const noteMarkup=p=>`<div class="reference-notes" id="reference-note-block-${esc(p.slug)}">${referenceNotesForWork(p,notes,data.agencies).map(noteEntryMarkup).join('')}${noteChooserMarkup(p)}</div>`;
+ const pendingNoteKeys=Object.keys(noteClearController.getPendingNotes()),noteDescriptions={...notes};
+ for(const key of pendingNoteKeys)if(!Object.hasOwn(noteDescriptions,key))noteDescriptions[key]='';
+ const noteMarkup=p=>`<div class="reference-notes" id="reference-note-block-${esc(p.slug)}">${referenceNotesForWork(p,noteDescriptions,data.agencies,{includeEmptyKeys:pendingNoteKeys}).map(noteEntryMarkup).join('')}${noteChooserMarkup(p)}</div>`;
  const works=saved.map(slug=>data.projects.find(p=>p.slug===slug)).filter(Boolean);
  const agencySlugs=new Set(works.flatMap(workAgencies));
  const agencies=data.agencies.filter(agency=>agencySlugs.has(agency.slug)).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
@@ -139,6 +143,7 @@ async function renderReferences(){
   '<div class="reference-empty"><h3>Начните с того, что нравится</h3><p>Откройте любую работу в каталоге и нажмите «Сохранить как пример». Она появится здесь вместе с вашей личной заметкой.</p><a class="secondary-action" href="/catalog?view=projects">Выбрать первый пример ↗</a></div>');
  setupReferenceBatch(host,removeReferenceBatch);
  noteCopyController.sync(host);
+ noteClearController.sync(host);
  if(works.length){
   const search=host.querySelector('#reference-search'),agency=host.querySelector('#reference-agency'),sort=host.querySelector('#reference-sort'),onlyNotes=host.querySelector('#reference-only-notes');
   host.querySelectorAll('[data-reference-team-select]').forEach(select=>select.addEventListener('change',()=>{const button=select.closest('.reference-team-choice').querySelector('[data-reference-team]');button.dataset.saveAgency=select.value;button.dataset.agencyName=data.agencies.find(agency=>agency.slug===select.value)?.name||'';button.disabled=!select.value;}));
@@ -163,7 +168,7 @@ async function renderReferences(){
  shownReferences=true;
  }catch{host.innerHTML='<h2 id="reference-title">Примеры для моего события</h2><p>Не удалось загрузить работы.</p><button data-retry-references>Попробовать снова</button>';}
 }
-document.addEventListener('input',event=>{
+function handleReferenceNoteUpdate(event){
  const field=event.target.closest('[data-work-note]');if(!field||!data||location.pathname.replace(/\/$/,'')!=='/my-project')return;
  const workSlug=field.dataset.noteWork,agencySlug=field.dataset.workNote;
  // Wait for the shared note editor to save and synchronize matching fields first.
@@ -176,9 +181,12 @@ document.addEventListener('input',event=>{
   noteFields(card).forEach(other=>{if(other!==field&&other.dataset.workNote===agencySlug&&other.value!==field.value)other.value=field.value;});
   syncReferenceNoteMark(card);
   noteCopyController.sync(card);
+  noteClearController.sync(card);
   syncReferenceNoteChooser(card,work);
  });
-});
+}
+document.addEventListener('input',handleReferenceNoteUpdate);
+document.addEventListener('ea:work-note-updated',handleReferenceNoteUpdate);
 
 document.addEventListener('change',event=>{
  const select=event.target.closest('[data-reference-note-team]');if(!select||!data)return;
@@ -195,7 +203,7 @@ document.addEventListener('click',async event=>{
   if(existing){syncReferenceNoteChooser(card,work);existing.scrollIntoView({block:'nearest'});existing.focus({preventScroll:true});return;}
   const entry=referenceNoteForTeam(work,agencySlug,currentNoteValues(work.slug),data.agencies);
   if(!entry){syncReferenceNoteChooser(card,work);return;}
-  const field=insertReferenceNote(card,entry);syncReferenceNoteMark(card);noteCopyController.sync(card);syncReferenceNoteChooser(card,work);field?.scrollIntoView({block:'nearest'});field?.focus({preventScroll:true});return;
+  const field=insertReferenceNote(card,entry);syncReferenceNoteMark(card);noteCopyController.sync(card);noteClearController.sync(card);syncReferenceNoteChooser(card,work);field?.scrollIntoView({block:'nearest'});field?.focus({preventScroll:true});return;
  }
  if(event.target.closest('[data-dismiss-reference]')){clearTimeout(timer);status.replaceChildren();removedReferences=null;return;}
  if(event.target.closest('[data-undo-reference]')&&removedReferences){
