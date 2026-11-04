@@ -6,6 +6,7 @@ import {setupProjectHistory} from './project-history.js';
 import {setupAccountProjectCopies} from './account-project-copies.js';
 import {normalizeReferences} from './reference-store.js';
 import {setupWishesUndo} from './wishes-undo.js';
+import {setupReplacementUndo} from './replacement-undo.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -22,7 +23,7 @@ const orderStatus=document.createElement('p');orderStatus.className='project-ord
 document.querySelector('.comparison-toolbar')?.after(orderStatus);
 const helpMode=new URLSearchParams(location.search).has('help');
 let helpSelectionExpanded=false;
-let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',lastReceipt=null,wishesUndo=null;
+let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',lastReceipt=null,wishesUndo=null,replacementUndo=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
 try{draft=readDraft(localStorage);}catch{available=false;}
 const getData=()=>dataPromise||(dataPromise=(async()=>{
@@ -37,19 +38,20 @@ function persist(next,{quiet=false}={}){
  catch{draft=normalizeDraft({...next,request:null});available=false;refresh();document.getElementById('project-storage-note')?.removeAttribute('hidden');if(!quiet)notice('Не удалось сохранить изменения','В браузере недоступно сохранение. Разрешите хранение данных сайта и попробуйте ещё раз.');return false;}
 }
 const pop=document.createElement('aside');pop.className='ea-selection-notice';pop.hidden=true;pop.setAttribute('aria-label','Ваша подборка');document.body.append(pop);
-function notice(title,copy){const inProject=Boolean(document.getElementById('project-board'));pop.innerHTML=`<button class="ea-notice-close" aria-label="Закрыть уведомление">×</button><div role="status"><strong>${esc(title)}</strong><p>${esc(copy)}</p></div><div class="ea-notice-actions"><button data-continue>Продолжить выбор</button><a href="${inProject?'#project-comparison':'/my-project'}"${inProject?' data-edit-selection':''}>${inProject?'К сравнению':'Мой проект'}${draft.selection.length?' · '+draft.selection.length:''} ↗</a></div>`;pop.hidden=false;}
+function notice(title,copy,{undoReplacement=false}={}){const inProject=Boolean(document.getElementById('project-board'));pop.innerHTML=`<button class="ea-notice-close" aria-label="Закрыть уведомление">×</button><div role="status"><strong>${esc(title)}</strong><p>${esc(copy)}</p></div><div class="ea-notice-actions">${undoReplacement&&replacementUndo?.hasChange()?'<button type="button" data-undo-replacement>Отменить замену</button>':''}<button data-continue>Продолжить выбор</button><a href="${inProject?'#project-comparison':'/my-project'}"${inProject?' data-edit-selection':''}>${inProject?'К сравнению':'Мой проект'}${draft.selection.length?' · '+draft.selection.length:''} ↗</a></div>`;pop.hidden=false;replacementUndo?.sync();}
 function withReferenceNote(state,agencySlug,workSlug,note){return workSlug&&note?.trim()&&!Object.hasOwn(state.workNotes,workNoteKey(agencySlug,workSlug))?updateWorkNote(state,agencySlug,workSlug,note):state;}
 const replacement=document.createElement('dialog');replacement.id='replacement-dialog';replacement.setAttribute('aria-labelledby','replacement-title');document.body.append(replacement);
 replacement.addEventListener('close',()=>{pendingReplacement=null;});
 async function offerReplacement(agencySlug,workSlug,note=''){
  try{
   const data=await getData(),candidate=data.agencies.find(a=>a.slug===agencySlug);if(!candidate)return;
-  pendingReplacement={agencySlug,workSlug,note};
-  replacement.innerHTML=`<button class="brief-close" data-cancel-replacement aria-label="Закрыть замену агентства">×</button><span class="eyebrow">До трёх команд в одном проекте</span><h2 id="replacement-title">Кого заменить на ${esc(candidate.name)}?</h2><p>Описание мероприятия сохранится. Вместо выбранной ниже команды появится ${esc(candidate.name)}${workSlug?' с выбранной работой':''}.</p><div class="replacement-options">${draft.selection.map(s=>{const a=data.agencies.find(a=>a.slug===s.agencySlug);return `<button class="secondary-action" data-replace-agency="${esc(s.agencySlug)}">Заменить ${esc(a?.name||s.agencySlug)}</button>`;}).join('')}</div><button class="replacement-cancel" data-cancel-replacement>Оставить подборку</button>`;
+  pendingReplacement={agencySlug,workSlug,note,name:candidate.name};
+  replacement.innerHTML=`<button class="brief-close" data-cancel-replacement aria-label="Закрыть замену агентства">×</button><span class="eyebrow">До трёх команд в одном проекте</span><h2 id="replacement-title">Кого заменить на ${esc(candidate.name)}?</h2><p>Описание мероприятия сохранится. Вместо выбранной ниже команды появится ${esc(candidate.name)}${workSlug?' с выбранной работой':''}. Последнюю замену можно будет отменить.</p><div class="replacement-options">${draft.selection.map(s=>{const a=data.agencies.find(a=>a.slug===s.agencySlug);return `<button class="secondary-action" data-replace-agency="${esc(s.agencySlug)}" data-replace-name="${esc(a?.name||s.agencySlug)}">Заменить ${esc(a?.name||s.agencySlug)}</button>`;}).join('')}</div><button class="replacement-cancel" data-cancel-replacement>Оставить подборку</button>`;
   pop.hidden=true;replacement.showModal();
  }catch{notice('Не удалось загрузить варианты замены','Подборка не изменилась. Попробуйте ещё раз.');}
 }
 function refresh(){
+ replacementUndo?.sync();
  document.querySelectorAll('[data-workspace-team-count]').forEach(node=>node.textContent=String(draft.selection.length));
  document.querySelectorAll('[data-save-agency]').forEach(button=>{
   const entry=draft.selection.find(s=>s.agencySlug===button.dataset.saveAgency),work=button.dataset.saveWork;
@@ -92,8 +94,9 @@ document.addEventListener('click',async event=>{
  }
  const replace=event.target.closest('[data-replace-agency]');
  if(replace&&pendingReplacement){
+  const previousSelection=draft.selection.map(item=>({...item})),previousName=replace.dataset.replaceName||replace.dataset.replaceAgency,nextName=pendingReplacement.name;
   const next=replaceAgency(draft,replace.dataset.replaceAgency,pendingReplacement.agencySlug,pendingReplacement.workSlug);
-  if(next.result==='replaced'&&persist(withReferenceNote(next.state,pendingReplacement.agencySlug,pendingReplacement.workSlug,pendingReplacement.note))){replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.');}
+  if(next.result==='replaced'&&persist(withReferenceNote(next.state,pendingReplacement.agencySlug,pendingReplacement.workSlug,pendingReplacement.note))){replacementUndo?.record(previousSelection,draft.selection,previousName,nextName);replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.',{undoReplacement:true});}
   else if(next.result!=='replaced'){replacement.close();notice('Подборка уже изменилась','Проверьте выбранные команды в «Моём проекте».');}
   return;
  }
@@ -158,6 +161,7 @@ let renderVersion=0;
 async function renderProject(){
  const host=document.getElementById('project-board');if(!host)return;const version=++renderVersion;
  wishesUndo?.sync();
+ replacementUndo?.sync();
  try{
   const data=await getData();if(version!==renderVersion)return;
   const agencyMap=new Map(data.agencies.map(a=>[a.slug,a]));
@@ -188,7 +192,7 @@ async function renderProject(){
   document.getElementById('project-storage-note').hidden=available;
   const result=document.getElementById('project-request-result');
   const accepted=inquiries.accepted(draft),receipt=lastReceipt||accepted;
-  if(accepted)wishesUndo?.clear();
+  if(accepted){wishesUndo?.clear();replacementUndo?.clear();}
   result.hidden=!receipt&&(!draft.request||!available);
   if(receipt)result.innerHTML=receiptMarkup(receipt,briefRows(receipt.brief));
   else if(draft.request&&available)result.innerHTML='<strong>Задача сохранена в этом браузере</strong><p>Можно продолжить редактирование.</p><div class="draft-result-actions"><button class="secondary-action" data-return-project>Вернуться к моему проекту</button><button class="secondary-action" data-download-brief>Скачать черновик</button></div>';
@@ -396,6 +400,22 @@ wishesUndo=setupWishesUndo({getDescription:()=>draft.brief.description,canUndo:(
  try{draft=writeDraft(localStorage,updateBrief(draft,{description}));available=true;lastReceipt=null;sendError='';if(briefForm&&document.getElementById('brief-dialog').open)fillBrief(briefForm);refresh();return true;}
  catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return false;}
 }});
+replacementUndo=setupReplacementUndo({getSelection:()=>draft.selection,canUndo:()=>!sending,restore:(selection,expected)=>{
+ if(!available)return 'failed';
+ try{
+  const current=readDraft(localStorage);
+  if(JSON.stringify(current.selection)!==JSON.stringify(expected)){draft=current;refresh();return 'changed';}
+  draft=writeDraft(localStorage,{...current,selection,request:null});available=true;lastReceipt=null;sendError='';refresh();return 'saved';
+ }catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return 'failed';}
+},onResult:(result,name)=>{
+ if(result==='saved'){
+  const message='Вернули «'+name+'» в подборку. Пожелания и личные заметки сохранены.';
+  if(document.getElementById('project-board')){pop.hidden=true;orderStatus.textContent=message;document.getElementById('project-comparison')?.focus({preventScroll:true});}
+  else notice('Замена отменена',message);
+ }else if(result==='changed')notice('Подборка уже изменилась','Новый выбор сохранён. Прежнюю замену больше нельзя отменить.');
+ else notice('Не удалось отменить замену','Разрешите хранение данных сайта, сохраните текущие изменения и повторите попытку.',{undoReplacement:true});
+}});
+if(inquiries.accepted(draft))replacementUndo.clear();
 const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending});
 setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
 document.addEventListener('ea:project-copy-restored',()=>{
