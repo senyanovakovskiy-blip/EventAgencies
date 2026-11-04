@@ -1,6 +1,6 @@
 import {nextAction,stageLabels} from './workflow-model.js';
 import {workflowMarkup,readWorkflow,wireWorkflow,syncWorkflow,workflowKey,workflowHistory} from './workflow-ui.js';
-import {preparationMarkup,wirePreparation,preparationHistory} from './preparation-ui.js';
+import {preparationMarkup,wirePreparation,preparationHistory,syncPreparationViewControls} from './preparation-ui.js';
 import {statusLabels,historyStatusLabel,recommendationInputs,recommendationKey,recommendationFingerprint,buildCustomerReply} from './manual-model.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const date=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
@@ -50,7 +50,7 @@ function availability(form){
  form.querySelector('#recommendation-hint').textContent=count>=3?'Выбрано три агентства. Чтобы добавить другое, уберите одну рекомендацию.':'';
  form.querySelector('#closure-reason-label').hidden=values.status!=='closed';
 }
-export function setEditorBusy(form,busy){if(!form)return;form.dataset.busy=String(busy);form.querySelectorAll('input,select,textarea,button').forEach(field=>field.disabled=busy);form.closest('#request-detail')?.querySelectorAll('.source-request [data-open-preparation]').forEach(button=>button.disabled=busy);availability(form);syncWorkflow(form);}
+export function setEditorBusy(form,busy){if(!form)return;form.dataset.busy=String(busy);form.querySelectorAll('input,select,textarea,button').forEach(field=>field.disabled=busy);form.closest('#request-detail')?.querySelectorAll('.source-request [data-open-preparation]').forEach(button=>button.disabled=busy);availability(form);syncWorkflow(form);syncPreparationViewControls(form);}
 export function wireEditor({data,catalog,onSave,onReload}){
  const form=document.getElementById('operator-form');let warningVersion=0,preparation=null;
  function picker(){

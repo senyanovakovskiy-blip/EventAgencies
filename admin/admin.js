@@ -1,6 +1,7 @@
 import {occasions,contactMethods} from '/custom/project-store.js';
 import {statusLabels} from './manual-model.js';
 import {editorMarkup,wireEditor,readEditor,editorChanged,setEditorBusy,historyMarkup,revealEditorError,selectStage} from './manual-ui.js';
+import {capturePreparationView,restorePreparationView} from './preparation-ui.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const labels=statusLabels;
 const $=selector=>document.querySelector(selector);
@@ -67,9 +68,9 @@ async function openDetail(id){
  }catch(error){if(version===detailVersion&&!loggingOut)$('#workspace-status').textContent=error.message;}
 }
 async function saveDetail(event){
- event.preventDefault();if(saving)return;const form=event.currentTarget,id=current.recordId;const view={stage:form.dataset.stage,preparation:form.querySelector('[data-preparation-context]')?.value};const input={...readEditor(form),revision:current.revision};
+ event.preventDefault();if(saving)return;const form=event.currentTarget,id=current.recordId;const view={stage:form.dataset.stage,preparation:capturePreparationView(form)};const input={...readEditor(form),revision:current.revision};
  saving=true;setEditorBusy(form,true);$('#save-status').textContent='Сохраняем…';
- try{const data=await api('/api/admin/inquiries/'+id,{method:'PATCH',body:JSON.stringify(input)});if(current.recordId===id){current=data;renderDetail(data);selectStage($('#operator-form'),view.stage);const context=$('[data-preparation-context]');if(context&&[...context.options].some(option=>option.value===view.preparation)){context.value=view.preparation;context.dispatchEvent(new Event('change',{bubbles:true}));}$('#save-status').textContent='Изменения сохранены на сервере';$('#operator-form button[type=submit]').focus({preventScroll:true});}await loadList();}
+ try{const data=await api('/api/admin/inquiries/'+id,{method:'PATCH',body:JSON.stringify(input)});if(current.recordId===id){current=data;renderDetail(data);selectStage($('#operator-form'),view.stage);restorePreparationView($('#operator-form'),view.preparation);$('#save-status').textContent='Изменения сохранены на сервере';$('#operator-form button[type=submit]').focus({preventScroll:true});}await loadList();}
  catch(error){if(current.recordId===id){$('#save-status').textContent=error.message;revealEditorError(form,error.code);$('#save-status').focus();if(error.code==='revision_conflict')$('#reload-detail').hidden=false;}}
  finally{saving=false;setEditorBusy($('#operator-form'),false);}
 }
