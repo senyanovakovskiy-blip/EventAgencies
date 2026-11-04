@@ -40,7 +40,7 @@ export function previousProject(){
   return {version:1,draft:normalizeDraft(value.draft),references:normalizeReferences(value.references),includeNotes:true,includeContact:true};
  }catch{return null;}
 }
-export function restoreProjectCopy(snapshot,getState){
+export function restoreProjectCopy(snapshot,getState,{preserveReferences=false}={}){
  const original=normalizeDraft(getState()),references=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));
  const next=normalizeDraft(snapshot.draft);next.request=null;
  if(!snapshot.includeContact)next.contact=original.contact;
@@ -52,7 +52,7 @@ export function restoreProjectCopy(snapshot,getState){
  try{localStorage.setItem(PREVIOUS_PROJECT_KEY,backup);}catch{throw Object.assign(new Error('browser_storage_unavailable'),{code:'browser_storage_unavailable'});}
  try{
   localStorage.setItem(KEY,JSON.stringify(next));
-  localStorage.setItem(REFERENCE_KEY,JSON.stringify(normalizeReferences(snapshot.references)));
+  localStorage.setItem(REFERENCE_KEY,JSON.stringify(preserveReferences?references:normalizeReferences(snapshot.references)));
  }catch{
   let recovered=true;
   for(const [key,value]of [[KEY,priorDraft],[REFERENCE_KEY,priorReferences]])try{if(value===null)localStorage.removeItem(key);else localStorage.setItem(key,value);}catch{recovered=false;}

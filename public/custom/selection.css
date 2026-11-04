@@ -621,6 +621,20 @@ html:root .ea-save-button{pointer-events:auto}
 .history-receipt-section li span{color:var(--muted)}
 #project-history-dialog a{color:var(--color-highlight);font-size:14px}
 .history-receipt-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:26px}
+#request-project-dialog{box-sizing:border-box;width:min(780px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:32px;border:1px solid var(--line);border-radius:12px;background:var(--color-bg);color:var(--ink);font-family:Motion,Arial,sans-serif;box-shadow:0 20px 70px #0003}
+#request-project-dialog::backdrop{background:#07100dc9;backdrop-filter:blur(8px)}
+#request-project-dialog>.eyebrow{display:block;margin:4px 32px 18px 0}
+#request-project-dialog h2{font-size:29px;font-weight:400;line-height:1.2;letter-spacing:-.03em;margin:0 32px 20px 0;overflow-wrap:anywhere}
+#request-project-dialog .request-project-intro{font-size:14px;line-height:1.6;color:var(--muted)}
+.request-project-contact{display:flex;align-items:flex-start;gap:12px;padding:18px;border:1px solid var(--line);border-radius:8px;background:var(--surface);margin:24px 0 18px;font-size:14px;line-height:1.5;cursor:pointer}
+.request-project-contact input{width:18px;height:18px;flex:none;margin:2px 0 0;accent-color:var(--color-highlight)}
+.request-project-contact small{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.request-project-effect{font-size:13px;line-height:1.6;color:var(--muted);margin:14px 0}
+.request-project-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:22px}
+#request-project-dialog .brief-local-note:empty{display:none}
+#request-project-dialog button:disabled{opacity:.45;cursor:default}
+#request-project-dialog :is(button,input,a,summary):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+@media(max-width:600px){#request-project-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);padding:28px 20px}#request-project-dialog h2{font-size:25px}#request-project-dialog .review-brief{grid-template-columns:1fr}.request-project-actions{align-items:stretch;flex-direction:column}.request-project-contact{padding:15px}}
 .history-download-note{font-size:12px;line-height:1.6;color:var(--muted);margin:14px 0 0}
 #project-history-dialog .brief-local-note:empty{display:none}
 #project-history-dialog button:disabled{opacity:.45;cursor:default}

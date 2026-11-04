@@ -27,10 +27,11 @@ export function prepareCopyPreview(snapshot,data,{preserveAll=false}={}){
  return {teams,references,issues,hasMissing:Object.values(issues).some(Boolean),preserveAll,loadSnapshot,loadSummary:copySummary(loadSnapshot)};
 }
 
-export function copyAvailabilityMarkup(prepared){
+export function copyAvailabilityMarkup(prepared,{source='account'}={}){
  if(!prepared?.hasMissing)return '';
  const labels={teams:'Команды',selectedWorks:'Выбранные работы',references:'Сохранённые примеры',notes:'Заметки к недоступным работам'};
- return `<aside class="copy-availability-note"><strong>Часть подборки больше не доступна в каталоге</strong><ul>${Object.entries(prepared.issues).filter(([,count])=>count).map(([key,count])=>`<li>${labels[key]}: ${count}</li>`).join('')}</ul><p>${prepared.preserveAll?'Предыдущий вариант будет восстановлен целиком, как был сохранён в этом браузере.':`При загрузке останутся доступные элементы: команд — ${prepared.loadSummary.teams}, примеров — ${prepared.loadSummary.references}. Полная копия сохранится в аккаунте.`}</p></aside>`;
+ const effect=prepared.preserveAll?'Предыдущий вариант будет восстановлен целиком, как был сохранён в этом браузере.':source==='request'?`В проект войдут доступные команды: ${prepared.loadSummary.teams}. Исходная заявка сохранится в истории.`:`При загрузке останутся доступные элементы: команд — ${prepared.loadSummary.teams}, примеров — ${prepared.loadSummary.references}. Полная копия сохранится в аккаунте.`;
+ return `<aside class="copy-availability-note"><strong>Часть подборки больше не доступна в каталоге</strong><ul>${Object.entries(prepared.issues).filter(([,count])=>count).map(([key,count])=>`<li>${labels[key]}: ${count}</li>`).join('')}</ul><p>${effect}</p></aside>`;
 }
 
 export function copyTeamsMarkup(teams){

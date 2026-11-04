@@ -3,6 +3,7 @@ import {copyRequest,currentProjectCopy,saveAccountCopy,previousProject,restorePr
 import {prepareCopyPreview,copyAvailabilityMarkup,copyTeamsMarkup,copyReferencesMarkup,copyReferenceCards} from './project-copy-preview.js';
 import {setupCopyNameEditor} from './project-copy-name.js';
 import {setupNewProject} from './project-new.js';
+import {setupProjectFromInquiry} from './project-from-inquiry.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
@@ -103,4 +104,5 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  });
  setupNewProject({anchor:opener,getState,canStart:()=>!busy&&canRestore(),onStarted:()=>{syncUndo();banner.querySelector('p').textContent='Создан новый проект. Предыдущий вариант доступен для возврата в этом браузере.';},onStorageIssue:syncUndo});
  syncUndo();
+ return {openReceiptProject:setupProjectFromInquiry({getState,getData,briefRows,canCreate:()=>!busy&&canRestore(),onCreated:id=>{syncUndo();banner.querySelector('p').textContent='Создан проект на основе заявки '+id+'. Предыдущий вариант доступен для возврата в этом браузере.';},onStorageIssue:syncUndo})};
 }

@@ -368,8 +368,8 @@ function renderComparison(data,entries){
 
 setupSelectionShare({getState:()=>draft,getData});
 setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
-setupProjectHistory({briefRows,formatName});
-setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending});
+const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending});
+setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
 document.addEventListener('ea:project-copy-restored',()=>{
  draft=readDraft(localStorage);available=true;removedAgency=null;lastReceipt=null;sendError='';focusRequest=false;orderStatus.textContent='';
  document.getElementById('project-undo').hidden=true;
