@@ -1,6 +1,9 @@
 import {normalizeProjectCopy,copySummary} from '../public/custom/project-copy-model.js';
 import {digest,problem} from './store.mjs';
 
+const searchText=value=>value.normalize('NFKC').toLocaleLowerCase('ru-RU').replace(/ё/g,'е');
+const names=new Intl.Collator('ru-RU',{numeric:true,sensitivity:'base'});
+
 export function createProjectCopyStore(binding,ownerId){
  if(typeof ownerId!=='string'||!ownerId.trim())throw problem(401,'authentication_required');
  const db=binding.withSession?binding.withSession('first-primary'):binding;
@@ -8,11 +11,22 @@ export function createProjectCopyStore(binding,ownerId){
  const item=row=>({id:row.id,name:row.name,createdAt:row.created_at,...copySummary(JSON.parse(row.snapshot_json))});
  const validId=id=>Number.isSafeInteger(id)&&id>0;
  return {
-  async list({page=1}={}){
+  async list({page=1,q='',sort='newest'}={}){
    if(!Number.isSafeInteger(page)||page<1)throw problem(400,'invalid_page');
-   const total=(await stmt('SELECT COUNT(*) AS n FROM project_copies WHERE owner_id=?',ownerId).first()).n,pages=Math.max(1,Math.ceil(total/10));page=Math.min(page,pages);
-   const result=await stmt('SELECT id,name,created_at,snapshot_json FROM project_copies WHERE owner_id=? ORDER BY id DESC LIMIT 10 OFFSET ?',ownerId,(page-1)*10).all();
-   return {page,pages,total,items:(result.results||[]).map(item)};
+   if(typeof q!=='string'||q.length>120||!['newest','oldest','name'].includes(sort))throw problem(400,'invalid_copy_search');
+   // Accounts hold at most 100 copies. Match only their small metadata rows
+   // with Unicode-aware text handling; load full snapshots for one page.
+   const result=await stmt('SELECT id,name,created_at FROM project_copies WHERE owner_id=? ORDER BY id DESC',ownerId).all(),all=result.results||[];
+   const words=searchText(q).trim().split(/\s+/).filter(Boolean);
+   const matches=all.filter(row=>{const name=searchText(row.name);return words.every(word=>name.includes(word));});
+   if(sort==='oldest')matches.sort((a,b)=>a.id-b.id);
+   if(sort==='name')matches.sort((a,b)=>names.compare(a.name,b.name)||b.id-a.id);
+   const total=matches.length,pages=Math.max(1,Math.ceil(total/10));page=Math.min(page,pages);
+   const selected=matches.slice((page-1)*10,page*10),ids=selected.map(row=>row.id);
+   if(!ids.length)return {page,pages,total,totalSaved:all.length,items:[]};
+   const snapshots=await stmt('SELECT id,snapshot_json FROM project_copies WHERE owner_id=? AND id IN ('+ids.map(()=>'?').join(',')+')',ownerId,...ids).all();
+   const byId=new Map((snapshots.results||[]).map(row=>[row.id,row.snapshot_json]));
+   return {page,pages,total,totalSaved:all.length,items:selected.filter(row=>byId.has(row.id)).map(row=>item({...row,snapshot_json:byId.get(row.id)}))};
   },
   async detail(id){
    if(!validId(id))throw problem(404,'not_found');

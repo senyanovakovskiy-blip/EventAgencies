@@ -42,7 +42,7 @@ export async function handleCloudApi(request, env) {
     if (url.pathname === '/api/admin/login') return reply(405, { error: 'sign_in_with_chatgpt_required' });
     if (url.pathname === '/api/project-copies') {
       const copies = createProjectCopyStore(env.DB, ownerId);
-      if (request.method === 'GET') return reply(200, await copies.list({ page: Number(url.searchParams.get('page') || 1) }));
+      if (request.method === 'GET') return reply(200, await copies.list({ page: Number(url.searchParams.get('page') || 1), q: url.searchParams.get('q') || '', sort: url.searchParams.get('sort') || 'newest' }));
       if (request.method === 'POST') {
         const result = await copies.save(await readBody(request, 1048576));
         return reply(result.duplicate ? 200 : 201, { ok: true, ...result });
