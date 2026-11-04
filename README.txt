@@ -1,7 +1,15 @@
-EventAgencies — основная версия с 8781.
-Сначала смотрите README-EVENTAGENCIES.txt и README-HOSTING.txt.
+EVENTAGENCIES — КАНДИДАТ РЕЛИЗА ДЛЯ ЛИЧНОГО ИСПОЛЬЗОВАНИЯ
 
-Локальный запуск (Node.js24+): npm run start:local
-Проверки: node --test tests/*.test.mjs
-Облачная сборка: npm run build
-Публикация: закрытый Sites, источник .openai/hosting.json.
+Основная линия eventagencies-light с прежнего локального порта 8781:
+вертикальная фотолента с инерцией, каталог и «Мой проект».
+
+Рабочий адрес владельца:
+https://eventagencies-motion.racinggiant1.chatgpt.site
+
+Начните с README-EVENTAGENCIES.txt: возможности, маршруты и сохранение данных.
+README-HOSTING.txt: локальный запуск, сборка и устройство закрытого хостинга.
+RELEASE-NOTES.txt: состав кандидата и границы выполненной проверки.
+
+Локальный запуск (Node.js 24+): npm run start:local
+Сборка для Sites: npm run build
+Точный коммит, архив и развёртывание фиксируются в отдельном манифесте релиза.

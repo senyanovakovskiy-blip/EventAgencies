@@ -14,10 +14,23 @@ const currentOpener=(opener,{agencySlug,workSlug,path})=>Boolean(opener.isConnec
 
 export function setupProjectNoteEditor({getData,canEdit,onSaved,onError}){
  const dialog=document.createElement('dialog');dialog.id='project-note-editor';dialog.setAttribute('aria-labelledby','project-note-editor-title');
- dialog.innerHTML=`<button class="brief-close" type="button" data-close-note-editor aria-label="Закрыть редактор заметки">×</button><span class="eyebrow">Только для вас</span><h2 id="project-note-editor-title">Личная заметка</h2><dl class="project-note-context"><div><dt>Агентство</dt><dd data-note-editor-agency></dd></div><div><dt>Выбранная работа</dt><dd data-note-editor-work></dd></div></dl><form><label for="project-note-editor-text">Что нравится в этой работе?</label><textarea id="project-note-editor-text" rows="8" maxlength="1000" aria-describedby="project-note-editor-help project-note-editor-count"></textarea><p id="project-note-editor-count" class="project-note-count"></p><p id="project-note-editor-help">Личная заметка сохраняется в этом браузере. В пожелания и заявку автоматически не добавляется.</p><p class="project-note-editor-status" data-note-editor-status role="status" aria-live="polite"></p><div class="project-note-editor-actions"><button class="primary-action" type="submit">Сохранить заметку</button><button class="secondary-action" type="button" data-close-note-editor>Отмена</button></div></form>`;
+ dialog.innerHTML=`<button class="brief-close" type="button" data-close-note-editor aria-label="Закрыть редактор заметки">×</button><span class="eyebrow">Только для вас</span><h2 id="project-note-editor-title">Личная заметка</h2><dl class="project-note-context"><div><dt>Агентство</dt><dd data-note-editor-agency></dd></div><div><dt>Выбранная работа</dt><dd data-note-editor-work></dd></div></dl><details class="project-note-description" data-note-editor-description hidden><summary>Описание выбранной работы</summary><dl data-note-editor-description-fields></dl></details><p class="project-note-description-empty" data-note-editor-description-empty hidden>Описание этой работы пока не опубликовано.</p><form><label for="project-note-editor-text">Что нравится в этой работе?</label><p id="project-note-editor-prompt">Что хочется взять для своего события, изменить или обсудить с командой?</p><textarea id="project-note-editor-text" rows="8" maxlength="1000" aria-describedby="project-note-editor-prompt project-note-editor-help project-note-editor-count"></textarea><p id="project-note-editor-count" class="project-note-count"></p><p id="project-note-editor-help">Личная заметка сохраняется в этом браузере. В пожелания и заявку автоматически не добавляется.</p><p class="project-note-editor-status" data-note-editor-status role="status" aria-live="polite"></p><div class="project-note-editor-actions"><button class="primary-action" type="submit">Сохранить заметку</button><button class="secondary-action" type="button" data-close-note-editor>Отмена</button></div></form>`;
  document.body.append(dialog);
  const form=dialog.querySelector('form'),field=dialog.querySelector('textarea'),submit=form.querySelector('[type=submit]'),status=dialog.querySelector('[data-note-editor-status]'),count=dialog.querySelector('#project-note-editor-count');
+ const description=dialog.querySelector('[data-note-editor-description]'),descriptionFields=dialog.querySelector('[data-note-editor-description-fields]'),descriptionEmpty=dialog.querySelector('[data-note-editor-description-empty]');
  let active=null,opening=false,busy=false,epoch=0,trigger=null;
+ function clearDescription(){
+  description.open=false;description.hidden=true;descriptionFields.replaceChildren();descriptionEmpty.hidden=true;
+ }
+ function showDescription(work){
+  clearDescription();
+  for(const [key,label] of [['lead','Коротко'],['intro','Описание'],['fit','Если вам близко'],['participation','Участие команды']]){
+   const text=work.presentation?.[key];if(typeof text!=='string'||!text.trim())continue;
+   const row=document.createElement('div'),term=document.createElement('dt'),value=document.createElement('dd');
+   term.textContent=label;value.textContent=text;row.append(term,value);descriptionFields.append(row);
+  }
+  const published=descriptionFields.childElementCount>0;description.hidden=!published;descriptionEmpty.hidden=published;
+ }
  function sync(){
   count.textContent=field.value.length+' / 1000';
   submit.disabled=busy||!active||Boolean(active.invalid)||field.value===active.expected;
@@ -50,6 +63,8 @@ export function setupProjectNoteEditor({getData,canEdit,onSaved,onError}){
    field.value=active.expected;status.textContent='';
    dialog.querySelector('[data-note-editor-agency]').textContent=agency.name;
    dialog.querySelector('[data-note-editor-work]').textContent=work.fullTitle;
+   // Keep the validated work's published description as a snapshot for this edit.
+   showDescription(work);
    sync();dialog.showModal();field.focus({preventScroll:true});
   }catch{if(version===epoch&&currentOpener(opener,context))onError('Не удалось открыть актуальную заметку. Проверьте доступ к хранилищу браузера и попробуйте снова.');}
   finally{opening=false;}
@@ -60,6 +75,7 @@ export function setupProjectNoteEditor({getData,canEdit,onSaved,onError}){
  dialog.addEventListener('cancel',event=>{if(busy)event.preventDefault();});
  dialog.addEventListener('close',()=>{
   const {agencySlug,workSlug,path}=active||{};active=null;epoch++;field.value='';status.textContent='';
+  clearDescription();
   restoreProjectActionFocus({trigger,agencySlug,workSlug,path,action:'note'});trigger=null;
  });
  // A delayed catalog load must not reopen a dialog after leaving and returning.
