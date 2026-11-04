@@ -4,6 +4,9 @@ import {prepareCopyPreview,copyAvailabilityMarkup,copyTeamsMarkup,copyReferences
 import {setupCopyNameEditor} from './project-copy-name.js';
 import {setupNewProject} from './project-new.js';
 import {setupProjectFromInquiry} from './project-from-inquiry.js';
+import {KEY,normalizeDraft} from './project-store.js';
+import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
+import {describeCopyChanges} from './project-copy-diff.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
@@ -29,7 +32,21 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  previous.textContent='← Назад';next.textContent='Далее →';
  let busy=false,editingName=false,listLoading=false,page=1,pageCount=1,listVersion=0,previewVersion=0,active=null,mode='restore',returnFocus=opener,searchTimer=null;
  function syncUndo(){banner.hidden=!previousProject();}
- function syncBusy(){fieldset.disabled=busy;query.disabled=busy;order.disabled=busy;reset.disabled=busy||(!query.value&&order.value==='newest');opener.disabled=busy;banner.querySelector('button').disabled=busy;dialog.querySelector('[data-back-copy-list]').disabled=busy;refresh.disabled=busy||listLoading;confirm.disabled=busy||editingName||!active;download.disabled=busy||editingName||!active;download.hidden=!onExportCopy||mode!=='restore'||Boolean(active?.localPrevious);downloadHint.hidden=download.hidden||!active;previous.disabled=busy||listLoading||page<=1;next.disabled=busy||listLoading||page>=pageCount;list.querySelectorAll('button').forEach(button=>button.disabled=busy);save.textContent=busy?'Сохраняем…':'Сохранить новую копию';}
+ function syncBusy(){fieldset.disabled=busy;query.disabled=busy;order.disabled=busy;reset.disabled=busy||(!query.value&&order.value==='newest');opener.disabled=busy;banner.querySelector('button').disabled=busy;dialog.querySelector('[data-back-copy-list]').disabled=busy;refresh.disabled=busy||listLoading;confirm.disabled=busy||editingName||!active||(mode==='restore'&&!active.changesReady);download.disabled=busy||editingName||!active;download.hidden=!onExportCopy||mode!=='restore'||Boolean(active?.localPrevious);downloadHint.hidden=download.hidden||!active;previous.disabled=busy||listLoading||page<=1;next.disabled=busy||listLoading||page>=pageCount;list.querySelectorAll('button').forEach(button=>button.disabled=busy);save.textContent=busy?'Сохраняем…':'Сохранить новую копию';}
+ function renderCopyChanges(){
+  if(!active||mode!=='restore')return false;
+  const host=previewBody.querySelector('[data-copy-changes]');if(!host)return false;
+  try{
+   const current=normalizeDraft(getState()),currentReferences=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));
+   const signature=JSON.stringify({brief:current.brief,contact:current.contact,selection:current.selection,notes:Object.entries(current.workNotes).sort(([a],[b])=>a.localeCompare(b)),references:currentReferences});
+   if(active.changesReady&&active.changesSource===signature)return false;
+   const changed=Boolean(active.changesSource&&active.changesSource!==signature);
+   const result=describeCopyChanges({current,currentReferences,incoming:active.loadSnapshot,data:active.catalog,briefRows});
+   host.innerHTML=result.html;active.changesSource=signature;active.changesReady=true;return changed;
+  }catch{
+   active.changesReady=false;host.innerHTML='<p class="copy-change-note" role="status">Не удалось прочитать текущий проект для сравнения. Разрешите хранение данных сайта и повторите попытку.</p><button class="secondary-action" type="button" data-refresh-copy-changes>Обновить сравнение</button>';return false;
+  }
+ }
  function currentSummary(){
   try{const summary=copySummary(currentProjectCopy(getState,{includeNotes:notes.checked,includeContact:contact.checked}));sourceSummary.textContent=`Команд: ${summary.teams} · Примеров: ${summary.references} · Заметок: ${summary.notes}`;save.disabled=busy;}
   catch(error){sourceSummary.textContent=errorMessage(error);save.disabled=true;}
@@ -62,9 +79,13 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
    const hasCatalog=Array.isArray(data?.agencies)&&Array.isArray(data?.projects);
    if(!hasCatalog&&action==='restore'&&!item.localPrevious)throw Object.assign(new Error('catalog_unavailable'),{code:'catalog_unavailable'});
    const prepared=hasCatalog?prepareCopyPreview(snapshot,data,{preserveAll:Boolean(item.localPrevious)}):null;
-   active={...item,snapshot,prepared,loadSnapshot:prepared?.loadSnapshot||snapshot,referencesShown:6,partial:Boolean(prepared?.hasMissing&&!item.localPrevious)};
+   active={...item,snapshot,prepared,loadSnapshot:prepared?.loadSnapshot||snapshot,referencesShown:6,partial:Boolean(prepared?.hasMissing&&!item.localPrevious),catalog:hasCatalog?data:null,changesReady:false,changesSource:null};
    if(action==='restore'&&active.partial)confirm.textContent='Загрузить доступное';
    previewBody.innerHTML=`<h3 tabindex="-1">${esc(item.name)}</h3>${item.createdAt?`<p class="account-copy-date">${esc(dateLabel(item.createdAt))}</p>`:''}<p>Команд: ${summary.teams} · Примеров: ${summary.references} · Заметок: ${summary.notes}</p><dl class="review-brief">${briefRows(snapshot.draft.brief).filter(([label])=>label!=='Пожелания').map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><h4>Пожелания</h4><p class="account-copy-wishes">${esc(snapshot.draft.brief.description||'Пока не указаны.')}</p>${prepared?`<h4>Команды и работы</h4>${copyTeamsMarkup(prepared.teams)}<h4>Сохранённые примеры</h4>${copyReferencesMarkup(prepared.references)}`:'<p class="copy-preview-empty">Каталог сейчас недоступен, поэтому названия и фотографии не загружены.</p>'}${action==='restore'?copyAvailabilityMarkup(prepared):''}<p class="account-copy-contact">${snapshot.includeContact?'Контакт в копии: '+esc(snapshot.draft.contact.name||'Имя не указано')+' · '+esc(snapshot.draft.contact.value||'Контакт не указан'):'Контакт в копию не включён.'+(action==='restore'?' При загрузке сохранится текущий контакт в этом браузере.':'')}</p><p class="account-copy-effect">${action==='delete'?'Эта копия будет удалена из аккаунта. Текущий проект в браузере останется на месте.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'}${action!=='delete'&&!snapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':''}</p>`;
+   if(action==='restore'){
+    const changes=document.createElement('div');changes.id='account-copy-changes';changes.dataset.copyChanges='';changes.tabIndex=-1;changes.setAttribute('role','region');changes.setAttribute('aria-label','Что изменится при загрузке');previewBody.querySelector('.account-copy-effect').before(changes);renderCopyChanges();
+    const changesJump=document.createElement('button');changesJump.type='button';changesJump.className='secondary-action account-copy-changes-jump';changesJump.dataset.showCopyChanges='';changesJump.setAttribute('aria-controls',changes.id);changesJump.textContent='Что изменится при загрузке ↓';previewBody.querySelector('h3').after(changesJump);
+   }
    if(action==='restore'&&!item.localPrevious)setupCopyNameEditor({body:previewBody,item:active,isCurrent:()=>version===previewVersion&&dialog.open,onBusy:value=>{busy=value;syncBusy();},onEditing:value=>{editingName=value;syncBusy();},onRenamed:renamed=>{accountStatus.textContent='Название копии изменено на «'+renamed.name+'».';saveStatus.textContent=accountStatus.textContent;loadList(page);}});
    syncBusy();
    previewBody.querySelector('h3').focus({preventScroll:true});
@@ -88,6 +109,8 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  });
  list.addEventListener('click',event=>{if(busy)return;const open=event.target.closest('[data-preview-copy]'),remove=event.target.closest('[data-delete-copy]');if(open)showPreview(Number(open.dataset.previewCopy));if(remove)showPreview(Number(remove.dataset.deleteCopy),'delete');});
  previewBody.addEventListener('click',event=>{
+  if(event.target.closest('[data-show-copy-changes]')){const changes=previewBody.querySelector('[data-copy-changes]');changes?.scrollIntoView({block:'start'});changes?.focus({preventScroll:true});return;}
+  if(event.target.closest('[data-refresh-copy-changes]')){renderCopyChanges();syncBusy();return;}
   const button=event.target.closest('[data-more-copy-references]');if(!button||!active?.prepared||busy)return;
   const references=active.prepared.references,start=active.referencesShown,grid=previewBody.querySelector('[data-copy-reference-grid]');
   grid.insertAdjacentHTML('beforeend',copyReferenceCards(references,start));active.referencesShown=Math.min(start+6,references.length);
@@ -95,8 +118,18 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   const first=grid.querySelector('[data-copy-reference-index="'+start+'"]');first?.scrollIntoView({block:'nearest'});first?.focus({preventScroll:true});
  });
  download.addEventListener('click',()=>{if(busy||editingName||!active||active.localPrevious||mode!=='restore'||!onExportCopy)return;onExportCopy(active,download);});
+ addEventListener('storage',event=>{
+  if(!dialog.open||mode!=='restore'||!active||![KEY,REFERENCE_KEY,null].includes(event.key))return;
+  if(renderCopyChanges())actionStatus.textContent='Текущий проект изменился в другой вкладке. Сравнение обновлено.';
+  syncBusy();
+ });
  confirm.addEventListener('click',async()=>{
-  if(busy||editingName||!active)return;const selected=active;busy=true;syncBusy();actionStatus.textContent=mode==='delete'?'Удаляем копию…':'Загружаем проект…';
+  if(busy||editingName||!active)return;
+  if(mode==='restore'){
+   const changed=renderCopyChanges();syncBusy();if(!active.changesReady)return;
+   if(changed){actionStatus.textContent='Текущий проект изменился. Сравнение обновлено — просмотрите его и нажмите загрузку ещё раз.';const changes=previewBody.querySelector('[data-copy-changes]');changes?.scrollIntoView({block:'nearest'});changes?.focus({preventScroll:true});return;}
+  }
+  const selected=active;busy=true;syncBusy();actionStatus.textContent=mode==='delete'?'Удаляем копию…':'Загружаем проект…';
   try{
    if(mode==='delete'){await copyRequest('/api/project-copies/'+selected.id,{method:'DELETE'});showManager();await loadList(page);saveStatus.textContent='Копия «'+selected.name+'» удалена.';}
    else{if(!canRestore())throw Object.assign(new Error('sending_in_progress'),{code:'sending_in_progress'});restoreProjectCopy(selected.loadSnapshot,getState);syncUndo();banner.querySelector('p').textContent=(selected.partial?'Загружены доступные элементы копии «':'Загружен проект «')+selected.name+'». Предыдущий вариант доступен для возврата.';returnFocus=document.getElementById('project-overview');dialog.close();returnFocus.scrollIntoView({block:'start'});returnFocus.focus({preventScroll:true});}
