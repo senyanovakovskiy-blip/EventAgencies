@@ -1,4 +1,4 @@
-import {preparationFields,preparationKey} from './preparation-model.js';
+import {preparationDraftFields,preparationKey} from './preparation-model.js';
 
 const text=value=>typeof value==='string'?value.trim():'';
 const excerpt=(value,max=350)=>{const copy=text(value);return copy.length>max?copy.slice(0,max-1)+'…':copy;};
@@ -51,7 +51,7 @@ function orientation(pages){
  return null;
 }
 
-/** Pure draft generation. Does not mutate the receipt, workflow or catalogue. */
+/** Pure six-field draft generation. Manual follow-up notes are never generated. */
 export function draftFor(entry,catalog,receipt,workflow){
  const {agency,work,name,title,linked}=preparationContext(entry,catalog,receipt),b=workflow?.brief||{},d=linked?work?.details||{}:{};
  const agencyPage=pageFor(agency,'agency'),workPage=linked?pageFor(work,'work'):null,pages=[workPage,agencyPage].filter(Boolean),hook=orientation(pages);
@@ -94,5 +94,5 @@ export function draftFor(entry,catalog,receipt,workflow){
  };
  // Existing preparation limits apply. Context excerpts are bounded so the
  // opening attribution and hypothesis labels stay attached to the saved text.
- return Object.fromEntries(Object.entries(preparationFields).map(([key,{max}])=>[key,excerpt(draft[key],max)]));
+ return Object.fromEntries(Object.entries(preparationDraftFields).map(([key,{max}])=>[key,excerpt(draft[key],max)]));
 }

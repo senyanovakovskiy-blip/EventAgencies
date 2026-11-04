@@ -97,7 +97,7 @@ export function createAdminStore(db,receipt,accessFile,catalog,operatorSources={
     const current=detail(id);
     // Report a stale preparation as a revision conflict before validating against
     // records another tab may have added. Keep identical retry saves a no-op.
-    if(current.revision!==revision&&input.workflow?.preparation!==undefined&&preparationContentKey(input.workflow.preparation)!==preparationContentKey(current.workflow.preparation))throw problem(409,'revision_conflict');
+    if(current.revision!==revision&&input.workflow?.preparation!==undefined&&preparationContentKey(input.workflow.preparation,current.workflow.preparation)!==preparationContentKey(current.workflow.preparation))throw problem(409,'revision_conflict');
     const closureReason=input.closureReason??current.closureReason,replyText=input.replyText??current.replyText,replyBasis=input.replyBasis??current.replyBasis;
     if(typeof closureReason!=='string'||closureReason.length>1500||typeof replyText!=='string'||replyText.length>16000||typeof replyBasis!=='string'||replyBasis!==''&&!/^[a-f0-9]{64}$/.test(replyBasis))throw problem(400,'invalid_update');
     const recommendations=input.recommendations===undefined?current.recommendations:resolveRecommendations(input.recommendations);

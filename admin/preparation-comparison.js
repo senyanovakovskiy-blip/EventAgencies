@@ -72,7 +72,7 @@ export function getPreparationComparisonOptions(contexts,catalog,receipt){
 /**
  * Call with a FRESH readPreparation(form) array for every render. There is no
  * fallback to a saved workflow, no generation and no input normalization/trims.
- * `fields` contains exactly the six original strings; missing/non-string values
+ * `fields` contains all eight preparation strings; missing/non-string values
  * become ''. Duplicate preparation rows use the last supplied row, never merge
  * fields from different rows. Selection is view state only, in requested order.
  *

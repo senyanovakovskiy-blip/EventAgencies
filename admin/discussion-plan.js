@@ -1,12 +1,11 @@
 import {briefFields} from './workflow-model.js';
-import {preparationFields} from './preparation-model.js';
+import {preparationDraftFields,preparationFollowUpFields} from './preparation-model.js';
 import {getPreparationComparisonOptions,buildPreparationComparison} from './preparation-comparison.js';
 
 const title='Внутренний план разговора';
 const comparisonTitle='Внутренний план обсуждения вариантов';
 const planNotice='Собрано из текущих данных страницы, включая возможные несохранённые правки. Это внутренний рабочий план, не подтверждённый сценарий и не сообщение клиенту.';
 const presentationFields={lead:'Краткое описание',intro:'Описание',fit:'Если вам близко',participation:'Участие команды и его границы'};
-const preparationOrder=['attraction','strengths','unknowns','questions','scenario','nextStep'];
 const valueBlock=(label,value,empty='Не заполнено.')=>label+'\n'+(typeof value==='string'&&value.length?value:empty);
 
 function safeOrigin(value){
@@ -50,7 +49,9 @@ function variantSections(column){
   pageSection('Подача агентства при составлении плана — '+column.agency.name,column.presentation.agency),
   pageSection(workHeading+' — '+column.work.title,column.presentation.work),
   'Рабочие записи и гипотезы по выбранному варианту\nНиже — записанный на странице текст оператора. Его формулировки не подтверждают условия, интерес команды или согласие клиента.',
-  ...preparationOrder.map(key=>valueBlock(preparationFields[key].label,column.fields[key],'Пока не записано.'))
+  ...Object.entries(preparationDraftFields).map(([key,{label}])=>valueBlock(label,column.fields[key],'Пока не записано.')),
+  'После обсуждения — записи оператора\nРучные записи отдельно от исходных гипотез. Они не меняют отметки подтверждения брифа, согласий сторон и состоявшегося разговора. Условия и изменения сценария согласуются отдельно.',
+  ...Object.entries(preparationFollowUpFields).map(([key,{label}])=>valueBlock(label,column.fields[key],'Пока не записано.'))
  ];
 }
 
@@ -63,7 +64,7 @@ function variantSections(column){
  *
  * Returns {key, title, contextTitle, text, warnings:[{code,message}],
  *          links:[{kind:'agency'|'work', label, href}]}.
- * All six preparation strings, briefFields and presentation strings are included
+ * All eight preparation strings, briefFields and presentation strings are included
  * without trimming, shortening, rewriting or generating missing content. Empty
  * values receive explicit labels in the text. Comparison's exact-pair receipt
  * fallback and last-duplicate-preparation-row semantics are preserved.

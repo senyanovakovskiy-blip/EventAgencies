@@ -159,7 +159,7 @@ export function createCloudStore(binding, ownerId, catalog = catalogData, operat
       const { status, note, revision } = input;
       if (typeof status !== 'string' || !Object.hasOwn(statusLabels, status) || typeof note !== 'string' || note.length > 5000 || !Number.isSafeInteger(revision) || revision < 0) throw problem(400, 'invalid_update');
       const current = await detail(id);
-      if (current.revision !== revision && input.workflow?.preparation !== undefined && preparationContentKey(input.workflow.preparation) !== preparationContentKey(current.workflow.preparation)) throw problem(409, 'revision_conflict');
+      if (current.revision !== revision && input.workflow?.preparation !== undefined && preparationContentKey(input.workflow.preparation, current.workflow.preparation) !== preparationContentKey(current.workflow.preparation)) throw problem(409, 'revision_conflict');
       const closureReason = input.closureReason ?? current.closureReason, replyText = input.replyText ?? current.replyText, replyBasis = input.replyBasis ?? current.replyBasis;
       if (typeof closureReason !== 'string' || closureReason.length > 1500 || typeof replyText !== 'string' || replyText.length > 16000 || typeof replyBasis !== 'string' || (replyBasis !== '' && !/^[a-f0-9]{64}$/.test(replyBasis))) throw problem(400, 'invalid_update');
       const recommendations = input.recommendations === undefined ? current.recommendations : resolveRecommendations(input.recommendations);
