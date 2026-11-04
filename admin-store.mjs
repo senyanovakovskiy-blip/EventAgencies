@@ -9,7 +9,7 @@ import {statusLabels,recommendationKey,replyKey} from './admin/manual-model.js';
 export const statuses=statusLabels;
 const hash=text=>createHash('sha256').update(text).digest('hex');
 const problem=(status,code)=>Object.assign(new Error(code),{status,code});
-export function createAdminStore(db,receipt,accessFile,catalog){
+export function createAdminStore(db,receipt,accessFile,catalog,operatorSources={}){
  db.exec(`CREATE TABLE IF NOT EXISTS inquiry_management(
   inquiry_id INTEGER PRIMARY KEY REFERENCES inquiries(id),
   status TEXT NOT NULL DEFAULT 'new', note TEXT NOT NULL DEFAULT '',
@@ -61,7 +61,7 @@ export function createAdminStore(db,receipt,accessFile,catalog){
  };
  return {
   register,
-  catalog(){return operatorCatalog(catalog);},
+  catalog(){return operatorCatalog(catalog,operatorSources.details,operatorSources.presentation);},
   login(username,password){
    const account=db.prepare('SELECT * FROM admin_account WHERE username=?').get('admin');
    if(typeof password!=='string'||password.length>512||!account)return null;

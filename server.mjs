@@ -8,7 +8,11 @@ const directory=path.dirname(fileURLToPath(import.meta.url));
 const types={'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.avif':'image/avif','.webp':'image/webp','.woff2':'font/woff2','.woff':'font/woff','.mp4':'video/mp4','.webm':'video/webm','.m4a':'audio/mp4','.mp3':'audio/mpeg','.wav':'audio/wav','.ogg':'audio/ogg','.ico':'image/x-icon'};
 export function createLocalServer({databasePath=path.join(directory,'private-data','inquiries.sqlite3'),root=path.join(directory,'local-dist')}={}){
  const catalog=JSON.parse(fs.readFileSync(path.join(directory,'content','catalog.json'),'utf8'));
- const store=createInquiryStore(databasePath,catalog);
+ const operatorSources={
+  details:JSON.parse(fs.readFileSync(path.join(directory,'content','case-details.json'),'utf8')),
+  presentation:JSON.parse(fs.readFileSync(path.join(directory,'content','client-presentation.json'),'utf8'))
+ };
+ const store=createInquiryStore(databasePath,catalog,operatorSources);
  const adminHandler=createAdminHandler(store.admin);
  const server=http.createServer(async(req,res)=>{
  try{

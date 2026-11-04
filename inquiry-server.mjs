@@ -7,7 +7,7 @@ import {createAdminStore} from './admin-store.mjs';
 
 const hash=value=>createHash('sha256').update(value).digest('hex');
 const fail=(status,code)=>Object.assign(new Error(code),{status,code});
-export function createInquiryStore(filename,catalog){
+export function createInquiryStore(filename,catalog,operatorSources={}){
  fs.mkdirSync(path.dirname(filename),{recursive:true});
  const db=new DatabaseSync(filename,{timeout:5000});
  db.exec(`PRAGMA journal_mode=WAL; PRAGMA synchronous=FULL;
@@ -21,7 +21,7 @@ export function createInquiryStore(filename,catalog){
  const find=db.prepare('SELECT * FROM inquiries WHERE key_hash=?');
  const insert=db.prepare('INSERT INTO inquiries(key_hash,payload_hash,created_at,snapshot_json) VALUES(?,?,?,?)');
  const receipt=row=>({id:`EA-${row.created_at.slice(0,4)}-${String(row.id).padStart(6,'0')}`,createdAt:row.created_at,recipient:'EventAgencies',localServer:true,...JSON.parse(row.snapshot_json)});
- const admin=createAdminStore(db,receipt,path.join(path.dirname(filename),'admin-access.txt'),catalog);
+ const admin=createAdminStore(db,receipt,path.join(path.dirname(filename),'admin-access.txt'),catalog,operatorSources);
  return {
   admin,
   save(key,input){

@@ -1,4 +1,6 @@
 import catalogData from '../content/catalog.json' with { type: 'json' };
+import caseDetails from '../content/case-details.json' with { type: 'json' };
+import clientPresentation from '../content/client-presentation.json' with { type: 'json' };
 import {operatorCatalog} from '../operator-catalog.mjs';
 import {preparationContentKey} from '../admin/preparation-model.js';
 import { submissionPayload, validPayload } from '../public/custom/inquiry-model.js';
@@ -17,7 +19,9 @@ const receipt = row => ({
 });
 const rows = result => result.results || [];
 
-export function createCloudStore(binding, ownerId, catalog = catalogData) {
+// Only the built-in catalogue receives the built-in editorial sources. Callers
+// supplying another catalogue may explicitly supply matching sources as arg 4.
+export function createCloudStore(binding, ownerId, catalog = catalogData, operatorSources = catalog === catalogData ? {details:caseDetails,presentation:clientPresentation} : {}) {
   if (typeof ownerId !== 'string' || !ownerId.trim()) throw problem(401, 'authentication_required');
   // D1 Sessions keep subsequent reads consistent when read replication is enabled.
   const db = binding.withSession ? binding.withSession('first-primary') : binding;
@@ -93,7 +97,7 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
       return { recordId: row.id, receipt: receipt(row), status: row.status, statusLabel: statusLabels[row.status] || (row.status === 'done' ? 'Завершена' : 'Статус уточняется'), updatedAt: row.updated_at };
     },
     catalog() {
-      return operatorCatalog(catalog);
+      return operatorCatalog(catalog,operatorSources.details,operatorSources.presentation);
     },
     async save(key, input) {
       let valid = false;
