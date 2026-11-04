@@ -136,6 +136,7 @@ ${page.route==='/'?`<link rel="preload" as="image" href="${esc(featuredProjects[
 <link rel="stylesheet" href="/custom/theme.css">
 <link rel="stylesheet" href="/custom/cinema.css"><link rel="stylesheet" href="/custom/selection.css"><link rel="stylesheet" href="/custom/polish.css"><link rel="stylesheet" href="/custom/site-atmosphere.css"><link rel="stylesheet" href="/custom/photo-viewer.css"><script defer src="/custom/polish.js"></script><script type="module" src="/custom/selection.js"></script>
 <link rel="stylesheet" href="/custom/home-atmosphere.css"><link rel="stylesheet" href="/custom/editorial.css">
+<link rel="stylesheet" href="/custom/home-color-field.css"><script type="module" src="/custom/home-color-field.js"></script>
 <script defer src="/custom/navigation.js"></script>
 <script defer src="/custom/atmosphere.js"></script>
 </head>

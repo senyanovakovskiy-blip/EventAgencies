@@ -1,0 +1,20 @@
+/* One continuous, photo-derived canvas. No enlarged duplicate of the picture. */
+.ea-home-color-field{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .65s ease,visibility .65s}
+.ea-home-color-field>div{position:absolute;inset:0}
+.ea-home-color-base,.ea-home-color-primary,.ea-home-color-secondary{transition:background-color 1.15s cubic-bezier(.22,.61,.36,1)}
+.ea-home-color-field.is-theme-switch>div{transition:none}
+.ea-home-color-primary{mask-image:radial-gradient(ellipse 92% 98% at 83% 38%,#000 0%,#000b 32%,transparent 80%)}
+.ea-home-color-secondary{mask-image:radial-gradient(ellipse 85% 105% at 9% 86%,#000c 0%,#0007 30%,transparent 78%)}
+.ea-home-color-finish{background:linear-gradient(110deg,#fff1,transparent 40%,#fff1),radial-gradient(ellipse at 50% 45%,transparent 48%,#ffffff0a)}
+html[data-theme=dark] .ea-home-color-finish{background:linear-gradient(110deg,#080b100d,transparent 44%,#080b101a),radial-gradient(ellipse at 50% 45%,transparent 45%,#03060826)}
+body[data-home-color] .ea-home-color-field{opacity:1;visibility:visible}
+body[data-home-color] .ea-atmosphere{opacity:0;visibility:hidden}
+html:root:has(body[data-home-color]),html:root body[data-home-color]{background:var(--ea-home-canvas,var(--canvas));transition:background-color 1.15s ease}
+body[data-home-color] .home.is-landing{--canvas:var(--ea-home-canvas);--chrome:var(--ea-home-canvas)}
+@media(max-width:900px){
+ .ea-home-color-primary{mask-image:radial-gradient(ellipse 130% 76% at 85% 61%,#000 0%,#0009 34%,transparent 84%)}
+ .ea-home-color-secondary{mask-image:radial-gradient(ellipse 110% 85% at 0% 18%,#000a 0%,transparent 80%)}
+}
+@media(prefers-reduced-motion:reduce){
+ .ea-home-color-field,.ea-home-color-field>div,html:root:has(body[data-home-color]),html:root body[data-home-color]{transition:none}
+}
