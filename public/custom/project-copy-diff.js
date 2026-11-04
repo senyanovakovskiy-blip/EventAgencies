@@ -113,14 +113,14 @@ export function describeCopyChanges({current,currentReferences,incoming,data,bri
    const [agencySlug,workSlug]=note.key.split('/'),status=!note.before?'Добавится':!note.after?'Будет убрана':'Изменится';
    return `<details><summary>${esc(status+' · '+labels.work(workSlug,agencySlug)+' · '+labels.agency(agencySlug))}</summary>${columns(textValue(note.before,'Заметки нет'),textValue(note.after,'Заметки нет'))}</details>`;
   }),'')));
- }else if(!includeNotes)preserved.push('Заметки в копию не включены. Все текущие заметки сохранятся, в том числе к работам, которых нет в загружаемой подборке.');
+ }else if(!includeNotes)preserved.push('При этой загрузке все текущие заметки сохранятся, в том числе к работам вне выбранной подборки.');
 
  const contactChanged=['name','method','value'].some(key=>before.contact[key]!==after.contact[key]);
  if(includeContact&&contactChanged){
   summary.push('Изменятся имя или контакт для ответа.');
   const contactRows=contact=>rows([['Имя',contact.name||'Не указано'],['Способ связи',contactMethods[contact.method]],['Контакт',contact.value||'Не указан']]);
   details.push(group('Имя и контакт для ответа',columns(contactRows(before.contact),contactRows(after.contact))));
- }else if(!includeContact)preserved.push('Контакт в копию не включён. Текущее имя, способ связи и контакт сохранятся.');
+ }else if(!includeContact)preserved.push('При этой загрузке текущие имя, способ связи и контакт сохранятся.');
 
  const hasChanges=summary.length>0;
  const html=`<section class="copy-changes"><h4 class="copy-changes-heading">Что изменится в текущем проекте</h4><p class="copy-changes-intro">${hasChanges?'Сравнение текущего проекта с результатом загрузки. Раскройте раздел, чтобы увидеть значения до и после.':'Описание события, команды, примеры, заметки и контакт останутся такими же.'}</p>${hasChanges?`<ul class="copy-changes-summary">${summary.map(item=>`<li>${esc(item)}</li>`).join('')}</ul>`:''}${details.join('')}${preserved.map(value=>`<p class="copy-change-preserved">${esc(value)}</p>`).join('')}${!labels.hasCatalog&&(previousTeams.length||nextTeams.length||previousReferences.length||nextReferences.length||notes.length)?'<p class="copy-change-note">Каталог сейчас недоступен. Для команд и работ показаны идентификаторы; их наличие в каталоге не подтверждено.</p>':''}</section>`;

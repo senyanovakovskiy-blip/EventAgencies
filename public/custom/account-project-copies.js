@@ -7,6 +7,7 @@ import {setupProjectFromInquiry} from './project-from-inquiry.js';
 import {KEY,normalizeDraft} from './project-store.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
 import {describeCopyChanges} from './project-copy-diff.js';
+import {copyForLoad} from './project-copy-mode.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
@@ -32,13 +33,23 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  previous.textContent='← Назад';next.textContent='Далее →';
  let busy=false,editingName=false,listLoading=false,page=1,pageCount=1,listVersion=0,previewVersion=0,active=null,mode='restore',returnFocus=opener,searchTimer=null;
  function syncUndo(){banner.hidden=!previousProject();}
- function syncBusy(){fieldset.disabled=busy;query.disabled=busy;order.disabled=busy;reset.disabled=busy||(!query.value&&order.value==='newest');opener.disabled=busy;banner.querySelector('button').disabled=busy;dialog.querySelector('[data-back-copy-list]').disabled=busy;refresh.disabled=busy||listLoading;confirm.disabled=busy||editingName||!active||(mode==='restore'&&!active.changesReady);download.disabled=busy||editingName||!active;download.hidden=!onExportCopy||mode!=='restore'||Boolean(active?.localPrevious);downloadHint.hidden=download.hidden||!active;previous.disabled=busy||listLoading||page<=1;next.disabled=busy||listLoading||page>=pageCount;list.querySelectorAll('button').forEach(button=>button.disabled=busy);save.textContent=busy?'Сохраняем…':'Сохранить новую копию';}
+ function syncBusy(){fieldset.disabled=busy;query.disabled=busy;order.disabled=busy;reset.disabled=busy||(!query.value&&order.value==='newest');opener.disabled=busy;banner.querySelector('button').disabled=busy;dialog.querySelector('[data-back-copy-list]').disabled=busy;refresh.disabled=busy||listLoading;confirm.disabled=busy||editingName||!active||(mode==='restore'&&!active.changesReady);download.disabled=busy||editingName||!active;download.hidden=!onExportCopy||mode!=='restore'||Boolean(active?.localPrevious);downloadHint.hidden=download.hidden||!active;previous.disabled=busy||listLoading||page<=1;next.disabled=busy||listLoading||page>=pageCount;list.querySelectorAll('button').forEach(button=>button.disabled=busy);save.textContent=busy?'Сохраняем…':'Сохранить новую копию';syncLoadScope();}
+ function syncLoadScope(){
+  if(!active||mode!=='restore')return;
+  const onlyEvent=active.loadScope==='event';
+  confirm.textContent=onlyEvent?'Загрузить только событие':active.partial?'Загрузить доступное':'Загрузить в мой проект';
+  const scopePanel=previewBody.querySelector('.copy-load-mode');if(scopePanel)scopePanel.disabled=busy||editingName;
+  previewBody.querySelectorAll('input[name="copyLoadScope"]').forEach(input=>{input.checked=input.value===active.loadScope;input.disabled=busy||editingName;});
+  previewBody.querySelectorAll('.copy-availability-note').forEach(note=>note.hidden=onlyEvent);
+  const effect=previewBody.querySelector('.account-copy-effect');if(effect)effect.textContent=onlyEvent?'Загрузка заменит только данные события. Выбранные команды, работы, примеры, заметки и контакт в этом браузере сохранятся. Предыдущий вариант сохранится для возврата.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'+(!active.baseSnapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':'');
+ }
  function renderCopyChanges(){
   if(!active||mode!=='restore')return false;
   const host=previewBody.querySelector('[data-copy-changes]');if(!host)return false;
   try{
    const current=normalizeDraft(getState()),currentReferences=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));
-   const signature=JSON.stringify({brief:current.brief,contact:current.contact,selection:current.selection,notes:Object.entries(current.workNotes).sort(([a],[b])=>a.localeCompare(b)),references:currentReferences});
+   active.loadSnapshot=copyForLoad({current,currentReferences,incoming:active.baseSnapshot,scope:active.loadScope});
+   const signature=JSON.stringify({scope:active.loadScope,brief:current.brief,contact:current.contact,selection:current.selection,notes:Object.entries(current.workNotes).sort(([a],[b])=>a.localeCompare(b)),references:currentReferences});
    if(active.changesReady&&active.changesSource===signature)return false;
    const changed=Boolean(active.changesSource&&active.changesSource!==signature);
    const result=describeCopyChanges({current,currentReferences,incoming:active.loadSnapshot,data:active.catalog,briefRows});
@@ -79,12 +90,12 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
    const hasCatalog=Array.isArray(data?.agencies)&&Array.isArray(data?.projects);
    if(!hasCatalog&&action==='restore'&&!item.localPrevious)throw Object.assign(new Error('catalog_unavailable'),{code:'catalog_unavailable'});
    const prepared=hasCatalog?prepareCopyPreview(snapshot,data,{preserveAll:Boolean(item.localPrevious)}):null;
-   active={...item,snapshot,prepared,loadSnapshot:prepared?.loadSnapshot||snapshot,referencesShown:6,partial:Boolean(prepared?.hasMissing&&!item.localPrevious),catalog:hasCatalog?data:null,changesReady:false,changesSource:null};
-   if(action==='restore'&&active.partial)confirm.textContent='Загрузить доступное';
+   active={...item,snapshot,prepared,baseSnapshot:prepared?.loadSnapshot||snapshot,loadScope:'full',loadSnapshot:null,referencesShown:6,partial:Boolean(prepared?.hasMissing&&!item.localPrevious),catalog:hasCatalog?data:null,changesReady:false,changesSource:null};
    previewBody.innerHTML=`<h3 tabindex="-1">${esc(item.name)}</h3>${item.createdAt?`<p class="account-copy-date">${esc(dateLabel(item.createdAt))}</p>`:''}<p>Команд: ${summary.teams} · Примеров: ${summary.references} · Заметок: ${summary.notes}</p><dl class="review-brief">${briefRows(snapshot.draft.brief).filter(([label])=>label!=='Пожелания').map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><h4>Пожелания</h4><p class="account-copy-wishes">${esc(snapshot.draft.brief.description||'Пока не указаны.')}</p>${prepared?`<h4>Команды и работы</h4>${copyTeamsMarkup(prepared.teams)}<h4>Сохранённые примеры</h4>${copyReferencesMarkup(prepared.references)}`:'<p class="copy-preview-empty">Каталог сейчас недоступен, поэтому названия и фотографии не загружены.</p>'}${action==='restore'?copyAvailabilityMarkup(prepared):''}<p class="account-copy-contact">${snapshot.includeContact?'Контакт в копии: '+esc(snapshot.draft.contact.name||'Имя не указано')+' · '+esc(snapshot.draft.contact.value||'Контакт не указан'):'Контакт в копию не включён.'+(action==='restore'?' При загрузке сохранится текущий контакт в этом браузере.':'')}</p><p class="account-copy-effect">${action==='delete'?'Эта копия будет удалена из аккаунта. Текущий проект в браузере останется на месте.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'}${action!=='delete'&&!snapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':''}</p>`;
    if(action==='restore'){
+    const scopePanel=document.createElement('fieldset');scopePanel.className='copy-load-mode';scopePanel.setAttribute('aria-describedby','copy-load-mode-note');scopePanel.innerHTML='<legend>Что загрузить</legend><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="full" checked><span>Весь проект<small>Событие, выбранные команды и примеры</small></span></label><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="event"><span>Только событие<small>Текущая подборка, заметки и контакт сохранятся</small></span></label><p class="copy-load-mode-note" id="copy-load-mode-note">Ниже показано содержимое исходной копии. Выбор обновляет сравнение; проект изменится только после нажатия кнопки загрузки.</p>';previewBody.querySelector('h3').after(scopePanel);
     const changes=document.createElement('div');changes.id='account-copy-changes';changes.dataset.copyChanges='';changes.tabIndex=-1;changes.setAttribute('role','region');changes.setAttribute('aria-label','Что изменится при загрузке');previewBody.querySelector('.account-copy-effect').before(changes);renderCopyChanges();
-    const changesJump=document.createElement('button');changesJump.type='button';changesJump.className='secondary-action account-copy-changes-jump';changesJump.dataset.showCopyChanges='';changesJump.setAttribute('aria-controls',changes.id);changesJump.textContent='Что изменится при загрузке ↓';previewBody.querySelector('h3').after(changesJump);
+    const changesJump=document.createElement('button');changesJump.type='button';changesJump.className='secondary-action account-copy-changes-jump';changesJump.dataset.showCopyChanges='';changesJump.setAttribute('aria-controls',changes.id);changesJump.textContent='Что изменится при загрузке ↓';scopePanel.after(changesJump);
    }
    if(action==='restore'&&!item.localPrevious)setupCopyNameEditor({body:previewBody,item:active,isCurrent:()=>version===previewVersion&&dialog.open,onBusy:value=>{busy=value;syncBusy();},onEditing:value=>{editingName=value;syncBusy();},onRenamed:renamed=>{accountStatus.textContent='Название копии изменено на «'+renamed.name+'».';saveStatus.textContent=accountStatus.textContent;loadList(page);}});
    syncBusy();
@@ -108,6 +119,12 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   finally{busy=false;syncBusy();currentSummary();}
  });
  list.addEventListener('click',event=>{if(busy)return;const open=event.target.closest('[data-preview-copy]'),remove=event.target.closest('[data-delete-copy]');if(open)showPreview(Number(open.dataset.previewCopy));if(remove)showPreview(Number(remove.dataset.deleteCopy),'delete');});
+ previewBody.addEventListener('change',event=>{
+  const input=event.target.closest('input[name="copyLoadScope"]');if(!input||!active||mode!=='restore')return;
+  if(busy||editingName||!input.checked||!['full','event'].includes(input.value)){syncLoadScope();return;}
+  if(active.loadScope===input.value)return;
+  active.loadScope=input.value;active.changesReady=false;active.changesSource=null;renderCopyChanges();syncBusy();actionStatus.textContent=active.changesReady?'Сравнение обновлено. Проект пока не изменён.':'Проект пока не изменён. Для загрузки нужно обновить сравнение.';
+ });
  previewBody.addEventListener('click',event=>{
   if(event.target.closest('[data-show-copy-changes]')){const changes=previewBody.querySelector('[data-copy-changes]');changes?.scrollIntoView({block:'start'});changes?.focus({preventScroll:true});return;}
   if(event.target.closest('[data-refresh-copy-changes]')){renderCopyChanges();syncBusy();return;}
@@ -129,10 +146,10 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
    const changed=renderCopyChanges();syncBusy();if(!active.changesReady)return;
    if(changed){actionStatus.textContent='Текущий проект изменился. Сравнение обновлено — просмотрите его и нажмите загрузку ещё раз.';const changes=previewBody.querySelector('[data-copy-changes]');changes?.scrollIntoView({block:'nearest'});changes?.focus({preventScroll:true});return;}
   }
-  const selected=active;busy=true;syncBusy();actionStatus.textContent=mode==='delete'?'Удаляем копию…':'Загружаем проект…';
+  const selected=active;busy=true;syncBusy();actionStatus.textContent=mode==='delete'?'Удаляем копию…':selected.loadScope==='event'?'Загружаем событие…':'Загружаем проект…';
   try{
    if(mode==='delete'){await copyRequest('/api/project-copies/'+selected.id,{method:'DELETE'});showManager();await loadList(page);saveStatus.textContent='Копия «'+selected.name+'» удалена.';}
-   else{if(!canRestore())throw Object.assign(new Error('sending_in_progress'),{code:'sending_in_progress'});restoreProjectCopy(selected.loadSnapshot,getState);syncUndo();banner.querySelector('p').textContent=(selected.partial?'Загружены доступные элементы копии «':'Загружен проект «')+selected.name+'». Предыдущий вариант доступен для возврата.';returnFocus=document.getElementById('project-overview');dialog.close();returnFocus.scrollIntoView({block:'start'});returnFocus.focus({preventScroll:true});}
+   else{if(!canRestore())throw Object.assign(new Error('sending_in_progress'),{code:'sending_in_progress'});restoreProjectCopy(selected.loadSnapshot,getState,{preserveReferences:selected.loadScope==='event'});syncUndo();banner.querySelector('p').textContent=(selected.loadScope==='event'?'Загружены данные события из копии «':selected.partial?'Загружены доступные элементы копии «':'Загружен проект «')+selected.name+'». Предыдущий вариант доступен для возврата.';returnFocus=document.getElementById('project-overview');dialog.close();returnFocus.scrollIntoView({block:'start'});returnFocus.focus({preventScroll:true});}
   }catch(error){actionStatus.textContent=errorMessage(error);syncUndo();}
   finally{busy=false;syncBusy();}
  });

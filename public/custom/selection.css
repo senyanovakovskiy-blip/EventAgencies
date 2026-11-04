@@ -672,6 +672,21 @@ html:root .ea-save-button{pointer-events:auto}
 .copy-changes :is(summary,[tabindex]):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 @media(max-width:600px){.copy-changes{padding:16px}.copy-change-grid{grid-template-columns:minmax(0,1fr);gap:16px;padding:12px}.copy-change-side+ .copy-change-side{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:14px}.copy-change-group>summary{padding:12px}.copy-changes .copy-change-value{max-height:160px}}
 
+/* Choose which part of a saved copy to load. */
+.copy-load-mode{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;min-inline-size:0;margin:24px 0 0;padding:0;border:0}
+.copy-load-mode>legend{padding:0;margin:0 0 12px;color:var(--ink);font-size:14px;line-height:1.5}
+.copy-load-option{box-sizing:border-box;display:flex;align-items:flex-start;gap:12px;min-width:0;min-height:44px;padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--color-bg);color:var(--ink);font-size:14px;line-height:1.5;cursor:pointer;overflow-wrap:anywhere}
+.copy-load-option>input{width:18px;height:18px;flex:none;margin:2px 0 0;accent-color:var(--color-highlight);cursor:inherit}
+.copy-load-option>span{display:block;min-width:0}
+.copy-load-option small{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6}
+.copy-load-option:has(input:checked){border-color:var(--color-highlight);background:var(--surface)}
+.copy-load-option:has(input:focus-visible){outline:2px solid var(--color-highlight);outline-offset:3px}
+.copy-load-option>input:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.account-copy-preview .copy-load-mode-note{grid-column:1/-1;margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.6;overflow-wrap:anywhere}
+.copy-load-mode>.copy-load-mode-note{margin:0}
+@media(hover:hover){.copy-load-option:hover{border-color:var(--color-highlight)}}
+@media(max-width:600px){.copy-load-mode{grid-template-columns:minmax(0,1fr);gap:10px}.copy-load-option{padding:14px}}
+
 .project-history{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:100px}
 .project-history>details>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;list-style:none;cursor:pointer;padding:20px 0}
 .project-history>details>summary::-webkit-details-marker{display:none}
