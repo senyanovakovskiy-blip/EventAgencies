@@ -2,6 +2,7 @@ import {copySummary,normalizeProjectCopy} from './project-copy-model.js';
 import {copyRequest,currentProjectCopy,saveAccountCopy,previousProject,restoreProjectCopy} from './project-copy-client.js';
 import {prepareCopyPreview,copyAvailabilityMarkup,copyTeamsMarkup,copyReferencesMarkup,copyReferenceCards} from './project-copy-preview.js';
 import {setupCopyNameEditor} from './project-copy-name.js';
+import {setupNewProject} from './project-new.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
@@ -100,5 +101,6 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  banner.querySelector('button').addEventListener('click',()=>{
   const snapshot=previousProject();if(!snapshot)return;returnFocus=banner.querySelector('button');if(!dialog.open)dialog.showModal();showPreview({name:'Предыдущий вариант в этом браузере',snapshot,localPrevious:true});
  });
+ setupNewProject({anchor:opener,getState,canStart:()=>!busy&&canRestore(),onStarted:()=>{syncUndo();banner.querySelector('p').textContent='Создан новый проект. Предыдущий вариант доступен для возврата в этом браузере.';},onStorageIssue:syncUndo});
  syncUndo();
 }
