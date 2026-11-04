@@ -10,9 +10,9 @@ const errors={
  storage:'Не удалось сохранить. Ваш ввод остался в окне. Разрешите хранение данных сайта и нажмите «Сохранить заметку» ещё раз.'
 };
 const linked=(work,agencySlug)=>work.agencySlug===agencySlug||work.agencySlugs?.includes(agencySlug);
+const currentOpener=(opener,{agencySlug,workSlug,path})=>Boolean(opener.isConnected&&!opener.disabled&&!opener.closest('[hidden],[inert]')&&opener.getClientRects().length&&getComputedStyle(opener).visibility!=='hidden'&&opener.dataset.editComparisonNote===agencySlug&&opener.dataset.noteWork===workSlug&&location.pathname+location.search===path);
 
 export function setupProjectNoteEditor({getData,canEdit,onSaved,onError}){
- if(!document.getElementById('project-board'))return;
  const dialog=document.createElement('dialog');dialog.id='project-note-editor';dialog.setAttribute('aria-labelledby','project-note-editor-title');
  dialog.innerHTML=`<button class="brief-close" type="button" data-close-note-editor aria-label="Закрыть редактор заметки">×</button><span class="eyebrow">Только для вас</span><h2 id="project-note-editor-title">Личная заметка</h2><dl class="project-note-context"><div><dt>Агентство</dt><dd data-note-editor-agency></dd></div><div><dt>Выбранная работа</dt><dd data-note-editor-work></dd></div></dl><form><label for="project-note-editor-text">Что нравится в этой работе?</label><textarea id="project-note-editor-text" rows="8" maxlength="1000" aria-describedby="project-note-editor-help project-note-editor-count"></textarea><p id="project-note-editor-count" class="project-note-count"></p><p id="project-note-editor-help">Личная заметка сохраняется в этом браузере. В пожелания и заявку автоматически не добавляется.</p><p class="project-note-editor-status" data-note-editor-status role="status" aria-live="polite"></p><div class="project-note-editor-actions"><button class="primary-action" type="submit">Сохранить заметку</button><button class="secondary-action" type="button" data-close-note-editor>Отмена</button></div></form>`;
  document.body.append(dialog);
@@ -34,21 +34,24 @@ export function setupProjectNoteEditor({getData,canEdit,onSaved,onError}){
  }
  async function open(opener){
   if(opening||dialog.open)return;
+  const context={agencySlug:opener.dataset.editComparisonNote,workSlug:opener.dataset.noteWork,path:location.pathname+location.search};
+  if(!currentOpener(opener,context))return;
   if(!canEdit()){onError('Сначала дождитесь отправки заявки и сохраните текущие изменения проекта.');return;}
   opening=true;const version=epoch,marker=referenceProjectMarker();
   try{
-   const data=await getData();if(version!==epoch)return;
-   const agencySlug=opener.dataset.editComparisonNote,workSlug=opener.dataset.noteWork;
+   const data=await getData();if(version!==epoch||!currentOpener(opener,context))return;
+   const {agencySlug,workSlug,path}=context;
    const current=readDraft(localStorage),entry=current.selection.find(item=>item.agencySlug===agencySlug),agency=data.agencies.find(item=>item.slug===agencySlug),work=data.projects.find(item=>item.slug===workSlug&&linked(item,agencySlug));
    if(marker===null||marker!==referenceProjectMarker())throw Error('project');
+   if(opener.dataset.noteProject&&opener.dataset.noteProject!==marker){onError('Проект уже изменился. Откройте заметку из текущего выбора.');return;}
    if(!canEdit()||!entry||entry.workSlug!==workSlug||!agency||!work){onError('Выбранная работа уже изменилась или недоступна. Откройте заметку для текущего выбора.');return;}
    const key=workNoteKey(agencySlug,workSlug);
-   active={agencySlug,workSlug,key,marker,expected:current.workNotes[key]||'',invalid:null};trigger=opener;
+   active={agencySlug,workSlug,key,marker,path,expected:current.workNotes[key]||'',invalid:null};trigger=opener;
    field.value=active.expected;status.textContent='';
    dialog.querySelector('[data-note-editor-agency]').textContent=agency.name;
    dialog.querySelector('[data-note-editor-work]').textContent=work.fullTitle;
    sync();dialog.showModal();field.focus({preventScroll:true});
-  }catch{onError('Не удалось открыть актуальную заметку. Проверьте доступ к хранилищу браузера и попробуйте снова.');}
+  }catch{if(version===epoch&&currentOpener(opener,context))onError('Не удалось открыть актуальную заметку. Проверьте доступ к хранилищу браузера и попробуйте снова.');}
   finally{opening=false;}
  }
  document.addEventListener('click',event=>{const opener=event.target.closest('[data-edit-comparison-note]');if(opener&&!opener.disabled){event.preventDefault();open(opener);}});
@@ -56,9 +59,11 @@ export function setupProjectNoteEditor({getData,canEdit,onSaved,onError}){
  dialog.querySelectorAll('[data-close-note-editor]').forEach(button=>button.addEventListener('click',()=>{if(!busy)dialog.close();}));
  dialog.addEventListener('cancel',event=>{if(busy)event.preventDefault();});
  dialog.addEventListener('close',()=>{
-  const agencySlug=active?.agencySlug;active=null;epoch++;field.value='';status.textContent='';
-  restoreProjectActionFocus({trigger,agencySlug,action:'note'});trigger=null;
+  const {agencySlug,workSlug,path}=active||{};active=null;epoch++;field.value='';status.textContent='';
+  restoreProjectActionFocus({trigger,agencySlug,workSlug,path,action:'note'});trigger=null;
  });
+ // A delayed catalog load must not reopen a dialog after leaving and returning.
+ addEventListener('pagehide',()=>{epoch++;});
  const projectChanged=()=>{epoch++;conflict('project');};
  document.addEventListener('ea:project-started',projectChanged);
  document.addEventListener('ea:project-copy-restored',projectChanged);
@@ -91,7 +96,7 @@ export function setupProjectNoteEditor({getData,canEdit,onSaved,onError}){
   }catch{status.textContent=errors.storage;sync();return;}
   session.expected=value;busy=true;status.textContent='';sync();
   try{
-   await onSaved(next,{agencySlug:session.agencySlug,workSlug:session.workSlug,value});
+   await onSaved(next,{agencySlug:session.agencySlug,workSlug:session.workSlug,value,trigger,marker:session.marker,path:session.path});
    if(active===session&&!session.invalid)dialog.close();
   }catch{status.textContent='Заметка сохранена. Не удалось обновить отображение — закройте окно и обновите страницу.';}
   finally{busy=false;sync();}

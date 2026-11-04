@@ -14,6 +14,7 @@ import {setupWishesUndo} from './wishes-undo.js';
 import {setupReplacementUndo} from './replacement-undo.js';
 import {setupProjectWorkPicker} from './project-work-picker.js';
 import {setupProjectNoteEditor} from './project-note-editor.js';
+import {referenceProjectMarker} from './reference-batch-session.js';
 import {setupComparisonCriteria,syncComparisonCriteria} from './project-comparison-criteria.js';
 import {comparisonValuesMatch} from './project-comparison-equality.js';
 import {selectionView,selectionProblems} from './project-selection-view.js';
@@ -48,7 +49,23 @@ function persist(next,{quiet=false}={}){
  catch{draft=normalizeDraft({...next,request:null});available=false;refresh();document.getElementById('project-storage-note')?.removeAttribute('hidden');if(!quiet)notice('Не удалось сохранить изменения','В браузере недоступно сохранение. Разрешите хранение данных сайта и попробуйте ещё раз.');return false;}
 }
 const pop=document.createElement('aside');pop.className='ea-selection-notice';pop.hidden=true;pop.setAttribute('aria-label','Ваша подборка');document.body.append(pop);
-function notice(title,copy,{undoReplacement=false}={}){const inProject=Boolean(document.getElementById('project-board'));pop.innerHTML=`<button class="ea-notice-close" aria-label="Закрыть уведомление">×</button><div role="status"><strong>${esc(title)}</strong><p>${esc(copy)}</p></div><div class="ea-notice-actions">${undoReplacement&&replacementUndo?.hasChange()?'<button type="button" data-undo-replacement>Отменить замену</button>':''}<button data-continue>Продолжить выбор</button><a href="${inProject?'#project-comparison':'/my-project'}"${inProject?' data-edit-selection':''}>${inProject?'К сравнению':'Мой проект'}${draft.selection.length?' · '+draft.selection.length:''} ↗</a></div>`;pop.hidden=false;replacementUndo?.sync();}
+let noticeNote=null;
+const noteActionLabel=value=>value.trim()?'Открыть мою заметку…':'Записать, что понравилось…';
+function savedNoteContext(pair){
+ if(!available||!pair?.workSlug)return null;
+ try{
+  const marker=referenceProjectMarker(),current=readDraft(localStorage);
+  if(marker===null||!current.selection.some(item=>item.agencySlug===pair.agencySlug&&item.workSlug===pair.workSlug))return null;
+  return {agencySlug:pair.agencySlug,workSlug:pair.workSlug,marker,value:current.workNotes[workNoteKey(pair.agencySlug,pair.workSlug)]||''};
+ }catch{return null;}
+}
+function notice(title,copy,{undoReplacement=false,selectedPair=null}={}){
+ const inProject=Boolean(document.getElementById('project-board')),context=savedNoteContext(selectedPair);
+ noticeNote=null;
+ pop.innerHTML=`<button class="ea-notice-close" type="button" aria-label="Закрыть уведомление">×</button><div role="status"><strong>${esc(title)}</strong><p>${esc(copy)}</p></div><div class="ea-notice-actions">${context?`<button type="button" data-edit-comparison-note="${esc(context.agencySlug)}" data-note-work="${esc(context.workSlug)}" data-note-project="${esc(context.marker)}">${noteActionLabel(context.value)}</button>`:''}${undoReplacement&&replacementUndo?.hasChange()?'<button type="button" data-undo-replacement>Отменить замену</button>':''}<button type="button" data-continue>Продолжить выбор</button><a href="${inProject?'#project-comparison':'/my-project'}"${inProject?' data-edit-selection':''}>${inProject?'К сравнению':'Мой проект'}${draft.selection.length?' · '+draft.selection.length:''} ↗</a></div>${context?'<p class="ea-notice-note-status" data-note-saved-status role="status" aria-live="polite" aria-atomic="true"></p>':''}`;
+ if(context)noticeNote={...context,button:pop.querySelector('[data-edit-comparison-note]'),status:pop.querySelector('[data-note-saved-status]')};
+ pop.hidden=false;replacementUndo?.sync();
+}
 function withReferenceNote(state,agencySlug,workSlug,note){return workSlug&&note?.trim()&&!Object.hasOwn(state.workNotes,workNoteKey(agencySlug,workSlug))?updateWorkNote(state,agencySlug,workSlug,note):state;}
 const replacement=document.createElement('dialog');replacement.id='replacement-dialog';replacement.setAttribute('aria-labelledby','replacement-title');document.body.append(replacement);
 replacement.addEventListener('close',()=>{pendingReplacement=null;});
@@ -100,13 +117,14 @@ document.addEventListener('click',async event=>{
   if(result.result==='invalid')return;
   if(result.result!=='existing'&&!persist(withReferenceNote(result.state,save.dataset.saveAgency,save.dataset.saveWork,referenceNote)))return;
   const left=3-draft.selection.length;
-  notice(result.result==='updated'?'Выбранная работа обновлена':result.result==='existing'?'Агентство уже в вашем проекте':'Агентство добавлено в ваш проект',left===2?'Можно добавить ещё две команды для сравнения или перейти к описанию мероприятия.':left===1?'Можно добавить ещё одну команду для сравнения или перейти к описанию мероприятия.':'Три команды выбраны. Перейдите к сравнению и описанию мероприятия.');return;
+  notice(result.result==='updated'?'Выбранная работа обновлена':result.result==='existing'?'Агентство уже в вашем проекте':'Агентство добавлено в ваш проект',left===2?'Можно добавить ещё две команды для сравнения или перейти к описанию мероприятия.':left===1?'Можно добавить ещё одну команду для сравнения или перейти к описанию мероприятия.':'Три команды выбраны. Перейдите к сравнению и описанию мероприятия.',{selectedPair:{agencySlug:save.dataset.saveAgency,workSlug:save.dataset.saveWork}});return;
  }
  const replace=event.target.closest('[data-replace-agency]');
  if(replace&&pendingReplacement){
-  const previousSelection=draft.selection.map(item=>({...item})),previousName=replace.dataset.replaceName||replace.dataset.replaceAgency,nextName=pendingReplacement.name;
-  const next=replaceAgency(draft,replace.dataset.replaceAgency,pendingReplacement.agencySlug,pendingReplacement.workSlug);
-  if(next.result==='replaced'&&persist(withReferenceNote(next.state,pendingReplacement.agencySlug,pendingReplacement.workSlug,pendingReplacement.note))){replacementUndo?.record(previousSelection,draft.selection,previousName,nextName);replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.',{undoReplacement:true});}
+  const {agencySlug,workSlug,note,name:nextName}=pendingReplacement;
+  const previousSelection=draft.selection.map(item=>({...item})),previousName=replace.dataset.replaceName||replace.dataset.replaceAgency;
+  const next=replaceAgency(draft,replace.dataset.replaceAgency,agencySlug,workSlug);
+  if(next.result==='replaced'&&persist(withReferenceNote(next.state,agencySlug,workSlug,note))){replacementUndo?.record(previousSelection,draft.selection,previousName,nextName);replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.',{undoReplacement:true,selectedPair:{agencySlug,workSlug}});}
   else if(next.result!=='replaced'){replacement.close();notice('Подборка уже изменилась','Проверьте выбранные команды в «Моём проекте».');}
   return;
  }
@@ -548,7 +566,8 @@ replacementUndo=setupReplacementUndo({getSelection:()=>draft.selection,canUndo:(
  else notice('Не удалось отменить замену','Разрешите хранение данных сайта, сохраните текущие изменения и повторите попытку.',{undoReplacement:true});
 }});
 if(inquiries.accepted(draft))replacementUndo.clear();
-setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=>notice('Личная заметка',message),onSaved:async(next,{agencySlug,workSlug,value})=>{
+setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=>notice('Личная заметка',message),onSaved:async(next,{agencySlug,workSlug,value,trigger,marker,path})=>{
+ const savedNotice=noticeNote?.button===trigger&&noticeNote.agencySlug===agencySlug&&noticeNote.workSlug===workSlug&&noticeNote.marker===marker?noticeNote:null;
  // A private note preserves request/receipt state and all other freshly read fields.
  draft=next;available=true;
  document.getElementById('project-storage-note')?.setAttribute('hidden','');
@@ -560,7 +579,14 @@ setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=
  // Existing listeners update saved examples, note counters and clear/undo for this key.
  fields[0]?.dispatchEvent(new CustomEvent('ea:work-note-updated',{bubbles:true,detail:{agencySlug,workSlug,reapplyReferenceFilters:true}}));
  await renderProject();
- orderStatus.textContent='Личная заметка сохранена. Пожелания и заявка не изменены.';
+ const message=value?'Личная заметка сохранена. Пожелания и заявка не изменены.':'Личная заметка очищена. Пожелания и заявка не изменены.';
+ orderStatus.textContent=message;
+ // Keep the live opener for focus return; another notice never inherits this result.
+ if(!savedNotice||noticeNote!==savedNotice||pop.hidden||!pop.contains(trigger)||location.pathname+location.search!==path)return;
+ const current=savedNoteContext({agencySlug,workSlug});
+ if(!current||current.marker!==marker||current.value!==value)return;
+ savedNotice.button.textContent=noteActionLabel(value);
+ savedNotice.status.textContent=message;
 }});
 setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onError:message=>notice('Выбор работы',message),onChoose:async({agencySlug,workSlug,expectedWorkSlug})=>{
  if(!available||sending)return 'failed';
