@@ -53,6 +53,7 @@ export async function handleCloudApi(request, env) {
     if (copyMatch) {
       const copies = createProjectCopyStore(env.DB, ownerId), id = Number(copyMatch[1]);
       if (request.method === 'GET') return reply(200, await copies.detail(id));
+      if (request.method === 'PATCH') return reply(200, await copies.rename(id, await readBody(request, 2048)));
       if (request.method === 'DELETE') return reply(200, await copies.remove(id));
       return reply(405, { error: 'method_not_allowed' });
     }

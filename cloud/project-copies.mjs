@@ -40,5 +40,18 @@ export function createProjectCopyStore(binding,ownerId){
    const row=await stmt('DELETE FROM project_copies WHERE owner_id=? AND id=? RETURNING id',ownerId,id).first();
    if(!row)throw problem(404,'not_found');return {ok:true};
   },
+  async rename(id,input){
+   if(!validId(id))throw problem(404,'not_found');
+   if(typeof input?.name!=='string'||!input.name.trim()||input.name.length>120||typeof input.expectedName!=='string'||!input.expectedName.trim()||input.expectedName.length>120)throw problem(400,'invalid_copy_name');
+   const name=input.name.trim();
+   // The creation hash remains unchanged so retries of the original save
+   // still identify the same snapshot after its display name changes.
+   const row=await stmt('UPDATE project_copies SET name=? WHERE owner_id=? AND id=? AND name=? RETURNING id,name',name,ownerId,id,input.expectedName).first();
+   if(row)return {ok:true,item:row};
+   const current=await stmt('SELECT id,name FROM project_copies WHERE owner_id=? AND id=?',ownerId,id).first();
+   if(!current)throw problem(404,'not_found');
+   if(current.name===name)return {ok:true,item:current};
+   throw problem(409,'copy_name_changed');
+  },
  };
 }

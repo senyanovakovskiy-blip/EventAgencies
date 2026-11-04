@@ -494,6 +494,14 @@ html:root .ea-save-button{pointer-events:auto}
 .account-copy-preview h4{font-size:16px;font-weight:400;margin:24px 0 12px}
 .account-copy-preview p{font-size:14px;line-height:1.6;overflow-wrap:anywhere}
 .account-copy-preview .account-copy-date{font-size:12px;color:var(--muted)}
+.copy-name-controls{margin:-10px 0 14px}
+.copy-name-editor{padding:18px;border:1px solid var(--line);border-radius:8px;background:var(--surface);margin:18px 0}
+.copy-name-editor fieldset{border:0;margin:0;padding:0;min-width:0}
+.copy-name-editor label{display:flex;flex-direction:column;gap:9px;font-size:12px;line-height:1.5;color:var(--muted)}
+.copy-name-editor input{box-sizing:border-box;width:100%;min-width:0;min-height:46px;padding:11px 12px;border:1px solid var(--line);border-radius:6px;background:var(--glass);color:var(--ink);font:16px/1.5 Motion,Arial,sans-serif}
+.copy-name-actions{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:14px}
+.copy-name-actions .secondary-action{min-height:44px;padding:10px 16px;font-size:12px}
+.copy-name-editor .brief-local-note:empty{display:none}
 .account-copy-preview .review-brief{padding-top:22px;margin-top:22px;border-top:1px solid var(--line)}
 .account-copy-wishes{white-space:pre-wrap}
 .account-copy-contact{color:var(--muted);margin:22px 0}
