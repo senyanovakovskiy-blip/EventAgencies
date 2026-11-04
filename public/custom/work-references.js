@@ -219,6 +219,12 @@ function handleReferenceNoteUpdate(event){
   noteClearController.sync(card);
   syncReferenceNoteChooser(card,work);
   syncReferenceNoteMatch(card);
+  // A completed edit outside the card can update visibility immediately;
+  // typing inside a saved example still waits until focus leaves that card.
+  if(event.detail?.reapplyReferenceFilters===true){
+   const works=[...host.querySelectorAll('[data-saved-reference]')].map(item=>data.projects.find(project=>project.slug===item.dataset.savedReference)).filter(Boolean);
+   filterReferences(host,works);
+  }
  });
 }
 document.addEventListener('input',handleReferenceNoteUpdate);

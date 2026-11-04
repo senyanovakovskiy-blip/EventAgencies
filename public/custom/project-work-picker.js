@@ -1,5 +1,6 @@
 import {KEY} from './project-store.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
+import {restoreProjectActionFocus} from './project-action-focus.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const normalize=value=>String(value||'').normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е').trim();
@@ -89,7 +90,7 @@ export function setupProjectWorkPicker({getState,getData,canChoose,onChoose,onEr
  dialog.addEventListener('change',event=>{if(!event.target.matches('input[name="projectWork"]')||busy)return;selected=event.target.value||null;status.textContent='';syncChoice();});
  dialog.querySelectorAll('[data-close-work-picker]').forEach(button=>button.addEventListener('click',()=>{if(!busy)dialog.close();}));
  dialog.addEventListener('cancel',event=>{if(busy)event.preventDefault();});
- dialog.addEventListener('close',()=>{const agencySlug=active?.agencySlug;active=null;const target=trigger?.isConnected?trigger:agencySlug&&document.querySelector(`[data-open-work-picker="${agencySlug}"]`);(target||document.getElementById('project-comparison'))?.focus({preventScroll:true});trigger=null;});
+ dialog.addEventListener('close',()=>{const agencySlug=active?.agencySlug;active=null;restoreProjectActionFocus({trigger,agencySlug});trigger=null;});
  document.addEventListener('ea:project-copy-restored',()=>{if(dialog.open)dialog.close();});
  confirm.addEventListener('click',async()=>{
   if(!active||active.unavailable||busy||selected===undefined||selected===active.expected)return;

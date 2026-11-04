@@ -9,6 +9,7 @@ import {referenceNotesForWork} from './reference-note-model.js';
 import {setupWishesUndo} from './wishes-undo.js';
 import {setupReplacementUndo} from './replacement-undo.js';
 import {setupProjectWorkPicker} from './project-work-picker.js';
+import {setupProjectNoteEditor} from './project-note-editor.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -107,7 +108,7 @@ document.addEventListener('click',async event=>{
  const remove=event.target.closest('[data-remove-agency]');if(remove){
   const index=draft.selection.findIndex(s=>s.agencySlug===remove.dataset.removeAgency);if(index<0)return;
   const item={...draft.selection[index]};
-  const name=remove.closest('article')?.querySelector('h3')?.textContent||item.agencySlug;
+  const name=remove.dataset.agencyName||remove.closest('article')?.querySelector('h3')?.textContent||item.agencySlug;
   if(persist(removeAgency(draft,item.agencySlug))){
    removedAgency={item,index};const undo=document.getElementById('project-undo');
    if(undo){undo.hidden=false;document.getElementById('project-undo-status').textContent=name+' убрано из подборки. Можно вернуть вместе с выбранным кейсом.';undo.querySelector('button').focus();}
@@ -405,7 +406,17 @@ document.addEventListener('input',event=>{
  catch{draft=next;available=false;status.textContent='Не удалось сохранить. Не закрывайте страницу: разрешите хранение данных и повторите ввод.';}
  document.getElementById('project-storage-note').hidden=available;
  document.querySelectorAll('[data-work-note]').forEach(other=>{if(other!==field&&other.dataset.workNote===field.dataset.workNote&&other.dataset.noteWork===field.dataset.noteWork)other.value=field.value;});
+ syncComparisonNote(field);
 });
+function syncComparisonNote(field){
+ if(!field?.matches?.('textarea[data-work-note]'))return;
+ document.querySelectorAll('#comparison-table [data-comparison-note-text]').forEach(node=>{
+  if(node.dataset.comparisonNoteText!==field.dataset.workNote||node.dataset.noteWork!==field.dataset.noteWork)return;
+  node.textContent=field.value||'Пока нет заметки';
+  const button=node.parentElement.querySelector('[data-edit-comparison-note]');if(button)button.textContent=field.value.trim()?'Изменить заметку…':'Добавить заметку…';
+ });
+}
+document.addEventListener('ea:work-note-updated',event=>syncComparisonNote(event.target));
 function renderComparison(data,entries){
  const host=document.getElementById('comparison-table');if(!host)return;
  const enough=entries.length>=2;
@@ -417,19 +428,26 @@ function renderComparison(data,entries){
  document.getElementById('comparison-hint').textContent=enough?'Расставьте команды по своему приоритету стрелками ↑ ↓':'Добавьте хотя бы два агентства для сравнения';
  if(!tableMode)return;
  const picks=entries.map(s=>({s,a:data.agencies.find(a=>a.slug===s.agencySlug),p:selectedWork(data,s)}));
+ const missingWork=({s})=>s.workSlug?'Выбранная работа недоступна в каталоге':'Работа не выбрана';
+ // One criterion model and one table serve both layouts. Stable identifiers
+ // also keep each value associated with its team when rows stack on mobile.
  const rows=[
- ['Выбранная работа',({p})=>p?`<a href="/work/${p.slug}?from=%2Fmy-project%23project-comparison">${esc(p.fullTitle)} ↗</a><p>${esc(facts(p))}</p>`:'Кейс не выбран'],
- ['Моя заметка',({s,p})=>esc(p&&draft.workNotes[workNoteKey(s.agencySlug,p.slug)]||'Пока нет заметки')],
- ['Специализация',({a})=>esc(a.types.map(t=>data.types[t]).filter(Boolean).join(', ')||'Нужно уточнить')],
- ['Город команды',({a})=>esc(a.city||'Нужно уточнить')],
- ['География работы',({a})=>esc(a.geography||'Нужно уточнить')],
- ['Услуги',({a})=>esc(a.services||'Нужно уточнить')],
- ['Роль в выбранной работе',({p})=>esc(p?role(p):'Кейс не выбран')],
- ['Опубликованные условия по бюджету',({a})=>esc(a.budgetConditions||'Нужно уточнить')],
- ['Дата и стоимость вашего события',()=> 'Нужно обсудить с командой'],
- ['Источники',({a,p})=>`${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer">Источник кейса ↗</a><br>`:''}<a href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison">Профиль агентства ↗</a>`]
+ {id:'work',label:'Выбранная работа',render:pick=>(pick.p?`<a href="/work/${pick.p.slug}?from=%2Fmy-project%23project-comparison" aria-label="Открыть работу «${esc(pick.p.fullTitle)}» · ${esc(pick.a.name)}">${esc(pick.p.fullTitle)} ↗</a><p>${esc(facts(pick.p))}</p>`:missingWork(pick))+`<div class="comparison-cell-actions"><button type="button" data-open-work-picker="${pick.a.slug}" aria-label="Выбрать работу для сравнения · ${esc(pick.a.name)}">${pick.p?'Сменить работу…':'Выбрать работу…'}</button></div>`},
+ {id:'note',label:'Моя заметка',render:({s,a,p})=>{
+  if(!p)return s.workSlug?'Выбранная работа недоступна. Выберите другую работу, чтобы редактировать заметку.':'Выберите работу, чтобы добавить личную заметку.';
+  const note=draft.workNotes[workNoteKey(s.agencySlug,p.slug)]||'';
+  return `<div class="comparison-note-text" data-comparison-note-text="${a.slug}" data-note-work="${p.slug}">${esc(note||'Пока нет заметки')}</div><div class="comparison-cell-actions"><button type="button" data-edit-comparison-note="${a.slug}" data-note-work="${p.slug}" aria-label="Открыть личную заметку к работе «${esc(p.fullTitle)}» · ${esc(a.name)}">${note.trim()?'Изменить заметку…':'Добавить заметку…'}</button></div>`;
+ }},
+ {id:'specialization',label:'Специализация',render:({a})=>esc(a.types.map(t=>data.types[t]).filter(Boolean).join(', ')||'Нужно уточнить')},
+ {id:'city',label:'Город команды',render:({a})=>esc(a.city||'Нужно уточнить')},
+ {id:'geography',label:'География работы',render:({a})=>esc(a.geography||'Нужно уточнить')},
+ {id:'services',label:'Услуги',render:({a})=>esc(a.services||'Нужно уточнить')},
+ {id:'role',label:'Роль в выбранной работе',render:pick=>esc(pick.p?role(pick.p):missingWork(pick))},
+ {id:'budget',label:'Опубликованные условия по бюджету',render:({a})=>esc(a.budgetConditions||'Нужно уточнить')},
+ {id:'event-terms',label:'Дата и стоимость вашего события',render:()=> 'Нужно обсудить с командой'},
+ {id:'sources',label:'Источники',render:({a,p})=>`${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer" aria-label="Источник выбранной работы · ${esc(a.name)} (новая вкладка)">Источник кейса ↗</a><br>`:''}<a href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison" aria-label="Открыть профиль агентства ${esc(a.name)}">Профиль агентства ↗</a>`}
  ];
- host.innerHTML=`<p class="comparison-scroll-hint">Команды расположены в вашем порядке. На узком экране прокрутите таблицу вправо.</p><div class="comparison-scroll" role="region" aria-label="Сравнение выбранных агентств" tabindex="0"><table class="agency-compare-table"><caption>Сравнение ${entries.length} агентств</caption><thead><tr><th scope="col">Критерий</th>${picks.map(({a},index)=>`<th scope="col">${agencyPriority(a,index,entries.length)}<a href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison">${esc(a.name)} ↗</a><button data-remove-agency="${a.slug}" aria-label="Убрать ${esc(a.name)} из сравнения">Убрать</button></th>`).join('')}</tr></thead><tbody>${rows.map(([label,render])=>`<tr><th scope="row">${label}</th>${picks.map(pick=>`<td>${render(pick)}</td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-guide">Личные заметки можно изменить во вкладке «Работы и заметки». Условия нового мероприятия уточняются индивидуально.</p>`;
+ host.innerHTML=`<p class="comparison-scroll-hint" id="comparison-format-hint">В каждом критерии команды идут в порядке вашего приоритета.</p><div class="comparison-scroll" role="region" aria-label="Сравнение выбранных агентств" tabindex="0"><table class="agency-compare-table" role="table" aria-labelledby="comparison-caption" aria-describedby="comparison-format-hint"><caption id="comparison-caption">Сравнение ${entries.length} агентств</caption><thead role="rowgroup"><tr role="row"><th class="comparison-criterion-column" scope="col" role="columnheader">Критерий</th>${picks.map(({a},index)=>`<th scope="col" role="columnheader" id="comparison-team-${a.slug}" aria-label="Приоритет ${index+1}: ${esc(a.name)}">${agencyPriority(a,index,entries.length)}<a class="comparison-team-name" href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison" aria-label="Открыть профиль агентства ${esc(a.name)}">${esc(a.name)} ↗</a><button type="button" data-remove-agency="${a.slug}" data-agency-name="${esc(a.name)}" aria-label="Убрать ${esc(a.name)} из сравнения">Убрать</button></th>`).join('')}</tr></thead><tbody role="rowgroup">${rows.map(({id,label,render})=>`<tr role="row" data-comparison-criterion="${id}"><th scope="row" role="rowheader" id="comparison-criterion-${id}">${label}</th>${picks.map((pick,index)=>`<td role="cell" headers="comparison-team-${pick.a.slug} comparison-criterion-${id}" data-comparison-agency="${pick.a.slug}"><span class="comparison-cell-team" aria-hidden="true"><span>${String(index+1).padStart(2,'0')}</span><strong>${esc(pick.a.name)}</strong></span><div class="comparison-cell-value">${render(pick)}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div><p class="comparison-guide">Работу и личную заметку можно изменить прямо в сравнении. Заметки автоматически не входят в пожелания и заявку. Условия нового мероприятия уточняются индивидуально.</p>`;
 }
 
 setupSelectionShare({getState:()=>draft,getData});
@@ -454,6 +472,20 @@ replacementUndo=setupReplacementUndo({getSelection:()=>draft.selection,canUndo:(
  else notice('Не удалось отменить замену','Разрешите хранение данных сайта, сохраните текущие изменения и повторите попытку.',{undoReplacement:true});
 }});
 if(inquiries.accepted(draft))replacementUndo.clear();
+setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=>notice('Личная заметка',message),onSaved:async(next,{agencySlug,workSlug,value})=>{
+ // A private note preserves request/receipt state and all other freshly read fields.
+ draft=next;available=true;
+ document.getElementById('project-storage-note')?.setAttribute('hidden','');
+ const fields=[...document.querySelectorAll('textarea[data-work-note]')].filter(field=>field.dataset.workNote===agencySlug&&field.dataset.noteWork===workSlug);
+ for(const field of fields){
+  field.value=value;
+  const status=field.closest('.work-note-block')?.querySelector('[role="status"]');if(status)status.textContent='Сохранено · '+value.length+' / 1000';
+ }
+ // Existing listeners update saved examples, note counters and clear/undo for this key.
+ fields[0]?.dispatchEvent(new CustomEvent('ea:work-note-updated',{bubbles:true,detail:{agencySlug,workSlug,reapplyReferenceFilters:true}}));
+ await renderProject();
+ orderStatus.textContent='Личная заметка сохранена. Пожелания и заявка не изменены.';
+}});
 setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onError:message=>notice('Выбор работы',message),onChoose:async({agencySlug,workSlug,expectedWorkSlug})=>{
  if(!available||sending)return 'failed';
  try{
