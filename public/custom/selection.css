@@ -647,6 +647,11 @@ html:root .ea-save-button{pointer-events:auto}
 #project-contact{scroll-margin-top:24px}
 #project-wishes-status:empty{display:none}
 #project-wishes-status{font-size:14px;line-height:1.5}
+.project-wishes-undo{display:flex;margin:-6px 0 24px}
+.project-wishes-undo[hidden]{display:none}
+.project-wishes-undo button{min-height:44px;padding:10px 16px;font-size:12px}
+.project-wishes-undo button:disabled{opacity:.45;cursor:default}
+.project-wishes-undo button:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 .ea-save-button[data-save-work]{white-space:normal}
 #wishes-dialog{box-sizing:border-box;width:min(720px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;padding:32px;border:1px solid var(--line);border-radius:20px;background:var(--chrome);color:var(--color-body);font-family:Motion,Arial,sans-serif}
 #wishes-dialog::backdrop{background:rgba(0,0,0,.65)}

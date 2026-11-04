@@ -5,6 +5,7 @@ import {setupProjectExport} from './project-export.js';
 import {setupProjectHistory} from './project-history.js';
 import {setupAccountProjectCopies} from './account-project-copies.js';
 import {normalizeReferences} from './reference-store.js';
+import {setupWishesUndo} from './wishes-undo.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -21,7 +22,7 @@ const orderStatus=document.createElement('p');orderStatus.className='project-ord
 document.querySelector('.comparison-toolbar')?.after(orderStatus);
 const helpMode=new URLSearchParams(location.search).has('help');
 let helpSelectionExpanded=false;
-let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',lastReceipt=null;
+let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',lastReceipt=null,wishesUndo=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
 try{draft=readDraft(localStorage);}catch{available=false;}
 const getData=()=>dataPromise||(dataPromise=(async()=>{
@@ -156,6 +157,7 @@ function agencyPriority(agency,index,total){
 let renderVersion=0;
 async function renderProject(){
  const host=document.getElementById('project-board');if(!host)return;const version=++renderVersion;
+ wishesUndo?.sync();
  try{
   const data=await getData();if(version!==renderVersion)return;
   const agencyMap=new Map(data.agencies.map(a=>[a.slug,a]));
@@ -186,6 +188,7 @@ async function renderProject(){
   document.getElementById('project-storage-note').hidden=available;
   const result=document.getElementById('project-request-result');
   const accepted=inquiries.accepted(draft),receipt=lastReceipt||accepted;
+  if(accepted)wishesUndo?.clear();
   result.hidden=!receipt&&(!draft.request||!available);
   if(receipt)result.innerHTML=receiptMarkup(receipt,briefRows(receipt.brief));
   else if(draft.request&&available)result.innerHTML='<strong>Задача сохранена в этом браузере</strong><p>Можно продолжить редактирование.</p><div class="draft-result-actions"><button class="secondary-action" data-return-project>Вернуться к моему проекту</button><button class="secondary-action" data-download-brief>Скачать черновик</button></div>';
@@ -277,11 +280,11 @@ async function openWishes(trigger){
    });
    wishesDialog.querySelector('[data-confirm-wishes]').addEventListener('click',async()=>{
     if(wishesBase!==draft.brief.description){if(wishesDialog.querySelector('#wishes-addition').value===wishesGenerated)regenerateWishes();updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
-    const merged=updateWishesPreview();if(merged.result!=='added')return;
+    const merged=updateWishesPreview();if(merged.result!=='added')return;const previousDescription=draft.brief.description;
     try{draft=writeDraft(localStorage,updateBrief(draft,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
     catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось сохранить пожелания. Разрешите хранение данных сайта и попробуйте снова.';return;}
-    await renderProject();wishesDialog.close();
-    const status=document.getElementById('project-wishes-status');status.textContent='Пожелания дополнены. Заявка ещё не отправлена.';status.focus({preventScroll:true});
+    wishesUndo?.record(previousDescription,merged.text);await renderProject();wishesDialog.close();
+    const status=document.getElementById('project-wishes-status');if(status){if(!wishesUndo)status.textContent='Пожелания дополнены. Заявка ещё не отправлена.';status.focus({preventScroll:true});}
    });
   }
   wishesTrigger=trigger;
@@ -389,6 +392,10 @@ function renderComparison(data,entries){
 
 setupSelectionShare({getState:()=>draft,getData});
 setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
+wishesUndo=setupWishesUndo({getDescription:()=>draft.brief.description,canUndo:()=>!sending,restore:description=>{
+ try{draft=writeDraft(localStorage,updateBrief(draft,{description}));available=true;lastReceipt=null;sendError='';if(briefForm&&document.getElementById('brief-dialog').open)fillBrief(briefForm);refresh();return true;}
+ catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return false;}
+}});
 const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending});
 setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
 document.addEventListener('ea:project-copy-restored',()=>{
