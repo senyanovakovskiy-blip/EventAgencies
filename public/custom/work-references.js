@@ -2,7 +2,7 @@ import {readDraft,workNoteKey} from './project-store.js';
 import {escapeHtml as esc} from './work-presentation.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
 import {setupReferenceBatch,syncReferenceBatch} from './reference-batch.js';
-import {referenceNotesForWork} from './reference-note-model.js';
+import {referenceNotesForWork,referenceNoteForTeam} from './reference-note-model.js';
 import {setupReferenceNoteCopy} from './reference-note-copy.js';
 export {REFERENCE_KEY,normalizeReferences};
 const noteCopyController=setupReferenceNoteCopy();
@@ -35,6 +35,36 @@ function noteFields(card){return [...card.querySelectorAll('.reference-notes [da
 function syncReferenceNoteMark(card){
  const count=noteFields(card).filter(field=>field.value.trim()).length;
  const mark=card.querySelector('[data-reference-note-mark]');if(mark)mark.textContent=count?'· '+count:'+';
+}
+function noteChooserMarkup(work){
+ const id='reference-note-team-'+work.slug;
+ return `<div class="reference-note-add" data-reference-note-add hidden><label for="${esc(id)}">Добавить заметку для команды</label><select id="${esc(id)}" data-reference-note-team aria-describedby="${esc(id)}-help" disabled><option value="">Выберите команду</option></select><button class="secondary-action" type="button" data-add-reference-team-note disabled>Добавить заметку</button><p class="reference-note-add-help" id="${esc(id)}-help">Текст сохранится после ввода. Состав сравнения останется прежним.</p></div>`;
+}
+function syncReferenceNoteChooser(card,work){
+ const chooser=card.querySelector('[data-reference-note-add]');if(!chooser||!work)return;
+ const select=chooser.querySelector('[data-reference-note-team]'),button=chooser.querySelector('[data-add-reference-team-note]');
+ const present=new Set(noteFields(card).map(field=>field.dataset.workNote)),linked=new Set(workAgencies(work));
+ const candidates=data.agencies.filter(agency=>linked.has(agency.slug)&&!present.has(agency.slug)).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
+ const signature=JSON.stringify(candidates.map(agency=>[agency.slug,agency.name]));
+ const choice=candidates.some(agency=>agency.slug===select.value)?select.value:candidates.length===1?candidates[0].slug:'';
+ if(chooser.dataset.noteCandidates!==signature){
+  select.innerHTML=(candidates.length===1?'':'<option value="">Выберите команду</option>')+candidates.map(agency=>`<option value="${esc(agency.slug)}">${esc(agency.name)}</option>`).join('');
+  chooser.dataset.noteCandidates=signature;
+ }
+ if(select.value!==choice)select.value=choice;
+ chooser.hidden=!candidates.length;select.disabled=!candidates.length;button.disabled=!choice;
+}
+function currentNoteValues(workSlug,source=null){
+ let notes={};try{notes={...readDraft(localStorage).workNotes};}catch{}
+ document.querySelectorAll('[data-work-note]').forEach(field=>{if(field.dataset.noteWork===workSlug)notes[workNoteKey(field.dataset.workNote,workSlug)]=field.value;});
+ if(source)notes[workNoteKey(source.dataset.workNote,workSlug)]=source.value;
+ return notes;
+}
+function insertReferenceNote(card,entry){
+ const container=card.querySelector('.reference-notes'),chooser=container?.querySelector('[data-reference-note-add]');if(!container)return null;
+ const existing=noteFields(card).find(field=>field.dataset.workNote===entry.agencySlug&&field.dataset.noteWork===entry.workSlug);if(existing)return existing;
+ if(chooser)chooser.insertAdjacentHTML('beforebegin',noteEntryMarkup(entry));else container.insertAdjacentHTML('beforeend',noteEntryMarkup(entry));
+ return noteFields(card).find(field=>field.dataset.workNote===entry.agencySlug&&field.dataset.noteWork===entry.workSlug)||null;
 }
 function sortReferences(host,works){
  const sorted=[...works];
@@ -86,7 +116,7 @@ async function renderReferences(){
  try{data ||= await fetch('/custom/catalog-data.json').then(r=>{if(!r.ok)throw Error();return r.json();});
  if(version!==renderVersion)return;
  let notes={},selection=[];try{const draft=readDraft(localStorage);notes=draft.workNotes;selection=draft.selection;}catch{}
- const noteMarkup=p=>`<div class="reference-notes" id="reference-note-block-${esc(p.slug)}">${referenceNotesForWork(p,notes,data.agencies).map(noteEntryMarkup).join('')}</div>`;
+ const noteMarkup=p=>`<div class="reference-notes" id="reference-note-block-${esc(p.slug)}">${referenceNotesForWork(p,notes,data.agencies).map(noteEntryMarkup).join('')}${noteChooserMarkup(p)}</div>`;
  const works=saved.map(slug=>data.projects.find(p=>p.slug===slug)).filter(Boolean);
  const agencySlugs=new Set(works.flatMap(workAgencies));
  const agencies=data.agencies.filter(agency=>agencySlugs.has(agency.slug)).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
@@ -124,7 +154,7 @@ async function renderReferences(){
    if(card.dataset.noteOpen==='true')card.querySelector('[data-work-note]')?.focus({preventScroll:true});
   }));
   host.querySelector('#saved-reference-grid').addEventListener('focusout',event=>{const card=event.target.closest('[data-saved-reference]');if(card&&!card.contains(event.relatedTarget)&&(referenceView.onlyNotes||referenceView.query))filterReferences(host,works);});
-  host.querySelectorAll('[data-saved-reference]').forEach(syncReferenceNoteMark);
+  host.querySelectorAll('[data-saved-reference]').forEach(card=>{syncReferenceNoteMark(card);syncReferenceNoteChooser(card,works.find(work=>work.slug===card.dataset.savedReference));});
   showReferenceMode(host);
   sortReferences(host,works);
   filterReferences(host,works);
@@ -140,18 +170,33 @@ document.addEventListener('input',event=>{
  queueMicrotask(()=>{
   const host=document.getElementById('work-references'),card=[...(host?.querySelectorAll('[data-saved-reference]')||[])].find(item=>item.dataset.savedReference===workSlug);
   const work=data.projects.find(item=>item.slug===workSlug),container=card?.querySelector('.reference-notes');if(!work||!container)return;
-  let notes={};try{notes={...readDraft(localStorage).workNotes};}catch{}
-  document.querySelectorAll('[data-work-note]').forEach(other=>{if(other.dataset.noteWork===workSlug)notes[workNoteKey(other.dataset.workNote,workSlug)]=other.value;});
-  const key=workNoteKey(agencySlug,workSlug);notes[key]=field.value;
+  const notes=currentNoteValues(workSlug,field);
   const present=new Set(noteFields(card).map(other=>workNoteKey(other.dataset.workNote,other.dataset.noteWork)));
-  referenceNotesForWork(work,notes,data.agencies).forEach(entry=>{if(!present.has(entry.key)){container.insertAdjacentHTML('beforeend',noteEntryMarkup(entry));present.add(entry.key);}});
+  referenceNotesForWork(work,notes,data.agencies).forEach(entry=>{if(!present.has(entry.key)){insertReferenceNote(card,entry);present.add(entry.key);}});
   noteFields(card).forEach(other=>{if(other!==field&&other.dataset.workNote===agencySlug&&other.value!==field.value)other.value=field.value;});
   syncReferenceNoteMark(card);
   noteCopyController.sync(card);
+  syncReferenceNoteChooser(card,work);
  });
 });
 
+document.addEventListener('change',event=>{
+ const select=event.target.closest('[data-reference-note-team]');if(!select||!data)return;
+ const card=select.closest('[data-saved-reference]'),work=data.projects.find(item=>item.slug===card?.dataset.savedReference);
+ if(card&&work)syncReferenceNoteChooser(card,work);
+});
+
 document.addEventListener('click',async event=>{
+ const addNote=event.target.closest('[data-add-reference-team-note]');
+ if(addNote){
+  event.preventDefault();const card=addNote.closest('[data-saved-reference]'),work=data?.projects.find(item=>item.slug===card?.dataset.savedReference),select=card?.querySelector('[data-reference-note-team]');
+  if(!card||!work||!select)return;
+  const agencySlug=select.value,existing=noteFields(card).find(field=>field.dataset.workNote===agencySlug&&field.dataset.noteWork===work.slug);
+  if(existing){syncReferenceNoteChooser(card,work);existing.scrollIntoView({block:'nearest'});existing.focus({preventScroll:true});return;}
+  const entry=referenceNoteForTeam(work,agencySlug,currentNoteValues(work.slug),data.agencies);
+  if(!entry){syncReferenceNoteChooser(card,work);return;}
+  const field=insertReferenceNote(card,entry);syncReferenceNoteMark(card);noteCopyController.sync(card);syncReferenceNoteChooser(card,work);field?.scrollIntoView({block:'nearest'});field?.focus({preventScroll:true});return;
+ }
  if(event.target.closest('[data-dismiss-reference]')){clearTimeout(timer);status.replaceChildren();removedReferences=null;return;}
  if(event.target.closest('[data-undo-reference]')&&removedReferences){
   try{
