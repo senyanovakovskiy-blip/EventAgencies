@@ -8,6 +8,7 @@ import {KEY,normalizeDraft} from './project-store.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
 import {describeCopyChanges} from './project-copy-diff.js';
 import {copyForLoad} from './project-copy-mode.js';
+import {setupCopyReferencePicker} from './project-copy-reference-picker.js';
 
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(value));
@@ -39,11 +40,12 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  }
  function referenceMergeLimitMessage(summary){
   const free=Math.max(0,summary.limit-(summary.totalReferences-summary.addedReferences));
-  return 'Лимит — '+summary.limit+' примеров. Свободных мест: '+free+'; новых примеров: '+summary.addedReferences+'; сверх лимита: '+summary.overflowCount+'. Добавление остановлено целиком. Освободите не меньше '+summary.overflowCount+' мест в текущей подборке и обновите сравнение.';
+  return 'Лимит — '+summary.limit+' примеров. Свободных мест: '+free+'; новых примеров: '+summary.addedReferences+'; сверх лимита: '+summary.overflowCount+'. Добавление остановлено целиком. Снимите отметку хотя бы с '+summary.overflowCount+' новых примеров или освободите место в текущей подборке.';
  }
  function referenceMergeMessage(){
   if(active?.loadScope!=='references'||!active.mergeSummary)return '';
   const summary=active.mergeSummary;
+  if(!active.referenceSelection.length)return active.referenceSnapshot?.references.length?'Отметьте хотя бы один пример для добавления.':'В этой копии нет доступных примеров для добавления.';
   if(summary.overflowCount>0)return referenceMergeLimitMessage(summary);
   return !summary.addedReferences&&!summary.addedNotes?'Новых примеров и заметок для добавления нет. Текущие заметки сохранятся; проект и предыдущий вариант не изменены.':'';
  }
@@ -60,17 +62,32 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   const scopePanel=previewBody.querySelector('.copy-load-mode');if(scopePanel)scopePanel.disabled=busy||editingName;
   previewBody.querySelectorAll('input[name="copyLoadScope"]').forEach(input=>{input.checked=input.value===active.loadScope;input.disabled=busy||editingName||(input.value==='references'&&!active.referenceSnapshot);});
   previewBody.querySelectorAll('.copy-availability-note').forEach(note=>note.hidden=onlyEvent||onlyReferences);
-  const effect=previewBody.querySelector('.account-copy-effect');if(effect)effect.textContent=onlyReferences?'Добавятся новые доступные примеры и отсутствующие заметки к примерам. Событие, выбранные команды, текущие примеры, заметки и контакт сохранятся. Предыдущий вариант сохранится для возврата.':onlyEvent?'Загрузка заменит только данные события. Выбранные команды, работы, примеры, заметки и контакт в этом браузере сохранятся. Предыдущий вариант сохранится для возврата.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'+(!active.baseSnapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':'');
+  const effect=previewBody.querySelector('.account-copy-effect');if(effect)effect.textContent=onlyReferences?'Добавятся отмеченные новые примеры и отсутствующие заметки к ним. Событие, выбранные команды, текущие примеры, заметки и контакт сохранятся. Предыдущий вариант сохранится для возврата.':onlyEvent?'Загрузка заменит только данные события. Выбранные команды, работы, примеры, заметки и контакт в этом браузере сохранятся. Предыдущий вариант сохранится для возврата.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'+(!active.baseSnapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':'');
   renderReferenceMergeSummary();
+  syncReferencePicker();
+ }
+ function destroyReferencePicker(){active?.referencePicker?.destroy();if(active)active.referencePicker=null;}
+ function syncReferencePicker(){
+  const host=previewBody.querySelector('[data-copy-reference-picker]');if(!host||!active)return;
+  const show=mode==='restore'&&active.loadScope==='references'&&Boolean(active.referenceSnapshot);host.hidden=!show;
+  if(show&&!active.referencePicker){
+   const record=active;
+   active.referencePicker=setupCopyReferencePicker({host,data:active.catalog,referenceSlugs:active.referenceSnapshot.references,selectedSlugs:active.referenceSelection,onChange:selection=>{
+    if(active!==record||mode!=='restore'||active.loadScope!=='references'||busy||editingName)return;
+    active.referenceSelection=[...selection];active.changesReady=false;active.changesSource=null;active.mergeSummary=null;
+    renderCopyChanges();syncBusy();actionStatus.textContent=referenceMergeMessage()||(active.changesReady?'Выбор обновлён. Примеры пока не добавлены.':'Примеры пока не добавлены. Обновите сравнение.');
+   }});
+  }
+  active.referencePicker?.setDisabled(busy||editingName||!show);
  }
  function renderCopyChanges(){
   if(!active||mode!=='restore')return false;
   const host=previewBody.querySelector('[data-copy-changes]');if(!host)return false;
   try{
    const current=normalizeDraft(getState()),currentReferences=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));
-   active.loadSnapshot=copyForLoad({current,currentReferences,incoming:active.loadScope==='references'?active.referenceSnapshot:active.baseSnapshot,scope:active.loadScope});
+   active.loadSnapshot=copyForLoad({current,currentReferences,incoming:active.loadScope==='references'?active.referenceSnapshot:active.baseSnapshot,scope:active.loadScope,referenceSelection:active.referenceSelection});
    active.mergeSummary=active.loadSnapshot.mergeSummary||null;
-   const signature=JSON.stringify({scope:active.loadScope,brief:current.brief,contact:current.contact,selection:current.selection,notes:Object.entries(current.workNotes).sort(([a],[b])=>a.localeCompare(b)),references:currentReferences});
+   const signature=JSON.stringify({scope:active.loadScope,referenceSelection:active.loadScope==='references'?active.referenceSelection:null,brief:current.brief,contact:current.contact,selection:current.selection,notes:Object.entries(current.workNotes).sort(([a],[b])=>a.localeCompare(b)),references:currentReferences});
    if(active.changesReady&&active.changesSource===signature)return false;
    const changed=Boolean(active.changesSource&&active.changesSource!==signature);
    const result=describeCopyChanges({current,currentReferences,incoming:active.loadSnapshot,data:active.catalog,briefRows});
@@ -98,12 +115,12 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   }catch(error){if(version===listVersion)listStatus.textContent=errorMessage(error);}
   finally{if(version===listVersion){listLoading=false;list.setAttribute('aria-busy','false');syncBusy();}}
  }
- function showManager(){previewVersion++;active=null;editingName=false;preview.hidden=true;manager.hidden=false;dialog.scrollTop=0;syncBusy();}
+ function showManager(){previewVersion++;destroyReferencePicker();active=null;editingName=false;preview.hidden=true;manager.hidden=false;dialog.scrollTop=0;syncBusy();}
  function open(){
   returnFocus=opener;showManager();name.value=([getState().brief.format?formatName(getState().brief.format):'Мой проект',getState().brief.city].filter(Boolean).join(' — ')).slice(0,120);notes.checked=true;contact.checked=false;saveStatus.textContent='';currentSummary();dialog.showModal();loadList(1);
  }
  async function showPreview(record,action='restore'){
-  const version=++previewVersion;mode=action;active=null;editingName=false;manager.hidden=true;preview.hidden=false;previewBody.textContent='Загружаем копию…';actionStatus.textContent='';confirm.textContent=action==='delete'?'Удалить копию':'Загрузить в мой проект';syncBusy();dialog.scrollTop=0;
+  const version=++previewVersion;mode=action;destroyReferencePicker();active=null;editingName=false;manager.hidden=true;preview.hidden=false;previewBody.textContent='Загружаем копию…';actionStatus.textContent='';confirm.textContent=action==='delete'?'Удалить копию':'Загрузить в мой проект';syncBusy();dialog.scrollTop=0;
   try{
    const item=typeof record==='number'?await copyRequest('/api/project-copies/'+record):record;
    if(version!==previewVersion||!dialog.open)return;
@@ -113,20 +130,22 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
    if(!hasCatalog&&action==='restore'&&!item.localPrevious)throw Object.assign(new Error('catalog_unavailable'),{code:'catalog_unavailable'});
    const prepared=hasCatalog?prepareCopyPreview(snapshot,data,{preserveAll:Boolean(item.localPrevious)}):null;
    active={...item,snapshot,prepared,baseSnapshot:prepared?.loadSnapshot||snapshot,referenceSnapshot:hasCatalog?(item.localPrevious?prepareCopyPreview(snapshot,data).loadSnapshot:prepared.loadSnapshot):null,loadScope:'full',loadSnapshot:null,mergeSummary:null,referencesShown:6,partial:Boolean(prepared?.hasMissing&&!item.localPrevious),catalog:hasCatalog?data:null,changesReady:false,changesSource:null};
+   active.referenceSelection=[...(active.referenceSnapshot?.references||[])];active.referencePicker=null;
    previewBody.innerHTML=`<h3 tabindex="-1">${esc(item.name)}</h3>${item.createdAt?`<p class="account-copy-date">${esc(dateLabel(item.createdAt))}</p>`:''}<p>Команд: ${summary.teams} · Примеров: ${summary.references} · Заметок: ${summary.notes}</p><dl class="review-brief">${briefRows(snapshot.draft.brief).filter(([label])=>label!=='Пожелания').map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><h4>Пожелания</h4><p class="account-copy-wishes">${esc(snapshot.draft.brief.description||'Пока не указаны.')}</p>${prepared?`<h4>Команды и работы</h4>${copyTeamsMarkup(prepared.teams)}<h4>Сохранённые примеры</h4>${copyReferencesMarkup(prepared.references)}`:'<p class="copy-preview-empty">Каталог сейчас недоступен, поэтому названия и фотографии не загружены.</p>'}${action==='restore'?copyAvailabilityMarkup(prepared):''}<p class="account-copy-contact">${snapshot.includeContact?'Контакт в копии: '+esc(snapshot.draft.contact.name||'Имя не указано')+' · '+esc(snapshot.draft.contact.value||'Контакт не указан'):'Контакт в копию не включён.'+(action==='restore'?' При загрузке сохранится текущий контакт в этом браузере.':'')}</p><p class="account-copy-effect">${action==='delete'?'Эта копия будет удалена из аккаунта. Текущий проект в браузере останется на месте.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'}${action!=='delete'&&!snapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':''}</p>`;
    if(action==='restore'){
     const scopePanel=document.createElement('fieldset');scopePanel.className='copy-load-mode';scopePanel.setAttribute('aria-describedby','copy-load-mode-note');scopePanel.innerHTML='<legend>Что загрузить</legend><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="full" checked><span>Весь проект<small>Событие, выбранные команды и примеры</small></span></label><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="event"><span>Только событие<small>Текущая подборка, заметки и контакт сохранятся</small></span></label><label class="copy-load-option" data-copy-load-references><input type="radio" name="copyLoadScope" value="references"><span>Добавить примеры<small>'+(hasCatalog?'Дополнить примеры и заметки, сохранив текущий проект':'Для добавления примеров нужен каталог; сейчас он недоступен')+'</small></span></label><p class="copy-load-mode-note" id="copy-load-mode-note">Ниже показано содержимое исходной копии. Выбор обновляет сравнение; проект изменится только после нажатия кнопки загрузки.</p><div data-copy-reference-merge hidden></div>';previewBody.querySelector('h3').after(scopePanel);
+    const referencePicker=document.createElement('div');referencePicker.dataset.copyReferencePicker='';referencePicker.hidden=true;scopePanel.append(referencePicker);
     const changes=document.createElement('div');changes.id='account-copy-changes';changes.dataset.copyChanges='';changes.tabIndex=-1;changes.setAttribute('role','region');changes.setAttribute('aria-label','Что изменится при загрузке');previewBody.querySelector('.account-copy-effect').before(changes);renderCopyChanges();
     const changesJump=document.createElement('button');changesJump.type='button';changesJump.className='secondary-action account-copy-changes-jump';changesJump.dataset.showCopyChanges='';changesJump.setAttribute('aria-controls',changes.id);changesJump.textContent='Что изменится при загрузке ↓';scopePanel.after(changesJump);
    }
    if(action==='restore'&&!item.localPrevious)setupCopyNameEditor({body:previewBody,item:active,isCurrent:()=>version===previewVersion&&dialog.open,onBusy:value=>{busy=value;syncBusy();},onEditing:value=>{editingName=value;syncBusy();},onRenamed:renamed=>{accountStatus.textContent='Название копии изменено на «'+renamed.name+'».';saveStatus.textContent=accountStatus.textContent;loadList(page);}});
    syncBusy();
    previewBody.querySelector('h3').focus({preventScroll:true});
-  }catch(error){if(version===previewVersion){active=null;previewBody.textContent=errorMessage(error);syncBusy();}}
+  }catch(error){if(version===previewVersion){destroyReferencePicker();active=null;previewBody.textContent=errorMessage(error);syncBusy();}}
  }
  opener.addEventListener('click',()=>{if(!dialog.open)open();});
  dialog.querySelector('[data-close-account-copies]').addEventListener('click',()=>dialog.close());
- dialog.addEventListener('close',()=>{clearTimeout(searchTimer);listVersion++;listLoading=false;list.setAttribute('aria-busy','false');previewVersion++;active=null;editingName=false;returnFocus?.focus({preventScroll:true});});
+ dialog.addEventListener('close',()=>{clearTimeout(searchTimer);listVersion++;listLoading=false;list.setAttribute('aria-busy','false');previewVersion++;destroyReferencePicker();active=null;editingName=false;returnFocus?.focus({preventScroll:true});});
  dialog.querySelector('[data-back-copy-list]').addEventListener('click',()=>{showManager();loadList(page);});
  notes.addEventListener('change',currentSummary);contact.addEventListener('change',currentSummary);
  filters.addEventListener('submit',event=>{event.preventDefault();if(!busy)scheduleSearch();});

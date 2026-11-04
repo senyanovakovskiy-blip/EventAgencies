@@ -6,9 +6,11 @@ const REFERENCE_LIMIT=200;
 const allReferences=value=>Array.isArray(value)?[...new Set(value.flatMap(slug=>normalizeReferences([slug])))]:[];
 
 /** Add available copy references and missing notes without replacing current work. */
-export function mergeCopyReferences({current,currentReferences,incoming}){
+export function mergeCopyReferences({current,currentReferences,incoming,referenceSelection=null}){
  const draft=normalizeDraft(current),source=normalizeDraft(incoming?.draft);
- const references=allReferences(currentReferences),incomingReferences=allReferences(incoming?.references);
+ const references=allReferences(currentReferences),sourceReferences=allReferences(incoming?.references);
+ const selectedSlugs=referenceSelection==null?null:new Set(allReferences(referenceSelection));
+ const incomingReferences=selectedSlugs?sourceReferences.filter(slug=>selectedSlugs.has(slug)):sourceReferences;
  const currentSlugs=new Set(references),incomingSlugs=new Set(incomingReferences);
  let addedReferences=0,existingReferences=0,addedNotes=0,conflictingNotes=0;
  for(const slug of incomingReferences){
