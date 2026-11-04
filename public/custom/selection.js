@@ -4,6 +4,7 @@ import {setupBriefSummary} from './project-brief.js';
 import {setupBriefSessionUndo} from './brief-session-undo.js';
 import {setupBriefEditor} from './brief-editor.js';
 import {setupContactPresentation} from './contact-presentation.js';
+import {setupContactEditor} from './contact-editor.js';
 import {setupProjectExport} from './project-export.js';
 import {setupProjectHistory} from './project-history.js';
 import {setupAccountProjectCopies} from './account-project-copies.js';
@@ -16,7 +17,7 @@ import {setupProjectNoteEditor} from './project-note-editor.js';
 import {setupComparisonCriteria,syncComparisonCriteria} from './project-comparison-criteria.js';
 import {comparisonValuesMatch} from './project-comparison-equality.js';
 import {selectionView,selectionProblems} from './project-selection-view.js';
-import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
+import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
 import {INQUIRY_KEY,contactError,validPayload,submissionPayload} from './inquiry-model.js';
@@ -32,7 +33,7 @@ const orderStatus=document.createElement('p');orderStatus.className='project-ord
 document.querySelector('.comparison-toolbar')?.after(orderStatus);
 const helpMode=new URLSearchParams(location.search).has('help');
 let helpSelectionExpanded=false;
-let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',selectionSendError=false,lastReceipt=null,wishesUndo=null,replacementUndo=null,briefUndo=null,briefEditor=null;
+let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendingRecovery=false,sendError='',selectionSendError=false,lastReceipt=null,wishesUndo=null,replacementUndo=null,briefUndo=null,briefEditor=null,contactEditor=null,handoffData=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
 try{draft=readDraft(localStorage);}catch{available=false;}
 const getData=()=>dataPromise||(dataPromise=(async()=>{
@@ -144,6 +145,9 @@ document.addEventListener('click',async event=>{
  if(event.target.closest('[data-submit-project]')){
   await sendInquiry();return;
  }
+ if(event.target.closest('[data-recover-project-inquiry]')){
+  await sendInquiry({recover:true});return;
+ }
  if(event.target.closest('[data-save-draft]')){
   if(savingDraft||(available&&draft.request))return;
   savingDraft=true;const button=document.querySelector('[data-save-draft]');button.disabled=true;
@@ -152,7 +156,16 @@ document.addEventListener('click',async event=>{
  }
 
 });
-addEventListener('storage',e=>{if(e.key===INQUIRY_KEY)refresh();if(e.key===KEY||e.key===null){try{draft=readDraft(localStorage);refresh();if(contactForm)fillContact();}catch{}}});
+addEventListener('storage',e=>{
+ try{if(e.storageArea!==localStorage)return;}catch{return;}
+ if(e.key===INQUIRY_KEY){refresh();return;}
+ if(e.key!==KEY&&e.key!==null)return;
+ if(contactEditor){
+  if(e.key===null||e.newValue===null)contactEditor.invalidate();
+  contactEditor.reconcile();
+ }else try{draft=readDraft(localStorage);available=true;}catch{available=false;}
+ refresh();
+});
 new MutationObserver(changes=>{if(changes.some(c=>c.type==='attributes'||[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-save-agency],[data-project-count]')||n.querySelector?.('[data-save-agency],[data-project-count]')))))refresh();}).observe(document.getElementById('root')||document.getElementById('content'),{childList:true,subtree:true,attributes:true,attributeFilter:['data-save-agency','data-save-work']});
 for(const type of ['wheel','pointerdown','touchstart'])document.addEventListener(type,event=>{if(matchMedia('(max-width:900px)').matches&&event.target.closest('.home.is-landing .ws:not(.ea-photo-reel)'))event.stopPropagation();},{capture:true,passive:true});
 function formatName(value){return occasions[value]||(value==='other'?'Другой формат':'Нужно уточнить');}
@@ -181,6 +194,7 @@ function comparisonTeamHeader({s,a,p,label},index,total){
 let renderVersion=0;
 async function renderProject(){
  briefEditor?.reconcile();
+ contactEditor?.reconcile();
  const host=document.getElementById('project-board');if(!host)return;const version=++renderVersion;
  wishesUndo?.sync();
  replacementUndo?.sync();
@@ -211,49 +225,95 @@ async function renderProject(){
   }).join(''):`<div class="project-empty"><h3>Команды можно выбрать позже.</h3><p>Добавьте до трёх агентств для сравнения.</p><a class="primary-action" href="/catalog">Добавить агентство ↗</a></div>`;
   host.querySelectorAll('[data-agency-details]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open)expandedAgencies.add(details.dataset.agencyDetails);else expandedAgencies.delete(details.dataset.agencyDetails);rememberProjectView();}));
   renderComparison(data,entries);
-  const accepted=inquiries.accepted(draft),retryPending=!accepted&&inquiries.hasPending(draft),unavailableSelection=selectionProblems(data,entries).length>0;
-  document.getElementById('project-review').innerHTML=reviewMarkup(draft,data,briefRows(b),{accepted:Boolean(accepted),retryPending});
-  document.getElementById('project-storage-note').hidden=available;
-  const result=document.getElementById('project-request-result');
-  const receipt=lastReceipt||accepted;
-  if(accepted){wishesUndo?.clear();replacementUndo?.clear();}
-  result.hidden=!receipt&&(!draft.request||!available);
-  if(receipt)result.innerHTML=receiptMarkup(receipt,briefRows(receipt.brief));
-  else if(draft.request&&available)result.innerHTML='<strong>Задача сохранена в этом браузере</strong><p>Можно продолжить редактирование.</p><div class="draft-result-actions"><button class="secondary-action" data-return-project>Вернуться к моему проекту</button><button class="secondary-action" data-download-brief>Скачать черновик</button></div>';
-  if(!result.hidden&&focusRequest){result.scrollIntoView({block:'start'});result.focus({preventScroll:true});focusRequest=false;}
-  const submit=document.querySelector('[data-submit-project]');
-  const blockedSelection=unavailableSelection&&!retryPending&&!accepted;
-  submit.textContent=sending?(retryPending?'Получаем подтверждение…':'Сохраняем заявку…'):accepted?'Заявка принята ✓':retryPending?'Получить подтверждение предыдущей отправки':blockedSelection?'Сначала исправьте выбор выше':'Передать задачу EventAgencies';
-  submit.disabled=sending||Boolean(accepted)||blockedSelection;submit.setAttribute('aria-busy',String(sending));
-  if(unavailableSelection)submit.setAttribute('aria-describedby','request-selection-warning');else submit.removeAttribute('aria-describedby');
-  const save=document.querySelector('[data-save-draft]');
-  save.textContent=draft.request&&available?'Черновик сохранён ✓':'Сохранить черновик';
-  save.disabled=sending||savingDraft||Boolean(draft.request&&available);
-  const error=document.getElementById('project-send-error');error.textContent=sendError;error.hidden=!sendError;
-  if(sendError&&selectionSendError){const link=document.createElement('a');link.href='#project-comparison';link.dataset.editSelection='';link.textContent='Исправить выбор в сравнении';error.append(' ',link);}
- }catch{host.innerHTML='<div class="project-empty"><h3>Не удалось загрузить команды.</h3><p>Обновите страницу, чтобы повторить загрузку. Описание мероприятия можно заполнить сейчас.</p></div>';}
+  renderHandoff(data);
+ }catch{host.innerHTML='<div class="project-empty"><h3>Не удалось загрузить команды.</h3><p>Обновите страницу, чтобы повторить загрузку. Описание мероприятия можно заполнить сейчас.</p></div>';renderHandoff();}
 }
-async function sendInquiry(){
- if(sending||inquiries.accepted(draft))return;
- const invalid=contactPresentation?contactPresentation.validateForSubmit(draft.contact):contactError(draft.contact);
- if(invalid)return;
- if(!validPayload(submissionPayload(draft))){openBrief();document.getElementById('brief-save-status').textContent='Проверьте количество гостей и бюджет: укажите целые неотрицательные числа, гостей — не меньше одного.';return;}
- sending=true;sendError='';selectionSendError=false;const snapshot=submissionPayload(draft);refresh();
+function contactNeedsSaving(){return Boolean(contactEditor&&(contactEditor.unsaved||contactEditor.blocked));}
+let handoffMarkup='',handoffResultMarkup='',handoffErrorKey='';
+// Rendering the handoff must never read/reconcile the contact editor again.
+// Its state event also uses this path while save/reconcile is still on the stack.
+function renderHandoff(data=handoffData){
+ const review=document.getElementById('project-review');if(!review)return;
+ if(data)handoffData=data;
+ const accepted=inquiries.accepted(draft),retryPending=!accepted&&inquiries.hasPending(draft),contactPending=contactNeedsSaving();
+ const unavailableSelection=Boolean(data&&selectionProblems(data,draft.selection).length);
+ if(data){const markup=reviewMarkup(draft,data,briefRows(draft.brief),{accepted:Boolean(accepted),retryPending});if(markup!==handoffMarkup){review.innerHTML=markup;handoffMarkup=markup;}}
+ document.getElementById('project-storage-note').hidden=available;
+ const result=document.getElementById('project-request-result'),receipt=lastReceipt||accepted;
+ if(accepted){wishesUndo?.clear();replacementUndo?.clear();}
+ result.hidden=!receipt&&(!draft.request||!available);
+ const resultMarkup=receipt?receiptMarkup(receipt,briefRows(receipt.brief)):draft.request&&available?'<strong>Задача сохранена в этом браузере</strong><p>Можно продолжить редактирование.</p><div class="draft-result-actions"><button class="secondary-action" data-return-project>Вернуться к моему проекту</button><button class="secondary-action" data-download-brief>Скачать черновик</button></div>':'';
+ if(resultMarkup!==handoffResultMarkup){result.innerHTML=resultMarkup;handoffResultMarkup=resultMarkup;}
+ if(!result.hidden&&focusRequest){result.scrollIntoView({block:'start'});result.focus({preventScroll:true});focusRequest=false;}
+ const submit=document.querySelector('[data-submit-project]');
+ const blockedSelection=unavailableSelection&&(contactPending||(!retryPending&&!accepted));
+ submit.textContent=sending?(sendingRecovery?'Получаем подтверждение…':'Сохраняем заявку…'):blockedSelection?'Сначала исправьте выбор выше':contactPending?(contactEditor.blocked?'Проверить контакт перед отправкой':'Сохранить контакт и передать задачу'):accepted?'Заявка принята ✓':retryPending?'Получить подтверждение предыдущей отправки':'Передать задачу EventAgencies';
+ submit.disabled=sending||Boolean(accepted&&!contactPending)||blockedSelection;submit.setAttribute('aria-busy',String(sending));
+ const descriptions=[unavailableSelection?'request-selection-warning':'',contactPending?'contact-save-status':''].filter(Boolean);
+ if(descriptions.length)submit.setAttribute('aria-describedby',descriptions.join(' '));else submit.removeAttribute('aria-describedby');
+ const recovery=document.getElementById('project-inquiry-recovery'),recover=recovery?.querySelector('button');
+ if(recovery){recovery.hidden=!(contactPending&&(accepted||retryPending));recover.disabled=sending;recover.textContent=accepted?'Показать подтверждение прежней заявки':'Получить подтверждение прежней заявки';}
+ if(contactForm){
+  contactForm.setAttribute('aria-busy',String(sending));
+  for(const key of ['name','value'])contactForm.elements.namedItem(key).readOnly=sending;
+  contactForm.elements.namedItem('method').disabled=sending;
+  contactForm.querySelectorAll('button').forEach(button=>button.disabled=sending);
+ }
+ const save=document.querySelector('[data-save-draft]');
+ save.textContent=draft.request&&available?'Черновик сохранён ✓':'Сохранить черновик';
+ save.disabled=sending||savingDraft||Boolean(draft.request&&available);
+ const error=document.getElementById('project-send-error'),errorKey=JSON.stringify([sendError,selectionSendError]);error.hidden=!sendError;
+ if(errorKey!==handoffErrorKey){
+  error.textContent=sendError;handoffErrorKey=errorKey;
+  if(sendError&&selectionSendError){const link=document.createElement('a');link.href='#project-comparison';link.dataset.editSelection='';link.textContent='Исправить выбор в сравнении';error.append(' ',link);}
+ }
+}
+async function sendInquiry({recover=false}={}){
+ if(sending)return;
+ contactEditor?.reconcile();
+ let accepted=inquiries.accepted(draft),retryPending=!accepted&&inquiries.hasPending(draft);
+ if(recover&&accepted){lastReceipt=accepted;focusRequest=true;renderHandoff();return;}
+ if(recover&&!retryPending){sendError='Прежняя попытка изменилась. Проверьте текущую заявку перед отправкой.';selectionSendError=false;renderHandoff();document.getElementById('project-send-error').focus();return;}
+ if(!recover&&!contactNeedsSaving()){
+  if(accepted)return;
+  recover=retryPending;
+ }
+ let isFresh=null;
+ if(!recover){
+  if(!contactEditor?.flush({focus:false})){
+   sendError='Контакт ещё не сохранён. Проверьте сообщение под полями и повторите сохранение.';selectionSendError=false;renderHandoff();contactEditor?.focusRecovery();return;
+  }
+  // Capture the fresh project before validating the values now in the form.
+  isFresh=contactEditor.createFreshnessGuard();
+  if(!isFresh){sendError='Проект изменился. Проверьте контакт перед новой отправкой.';selectionSendError=false;renderHandoff();contactEditor.focusRecovery();return;}
+  const invalid=contactPresentation?contactPresentation.validateForSubmit():contactError(draft.contact);
+  if(invalid)return;
+  if(!validPayload(submissionPayload(draft))){openBrief();document.getElementById('brief-save-status').textContent='Проверьте количество гостей и бюджет: укажите целые неотрицательные числа, гостей — не меньше одного.';return;}
+  accepted=inquiries.accepted(draft);retryPending=!accepted&&inquiries.hasPending(draft);
+  if(accepted){renderHandoff();return;}
+  recover=retryPending;
+ }
+ sending=true;sendingRecovery=recover;sendError='';selectionSendError=false;const snapshot=submissionPayload(draft);renderHandoff();
  try{
   lastReceipt=await inquiries.send(snapshot,{beforeNewRequest:async payload=>{
    // The client invokes this only for a new attempt, never for receipt recovery.
-   if(!payload.selection.length)return;
-   let data;try{data=await getData();}catch{throw Error('catalog_unavailable');}
-   if(!Array.isArray(data?.agencies)||!Array.isArray(data?.projects))throw Error('catalog_unavailable');
-   if(selectionProblems(data,payload.selection).length)throw Error('unavailable_selection');
+   if(recover)throw Error('previous_inquiry_changed');
+   let data;
+   if(payload.selection.length){try{data=await getData();}catch{throw Error('catalog_unavailable');}}
+   // Also check empty selections, after the final await and any lock wait.
+   if(!isFresh?.())throw Error('project_changed_before_send');
+   if(payload.selection.length){
+    if(!Array.isArray(data?.agencies)||!Array.isArray(data?.projects))throw Error('catalog_unavailable');
+    if(selectionProblems(data,payload.selection).length)throw Error('unavailable_selection');
+   }
   }});
   focusRequest=true;document.dispatchEvent(new Event('ea:inquiry-accepted'));
  }
  catch(error){
   const code=error.code||error.message;selectionSendError=code==='unavailable_selection'||code==='invalid_selection';
-  sendError=code==='unavailable_selection'?'Новая заявка не отправлена: в выборе есть недоступная команда или работа. Исправьте выбор либо оставьте доступную команду без работы.':code==='invalid_selection'?'Сервер отклонил выбранную команду или работу. Каталог на этой странице мог устареть. Обновите страницу и исправьте выбор перед новой заявкой; прежняя попытка не получила подтверждения.':code==='catalog_unavailable'?'Новая заявка не отправлена: не удалось проверить выбранные команды по каталогу. Обновите страницу или попробуйте позже.':code==='retry_storage_unavailable'?'Не удалось отправить. Разрешите сохранение данных этого сайта и попробуйте ещё раз.':inquiries.hasPending(snapshot)?'Подтверждение заявки не получено. Повторите попытку — прежние данные отправки будут использованы повторно.':'Не удалось отправить заявку. Попробуйте ещё раз.';
+  sendError=code==='project_changed_before_send'?'Новая заявка не отправлена: проект изменился во время подготовки. Проверьте актуальные данные и повторите отправку.':code==='previous_inquiry_changed'?'Прежняя попытка изменилась. Новая заявка не создана; проверьте текущие данные.':code==='unavailable_selection'?'Новая заявка не отправлена: в выборе есть недоступная команда или работа. Исправьте выбор либо оставьте доступную команду без работы.':code==='invalid_selection'?'Сервер отклонил выбранную команду или работу. Каталог на этой странице мог устареть. Обновите страницу и исправьте выбор перед новой заявкой; прежняя попытка не получила подтверждения.':code==='catalog_unavailable'?'Новая заявка не отправлена: не удалось проверить выбранные команды по каталогу. Обновите страницу или попробуйте позже.':code==='retry_storage_unavailable'?'Не удалось отправить. Разрешите сохранение данных этого сайта и попробуйте ещё раз.':inquiries.hasPending(snapshot)?'Подтверждение заявки не получено. Повторите попытку — прежние данные отправки будут использованы повторно.':'Не удалось отправить заявку. Попробуйте ещё раз.';
  }
- finally{sending=false;await renderProject();if(sendError){const node=document.getElementById('project-send-error');node.focus();}}
+ finally{sending=false;sendingRecovery=false;contactEditor?.reconcile();renderHandoff();await renderProject();if(sendError){if(contactNeedsSaving())contactEditor.focusRecovery();else document.getElementById('project-send-error').focus();}}
 }
 function openBrief(field){
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
@@ -361,20 +421,13 @@ if(briefForm){
 }
 const contactForm=document.getElementById('project-contact-form');
 const contactPresentation=contactForm?setupContactPresentation(contactForm):null;
-function fillContact({resetErrors=false}={}){
- for(const [key,value]of Object.entries(draft.contact))contactForm.elements.namedItem(key).value=value;
- if(resetErrors)contactPresentation.reset();else contactPresentation.sync();
-}
 if(contactForm){
- fillContact();
- const saveContact=()=>{
-  contactPresentation.sync();
-  const values={name:contactForm.elements.name.value,method:contactForm.elements.method.value,value:contactForm.elements.value.value};
-  const saved=persist(updateContact(draft,values),{quiet:true});
-  document.getElementById('contact-save-status').textContent=saved?'Контакт сохранён в этом браузере.':'Не удалось сохранить контакт. Он остаётся на этой странице; разрешите хранение данных сайта и попробуйте снова.';
- };
- contactForm.addEventListener('input',saveContact);contactForm.addEventListener('change',saveContact);
- contactForm.addEventListener('submit',event=>{event.preventDefault();saveContact();});
+ contactEditor=setupContactEditor({form:contactForm,presentation:contactPresentation,canEdit:()=>!sending,
+  onRead:next=>{draft=next;available=true;},
+  onSaved:next=>{draft=next;available=true;orderStatus.textContent='';lastReceipt=null;sendError='';selectionSendError=false;refresh();},
+  onStorageError:()=>{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');}
+ });
+ contactForm.addEventListener('ea:contact-editor-state',()=>renderHandoff());
 }
 refresh();
 
@@ -522,10 +575,12 @@ setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onErro
 }});
 const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending,onExportCopy:projectExporter?.openSavedCopy});
 setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
-document.addEventListener('ea:project-copy-restored',()=>{
- draft=readDraft(localStorage);available=true;removedAgency=null;lastReceipt=null;sendError='';focusRequest=false;orderStatus.textContent='';
- document.getElementById('project-undo').hidden=true;
- if(contactForm)fillContact({resetErrors:true});refresh();
+for(const type of ['ea:project-copy-restored','ea:project-started'])document.addEventListener(type,()=>{
+ removedAgency=null;lastReceipt=null;sendError='';selectionSendError=false;focusRequest=false;orderStatus.textContent='';
+ document.getElementById('project-undo')?.setAttribute('hidden','');
+ if(contactEditor){contactEditor.invalidate();contactEditor.resetFromProject({focus:false});}
+ else try{draft=readDraft(localStorage);available=true;}catch{available=false;}
+ refresh();
 });
 setupProjectSections();
 

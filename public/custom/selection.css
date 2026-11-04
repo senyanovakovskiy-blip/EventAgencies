@@ -356,6 +356,19 @@ html:root .my-project #project-review{grid-template-columns:minmax(0,1fr) minmax
 .project-contact :is(input,select):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 .my-project #contact-local-note,.my-project #contact-save-status{font-size:14px;line-height:1.5}
 .my-project #contact-save-status:empty{display:none}
+.my-project #contact-save-status{overflow-wrap:anywhere}
+.contact-editor-recovery,.project-inquiry-recovery{display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px;margin-top:16px;padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--glass);min-width:0}
+.contact-editor-recovery[hidden],.contact-editor-recovery [hidden],.project-inquiry-recovery[hidden]{display:none!important}
+.contact-editor-recovery>p,.project-inquiry-recovery>p{flex-basis:100%;margin:0;font:13px/1.6 Motion,Arial,sans-serif;color:var(--muted);overflow-wrap:anywhere}
+.contact-editor-conflict{flex-basis:100%;min-width:0;padding-top:12px;border-top:1px solid var(--line)}
+.contact-editor-conflict>p{margin:0 0 10px;font:14px/1.6 Motion,Arial,sans-serif;overflow-wrap:anywhere;white-space:pre-wrap}
+.contact-editor-recovery .secondary-action,.project-inquiry-recovery .secondary-action{box-sizing:border-box;min-width:0;max-width:100%;min-height:44px;padding:10px 16px;white-space:normal;overflow-wrap:anywhere;text-align:left;font-size:13px;line-height:1.5}
+.project-contact :is(input[readonly],select:disabled){background:var(--glass);cursor:wait}
+.project-contact select:disabled,.contact-editor-recovery button:disabled,.project-inquiry-recovery button:disabled{opacity:.6;cursor:wait}
+.contact-editor-recovery button:focus-visible,.project-inquiry-recovery button:focus-visible,#contact-save-status:focus-visible,[data-submit-project]:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.my-project .project-handoff>.draft-result-actions>button{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.my-project #project-request-result .review-brief dd{overflow-wrap:anywhere;min-width:0}
+@media(max-width:600px){.contact-editor-recovery,.project-inquiry-recovery{padding:14px;gap:10px}.contact-editor-recovery .secondary-action,.project-inquiry-recovery .secondary-action{width:100%;justify-content:flex-start}}
 .my-project .project-delivery-note{margin-top:16px}
 .my-project .draft-result-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
 .my-project [data-submit-project]:disabled{opacity:.65;cursor:default;background:var(--ink);border-color:var(--line)}
