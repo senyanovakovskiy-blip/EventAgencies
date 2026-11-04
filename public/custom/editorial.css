@@ -1,3 +1,10 @@
+/* A visible owner entry in both the retained home and shared page navigation. */
+html:not([data-ea-admin]) .ea-admin-nav{display:none!important}
+html:root .pl-top{display:flex;align-items:center;justify-content:space-between;gap:16px}
+html:root a.ea-admin-nav{display:inline-flex;flex:none;align-items:center;justify-content:center;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:6px;font:13px/1.4 Motion,Arial,sans-serif;letter-spacing:0;text-transform:none;white-space:nowrap;color:var(--ink);text-decoration:none}
+html:root a.ea-admin-nav:hover{background:var(--glass);border-color:var(--ink)}
+html:root a.ea-admin-nav:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+html:root .catalog-header nav{flex-wrap:wrap}
 /* Editorial system: warm paper, firm typography, quiet photographic depth. */
 html:root,html:root[data-theme=light]{
  --canvas:#e6e1d7;--chrome:#e6e1d7;--color-ground:#e6e1d7;--color-bg:#f0ece4;

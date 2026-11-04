@@ -1,3 +1,4 @@
+import './admin-entry.js';
 import {setupSelectionShare} from './share-selection.js';
 import {setupProjectSections} from './project-sections.js';
 import {setupBriefSummary} from './project-brief.js';

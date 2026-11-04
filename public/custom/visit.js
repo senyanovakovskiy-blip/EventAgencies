@@ -1,4 +1,4 @@
-// Restore the original site-entry animation before the large photo sequence.
+// The entry splash is temporarily disabled so the home page opens directly.
 (()=>{
  let theme='dark';try{if(localStorage.getItem('zizi-theme')==='light')theme='light';}catch{}
  document.documentElement.dataset.theme=theme;
@@ -6,7 +6,7 @@
  chrome();document.addEventListener('DOMContentLoaded',chrome,{once:true});
  new MutationObserver(chrome).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 })();
-window.__eaShowIntro=location.pathname==='/';
+window.__eaShowIntro=false;
 if(window.__eaShowIntro){
  window.__eaIntroDone=new Promise(resolve=>window.__eaResolveIntro=resolve);
  window.__eaNativeIntroDone=new Promise(resolve=>{

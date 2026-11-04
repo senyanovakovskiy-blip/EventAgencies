@@ -12,6 +12,8 @@ export function selectionExperience(code,file,{site}){
  replace('t.jsx("a",{href:p.agencyUrl,children:p.agency+" ↗"})','t.jsx("a",{href:p.agencyUrl,children:"Команда — "+p.agency+" ↗"}),t.jsx("button",{type:"button",className:"ea-save-button","data-save-agency":p.agencySlug,"data-save-work":p.slug,children:"В мой проект"})');
  replace('children:"Открыть проект ↗"','children:"Подробнее о проекте ↗"');
  replace('className:"site-header",children:[','className:"site-header",children:[t.jsx(EaProjectNav,{}),');
+ // Keep the owner entry visible beside the brand, including on small screens.
+ replace('children:t.jsx(Y1,{text:__TEMPLATE_LOCATION__,tone:"title",play:e})','children:[t.jsx(Y1,{text:__TEMPLATE_LOCATION__,tone:"title",play:e}),t.jsx("a",{className:"ea-admin-nav",href:"/admin",children:"Админка"})]');
  replace('{id:"catalog",label:"Каталог"},','{id:"catalog",label:"Каталог"},{id:"my-project",label:"Мой проект"},');
  replace('V==="catalog"?void 0:', '(V==="catalog"||V==="my-project")?void 0:');
  const source='e.source&&t.jsx("a",{className:"ea-project-source mono",href:e.source,target:"_blank",rel:"noopener noreferrer",children:"Материалы проекта ↗"})';
