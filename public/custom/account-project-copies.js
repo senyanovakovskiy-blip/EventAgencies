@@ -91,6 +91,7 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  function syncNotePicker(){
   const host=previewBody.querySelector('[data-copy-note-picker]');if(!host||!active)return;
   const show=mode==='restore'&&active.loadScope==='references'&&active.includeReferenceNotes&&active.referenceNotesAvailable;host.hidden=!show;
+  const jump=previewBody.querySelector('[data-show-copy-notes]');if(jump){jump.hidden=!show;jump.disabled=busy||editingName;}
   if(show&&!active.notePicker){
    const record=active;
    active.notePicker=setupCopyNotePicker({host,data:active.catalog,sourceNotes:active.referenceSourceNotes,referenceSlugs:active.referenceSelection,selectedKeys:active.referenceNoteSelection,currentNotes:active.currentNotes,onChange:selection=>{
@@ -163,8 +164,9 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
    if(action==='restore'){
     const scopePanel=document.createElement('fieldset');scopePanel.className='copy-load-mode';scopePanel.setAttribute('aria-describedby','copy-load-mode-note');scopePanel.innerHTML='<legend>Что загрузить</legend><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="full" checked><span>Весь проект<small>Событие, выбранные команды и примеры</small></span></label><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="event"><span>Только событие<small>Текущая подборка, заметки и контакт сохранятся</small></span></label><label class="copy-load-option" data-copy-load-references><input type="radio" name="copyLoadScope" value="references"><span>Добавить примеры<small>'+(hasCatalog?'Дополнить примеры и заметки, сохранив текущий проект':'Для добавления примеров нужен каталог; сейчас он недоступен')+'</small></span></label><p class="copy-load-mode-note" id="copy-load-mode-note">Ниже показано содержимое исходной копии. Выбор обновляет сравнение; проект изменится только после нажатия кнопки загрузки.</p><div data-copy-reference-merge hidden></div>';previewBody.querySelector('h3').after(scopePanel);
     const noteChoice=document.createElement('label');noteChoice.className='copy-reference-notes-choice';noteChoice.hidden=true;noteChoice.innerHTML='<input type="checkbox" data-copy-reference-notes><span>Также добавить заметки из копии<small data-copy-reference-notes-help></small></span>';scopePanel.append(noteChoice);
+    const notesJump=document.createElement('button');notesJump.type='button';notesJump.className='secondary-action copy-note-jump';notesJump.dataset.showCopyNotes='';notesJump.setAttribute('aria-controls','account-copy-note-picker');notesJump.textContent='Найти и выбрать заметки ↓';notesJump.hidden=true;scopePanel.append(notesJump);
     const referencePicker=document.createElement('div');referencePicker.dataset.copyReferencePicker='';referencePicker.hidden=true;scopePanel.append(referencePicker);
-    const notePicker=document.createElement('div');notePicker.dataset.copyNotePicker='';notePicker.hidden=true;scopePanel.append(notePicker);
+    const notePicker=document.createElement('div');notePicker.id='account-copy-note-picker';notePicker.dataset.copyNotePicker='';notePicker.hidden=true;scopePanel.append(notePicker);
     const changes=document.createElement('div');changes.id='account-copy-changes';changes.dataset.copyChanges='';changes.tabIndex=-1;changes.setAttribute('role','region');changes.setAttribute('aria-label','Что изменится при загрузке');previewBody.querySelector('.account-copy-effect').before(changes);renderCopyChanges();
     const changesJump=document.createElement('button');changesJump.type='button';changesJump.className='secondary-action account-copy-changes-jump';changesJump.dataset.showCopyChanges='';changesJump.setAttribute('aria-controls',changes.id);changesJump.textContent='Что изменится при загрузке ↓';scopePanel.after(changesJump);
    }
@@ -204,6 +206,11 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   active.loadScope=input.value;active.changesReady=false;active.changesSource=null;active.mergeSummary=null;renderCopyChanges();syncBusy();actionStatus.textContent=referenceMergeMessage()||(active.changesReady?'Сравнение обновлено. Проект пока не изменён.':'Проект пока не изменён. Для загрузки нужно обновить сравнение.');
  });
  previewBody.addEventListener('click',event=>{
+  if(event.target.closest('[data-show-copy-notes]')){
+   if(busy||editingName||!active||active.loadScope!=='references'||!active.includeReferenceNotes)return;
+   const host=previewBody.querySelector('[data-copy-note-picker]'),details=host?.querySelector('details');if(!details||host.hidden)return;
+   details.open=true;host.scrollIntoView({block:'start'});(host.querySelector('input[type="search"]')||details.querySelector('summary'))?.focus({preventScroll:true});return;
+  }
   if(event.target.closest('[data-show-copy-changes]')){const changes=previewBody.querySelector('[data-copy-changes]');changes?.scrollIntoView({block:'start'});changes?.focus({preventScroll:true});return;}
   if(event.target.closest('[data-refresh-copy-changes]')){renderCopyChanges();syncBusy();actionStatus.textContent=referenceMergeMessage()||(active?.changesReady?'Сравнение обновлено. Проект пока не изменён.':'Для загрузки нужно обновить сравнение.');return;}
   const button=event.target.closest('[data-more-copy-references]');if(!button||!active?.prepared||busy)return;

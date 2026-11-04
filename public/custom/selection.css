@@ -777,6 +777,22 @@ html:root .ea-save-button{pointer-events:auto}
 @media(hover:hover){.copy-note-tools>button:not(:disabled):hover,.copy-note-more:not(:disabled):hover{border-color:var(--color-highlight)}}
 @media(max-width:600px){.copy-note-versions{grid-template-columns:minmax(0,1fr)}.copy-note-card{padding:10px}.copy-note-more{width:calc(100% - 28px)}}
 
+/* Find notes by text and status while keeping selection controls compact. */
+.copy-note-filters{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:10px 12px;align-items:end;min-width:0;margin:14px}
+.copy-note-search,.copy-note-filter{display:flex;flex-direction:column;gap:8px;min-width:0;color:var(--muted);font-size:12px;line-height:1.5}
+.copy-note-search>input,.copy-note-filter>select{box-sizing:border-box;width:100%;min-width:0;min-height:46px;padding:11px 12px;border:1px solid var(--line);border-radius:6px;background:var(--glass);color:var(--ink);font:16px/1.5 Motion,Arial,sans-serif}
+.copy-note-filter>select option{background:var(--color-bg);color:var(--ink)}
+.copy-note-filters>.copy-note-reset{grid-column:1/-1;justify-self:start}
+.copy-note-reset{display:inline-flex;align-items:center;justify-content:flex-start;max-width:100%;min-height:44px;padding:10px 0;border:0;border-radius:0;background:transparent;color:var(--color-highlight);font:12px/1.5 Motion,Arial,sans-serif;cursor:pointer;white-space:normal;overflow-wrap:anywhere;text-align:left}
+.copy-note-search>input:disabled,.copy-note-filter>select:disabled,.copy-note-reset:disabled{opacity:.45;cursor:default}
+.copy-note-search>input:focus-visible,.copy-note-filter>select:focus-visible,.copy-note-reset:focus-visible,.copy-note-count:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.copy-load-mode>.copy-note-jump{grid-column:1/-1;justify-self:start;max-width:100%;min-height:44px;padding:10px 16px;font-size:12px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.copy-note-jump:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.copy-note-jump:disabled{opacity:.45;cursor:default}
+.copy-load-mode>.copy-note-jump[hidden]{display:none}
+#account-copy-note-picker{scroll-margin-top:16px}
+@media(max-width:600px){.copy-note-filters{grid-template-columns:minmax(0,1fr)}}
+
 .project-history{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:100px}
 .project-history>details>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;list-style:none;cursor:pointer;padding:20px 0}
 .project-history>details>summary::-webkit-details-marker{display:none}
