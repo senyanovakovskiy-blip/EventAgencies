@@ -1,6 +1,8 @@
 import {setupSelectionShare} from './share-selection.js';
 import {setupProjectSections} from './project-sections.js';
 import {setupBriefSummary} from './project-brief.js';
+import {setupBriefSessionUndo} from './brief-session-undo.js';
+import {setupBriefEditor} from './brief-editor.js';
 import {setupProjectExport} from './project-export.js';
 import {setupProjectHistory} from './project-history.js';
 import {setupAccountProjectCopies} from './account-project-copies.js';
@@ -29,7 +31,7 @@ const orderStatus=document.createElement('p');orderStatus.className='project-ord
 document.querySelector('.comparison-toolbar')?.after(orderStatus);
 const helpMode=new URLSearchParams(location.search).has('help');
 let helpSelectionExpanded=false;
-let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',selectionSendError=false,lastReceipt=null,wishesUndo=null,replacementUndo=null;
+let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendError='',selectionSendError=false,lastReceipt=null,wishesUndo=null,replacementUndo=null,briefUndo=null,briefEditor=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
 try{draft=readDraft(localStorage);}catch{available=false;}
 const getData=()=>dataPromise||(dataPromise=(async()=>{
@@ -149,7 +151,7 @@ document.addEventListener('click',async event=>{
  }
 
 });
-addEventListener('storage',e=>{if(e.key===INQUIRY_KEY)refresh();if(e.key===KEY||e.key===null){try{draft=readDraft(localStorage);refresh();if(briefForm&&document.getElementById('brief-dialog').open)fillBrief(briefForm);if(contactForm)fillContact();}catch{}}});
+addEventListener('storage',e=>{if(e.key===INQUIRY_KEY)refresh();if(e.key===KEY||e.key===null){try{draft=readDraft(localStorage);refresh();if(contactForm)fillContact();}catch{}}});
 new MutationObserver(changes=>{if(changes.some(c=>c.type==='attributes'||[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-save-agency],[data-project-count]')||n.querySelector?.('[data-save-agency],[data-project-count]')))))refresh();}).observe(document.getElementById('root')||document.getElementById('content'),{childList:true,subtree:true,attributes:true,attributeFilter:['data-save-agency','data-save-work']});
 for(const type of ['wheel','pointerdown','touchstart'])document.addEventListener(type,event=>{if(matchMedia('(max-width:900px)').matches&&event.target.closest('.home.is-landing .ws:not(.ea-photo-reel)'))event.stopPropagation();},{capture:true,passive:true});
 function formatName(value){return occasions[value]||(value==='other'?'Другой формат':'Нужно уточнить');}
@@ -177,11 +179,13 @@ function comparisonTeamHeader({s,a,p,label},index,total){
 }
 let renderVersion=0;
 async function renderProject(){
+ briefEditor?.reconcile();
  const host=document.getElementById('project-board');if(!host)return;const version=++renderVersion;
  wishesUndo?.sync();
  replacementUndo?.sync();
  try{
   const data=await getData();if(version!==renderVersion)return;
+  briefUndo?.sync();
   const entries=draft.selection,b=draft.brief;
   host.dataset.count=String(entries.length);
   renderBriefSummary(b);
@@ -250,14 +254,9 @@ async function sendInquiry(){
  }
  finally{sending=false;await renderProject();if(sendError){const node=document.getElementById('project-send-error');node.focus();}}
 }
-function fillBrief(form){
- for(const [key,value]of Object.entries(draft.brief)){const field=form.elements.namedItem(key);if(field){if(field.type==='checkbox')field.checked=value;else field.value=value;}}
- syncUnknown(form);updateBriefDescriptionCount(form);
-}
 function openBrief(field){
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
- const form=dialog.querySelector('form');fillBrief(form);dialog.showModal();
- if(field){const target=form.elements.namedItem(field);(target?.disabled?form.elements.namedItem(field==='date'?'dateUnknown':'budgetHelp'):target)?.focus();}
+ briefEditor?.open(field);
 }
 function focusContact(){
  const form=document.getElementById('project-contact-form');if(!form)return;
@@ -347,16 +346,16 @@ function updateBriefDescriptionCount(form){
 }
 const briefForm=document.getElementById('event-brief-form');
 if(briefForm){
- const saveForm=()=>{
-  syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);
-  const values={};for(const key of Object.keys(emptyDraft().brief)){const field=briefForm.elements.namedItem(key);values[key]=field.type==='checkbox'?field.checked:field.value;}
-  const saved=persist(updateBrief(draft,values),{quiet:true});
-  document.getElementById('brief-save-status').textContent=saved?'Изменения сохранены в этом браузере.':'Не удалось сохранить. Разрешите хранение данных сайта и попробуйте снова.';
-  return saved;
- };
- briefForm.addEventListener('input',saveForm);briefForm.addEventListener('change',saveForm);
- briefForm.addEventListener('submit',event=>{event.preventDefault();if(saveForm()){document.getElementById('brief-dialog').close();if(helpMode)focusContact();}});
- document.querySelector('[data-close-brief]').addEventListener('click',()=>{if(saveForm())document.getElementById('brief-dialog').close();});
+ const dialog=document.getElementById('brief-dialog');
+ briefUndo=setupBriefSessionUndo({form:briefForm,dialog,canUndo:current=>!sending&&!inquiries.hasPending(current)&&!inquiries.accepted(current),onRestored:(next,context)=>{draft=next;available=true;briefEditor?.restored(next,context);syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);refresh();}});
+ briefEditor=setupBriefEditor({form:briefForm,dialog,undo:briefUndo,
+  getFallbackBrief:()=>draft.brief,
+  updateForm:()=>{syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);},
+  onRead:next=>{draft=next;available=true;},
+  onSaved:next=>{draft=next;available=true;orderStatus.textContent='';lastReceipt=null;sendError='';refresh();},
+  onClose:()=>refresh(),
+  onSubmit:()=>{if(helpMode)focusContact();}
+ });
  if(new URLSearchParams(location.search).get('edit')==='1')openBrief();
 }
 const contactForm=document.getElementById('project-contact-form');
@@ -486,7 +485,7 @@ function renderComparison(data,entries){
 setupSelectionShare({getState:()=>draft,getData});
 const projectExporter=setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
 wishesUndo=setupWishesUndo({getDescription:()=>draft.brief.description,canUndo:()=>!sending,restore:description=>{
- try{draft=writeDraft(localStorage,updateBrief(draft,{description}));available=true;lastReceipt=null;sendError='';if(briefForm&&document.getElementById('brief-dialog').open)fillBrief(briefForm);refresh();return true;}
+ try{draft=writeDraft(localStorage,updateBrief(draft,{description}));available=true;lastReceipt=null;sendError='';refresh();return true;}
  catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return false;}
 }});
 replacementUndo=setupReplacementUndo({getSelection:()=>draft.selection,canUndo:()=>!sending,restore:(selection,expected)=>{

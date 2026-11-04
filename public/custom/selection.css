@@ -253,8 +253,24 @@ html:root #brief-dialog.brief-editor h2{font-size:28px;margin:0 32px 12px 0;padd
 .brief-description-meta p{font-size:12px;line-height:1.5;margin:0;max-width:390px}
 #brief-description-count{flex:none;font:11px/1.6 MotionMono,monospace;white-space:nowrap}
 #brief-description-count.is-full{color:var(--color-highlight)}
-.brief-editor-footer{flex:none;display:flex;align-items:center;gap:20px;padding:18px 32px;border-top:1px solid var(--line);background:var(--color-bg)}
+.brief-editor-footer{flex:none;display:flex;align-items:stretch;flex-direction:column;gap:8px;padding:18px 32px;border-top:1px solid var(--line);background:var(--color-bg)}
+.brief-editor-buttons{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brief-editor-buttons button{min-height:44px;max-width:100%;white-space:normal}
+.brief-editor-buttons button:disabled{opacity:.45;cursor:default}
+.brief-undo-status,.brief-undo-limit{margin:0;font:12px/1.5 Motion,Arial,sans-serif;color:var(--muted);overflow-wrap:anywhere}
+.project-brief-undo{display:flex;align-items:center;flex-wrap:wrap;gap:8px 16px;margin-top:16px;padding:14px 16px;border:1px solid var(--line);border-radius:8px}
+.project-brief-undo p{flex:1 1 220px;margin:0;font:13px/1.5 Motion,Arial,sans-serif;overflow-wrap:anywhere}
+.project-brief-undo small{flex-basis:100%;font:11px/1.5 Motion,Arial,sans-serif;color:var(--muted)}
+.project-brief-undo button{min-height:44px;white-space:normal;max-width:100%}
+.project-brief-undo button:disabled{opacity:.45;cursor:default}
+.project-brief-undo[hidden],.project-brief-undo button[hidden],.brief-undo-status[hidden]{display:none!important}
+.brief-editor-buttons button:focus-visible,.project-brief-undo :is(button,p):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+@media(max-width:600px){.brief-editor-buttons{align-items:stretch;flex-direction:column}.brief-editor-buttons button,.project-brief-undo button{width:100%}.project-brief-undo{align-items:stretch;flex-direction:column}.project-brief-undo p{flex-basis:auto}}
 .brief-editor-footer .primary-action{flex:none}
+.brief-editor-recovery{display:flex;flex-wrap:wrap;gap:8px;padding:16px;margin-bottom:24px;border:1px solid var(--line);border-radius:8px;background:var(--color-bg)}
+.brief-editor-recovery[hidden]{display:none}
+.brief-editor-recovery p{flex-basis:100%;margin:0 0 4px;font-size:13px;line-height:1.5}
+.brief-editor-recovery .secondary-action{min-width:0;white-space:normal;text-align:left}
 .brief-editor-footer .brief-local-note{font-size:11px;line-height:1.5;margin:0}
 @media(max-width:600px){html:root #brief-dialog.brief-editor{width:calc(100vw - 20px);max-height:calc(100dvh - 20px)}.brief-editor-header{padding:24px 20px 18px}.brief-editor-content{padding:22px 20px}.brief-editor-footer{padding:16px 20px;gap:10px;flex-direction:column;align-items:stretch}.brief-editor-footer .brief-local-note{text-align:center}.brief-description-meta{gap:12px}.brief-editor .brief-fields{grid-template-columns:1fr}.brief-editor .brief-wide{grid-column:1}}
 #replacement-dialog{width:min(520px,calc(100vw - 32px));max-height:calc(100dvh - 40px);overflow:auto;border:1px solid var(--color-divider);border-radius:22px;background:var(--color-bg);color:var(--color-title);font-family:Motion,Arial,sans-serif;padding:36px}
