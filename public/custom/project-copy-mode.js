@@ -1,8 +1,10 @@
 import {emptyDraft,normalizeDraft} from './project-store.js';
 import {normalizeReferences} from './reference-store.js';
+import {mergeCopyReferences} from './project-copy-reference-merge.js';
 
 /** Build an effective snapshot for restoreProjectCopy without changing either source. */
 export function copyForLoad({current,currentReferences,incoming,scope='full'}){
+ if(scope==='references')return mergeCopyReferences({current,currentReferences,incoming});
  const source=normalizeDraft(incoming?.draft);
  source.request=null;
  const references=normalizeReferences(incoming?.references);

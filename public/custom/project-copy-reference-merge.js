@@ -1,0 +1,35 @@
+import {normalizeDraft} from './project-store.js';
+import {normalizeReferences} from './reference-store.js';
+
+const REFERENCE_LIMIT=200;
+// Validate each slug without the store's list cap so overflow stays visible.
+const allReferences=value=>Array.isArray(value)?[...new Set(value.flatMap(slug=>normalizeReferences([slug])))]:[];
+
+/** Add available copy references and missing notes without replacing current work. */
+export function mergeCopyReferences({current,currentReferences,incoming}){
+ const draft=normalizeDraft(current),source=normalizeDraft(incoming?.draft);
+ const references=allReferences(currentReferences),incomingReferences=allReferences(incoming?.references);
+ const currentSlugs=new Set(references),incomingSlugs=new Set(incomingReferences);
+ let addedReferences=0,existingReferences=0,addedNotes=0,conflictingNotes=0;
+ for(const slug of incomingReferences){
+  if(currentSlugs.has(slug)){existingReferences++;continue;}
+  references.push(slug);
+  currentSlugs.add(slug);
+  addedReferences++;
+ }
+ if(incoming?.includeNotes===true){
+  for(const [key,note] of Object.entries(source.workNotes)){
+   if(!note.trim()||!incomingSlugs.has(key.split('/')[1]))continue;
+   if(Object.hasOwn(draft.workNotes,key)){
+    if(draft.workNotes[key]!==note)conflictingNotes++;
+    continue;
+   }
+   draft.workNotes[key]=note;
+   addedNotes++;
+  }
+ }
+ const mergeSummary={addedReferences,existingReferences,addedNotes,conflictingNotes,totalReferences:references.length,limit:REFERENCE_LIMIT,overflowCount:Math.max(0,references.length-REFERENCE_LIMIT)};
+ if(mergeSummary.overflowCount)throw Object.assign(new Error('copy_references_limit'),{code:'copy_references_limit',summary:mergeSummary});
+ draft.request=null;
+ return {version:1,draft,references,includeNotes:true,includeContact:false,mergeSummary};
+}
