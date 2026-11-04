@@ -61,8 +61,13 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   confirm.textContent=onlyReferences?'Добавить примеры':onlyEvent?'Загрузить только событие':active.partial?'Загрузить доступное':'Загрузить в мой проект';
   const scopePanel=previewBody.querySelector('.copy-load-mode');if(scopePanel)scopePanel.disabled=busy||editingName;
   previewBody.querySelectorAll('input[name="copyLoadScope"]').forEach(input=>{input.checked=input.value===active.loadScope;input.disabled=busy||editingName||(input.value==='references'&&!active.referenceSnapshot);});
+  const noteChoice=previewBody.querySelector('.copy-reference-notes-choice');
+  if(noteChoice){
+   noteChoice.hidden=!onlyReferences;const input=noteChoice.querySelector('input');input.checked=active.includeReferenceNotes;input.disabled=busy||editingName||!active.referenceNotesAvailable;
+   noteChoice.querySelector('[data-copy-reference-notes-help]').textContent=!active.referenceNotesAvailable?'В этой копии нет заметок к доступным примерам.':active.includeReferenceNotes?'Добавятся только отсутствующие заметки к отмеченным примерам. Ваши тексты сохранятся.':'Новые заметки из копии добавляться не будут. Ваши текущие заметки сохранятся.';
+  }
   previewBody.querySelectorAll('.copy-availability-note').forEach(note=>note.hidden=onlyEvent||onlyReferences);
-  const effect=previewBody.querySelector('.account-copy-effect');if(effect)effect.textContent=onlyReferences?'Добавятся отмеченные новые примеры и отсутствующие заметки к ним. Событие, выбранные команды, текущие примеры, заметки и контакт сохранятся. Предыдущий вариант сохранится для возврата.':onlyEvent?'Загрузка заменит только данные события. Выбранные команды, работы, примеры, заметки и контакт в этом браузере сохранятся. Предыдущий вариант сохранится для возврата.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'+(!active.baseSnapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':'');
+  const effect=previewBody.querySelector('.account-copy-effect');if(effect)effect.textContent=onlyReferences?(active.includeReferenceNotes?'Добавятся отмеченные новые примеры и отсутствующие заметки к ним.':'Добавятся отмеченные новые примеры без заметок из копии.')+' Событие, выбранные команды, текущие примеры, заметки и контакт сохранятся. Предыдущий вариант сохранится для возврата.':onlyEvent?'Загрузка заменит только данные события. Выбранные команды, работы, примеры, заметки и контакт в этом браузере сохранятся. Предыдущий вариант сохранится для возврата.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'+(!active.baseSnapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':'');
   renderReferenceMergeSummary();
   syncReferencePicker();
  }
@@ -72,12 +77,13 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   const show=mode==='restore'&&active.loadScope==='references'&&Boolean(active.referenceSnapshot);host.hidden=!show;
   if(show&&!active.referencePicker){
    const record=active;
-   active.referencePicker=setupCopyReferencePicker({host,data:active.catalog,referenceSlugs:active.referenceSnapshot.references,selectedSlugs:active.referenceSelection,onChange:selection=>{
+   active.referencePicker=setupCopyReferencePicker({host,data:active.catalog,referenceSlugs:active.referenceSnapshot.references,selectedSlugs:active.referenceSelection,currentReferences:active.currentReferences,onChange:selection=>{
     if(active!==record||mode!=='restore'||active.loadScope!=='references'||busy||editingName)return;
     active.referenceSelection=[...selection];active.changesReady=false;active.changesSource=null;active.mergeSummary=null;
     renderCopyChanges();syncBusy();actionStatus.textContent=referenceMergeMessage()||(active.changesReady?'Выбор обновлён. Примеры пока не добавлены.':'Примеры пока не добавлены. Обновите сравнение.');
    }});
   }
+  active.referencePicker?.setCurrentReferences(active.currentReferences||[]);
   active.referencePicker?.setDisabled(busy||editingName||!show);
  }
  function renderCopyChanges(){
@@ -85,9 +91,10 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   const host=previewBody.querySelector('[data-copy-changes]');if(!host)return false;
   try{
    const current=normalizeDraft(getState()),currentReferences=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));
-   active.loadSnapshot=copyForLoad({current,currentReferences,incoming:active.loadScope==='references'?active.referenceSnapshot:active.baseSnapshot,scope:active.loadScope,referenceSelection:active.referenceSelection});
+   active.currentReferences=currentReferences;
+   active.loadSnapshot=copyForLoad({current,currentReferences,incoming:active.loadScope==='references'?active.referenceSnapshot:active.baseSnapshot,scope:active.loadScope,referenceSelection:active.referenceSelection,includeReferenceNotes:active.includeReferenceNotes});
    active.mergeSummary=active.loadSnapshot.mergeSummary||null;
-   const signature=JSON.stringify({scope:active.loadScope,referenceSelection:active.loadScope==='references'?active.referenceSelection:null,brief:current.brief,contact:current.contact,selection:current.selection,notes:Object.entries(current.workNotes).sort(([a],[b])=>a.localeCompare(b)),references:currentReferences});
+   const signature=JSON.stringify({scope:active.loadScope,referenceSelection:active.loadScope==='references'?active.referenceSelection:null,includeReferenceNotes:active.loadScope==='references'?active.includeReferenceNotes:null,brief:current.brief,contact:current.contact,selection:current.selection,notes:Object.entries(current.workNotes).sort(([a],[b])=>a.localeCompare(b)),references:currentReferences});
    if(active.changesReady&&active.changesSource===signature)return false;
    const changed=Boolean(active.changesSource&&active.changesSource!==signature);
    const result=describeCopyChanges({current,currentReferences,incoming:active.loadSnapshot,data:active.catalog,briefRows});
@@ -131,9 +138,13 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
    const prepared=hasCatalog?prepareCopyPreview(snapshot,data,{preserveAll:Boolean(item.localPrevious)}):null;
    active={...item,snapshot,prepared,baseSnapshot:prepared?.loadSnapshot||snapshot,referenceSnapshot:hasCatalog?(item.localPrevious?prepareCopyPreview(snapshot,data).loadSnapshot:prepared.loadSnapshot):null,loadScope:'full',loadSnapshot:null,mergeSummary:null,referencesShown:6,partial:Boolean(prepared?.hasMissing&&!item.localPrevious),catalog:hasCatalog?data:null,changesReady:false,changesSource:null};
    active.referenceSelection=[...(active.referenceSnapshot?.references||[])];active.referencePicker=null;
+   const availableReferences=new Set(active.referenceSnapshot?.references||[]);
+   active.referenceNotesAvailable=Boolean(active.referenceSnapshot?.includeNotes&&Object.entries(active.referenceSnapshot.draft.workNotes).some(([key,note])=>note.trim()&&availableReferences.has(key.split('/')[1])));
+   active.includeReferenceNotes=active.referenceNotesAvailable;active.currentReferences=[];
    previewBody.innerHTML=`<h3 tabindex="-1">${esc(item.name)}</h3>${item.createdAt?`<p class="account-copy-date">${esc(dateLabel(item.createdAt))}</p>`:''}<p>Команд: ${summary.teams} · Примеров: ${summary.references} · Заметок: ${summary.notes}</p><dl class="review-brief">${briefRows(snapshot.draft.brief).filter(([label])=>label!=='Пожелания').map(([label,value])=>`<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join('')}</dl><h4>Пожелания</h4><p class="account-copy-wishes">${esc(snapshot.draft.brief.description||'Пока не указаны.')}</p>${prepared?`<h4>Команды и работы</h4>${copyTeamsMarkup(prepared.teams)}<h4>Сохранённые примеры</h4>${copyReferencesMarkup(prepared.references)}`:'<p class="copy-preview-empty">Каталог сейчас недоступен, поэтому названия и фотографии не загружены.</p>'}${action==='restore'?copyAvailabilityMarkup(prepared):''}<p class="account-copy-contact">${snapshot.includeContact?'Контакт в копии: '+esc(snapshot.draft.contact.name||'Имя не указано')+' · '+esc(snapshot.draft.contact.value||'Контакт не указан'):'Контакт в копию не включён.'+(action==='restore'?' При загрузке сохранится текущий контакт в этом браузере.':'')}</p><p class="account-copy-effect">${action==='delete'?'Эта копия будет удалена из аккаунта. Текущий проект в браузере останется на месте.':'Загрузка заменит описание события, выбранные команды и примеры в этом браузере. Предыдущий вариант сохранится для возврата.'}${action!=='delete'&&!snapshot.includeNotes?' Заметки в копию не включены — текущие заметки сохранятся.':''}</p>`;
    if(action==='restore'){
     const scopePanel=document.createElement('fieldset');scopePanel.className='copy-load-mode';scopePanel.setAttribute('aria-describedby','copy-load-mode-note');scopePanel.innerHTML='<legend>Что загрузить</legend><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="full" checked><span>Весь проект<small>Событие, выбранные команды и примеры</small></span></label><label class="copy-load-option"><input type="radio" name="copyLoadScope" value="event"><span>Только событие<small>Текущая подборка, заметки и контакт сохранятся</small></span></label><label class="copy-load-option" data-copy-load-references><input type="radio" name="copyLoadScope" value="references"><span>Добавить примеры<small>'+(hasCatalog?'Дополнить примеры и заметки, сохранив текущий проект':'Для добавления примеров нужен каталог; сейчас он недоступен')+'</small></span></label><p class="copy-load-mode-note" id="copy-load-mode-note">Ниже показано содержимое исходной копии. Выбор обновляет сравнение; проект изменится только после нажатия кнопки загрузки.</p><div data-copy-reference-merge hidden></div>';previewBody.querySelector('h3').after(scopePanel);
+    const noteChoice=document.createElement('label');noteChoice.className='copy-reference-notes-choice';noteChoice.hidden=true;noteChoice.innerHTML='<input type="checkbox" data-copy-reference-notes><span>Также добавить заметки из копии<small data-copy-reference-notes-help></small></span>';scopePanel.append(noteChoice);
     const referencePicker=document.createElement('div');referencePicker.dataset.copyReferencePicker='';referencePicker.hidden=true;scopePanel.append(referencePicker);
     const changes=document.createElement('div');changes.id='account-copy-changes';changes.dataset.copyChanges='';changes.tabIndex=-1;changes.setAttribute('role','region');changes.setAttribute('aria-label','Что изменится при загрузке');previewBody.querySelector('.account-copy-effect').before(changes);renderCopyChanges();
     const changesJump=document.createElement('button');changesJump.type='button';changesJump.className='secondary-action account-copy-changes-jump';changesJump.dataset.showCopyChanges='';changesJump.setAttribute('aria-controls',changes.id);changesJump.textContent='Что изменится при загрузке ↓';scopePanel.after(changesJump);
@@ -161,6 +172,13 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  });
  list.addEventListener('click',event=>{if(busy)return;const open=event.target.closest('[data-preview-copy]'),remove=event.target.closest('[data-delete-copy]');if(open)showPreview(Number(open.dataset.previewCopy));if(remove)showPreview(Number(remove.dataset.deleteCopy),'delete');});
  previewBody.addEventListener('change',event=>{
+  const noteChoice=event.target.closest('[data-copy-reference-notes]');
+  if(noteChoice){
+   if(!active||mode!=='restore'||active.loadScope!=='references')return;
+   if(busy||editingName||!active.referenceNotesAvailable){syncLoadScope();return;}
+   active.includeReferenceNotes=noteChoice.checked;active.changesReady=false;active.changesSource=null;active.mergeSummary=null;
+   renderCopyChanges();syncBusy();actionStatus.textContent=referenceMergeMessage()||(active.changesReady?'Состав переноса обновлён. Проект пока не изменён.':'Проект пока не изменён. Обновите сравнение.');return;
+  }
   const input=event.target.closest('input[name="copyLoadScope"]');if(!input||!active||mode!=='restore')return;
   if(busy||editingName||!input.checked||!['full','event','references'].includes(input.value)||(input.value==='references'&&!active.referenceSnapshot)){syncLoadScope();return;}
   if(active.loadScope===input.value)return;

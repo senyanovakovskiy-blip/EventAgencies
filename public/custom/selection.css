@@ -726,6 +726,20 @@ html:root .ea-save-button{pointer-events:auto}
 @media(hover:hover){.copy-import-card:not(:has(input:disabled)):hover,.copy-import-tools>button:not(:disabled):hover,.copy-import-more:not(:disabled):hover{border-color:var(--color-highlight)}}
 @media(max-width:600px){.copy-import-grid{grid-template-columns:minmax(0,1fr);gap:10px}.copy-import-tools{gap:8px}.copy-import-card{padding:10px}.copy-import-more{width:100%}}
 
+/* Existing examples and optional notes remain separate choices during import. */
+.copy-import-card-copy>.copy-import-existing{display:inline-block;box-sizing:border-box;max-width:100%;margin-top:6px;padding:3px 6px;border:1px solid var(--line);border-radius:4px;background:var(--surface);color:var(--muted);font-size:11px;line-height:1.4;white-space:normal;overflow-wrap:anywhere;vertical-align:top}
+.copy-import-card-copy>.copy-import-existing[hidden]{display:none}
+.copy-import-tools>.copy-import-remove-existing{flex:1 1 180px}
+.copy-load-mode>.copy-reference-notes-choice{grid-column:1/-1}
+.copy-reference-notes-choice{box-sizing:border-box;display:flex;align-items:flex-start;gap:12px;min-width:0;min-height:44px;padding:14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);font-size:13px;line-height:1.5;cursor:pointer;overflow-wrap:anywhere}
+.copy-reference-notes-choice>input{width:18px;height:18px;flex:none;margin:2px 0 0;accent-color:var(--color-highlight);cursor:inherit}
+.copy-reference-notes-choice>span{display:block;min-width:0}
+.copy-reference-notes-choice small{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.6}
+.copy-reference-notes-choice:has(input:disabled){opacity:.6;cursor:default}
+.copy-reference-notes-choice>input:focus-visible,.copy-reference-notes-choice:has(input:focus-visible){outline:2px solid var(--color-highlight);outline-offset:3px}
+.copy-reference-notes-choice[hidden],.copy-reference-notes-choice [hidden]{display:none}
+@media(max-width:600px){.copy-reference-notes-choice{padding:12px}}
+
 .project-history{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:100px}
 .project-history>details>summary{display:flex;align-items:center;justify-content:space-between;gap:20px;list-style:none;cursor:pointer;padding:20px 0}
 .project-history>details>summary::-webkit-details-marker{display:none}
