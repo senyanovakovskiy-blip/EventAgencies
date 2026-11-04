@@ -11,7 +11,7 @@ const reference={
  })),
  projects:data.projects.map(({slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source,presentation})=>({
   slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source,
-  presentation:{lead:publicText(presentation?.lead),fit:publicText(presentation?.fit),participation:publicText(presentation?.participation)}
+  presentation:{lead:publicText(presentation?.lead),intro:publicText(presentation?.intro),fit:publicText(presentation?.fit),participation:publicText(presentation?.participation)}
  }))
 };
 return `<main class="my-project" id="content">

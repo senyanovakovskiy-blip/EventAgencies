@@ -19,3 +19,11 @@
 .filter-extra{display:flex;flex-direction:column;gap:24px}
 .catalog-grid h2 a,.catalog-grid h3 a{display:block}
 @media(max-width:760px){.catalog-aside{max-height:none;overflow:visible}.filter-options summary{display:block}.filter-options[open] .filter-extra{padding-top:18px}.filter-extra{gap:18px}.filter-options:not([open]) .filter-extra{display:none}}
+
+/* Search sources stay readable in the existing cards, including long copy. */
+.catalog-aside .catalog-search-field{min-width:0}
+.catalog-aside .catalog-search-help{margin:8px 0 0;font:12px/1.5 Motion,Arial,sans-serif;color:var(--muted);overflow-wrap:anywhere}
+#catalog-results .catalog-search-context{min-width:0;margin:16px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+#catalog-results .catalog-search-context dt{font:11px/1.5 Motion,Arial,sans-serif;color:var(--muted);overflow-wrap:anywhere}
+#catalog-results .catalog-search-context dt>span{display:block;margin-bottom:4px;color:var(--ink);font-size:12px}
+#catalog-results .catalog-search-context dd{margin:6px 0 0;font:13px/1.6 Motion,Arial,sans-serif;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
