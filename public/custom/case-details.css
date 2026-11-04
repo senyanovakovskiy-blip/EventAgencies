@@ -133,6 +133,17 @@ html[data-theme=dark] .case-page .case-photo-depth{box-shadow:0 3px 8px #0002,0 
 .saved-references .reference-notes .reference-note-add[hidden],.saved-references .reference-notes .reference-note-add [hidden]{display:none}
 @media(max-width:600px){.saved-references .reference-notes .reference-note-add{margin-top:14px;padding-top:14px}.saved-references .reference-notes .reference-note-add>:is(select,button){flex-basis:100%}}
 
+/* A matching note stays readable as a compact route to the full text. */
+.saved-references .reference-note-match{min-width:0;max-width:100%;margin:12px 0 0}
+.saved-references .reference-note-match>.reference-note-match-button{box-sizing:border-box;display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;min-width:0;max-width:100%;min-height:44px;padding:12px;border:1px solid var(--line);border-left:2px solid var(--color-highlight);border-radius:6px;background:var(--surface);color:var(--ink);font-family:Motion,Arial,sans-serif;text-align:left;text-decoration:none;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+.saved-references .reference-note-match-label{display:block;min-width:0;color:var(--muted);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.saved-references .reference-note-match-text{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;min-width:0;overflow:hidden;color:var(--ink);font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.saved-references .reference-note-match-action{display:block;min-width:0;color:var(--color-highlight);font-size:12px;line-height:1.5;overflow-wrap:anywhere}
+.saved-references .reference-note-match-button:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.saved-references .reference-note-match-button:disabled{opacity:.45;cursor:default}
+.saved-references .reference-note-match[hidden],.saved-references .reference-note-match [hidden]{display:none}
+@media(max-width:600px){.saved-references .reference-note-match>.reference-note-match-button{padding:10px;gap:7px}}
+
 .saved-references .reference-note-toggle [data-reference-note-mark]{flex:none;max-width:100%;font-size:11px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
 .saved-references .reference-notes[hidden],.saved-references .reference-notes [hidden]{display:none}
 @media(max-width:600px){.saved-references .reference-notes>.reference-note-entry{margin-top:14px;padding-top:14px}.saved-references .reference-note-entry>.secondary-action,.saved-references .reference-notes .reference-note-actions>.secondary-action{width:100%}.saved-references .reference-notes .reference-note-actions{flex-direction:column;align-items:stretch}.saved-references .reference-notes .reference-note-actions>.secondary-action{flex:0 1 auto}}
