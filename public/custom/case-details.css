@@ -95,6 +95,21 @@ html[data-theme=dark] .case-page .case-photo-depth{box-shadow:0 3px 8px #0002,0 
 .reference-cover-empty>span:first-child{font-size:42px;line-height:1;color:var(--color-highlight)}
 .reference-grid h3{font-size:19px;line-height:1.25;letter-spacing:-.02em;margin:14px 0 8px;overflow-wrap:anywhere}
 .reference-team{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 8px}
+.saved-references>.reference-search-help{margin:12px 0 0;font-size:12px;line-height:1.6;color:var(--muted)}
+.saved-references .reference-presentation{min-width:0;margin:14px 0 16px;padding-top:14px;border-top:1px solid var(--line);overflow-wrap:anywhere}
+.saved-references .reference-presentation>h4{margin:0 0 8px;color:var(--muted);font:11px/1.5 MotionMono,monospace}
+.saved-references .reference-presentation-lead,.saved-references .reference-presentation-details dd,.saved-references .reference-presentation-match-text{min-width:0;margin:0;color:var(--ink);font-size:13px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere}
+.saved-references .reference-presentation-empty{margin:0;color:var(--muted);font-size:12px;line-height:1.6}
+.saved-references .reference-presentation-details{margin-top:8px;min-width:0}
+.saved-references .reference-presentation-details>summary{box-sizing:border-box;min-height:44px;padding:12px 0;color:var(--ink);font:13px/1.5 Motion,Arial,sans-serif;cursor:pointer;overflow-wrap:anywhere}
+.saved-references .reference-presentation-details>summary::marker{color:var(--color-highlight)}
+.saved-references .reference-presentation-details>summary:focus-visible{outline:2px solid var(--color-highlight);outline-offset:4px}
+.saved-references .reference-presentation-details dl{margin:0;padding:0 0 10px}
+.saved-references .reference-presentation-details dl>div+div{margin-top:14px}
+.saved-references .reference-presentation-details dt,.saved-references .reference-presentation-match-label{margin:0 0 6px;color:var(--muted);font-size:11px;line-height:1.5;overflow-wrap:anywhere}
+.saved-references .reference-presentation-match{min-width:0;margin-top:10px;padding:12px;border-left:2px solid var(--color-highlight);border-radius:4px;background:var(--surface,var(--color-bg))}
+.saved-references .reference-presentation-source+.reference-presentation-source{margin-top:16px}
+.saved-references .reference-presentation-match[hidden],.saved-references .reference-presentation-details[open]+.reference-presentation-match{display:none}
 .reference-team-choice{margin:14px 0 16px}
 .reference-team-choice label{display:block;font-size:11px;line-height:1.5;color:var(--muted);margin-bottom:7px}
 .reference-team-choice select{box-sizing:border-box;width:100%;min-width:0;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--color-bg);color:var(--ink);font:13px/1.5 Motion,Arial,sans-serif;margin:0 0 9px}

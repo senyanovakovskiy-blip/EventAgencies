@@ -9,6 +9,8 @@ import {setupReferenceNoteCopy} from './reference-note-copy.js';
 import {setupReferenceNoteClear} from './reference-note-clear.js';
 import {findReferenceNoteMatch} from './reference-note-search.js';
 import {setupReferenceReturn} from './reference-return.js';
+import {normalizeSearchText,searchTerms,publicPresentationText} from './catalog-search.js';
+import {referencePresentationMarkup,syncReferencePresentationMatch} from './reference-presentation.js';
 export {REFERENCE_KEY,normalizeReferences};
 const noteCopyController=setupReferenceNoteCopy();
 const noteClearController=setupReferenceNoteClear();
@@ -31,7 +33,6 @@ let data,renderVersion=0;
 const VIEW_KEY='eventagencies-reference-view-v1';
 let referenceView={query:'',agency:'',mode:'photos',sort:'recent',onlyNotes:false};
 try{const view=JSON.parse(sessionStorage.getItem(VIEW_KEY)||'null');if(view)referenceView={query:typeof view.query==='string'?view.query.slice(0,200):'',agency:typeof view.agency==='string'?view.agency:'',mode:view.mode==='notes'?'notes':'photos',sort:['earliest','title','agency'].includes(view.sort)?view.sort:'recent',onlyNotes:view.onlyNotes===true};}catch{}
-const normalizeSearch=value=>String(value||'').normalize('NFKC').toLocaleLowerCase('ru').replace(/ё/g,'е');
 const workAgencies=work=>[...new Set([work.agencySlug,...(Array.isArray(work.agencySlugs)?work.agencySlugs:[])].filter(Boolean))];
 function rememberView(){try{sessionStorage.setItem(VIEW_KEY,JSON.stringify(referenceView));}catch{}}
 function noteEntryMarkup(entry){
@@ -47,6 +48,11 @@ function syncReferenceNoteMark(card){
 }
 function referenceNoteSearchItems(card){
  return noteFields(card).map(field=>({key:workNoteKey(field.dataset.workNote,field.dataset.noteWork),agencyName:field.closest('.reference-note-entry')?.dataset.referenceNoteAgencyName||field.dataset.workNote,note:field.value}));
+}
+function referenceSearchText(card,work){
+ const agencies=data.agencies.filter(agency=>workAgencies(work).includes(agency.slug)).map(agency=>agency.name);
+ const noteAgencies=[...card.querySelectorAll('[data-reference-note-agency-name]')].map(entry=>entry.dataset.referenceNoteAgencyName);
+ return normalizeSearchText([work.fullTitle,work.client,work.category,work.eventCity,...agencies,...noteAgencies,...noteFields(card).map(field=>field.value)].join(' '));
 }
 function syncReferenceNoteMatch(card){
  const host=card.querySelector('.reference-note-match');if(!host)return;
@@ -116,16 +122,16 @@ function showReferenceMode(host){
  });
 }
 function filterReferences(host,works){
- const words=normalizeSearch(referenceView.query).trim().split(/\s+/).filter(Boolean);
+ const words=searchTerms(referenceView.query);
  let visible=0;
  host.querySelectorAll('[data-saved-reference]').forEach(card=>{
   const work=works.find(work=>work.slug===card.dataset.savedReference);
   const fields=noteFields(card),notes=fields.map(field=>field.value);
-  const agencies=data.agencies.filter(agency=>workAgencies(work).includes(agency.slug)).map(agency=>agency.name);
-  const noteAgencies=[...card.querySelectorAll('[data-reference-note-agency-name]')].map(entry=>entry.dataset.referenceNoteAgencyName);
-  const text=normalizeSearch([work.fullTitle,work.client,work.category,work.eventCity,...agencies,...noteAgencies,...notes].join(' '));
+  const otherText=referenceSearchText(card,work);
+  const text=normalizeSearchText([otherText,publicPresentationText(work)].join(' '));
   const matches=(!referenceView.agency||workAgencies(work).includes(referenceView.agency))&&(!referenceView.onlyNotes||notes.some(note=>note.trim()))&&words.every(word=>text.includes(word));
   card.hidden=!matches;if(matches)visible++;
+  syncReferencePresentationMatch(card,work,words,otherText);
   syncReferenceNoteMatch(card);
  });
  host.querySelector('[data-reference-count]').textContent=`Показано ${visible} из ${works.length}`;
@@ -169,12 +175,13 @@ async function renderReferences({reloadCatalog=false}={}){
  };
  host.innerHTML=`<div class="reference-heading"><div><span class="eyebrow">Вдохновение</span><h2 id="reference-title">Примеры для моего события</h2></div><a class="text-link" href="/catalog?view=projects">Найти ещё примеры ↗</a></div><p>Соберите настроение события: сохраняйте работы и отмечайте, что в них нравится. Чтобы передать пример вместе с заявкой, добавьте его в пожелания.</p>`+(works.length?`
   <div class="reference-filters" role="search" aria-label="Поиск в сохранённых примерах">
-   <label class="reference-search">Найти в моих примерах<input id="reference-search" type="search" maxlength="200" placeholder="Название, агентство или ваша заметка" value="${esc(referenceView.query)}" aria-controls="saved-reference-grid"></label>
+   <label class="reference-search">Найти в моих примерах<input id="reference-search" type="search" maxlength="200" placeholder="Название, описание или заметка" value="${esc(referenceView.query)}" aria-controls="saved-reference-grid" aria-describedby="reference-search-help"></label>
    <label>Агентство<select id="reference-agency" aria-controls="saved-reference-grid"><option value="">Все агентства</option>${agencies.map(agency=>`<option value="${esc(agency.slug)}"${agency.slug===referenceView.agency?' selected':''}>${esc(agency.name)}</option>`).join('')}</select></label>
    <button type="button" class="text-button" data-clear-references>Сбросить</button>
   </div>
+  <p class="reference-search-help" id="reference-search-help">Ищем по названию, агентству, описанию работы и вашим заметкам. Все слова запроса должны встретиться в одном примере.</p>
   <div class="reference-view-bar"><div class="reference-view-switch" role="group" aria-label="Вид сохранённых примеров"><button type="button" data-reference-view="photos" aria-controls="saved-reference-grid">Фотосетка</button><button type="button" data-reference-view="notes" aria-controls="saved-reference-grid">С заметками</button></div><label class="reference-sort">Порядок<select id="reference-sort" aria-controls="saved-reference-grid">${[['recent','Сначала новые'],['earliest','Сначала добавленные'],['title','По названию'],['agency','По агентству']].map(([value,label])=>`<option value="${value}"${referenceView.sort===value?' selected':''}>${label}</option>`).join('')}</select></label><label class="reference-notes-filter"><input id="reference-only-notes" type="checkbox"${referenceView.onlyNotes?' checked':''} aria-controls="saved-reference-grid">Только с моими заметками</label><p class="reference-count" data-reference-count role="status" aria-live="polite" aria-atomic="true"></p></div>
-  <div class="reference-grid" id="saved-reference-grid">${works.map(p=>`<article data-saved-reference="${esc(p.slug)}"><a class="reference-cover${p.hasPhotos?'':' reference-cover-empty'}" href="${workLink(p)}">${p.hasPhotos?`<img src="${esc(p.preview||p.thumb||p.image)}" alt="${esc(p.fullTitle)}" loading="lazy">`:'<span aria-hidden="true">↗</span><span>Работа без фотографий</span>'}</a><h3><a href="${workLink(p)}">${esc(p.fullTitle)}</a></h3><p class="reference-team">${esc(p.client)}</p>${teamAction(p)}<button type="button" class="reference-note-toggle" data-toggle-reference-note aria-controls="reference-note-block-${esc(p.slug)}" aria-expanded="false">Мои заметки <span data-reference-note-mark>+</span></button><div class="reference-note-match" hidden></div>${noteMarkup(p)}<button class="reference-remove" data-remove-reference="${esc(p.slug)}">Убрать пример</button></article>`).join('')}</div>
+  <div class="reference-grid" id="saved-reference-grid">${works.map(p=>`<article data-saved-reference="${esc(p.slug)}"><a class="reference-cover${p.hasPhotos?'':' reference-cover-empty'}" href="${workLink(p)}">${p.hasPhotos?`<img src="${esc(p.preview||p.thumb||p.image)}" alt="${esc(p.fullTitle)}" loading="lazy">`:'<span aria-hidden="true">↗</span><span>Работа без фотографий</span>'}</a><h3><a href="${workLink(p)}">${esc(p.fullTitle)}</a></h3><p class="reference-team">${esc(p.client)}</p>${referencePresentationMarkup(p)}${teamAction(p)}<button type="button" class="reference-note-toggle" data-toggle-reference-note aria-controls="reference-note-block-${esc(p.slug)}" aria-expanded="false">Мои заметки <span data-reference-note-mark>+</span></button><div class="reference-note-match" hidden></div>${noteMarkup(p)}<button class="reference-remove" data-remove-reference="${esc(p.slug)}">Убрать пример</button></article>`).join('')}</div>
   <div class="reference-empty" data-reference-empty hidden><h3>Таких примеров пока нет</h3><p>Попробуйте другое слово, выберите все агентства или снимите фильтр заметок.</p><button class="secondary-action" type="button" data-reset-references>Показать все сохранённые</button></div>`:
   '<div class="reference-empty"><h3>Начните с того, что нравится</h3><p>Откройте любую работу в каталоге и нажмите «Сохранить как пример». Она появится здесь вместе с вашей личной заметкой.</p><a class="secondary-action" href="/catalog?view=projects">Выбрать первый пример ↗</a></div>');
  setupReferenceBatch(host,removeReferenceBatch);
@@ -218,6 +225,7 @@ function handleReferenceNoteUpdate(event){
   noteCopyController.sync(card);
   noteClearController.sync(card);
   syncReferenceNoteChooser(card,work);
+  syncReferencePresentationMatch(card,work,referenceView.query,referenceSearchText(card,work));
   syncReferenceNoteMatch(card);
   // A completed edit outside the card can update visibility immediately;
   // typing inside a saved example still waits until focus leaves that card.
