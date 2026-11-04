@@ -1,16 +1,21 @@
 import {readDraft,workNoteKey} from './project-store.js';
 import {escapeHtml as esc} from './work-presentation.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
-import {setupReferenceBatch,syncReferenceBatch,resetReferenceBatch} from './reference-batch.js';
+import {setupReferenceBatch,syncReferenceBatch,resetReferenceBatch,reconcileReferenceBatch,resumeReferenceBatch,suspendReferenceBatch} from './reference-batch.js';
+import {REFERENCE_BATCH_KEY} from './reference-batch-session.js';
 import {PREVIOUS_PROJECT_KEY} from './project-copy-client.js';
 import {referenceNotesForWork,referenceNoteForTeam} from './reference-note-model.js';
 import {setupReferenceNoteCopy} from './reference-note-copy.js';
 import {setupReferenceNoteClear} from './reference-note-clear.js';
 import {findReferenceNoteMatch} from './reference-note-search.js';
+import {setupReferenceReturn} from './reference-return.js';
 export {REFERENCE_KEY,normalizeReferences};
 const noteCopyController=setupReferenceNoteCopy();
 const noteClearController=setupReferenceNoteClear();
-let saved=[];try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));}catch{}
+const referenceReturn=setupReferenceReturn();
+let saved=[],savedKnown=false;
+function readSavedReferences(){try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));savedKnown=true;}catch{}}
+readSavedReferences();
 const status=document.createElement('div');status.className='reference-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.append(status);
 let timer,removedReferences=null;
 function announce(text,undo=false){
@@ -21,8 +26,8 @@ function announce(text,undo=false){
   const close=document.createElement('button');close.type='button';close.dataset.dismissReference='';close.setAttribute('aria-label','Закрыть уведомление');close.textContent='×';status.append(close);
  }else timer=setTimeout(()=>status.replaceChildren(),4500);
 }
-function sync(){document.querySelectorAll('[data-workspace-reference-count]').forEach(node=>node.textContent=String(saved.length));document.querySelectorAll('[data-reference-work]').forEach(b=>{const active=saved.includes(b.dataset.referenceWork);const label=active?'Пример сохранён ✓':'Сохранить как пример';if(b.textContent!==label)b.textContent=label;b.setAttribute('aria-pressed',String(active));});}
-let data,renderVersion=0,shownReferences=false;
+function sync(){readSavedReferences();if(savedKnown)reconcileReferenceBatch(saved);document.querySelectorAll('[data-workspace-reference-count]').forEach(node=>node.textContent=String(saved.length));document.querySelectorAll('[data-reference-work]').forEach(b=>{const active=saved.includes(b.dataset.referenceWork);const label=active?'Пример сохранён ✓':'Сохранить как пример';if(b.textContent!==label)b.textContent=label;b.setAttribute('aria-pressed',String(active));});}
+let data,renderVersion=0;
 const VIEW_KEY='eventagencies-reference-view-v1';
 let referenceView={query:'',agency:'',mode:'photos',sort:'recent',onlyNotes:false};
 try{const view=JSON.parse(sessionStorage.getItem(VIEW_KEY)||'null');if(view)referenceView={query:typeof view.query==='string'?view.query.slice(0,200):'',agency:typeof view.agency==='string'?view.agency:'',mode:view.mode==='notes'?'notes':'photos',sort:['earliest','title','agency'].includes(view.sort)?view.sort:'recent',onlyNotes:view.onlyNotes===true};}catch{}
@@ -137,12 +142,16 @@ async function removeReferenceBatch(slugs){
   return true;
  }catch{announce('Не удалось убрать примеры. Проверьте доступ к хранилищу браузера.');return false;}
 }
-async function renderReferences(){
+async function renderReferences({reloadCatalog=false}={}){
  if(location.pathname.replace(/\/$/,'')!=='/my-project')return;
  let host=document.getElementById('work-references');if(!host){host=document.createElement('section');host.id='work-references';host.className='saved-references';document.querySelector('main').append(host);}
  const version=++renderVersion;
- try{data ||= await fetch('/custom/catalog-data.json').then(r=>{if(!r.ok)throw Error();return r.json();});
+ let renderFailed=false;
+ host.inert=true;host.setAttribute('aria-busy','true');
+ try{
+ const loaded=!data||reloadCatalog?await fetch('/custom/catalog-data.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error();return r.json();}).then(value=>{if(!Array.isArray(value?.projects)||!Array.isArray(value?.agencies))throw Error();return value;}).catch(error=>{if(data)return data;throw error;}):data;
  if(version!==renderVersion)return;
+ data=loaded;
  let notes={},selection=[];try{const draft=readDraft(localStorage);notes=draft.workNotes;selection=draft.selection;}catch{}
  const pendingNoteKeys=Object.keys(noteClearController.getPendingNotes()),noteDescriptions={...notes};
  for(const key of pendingNoteKeys)if(!Object.hasOwn(noteDescriptions,key))noteDescriptions[key]='';
@@ -150,8 +159,9 @@ async function renderReferences(){
  const works=saved.map(slug=>data.projects.find(p=>p.slug===slug)).filter(Boolean);
  const agencySlugs=new Set(works.flatMap(workAgencies));
  const agencies=data.agencies.filter(agency=>agencySlugs.has(agency.slug)).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
- if(referenceView.agency&&!agencies.some(agency=>agency.slug===referenceView.agency)){referenceView.agency='';rememberView();}
- const workLink=work=>'/work/'+esc(work.slug)+'?from=%2Fmy-project%23work-references';
+ // A removed work must not silently clear the filter when returning to its card.
+ if(referenceView.agency&&!agencies.some(agency=>agency.slug===referenceView.agency))agencies.push({slug:referenceView.agency,name:(data.agencies.find(agency=>agency.slug===referenceView.agency)?.name||'Выбранное агентство')+' — нет сохранённых примеров'});
+ const workLink=work=>esc(referenceReturn.workLink(work.slug));
  const teamAction=work=>{
   const teams=data.agencies.filter(agency=>workAgencies(work).includes(agency.slug));if(!teams.length)return '';
   const chosen=teams.length===1?teams[0].slug:selection.find(item=>item.workSlug===work.slug&&teams.some(team=>team.slug===item.agencySlug))?.agencySlug||'',name=teams.find(team=>team.slug===chosen)?.name||'';
@@ -190,9 +200,8 @@ async function renderReferences(){
   sortReferences(host,works);
   filterReferences(host,works);
  }
- if(!shownReferences&&location.hash==='#work-references')host.scrollIntoView({block:'start'});
- shownReferences=true;
- }catch{host.innerHTML='<h2 id="reference-title">Примеры для моего события</h2><p>Не удалось загрузить работы.</p><button data-retry-references>Попробовать снова</button>';}
+ }catch{renderFailed=true;if(version===renderVersion)host.innerHTML='<h2 id="reference-title">Примеры для моего события</h2><p>Не удалось загрузить работы.</p><button data-retry-references>Попробовать снова</button>';}
+ finally{if(version===renderVersion){host.inert=false;host.removeAttribute('aria-busy');referenceReturn.rendered(host,{failed:renderFailed});}}
 }
 function handleReferenceNoteUpdate(event){
  const field=event.target.closest('[data-work-note]');if(!field||!data||location.pathname.replace(/\/$/,'')!=='/my-project')return;
@@ -259,15 +268,27 @@ document.addEventListener('click',async event=>{
  try{localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReferences=remove?[{slug,index}]:null;sync();await renderReferences();announce(remove?'Пример убран.':'Работа сохранена в «Моём проекте». Агентство не добавлено.',remove);if(b.dataset.removeReference)status.querySelector('[data-undo-reference]')?.focus({preventScroll:true});}catch{announce('Не удалось сохранить пример. Проверьте доступ к хранилищу браузера.');}
 });
 addEventListener('storage',event=>{
+ let local=false,tab=false;try{local=event.storageArea===localStorage;tab=event.storageArea===sessionStorage;}catch{return;}
+ if(tab&&(event.key===REFERENCE_BATCH_KEY||event.key===null)){resumeReferenceBatch(document.getElementById('work-references'));syncReferenceBatch(document.getElementById('work-references'));return;}
+ if(!local)return;
  // The backup record marks project replacement in another tab, even when the
  // new project retains exactly the same saved references.
  if(event.key===PREVIOUS_PROJECT_KEY||event.key===null)resetReferenceBatch(document.getElementById('work-references'));
- if(event.key===REFERENCE_KEY||event.key===PREVIOUS_PROJECT_KEY||event.key===null){try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));sync();renderReferences();}catch{}}
+ if(event.key===REFERENCE_KEY||event.key===PREVIOUS_PROJECT_KEY||event.key===null){readSavedReferences();sync();renderReferences();}
+});
+addEventListener('pagehide',()=>{renderVersion++;referenceReturn?.suspend();suspendReferenceBatch(document.getElementById('work-references'));});
+addEventListener('pageshow',event=>{
+ if(!event.persisted)return;
+ referenceReturn?.resume();
+ const changed=resumeReferenceBatch(document.getElementById('work-references'));
+ readSavedReferences();removedReferences=null;clearTimeout(timer);status.replaceChildren();
+ if(changed){referenceView={...referenceView,query:'',agency:'',onlyNotes:false};rememberView();}
+ sync();renderReferences({reloadCatalog:true});
 });
 document.addEventListener('ea:project-started',()=>resetReferenceBatch(document.getElementById('work-references')));
 document.addEventListener('ea:project-copy-restored',()=>{
  resetReferenceBatch(document.getElementById('work-references'));
- try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));removedReferences=null;clearTimeout(timer);status.replaceChildren();referenceView={...referenceView,query:'',agency:'',onlyNotes:false};rememberView();sync();renderReferences();}catch{}
+ readSavedReferences();removedReferences=null;clearTimeout(timer);status.replaceChildren();referenceView={...referenceView,query:'',agency:'',onlyNotes:false};rememberView();sync();renderReferences();
 });
 new MutationObserver(changes=>{if(changes.some(c=>[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-reference-work]')||n.querySelector?.('[data-reference-work]')))))sync();}).observe(document.querySelector('main')||document.body,{childList:true,subtree:true});
 const back=document.querySelector('[data-case-back]');if(back){try{const from=new URLSearchParams(location.search).get('from');const url=new URL(from||'/catalog?view=projects',location.origin);url.pathname=url.pathname.replace(/\/$/,'')||'/';if(url.origin===location.origin&&(/^\/agency\/[a-z0-9-]+$/.test(url.pathname)||url.pathname==='/catalog'||url.pathname==='/my-project')){back.href=url.pathname+url.search+url.hash;back.textContent=url.pathname.startsWith('/agency/')?'← К работам агентства':url.pathname==='/my-project'?'← В мой проект':'← К работам';}}catch{}}

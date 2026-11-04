@@ -1,17 +1,22 @@
 import {setupReferenceBatchCopy} from './reference-batch-copy.js';
+import {referenceBatchSession as session} from './reference-batch-session.js';
 
 const controllers=new WeakMap();
 
 export function syncReferenceBatch(host){controllers.get(host)?.sync();}
-export function resetReferenceBatch(host){controllers.get(host)?.reset();}
+export function resetReferenceBatch(host){const controller=controllers.get(host);if(controller)controller.reset();else session.reset();}
+export function reconcileReferenceBatch(slugs){session.reconcile();session.prune(slugs);}
+export function resumeReferenceBatch(host){controllers.get(host)?.suspend();return session.resume();}
+export function suspendReferenceBatch(host){controllers.get(host)?.suspend();session.reconcile();session.save();}
 
 export function setupReferenceBatch(host,onRemove){
  // A render replaces cards, not the selection belonging to this project.
- const previous=controllers.get(host),state=previous?.state||{active:false,busy:false,selected:new Set(),generation:0};
+ const previous=controllers.get(host),state=session.state;
+ session.reconcile();
  previous?.destroy();
  controllers.delete(host);host.querySelector('.reference-batch-bar')?.remove();
  const grid=host.querySelector('#saved-reference-grid');
- if(!grid){state.selected.clear();state.active=false;state.busy=false;state.generation++;delete host.dataset.referenceSelecting;return;}
+ if(!grid){session.reset();delete host.dataset.referenceSelecting;return;}
  const bar=document.createElement('div');bar.className='reference-batch-bar';
  bar.innerHTML=`<button class="reference-batch-open" type="button">Выбрать несколько</button><div class="reference-batch-tools" hidden>
   <p role="status" aria-live="polite" aria-atomic="true" data-batch-count></p>
@@ -22,6 +27,7 @@ export function setupReferenceBatch(host,onRemove){
   <div class="reference-batch-copy-manual" data-batch-copy-manual hidden><label for="reference-batch-copy-text">Названия и ссылки на выбранные работы</label><textarea id="reference-batch-copy-text" rows="6" readonly spellcheck="false" aria-describedby="reference-batch-copy-help"></textarea><p id="reference-batch-copy-help">Выделите текст и используйте команду «Копировать» или Ctrl+C / ⌘C.</p><div class="reference-batch-actions"><button type="button">Выделить текст</button></div></div>
   <small>Копируются только названия и ссылки на работы, без личных заметок и контактов.</small>
   <small>«Выбрать показанные» добавляет видимые примеры к выбору. Заметки сохранятся после удаления примеров.</small>
+  <small data-batch-retention role="status"></small>
  </div>`;
  grid.before(bar);
  const opener=bar.querySelector('.reference-batch-open'),panel=bar.querySelector('.reference-batch-tools'),count=bar.querySelector('[data-batch-count]'),scope=bar.querySelector('[data-batch-scope]');
@@ -39,6 +45,7 @@ export function setupReferenceBatch(host,onRemove){
   return {card,label,input,slug:card.dataset.savedReference};
  });
  function sync(){
+  if(session.reconcile())copyLinks.reset();
   const cards=cardsInOrder(),available=new Set(cards.map(card=>card.dataset.savedReference)),visible=cards.filter(card=>!card.hidden);
   for(const slug of state.selected)if(!available.has(slug))state.selected.delete(slug);
   const total=state.selected.size,visibleSelected=visible.filter(card=>state.selected.has(card.dataset.savedReference)).length,hiddenSelected=total-visibleSelected;
@@ -53,8 +60,12 @@ export function setupReferenceBatch(host,onRemove){
   wishes.textContent='В пожелания'+(total?' · '+total:'')+'…';
   remove.textContent=state.busy?'Убираем…':'Убрать выбранные'+(total?' · '+total:'');
   copyLinks.sync({unavailable:state.busy||!state.active});
+  session.save();
+  const retention=bar.querySelector('[data-batch-retention]');
+  const retentionText=session.available?'Режим и выбор сохраняются в этой вкладке при переходе к работе и перезагрузке. «Готово» завершает выбор.':'Выбор работает на этой странице. Не удалось сохранить его для переходов и перезагрузки.';
+  if(retention.textContent!==retentionText)retention.textContent=retentionText;
  }
- function reset(){copyLinks.reset();state.generation++;state.active=false;state.busy=false;state.selected.clear();sync();}
+ function reset(){copyLinks.reset();session.reset();sync();}
  opener.addEventListener('click',()=>{state.active=true;sync();options.find(option=>!option.card.hidden)?.input.focus({preventScroll:true});});
  options.forEach(option=>option.input.addEventListener('change',()=>{if(state.busy)return;if(option.input.checked)state.selected.add(option.slug);else state.selected.delete(option.slug);sync();}));
  all.addEventListener('click',()=>{if(state.busy)return;for(const card of cardsInOrder())if(!card.hidden)state.selected.add(card.dataset.savedReference);sync();});
@@ -73,5 +84,5 @@ export function setupReferenceBatch(host,onRemove){
   try{if(await onRemove(slugs)&&generation===state.generation){state.active=false;state.selected.clear();}}
   finally{if(generation===state.generation){state.busy=false;syncReferenceBatch(host);}}
  });
- controllers.set(host,{state,sync,reset,destroy:()=>copyLinks.destroy()});sync();
+ controllers.set(host,{state,sync,reset,suspend:()=>copyLinks.reset(),destroy:()=>copyLinks.destroy()});sync();
 }

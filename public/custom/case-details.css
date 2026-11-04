@@ -29,6 +29,9 @@ html[data-theme=dark] .case-page .case-photo-depth{box-shadow:0 3px 8px #0002,0 
 .reference-empty h3{font-size:25px;line-height:1.2;letter-spacing:-.025em;margin:0 0 12px}
 .reference-empty p{color:var(--muted);line-height:1.6;margin:0 0 20px}
 .reference-grid>article{min-width:0}
+.reference-grid>article[data-reference-returned=true]{box-shadow:0 0 0 6px var(--surface,var(--color-bg));border-radius:4px}
+.reference-grid>article[data-reference-returned=true] h3 a:focus-visible{outline:2px solid var(--color-highlight);outline-offset:4px}
+.saved-references>.reference-return-message{margin:16px 0;padding:12px 14px;border-left:2px solid var(--color-highlight);background:var(--surface,var(--color-bg));font-size:13px;line-height:1.6;color:var(--ink);overflow-wrap:anywhere}
 .reference-batch-bar{margin:0 0 22px}
 .reference-batch-open{min-height:44px;padding:10px 0;border:0;background:transparent;color:var(--color-highlight);font:13px/1.5 Motion,Arial,sans-serif;cursor:pointer}
 .reference-batch-tools{padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--color-bg);box-shadow:0 8px 24px #0001}
