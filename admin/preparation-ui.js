@@ -1,6 +1,7 @@
 import {draftFor,preparationContext as identity,preparationUnknowns as unknowns} from './preparation-draft.js';
 import {preparationFields,preparationKey,emptyPreparation,normalizePreparation,preparationLength,PREPARATION_LIMIT,PREPARATION_MAX_ITEMS} from './preparation-model.js';
 import {preparationComparisonMarkup,wirePreparationComparison} from './preparation-comparison-ui.js';
+import {discussionPlanMarkup,wireDiscussionPlans} from './discussion-plan-ui.js';
 const preparationViews=new WeakMap();
 export const capturePreparationView=form=>preparationViews.get(form)?.capture()||null;
 export const restorePreparationView=(form,view)=>preparationViews.get(form)?.restore(view);
@@ -34,7 +35,7 @@ function dossier(entry,catalog,receipt){
 function cardMarkup(entry,catalog,receipt,saved=false){
  const {name,title}=identity(entry,catalog,receipt);
  const statusId='preparation-'+entry.agencySlug+'--'+(entry.workSlug?'work-'+entry.workSlug:'agency')+'-generation';
- return `<article class="preparation-card" data-preparation-card="${esc(preparationKey(entry))}" data-agency="${esc(entry.agencySlug)}" data-work="${esc(entry.workSlug||'')}" data-saved="${saved}" hidden><h4>${esc(name)} · ${esc(title)}</h4><p class="small muted" data-preparation-origin></p>${workPicker(entry,catalog)}${sitePresentation(entry,catalog,receipt)}${dossier(entry,catalog,receipt)}<div class="preparation-editor"><h4>От примера — к разговору</h4><p class="small muted">Набросок использует доступное «Если вам близко», цель и ожидания из рабочего брифа и сведения о прошлой работе. Заполнятся только пустые поля этого варианта; ваш текст останется на месте.</p><div class="preparation-actions"><button type="button" class="secondary" data-prepare-draft>Заполнить пустые поля наброском</button><button type="button" class="text-button" data-replace-preparation>Заменить все поля наброском…</button></div><p class="small muted">Полная замена — отдельное действие: она перезапишет все шесть полей этого варианта. Набросок остаётся рабочей гипотезой; проверьте его перед разговором.</p><p id="${esc(statusId)}" class="preparation-generation-status" data-generation-status role="status" aria-atomic="true" tabindex="-1"></p>${Object.entries(preparationFields).map(([key,{label,max}])=>`<label>${esc(label)}<textarea data-preparation-field="${key}" maxlength="${max}" rows="${key==='scenario'?8:3}" aria-describedby="preparation-privacy ${esc(statusId)} ${esc(statusId+'-'+key+'-limit')}">${esc(entry[key])}</textarea><span id="${esc(statusId+'-'+key+'-limit')}" class="small muted">До ${max.toLocaleString('ru-RU')} символов</span></label>`).join('')}</div></article>`;
+ return `<article class="preparation-card" data-preparation-card="${esc(preparationKey(entry))}" data-agency="${esc(entry.agencySlug)}" data-work="${esc(entry.workSlug||'')}" data-saved="${saved}" hidden><h4>${esc(name)} · ${esc(title)}</h4><p class="small muted" data-preparation-origin></p>${workPicker(entry,catalog)}${sitePresentation(entry,catalog,receipt)}${dossier(entry,catalog,receipt)}<div class="preparation-editor"><h4>От примера — к разговору</h4><p class="small muted">Набросок использует доступное «Если вам близко», цель и ожидания из рабочего брифа и сведения о прошлой работе. Заполнятся только пустые поля этого варианта; ваш текст останется на месте.</p><div class="preparation-actions"><button type="button" class="secondary" data-prepare-draft>Заполнить пустые поля наброском</button><button type="button" class="text-button" data-replace-preparation>Заменить все поля наброском…</button></div><p class="small muted">Полная замена — отдельное действие: она перезапишет все шесть полей этого варианта. Набросок остаётся рабочей гипотезой; проверьте его перед разговором.</p><p id="${esc(statusId)}" class="preparation-generation-status" data-generation-status role="status" aria-atomic="true" tabindex="-1"></p>${Object.entries(preparationFields).map(([key,{label,max}])=>`<label>${esc(label)}<textarea data-preparation-field="${key}" maxlength="${max}" rows="${key==='scenario'?8:3}" aria-describedby="preparation-privacy ${esc(statusId)} ${esc(statusId+'-'+key+'-limit')}">${esc(entry[key])}</textarea><span id="${esc(statusId+'-'+key+'-limit')}" class="small muted">До ${max.toLocaleString('ru-RU')} символов</span></label>`).join('')}${discussionPlanMarkup(statusId+'-plan')}</div></article>`;
 }
 export function preparationMarkup(){
  return `<section class="operator-subsection" id="admin-preparation" data-stage-panel="preparation"><h3>Разговор и сценарий</h3><p id="preparation-privacy" class="small muted">Только для оператора. Подготовка сохраняется с заявкой; автоматически не попадает в бриф, рекомендации или ответ клиенту. Переключение команды и работы сохраняет введённые поля на странице.</p>${preparationComparisonMarkup()}<label>Чей опыт обсуждаем<select data-preparation-context aria-label="Агентство и работа для подготовки"></select></label><p class="small muted" data-preparation-empty hidden>В заявке пока нет выбранных команд. Добавьте рекомендацию или команду для обсуждения.</p><div data-preparation-cards></div><p class="small muted" data-preparation-count role="status"></p></section>`;
@@ -49,7 +50,7 @@ export function readPreparation(form,fallback=[]){
 }
 export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const host=form.querySelector('[data-preparation-cards]'),select=form.querySelector('[data-preparation-context]'),count=form.querySelector('[data-preparation-count]');
- const saved=normalizePreparation(data.workflow?.preparation),visited=new Map();let active='',optionKey='',comparison=null;
+ const saved=normalizePreparation(data.workflow?.preparation),visited=new Map();let active='',optionKey='',comparison=null,plans=null;
  host.innerHTML=saved.map(item=>cardMarkup(item,catalog,data.receipt,true)).join('');host.dataset.ready='true';
  const cards=()=>[...host.querySelectorAll('[data-preparation-card]')];
  function contexts(){
@@ -67,6 +68,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   if(!card){host.insertAdjacentHTML('beforeend',cardMarkup(emptyPreparation(entry.agencySlug,entry.workSlug),catalog,data.receipt));card=cards().find(node=>node.dataset.preparationCard===active);}
   for(const node of cards())node.hidden=node!==card;
   card.querySelector('[data-preparation-origin]').textContent=entry.origins?.join(' · ')||'Просмотр досье';select.value=active;
+  plans?.contextChanged();
  }
  function sync(){
   const entries=contexts(),key=[...entries].map(([id,item])=>id+':'+item.origins.join(',')).join('|');
@@ -76,6 +78,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const items=readPreparation(form),length=preparationLength(items),tooLarge=length>PREPARATION_LIMIT||items.length>PREPARATION_MAX_ITEMS;
   count.textContent=`Подготовка: ${length.toLocaleString('ru-RU')} / ${PREPARATION_LIMIT.toLocaleString('ru-RU')} символов во всех записях; ${items.length} / ${PREPARATION_MAX_ITEMS} записей.`+(tooLarge?' Сократите текст перед сохранением.':' Сохраняется общей кнопкой заявки.');count.classList.toggle('reply-warning',tooLarge);
   comparison?.sync();
+  plans?.sync();
  }
  function open(item,field=null){
   if(form.dataset.busy==='true')return;
@@ -102,7 +105,8 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  function shortcut(event){if(form.dataset.busy==='true')return;const button=event.target.closest('[data-open-preparation]');if(button){const recommendation=button.closest('[data-recommendation]');open({agencySlug:button.dataset.openPreparation,workSlug:(recommendation?recommendation.querySelector('[data-rec-field=workSlug]').value:button.dataset.preparationWork)||null});}}
  form.addEventListener('click',shortcut);form.ownerDocument.querySelector('.source-request')?.addEventListener('click',shortcut);
  comparison=wirePreparationComparison(form,{catalog,receipt:data.receipt,getContexts:contexts,getPreparation:()=>readPreparation(form),onEdit:open});
- const controller={sync,controls:()=>comparison.controls(),capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
+ plans=wireDiscussionPlans(form,{catalog,receipt:data.receipt,getPreparation:()=>readPreparation(form),getWorkflow:()=>getValues().workflow,getActiveKey:()=>active,siteOrigin:location.origin});
+ const controller={sync,controls:()=>{comparison.controls();plans.controls();},capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
   if(form.dataset.busy==='true'||!view||view.recordId!==data.recordId)return;
   // Empty visited contexts are view state too: readPreparation omits them.
   for(const item of normalizePreparation(view.visited))visited.set(preparationKey(item),{agencySlug:item.agencySlug,workSlug:item.workSlug});
