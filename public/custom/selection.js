@@ -7,6 +7,7 @@ import {setupAccountProjectCopies} from './account-project-copies.js';
 import {normalizeReferences} from './reference-store.js';
 import {setupWishesUndo} from './wishes-undo.js';
 import {setupReplacementUndo} from './replacement-undo.js';
+import {setupProjectWorkPicker} from './project-work-picker.js';
 import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,updateContact,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
@@ -123,6 +124,8 @@ document.addEventListener('click',async event=>{
  const editBrief=event.target.closest('[data-edit-brief]');if(editBrief)openBrief(editBrief.dataset.briefField);
  const editWork=event.target.closest('[data-review-work]');if(editWork){
   event.preventDefault();setHelpSelection(true);comparisonView='cards';rememberProjectView();await renderProject();
+  const picker=document.querySelector(`[data-open-work-picker="${editWork.dataset.reviewWork}"]`);
+  if(picker){picker.click();return;}
   const field=document.getElementById('work-choice-'+editWork.dataset.reviewWork);
   if(field){field.scrollIntoView({block:'center'});field.focus({preventScroll:true});}
   else document.getElementById('project-comparison')?.focus();
@@ -176,7 +179,7 @@ async function renderProject(){
     ${agencyPriority(a,index,entries.length)}
     <div class="project-agency-head"><div><h3>${esc(a.name)}</h3><p class="project-agency-location">${esc(a.city||'Город не указан')}</p></div></div>
     <div class="project-case-reason">${p?`${p.hasPhotos?`<a class="project-case-photo" href="${link}"><img src="${p.preview||p.reelMobile||p.image}" srcset="${esc(p.previewSrcSet||'')}" sizes="(max-width:900px) 100vw, 33vw" width="${p.imageWidth||1500}" height="${p.imageHeight||1000}" decoding="async" alt="${esc(p.fullTitle)}" loading="lazy"></a>`:''}<span class="eyebrow">${p.kind==='case'?'Выбранный кейс':'Выбранная работа'}</span><h4><a href="${link}">${esc(p.fullTitle)} ↗</a></h4><p>${esc(facts(p))}</p>`:'<div class="project-no-case"><span>Кейс не выбран</span></div>'}</div>
-    <section class="work-note-block"><label for="work-choice-${a.slug}">Работа для сравнения</label><select id="work-choice-${a.slug}" data-selected-work="${a.slug}"><option value="">Без выбранной работы</option>${data.projects.filter(w=>w.agencySlug===a.slug||w.agencySlugs?.includes(a.slug)).map(w=>`<option value="${esc(w.slug)}" ${w.slug===s.workSlug?'selected':''}>${esc(w.fullTitle)}</option>`).join('')}</select>${p?`<label for="note-${a.slug}">Что нравится в этой работе?</label><textarea id="note-${a.slug}" data-work-note="${a.slug}" data-note-work="${p.slug}" rows="3" maxlength="1000" aria-describedby="note-help-${a.slug} note-status-${a.slug}" placeholder="Например: тёплый свет, оформление сцены, живая музыка">${esc(draft.workNotes[workNoteKey(a.slug,p.slug)]||'')}</textarea><p id="note-help-${a.slug}">Личная заметка · только в этом браузере. Передать её можно через «Добавить в пожелания».</p><button class="secondary-action" type="button" data-add-wishes-work="${p.slug}" data-add-wishes-agency="${a.slug}">Добавить в пожелания…</button><p id="note-status-${a.slug}" role="status"></p>`:'<p>Выберите работу выше, чтобы оставить заметку.</p>'}</section>
+    <section class="work-note-block"><label for="work-choice-${a.slug}">Работа для сравнения</label><select id="work-choice-${a.slug}" data-selected-work="${a.slug}"><option value="">Без выбранной работы</option>${data.projects.filter(w=>w.agencySlug===a.slug||w.agencySlugs?.includes(a.slug)).map(w=>`<option value="${esc(w.slug)}" ${w.slug===s.workSlug?'selected':''}>${esc(w.fullTitle)}</option>`).join('')}</select><button class="secondary-action work-picker-opener" type="button" data-open-work-picker="${a.slug}" aria-label="Посмотреть и выбрать работу ${esc(a.name)}">Посмотреть работы…</button>${p?`<label for="note-${a.slug}">Что нравится в этой работе?</label><textarea id="note-${a.slug}" data-work-note="${a.slug}" data-note-work="${p.slug}" rows="3" maxlength="1000" aria-describedby="note-help-${a.slug} note-status-${a.slug}" placeholder="Например: тёплый свет, оформление сцены, живая музыка">${esc(draft.workNotes[workNoteKey(a.slug,p.slug)]||'')}</textarea><p id="note-help-${a.slug}">Личная заметка · только в этом браузере. Передать её можно через «Добавить в пожелания».</p><button class="secondary-action" type="button" data-add-wishes-work="${p.slug}" data-add-wishes-agency="${a.slug}">Добавить в пожелания…</button><p id="note-status-${a.slug}" role="status"></p>`:'<p>Выберите работу выше, чтобы оставить заметку.</p>'}</section>
     <details class="project-agency-details" data-agency-details="${a.slug}"${expandedAgencies.has(a.slug)?' open':''}><summary><span>Об агентстве и условиях</span><span class="agency-details-sign" aria-hidden="true">+</span></summary>
     <section class="comparison-block"><h4>Специализация</h4><p>${esc(specialization)}</p></section>
     <section class="comparison-block"><h4>География работы</h4><p>${esc(a.geography||'Нужно уточнить')}</p><p class="comparison-detail">Город команды: ${esc(a.city||'Нужно уточнить')}</p></section>
@@ -416,6 +419,17 @@ replacementUndo=setupReplacementUndo({getSelection:()=>draft.selection,canUndo:(
  else notice('Не удалось отменить замену','Разрешите хранение данных сайта, сохраните текущие изменения и повторите попытку.',{undoReplacement:true});
 }});
 if(inquiries.accepted(draft))replacementUndo.clear();
+setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onError:message=>notice('Выбор работы',message),onChoose:async({agencySlug,workSlug,expectedWorkSlug})=>{
+ if(!available||sending)return 'failed';
+ try{
+  const current=readDraft(localStorage),entry=current.selection.find(item=>item.agencySlug===agencySlug);
+  if(!entry||entry.workSlug!==expectedWorkSlug){draft=current;refresh();await renderProject();return 'changed';}
+  draft=writeDraft(localStorage,{...current,selection:current.selection.map(item=>item.agencySlug===agencySlug?{...item,workSlug}:item),request:null});
+  available=true;lastReceipt=null;sendError='';refresh();await renderProject();
+  orderStatus.textContent=workSlug?'Работа для сравнения обновлена. Личные заметки к другим работам сохранены.':'Агентство осталось в сравнении без выбранной работы. Личные заметки сохранены.';
+  return 'saved';
+ }catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return 'failed';}
+}});
 const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending});
 setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
 document.addEventListener('ea:project-copy-restored',()=>{
