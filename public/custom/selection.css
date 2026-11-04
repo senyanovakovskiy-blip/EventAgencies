@@ -413,6 +413,11 @@ html:root .ea-save-button{pointer-events:auto}
 .work-picker-search button{flex:none;min-height:44px;padding:8px 12px;border:0;background:transparent;color:var(--color-highlight);font:12px/1.4 Motion,Arial,sans-serif;cursor:pointer}
 .work-picker-content{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:18px 30px 26px}
 .work-picker-count{margin:0 0 14px;font:12px/1.5 Motion,Arial,sans-serif;color:var(--color-body)}
+.work-picker-filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.work-picker-filters button{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 14px;border:1px solid var(--color-divider);border-radius:24px;background:transparent;color:var(--color-body);font:12px/1.4 Motion,Arial,sans-serif;cursor:pointer}
+.work-picker-filters button[aria-pressed=true]{background:var(--color-title);border-color:var(--color-title);color:var(--canvas)}
+.work-picker-filters button span{font:10px/1.2 MotionMono,monospace;opacity:.7}
+.work-picker-personal-warning{font-size:12px;line-height:1.5;color:var(--color-body);padding:12px 14px;border:1px solid var(--color-divider);border-radius:8px;margin:0 0 14px}
 .work-picker-content fieldset{min-width:0;border:0;padding:0;margin:0}
 .work-picker-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .work-picker-none{display:flex;gap:12px;align-items:center;padding:14px 16px;margin-bottom:18px;border:1px solid var(--color-divider);border-radius:10px;background:var(--glass);cursor:pointer;font-size:14px;line-height:1.4}
@@ -430,9 +435,24 @@ html:root .ea-save-button{pointer-events:auto}
 .work-picker-card-copy>span{font-size:11px;line-height:1.5;color:var(--color-body)}
 .work-picker-card-copy small{font-size:10px;line-height:1.4;color:var(--color-body)}
 .work-picker-card-copy .work-picker-current{color:var(--color-highlight)}
+.work-picker-personal{padding:0 15px 4px}
+.work-picker-saved{font-size:10px;line-height:1.5;color:var(--color-highlight);margin:0 0 6px}
+.work-picker-notes{border-top:1px solid var(--color-divider);margin-top:4px}
+.work-picker-notes summary{display:flex;align-items:center;gap:8px;justify-content:space-between;min-height:44px;color:var(--color-body);font-size:12px;line-height:1.4;cursor:pointer;list-style:none}
+.work-picker-notes summary::-webkit-details-marker{display:none}
+.work-picker-notes summary::after{content:'+';font-size:18px;color:var(--color-highlight)}
+.work-picker-notes[open] summary::after{content:'−'}
+.work-picker-notes summary:focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
+.work-picker-notes>div{max-height:240px;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.work-picker-notes section+section{padding-top:12px;border-top:1px solid var(--color-divider)}
+.work-picker-notes section>span{display:block;font-size:10px;line-height:1.5;color:var(--color-body);margin:0 0 5px}
+.work-picker-notes section>p{margin:0 0 12px;color:var(--color-title);font-size:12px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.work-picker-notes>small{display:block;margin:6px 0 10px;color:var(--color-body);font-size:10px;line-height:1.5}
 .work-picker-card>a{display:flex;align-items:center;min-height:44px;padding:6px 15px 12px;color:var(--color-highlight);font-size:11px;line-height:1.4;text-decoration:none}
 .work-picker-card.is-selected,.work-picker-none.is-selected{border-color:var(--color-highlight);box-shadow:inset 0 0 0 1px var(--color-highlight)}
 .work-picker-empty{font-size:14px;line-height:1.6;color:var(--color-body);padding:20px 0;margin:0}
+.work-picker-empty p{margin:0 0 14px}
+.work-picker-empty button{min-height:44px;font-size:12px;padding:10px 16px}
 .work-picker-footer{flex:none;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:18px 30px;border-top:1px solid var(--color-divider);background:var(--color-bg)}
 .work-picker-footer>div:first-child{min-width:0}
 .work-picker-choice{font-size:13px;line-height:1.5;margin:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
