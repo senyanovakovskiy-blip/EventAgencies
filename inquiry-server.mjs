@@ -26,10 +26,13 @@ export function createInquiryStore(filename,catalog,operatorSources={}){
   admin,
   save(key,input){
    if(typeof key!=='string'||!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(key)||!validPayload(input))throw fail(400,'invalid_request');
-   const payload=submissionPayload(input),keyHash=hash(key),payloadHash=hash(JSON.stringify(payload));
+   const payload=submissionPayload(input),keyHash=hash(key.toLowerCase()),payloadHash=hash(JSON.stringify(payload));
    db.exec('BEGIN IMMEDIATE');
    try{
-    const existing=find.get(keyHash);
+    // UUID hex is case-insensitive. The prior local implementation hashed the
+    // spelling as supplied. Prefer its exact key when legacy case variants
+    // coexist, then recognize normalized and all-uppercase keys.
+    const existing=[...new Set([hash(key),keyHash,hash(key.toUpperCase())])].map(value=>find.get(value)).find(Boolean);
     if(existing){if(existing.payload_hash!==payloadHash)throw fail(409,'request_changed');db.exec('COMMIT');return {receipt:receipt(existing),duplicate:true};}
     const selection=payload.selection.map(s=>{
      const agency=catalog.agencies.find(a=>a.slug===s.agencySlug);

@@ -76,10 +76,13 @@ export function teamAction(t,b){
  if(t.contactsShared)return 'Уточнить, состоялся ли разговор';
  if(b&&t.response!=='pending'&&!evidenceCurrent(t,b,'response'))return 'Перепроверить ответ по актуальному брифу';
  if(t.response==='declined')return 'Отказ — продолжить с другой командой';
- if(t.customerConsent==='no'||t.agencyConsent==='no')return 'Знакомство отклонено — выбрать другую команду';
+ const currentRefusal=key=>t[key]==='no'&&(!b||evidenceCurrent(t,b,key));
+ if(currentRefusal('customerConsent')||currentRefusal('agencyConsent'))return 'Знакомство отклонено — выбрать другую команду';
  if(t.response==='no_response')return 'Уточнить ответ или выбрать другую команду';
  if(t.response!=='interested')return 'Узнать интерес агентства';
+ if(t.customerConsent==='no'&&b&&!evidenceCurrent(t,b,'customerConsent'))return 'Уточнить решение заказчика по актуальному брифу';
  if(t.customerConsent!=='yes'||b&&!evidenceCurrent(t,b,'customerConsent'))return 'Получить согласие заказчика на актуальный бриф';
+ if(t.agencyConsent==='no'&&b&&!evidenceCurrent(t,b,'agencyConsent'))return 'Уточнить решение агентства по актуальному брифу';
  if(t.agencyConsent!=='yes'||b&&!evidenceCurrent(t,b,'agencyConsent'))return 'Получить согласие агентства на актуальный бриф';
  return 'Передать контакты и отметить знакомство';
 }
@@ -92,7 +95,11 @@ export function nextAction(data){
  const missing=Object.keys(briefFields).filter(k=>!b[k]?.trim());
  if(missing.length)return {stage:'brief',action:'Уточнить задачу с заказчиком'};
  if(!briefConfirmed(b))return {stage:'confirm',action:'Получить подтверждение брифа'};
- const active=w.teams.find(t=>!t.result.trim()&&t.response!=='declined'&&t.customerConsent!=='no'&&t.agencyConsent!=='no');
+ // A refusal applies to its recorded brief, not automatically to later terms.
+ const active=w.teams.find(t=>!t.result.trim()&&
+  (t.response!=='declined'||!evidenceCurrent(t,b,'response'))&&
+  (t.customerConsent!=='no'||!evidenceCurrent(t,b,'customerConsent'))&&
+  (t.agencyConsent!=='no'||!evidenceCurrent(t,b,'agencyConsent')));
  if(active)return {stage:'introduction',action:teamAction(active,b),agencySlug:active.agencySlug};
  if(w.teams.some(t=>t.result.trim()||t.conversationHeld))return {stage:'outcome',action:'Проверить результат и закрыть заявку'};
  if(w.teams.length)return {stage:'selection',action:'Подобрать другую команду'};
