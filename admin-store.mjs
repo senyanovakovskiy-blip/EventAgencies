@@ -1,4 +1,6 @@
 import {normalizeWorkflow,validateWorkflow,nextAction} from './admin/workflow-model.js';
+import {operatorCatalog} from './operator-catalog.mjs';
+import {preparationContentKey} from './admin/preparation-model.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import {randomBytes,createHash,scryptSync,timingSafeEqual} from 'node:crypto';
@@ -59,7 +61,7 @@ export function createAdminStore(db,receipt,accessFile,catalog){
  };
  return {
   register,
-  catalog(){return {types:catalog.types,agencies:catalog.agencies.map(({slug,name,city,types,geography,services,budgetConditions})=>({slug,name,city,types,geography,services,budgetConditions})),projects:catalog.projects.map(({slug,agencySlug,agencySlugs,fullTitle,kind,category,eventCity,source})=>({slug,agencySlug,agencySlugs,fullTitle,kind,category,eventCity,source}))};},
+  catalog(){return operatorCatalog(catalog);},
   login(username,password){
    const account=db.prepare('SELECT * FROM admin_account WHERE username=?').get('admin');
    if(typeof password!=='string'||password.length>512||!account)return null;
@@ -93,12 +95,15 @@ export function createAdminStore(db,receipt,accessFile,catalog){
    db.exec('BEGIN IMMEDIATE');
    try{
     const current=detail(id);
+    // Report a stale preparation as a revision conflict before validating against
+    // records another tab may have added. Keep identical retry saves a no-op.
+    if(current.revision!==revision&&input.workflow?.preparation!==undefined&&preparationContentKey(input.workflow.preparation)!==preparationContentKey(current.workflow.preparation))throw problem(409,'revision_conflict');
     const closureReason=input.closureReason??current.closureReason,replyText=input.replyText??current.replyText,replyBasis=input.replyBasis??current.replyBasis;
     if(typeof closureReason!=='string'||closureReason.length>1500||typeof replyText!=='string'||replyText.length>16000||typeof replyBasis!=='string'||replyBasis!==''&&!/^[a-f0-9]{64}$/.test(replyBasis))throw problem(400,'invalid_update');
     const recommendations=input.recommendations===undefined?current.recommendations:resolveRecommendations(input.recommendations);
     if(status==='prepared'&&(!recommendations.length||recommendations.some(r=>!r.reason.trim()||!r.questions.trim())))throw problem(400,'shortlist_incomplete');
     const now=new Date().toISOString();
-    const workflow=input.workflow===undefined?current.workflow:validateWorkflow(input.workflow,current.workflow,catalog,now);
+    const workflow=input.workflow===undefined?current.workflow:validateWorkflow(input.workflow,current.workflow,catalog,now,current.receipt.selection);
     const changes=Object.keys({status,note,closureReason,replyText,replyBasis}).filter(k=>current[k]!==({status,note,closureReason,replyText,replyBasis})[k]);
     if(recommendationKey(current.recommendations)!==recommendationKey(recommendations))changes.push('recommendations');
     if(JSON.stringify(workflow)!==JSON.stringify(current.workflow))changes.push('workflow');

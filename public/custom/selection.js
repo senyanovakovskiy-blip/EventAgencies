@@ -3,6 +3,7 @@ import {setupProjectSections} from './project-sections.js';
 import {setupBriefSummary} from './project-brief.js';
 import {setupBriefSessionUndo} from './brief-session-undo.js';
 import {setupBriefEditor} from './brief-editor.js';
+import {setupContactPresentation} from './contact-presentation.js';
 import {setupProjectExport} from './project-export.js';
 import {setupProjectHistory} from './project-history.js';
 import {setupAccountProjectCopies} from './account-project-copies.js';
@@ -234,8 +235,8 @@ async function renderProject(){
 }
 async function sendInquiry(){
  if(sending||inquiries.accepted(draft))return;
- const invalid=contactError(draft.contact);
- if(invalid){document.getElementById('contact-save-status').textContent=invalid.message;const field=contactForm.elements.namedItem(invalid.field);field?.setAttribute('aria-invalid','true');field?.setAttribute('aria-describedby','contact-save-status contact-purpose');field?.focus();return;}
+ const invalid=contactPresentation?contactPresentation.validateForSubmit(draft.contact):contactError(draft.contact);
+ if(invalid)return;
  if(!validPayload(submissionPayload(draft))){openBrief();document.getElementById('brief-save-status').textContent='Проверьте количество гостей и бюджет: укажите целые неотрицательные числа, гостей — не меньше одного.';return;}
  sending=true;sendError='';selectionSendError=false;const snapshot=submissionPayload(draft);refresh();
  try{
@@ -359,25 +360,15 @@ if(briefForm){
  if(new URLSearchParams(location.search).get('edit')==='1')openBrief();
 }
 const contactForm=document.getElementById('project-contact-form');
-const contactFields={
- email:{type:'email',autocomplete:'email',placeholder:'name@example.com'},
- phone:{type:'tel',autocomplete:'tel',placeholder:'+7 900 000-00-00'},
- telegram:{type:'text',autocomplete:'off',placeholder:'@username или ссылка на профиль'}
-};
-function syncContact(){
- const method=contactForm.elements.method.value,config=contactFields[method],field=contactForm.elements.value;
- document.getElementById('contact-value-label').textContent=contactMethods[method];
- field.type=config.type;field.autocomplete=config.autocomplete;field.placeholder=config.placeholder;
-}
-function fillContact(){
+const contactPresentation=contactForm?setupContactPresentation(contactForm):null;
+function fillContact({resetErrors=false}={}){
  for(const [key,value]of Object.entries(draft.contact))contactForm.elements.namedItem(key).value=value;
- syncContact();
+ if(resetErrors)contactPresentation.reset();else contactPresentation.sync();
 }
 if(contactForm){
  fillContact();
  const saveContact=()=>{
-  contactForm.querySelectorAll('[aria-invalid]').forEach(field=>field.removeAttribute('aria-invalid'));
-  syncContact();
+  contactPresentation.sync();
   const values={name:contactForm.elements.name.value,method:contactForm.elements.method.value,value:contactForm.elements.value.value};
   const saved=persist(updateContact(draft,values),{quiet:true});
   document.getElementById('contact-save-status').textContent=saved?'Контакт сохранён в этом браузере.':'Не удалось сохранить контакт. Он остаётся на этой странице; разрешите хранение данных сайта и попробуйте снова.';
@@ -534,7 +525,7 @@ setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProj
 document.addEventListener('ea:project-copy-restored',()=>{
  draft=readDraft(localStorage);available=true;removedAgency=null;lastReceipt=null;sendError='';focusRequest=false;orderStatus.textContent='';
  document.getElementById('project-undo').hidden=true;
- if(contactForm)fillContact();refresh();
+ if(contactForm)fillContact({resetErrors:true});refresh();
 });
 setupProjectSections();
 

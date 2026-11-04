@@ -6,15 +6,17 @@ export const submissionPayload=state=>{
  return {brief,contact,selection};
 };
 export const samePayload=(a,b)=>JSON.stringify(submissionPayload(a))===JSON.stringify(submissionPayload(b));
-export function contactError(contact){
- if(!contact?.name?.trim())return {field:'name',message:'Укажите, как к вам обращаться.'};
- if(!Object.hasOwn(contactMethods,contact.method)||!contact.value?.trim())return {field:'value',message:'Укажите один удобный способ связи.'};
+export function contactFieldError(contact,field){
+ if(field==='name')return typeof contact?.name!=='string'||!contact.name.trim()?{field:'name',message:'Укажите, как к вам обращаться.'}:null;
+ if(field!=='value')return null;
+ if(!Object.hasOwn(contactMethods,contact?.method)||typeof contact?.value!=='string'||!contact.value.trim())return {field:'value',message:'Укажите один удобный способ связи.'};
  const value=contact.value.trim();
  if(contact.method==='email'&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))return {field:'value',message:'Проверьте адрес электронной почты.'};
  if(contact.method==='phone'&&(!/^[+\d\s().-]+$/.test(value)||value.replace(/\D/g,'').length<7||value.replace(/\D/g,'').length>15))return {field:'value',message:'Проверьте номер телефона.'};
  if(contact.method==='telegram'&&!/^(?:@|https:\/\/t\.me\/)?[a-zA-Z][a-zA-Z0-9_]{4,31}$/.test(value))return {field:'value',message:'Укажите Telegram в формате @username или https://t.me/username.'};
  return null;
 }
+export function contactError(contact){return contactFieldError(contact,'name')||contactFieldError(contact,'value');}
 // Reject malformed server inputs instead of silently truncating or dropping them.
 export function validPayload(input){
  if(!input||!input.brief||!input.contact||!Array.isArray(input.selection)||input.selection.length>3)return false;

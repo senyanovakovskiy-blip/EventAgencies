@@ -73,7 +73,7 @@ export async function handleCloudApi(request, env) {
     if (url.pathname === '/api/admin/inquiries' && request.method === 'GET') return reply(200, await store.list({ q: url.searchParams.get('q') || '', status: url.searchParams.get('status') || '', page: Number(url.searchParams.get('page') || 1) }));
     const match = /^\/api\/admin\/inquiries\/([1-9]\d*)$/.exec(url.pathname);
     if (match && request.method === 'GET') return reply(200, await store.detail(Number(match[1])));
-    if (match && request.method === 'PATCH') return reply(200, await store.update(Number(match[1]), await readBody(request, 131072)));
+    if (match && request.method === 'PATCH') return reply(200, await store.update(Number(match[1]), await readBody(request, 262144)));
     return reply(404, { error: 'not_found' });
   } catch (error) {
     return reply(error.status || 503, { error: error.status ? error.code : 'storage_unavailable' });

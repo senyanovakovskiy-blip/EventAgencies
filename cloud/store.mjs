@@ -1,4 +1,6 @@
 import catalogData from '../content/catalog.json' with { type: 'json' };
+import {operatorCatalog} from '../operator-catalog.mjs';
+import {preparationContentKey} from '../admin/preparation-model.js';
 import { submissionPayload, validPayload } from '../public/custom/inquiry-model.js';
 import { statusLabels, recommendationKey, replyKey } from '../admin/manual-model.js';
 import { normalizeWorkflow, validateWorkflow, nextAction } from '../admin/workflow-model.js';
@@ -91,11 +93,7 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
       return { recordId: row.id, receipt: receipt(row), status: row.status, statusLabel: statusLabels[row.status] || (row.status === 'done' ? 'Завершена' : 'Статус уточняется'), updatedAt: row.updated_at };
     },
     catalog() {
-      return {
-        types: catalog.types,
-        agencies: catalog.agencies.map(({ slug, name, city, types, geography, services, budgetConditions }) => ({ slug, name, city, types, geography, services, budgetConditions })),
-        projects: catalog.projects.map(({ slug, agencySlug, agencySlugs, fullTitle, kind, category, eventCity, source }) => ({ slug, agencySlug, agencySlugs, fullTitle, kind, category, eventCity, source })),
-      };
+      return operatorCatalog(catalog);
     },
     async save(key, input) {
       let valid = false;
@@ -157,12 +155,13 @@ export function createCloudStore(binding, ownerId, catalog = catalogData) {
       const { status, note, revision } = input;
       if (typeof status !== 'string' || !Object.hasOwn(statusLabels, status) || typeof note !== 'string' || note.length > 5000 || !Number.isSafeInteger(revision) || revision < 0) throw problem(400, 'invalid_update');
       const current = await detail(id);
+      if (current.revision !== revision && input.workflow?.preparation !== undefined && preparationContentKey(input.workflow.preparation) !== preparationContentKey(current.workflow.preparation)) throw problem(409, 'revision_conflict');
       const closureReason = input.closureReason ?? current.closureReason, replyText = input.replyText ?? current.replyText, replyBasis = input.replyBasis ?? current.replyBasis;
       if (typeof closureReason !== 'string' || closureReason.length > 1500 || typeof replyText !== 'string' || replyText.length > 16000 || typeof replyBasis !== 'string' || (replyBasis !== '' && !/^[a-f0-9]{64}$/.test(replyBasis))) throw problem(400, 'invalid_update');
       const recommendations = input.recommendations === undefined ? current.recommendations : resolveRecommendations(input.recommendations);
       if (status === 'prepared' && (!recommendations.length || recommendations.some(r => !r.reason.trim() || !r.questions.trim()))) throw problem(400, 'shortlist_incomplete');
       const now = new Date().toISOString();
-      const workflow = input.workflow === undefined ? current.workflow : validateWorkflow(input.workflow, current.workflow, catalog, now);
+      const workflow = input.workflow === undefined ? current.workflow : validateWorkflow(input.workflow, current.workflow, catalog, now, current.receipt.selection);
       const values = { status, note, closureReason, replyText, replyBasis, recommendations, workflow }, changes = changesBetween(current, values);
       if (!changes.length) return current;
       if (current.revision !== revision) throw problem(409, 'revision_conflict');

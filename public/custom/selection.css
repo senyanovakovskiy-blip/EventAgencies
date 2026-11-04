@@ -347,6 +347,13 @@ html:root .my-project #project-review{grid-template-columns:minmax(0,1fr) minmax
 .my-project .project-contact .brief-fields{margin:24px 0 0}
 .my-project .project-contact input,.my-project .project-contact select{font-size:16px}
 .my-project .project-contact label{font-size:14px}
+.project-contact .contact-field{min-width:0}
+.project-contact .contact-field>label{display:flex;flex-direction:column;gap:10px}
+.project-contact .contact-field-help{margin:8px 0 0;color:var(--muted);font:12px/1.5 Motion,Arial,sans-serif;overflow-wrap:anywhere}
+.project-contact .contact-field-error{margin:8px 0 0;padding-left:10px;border-left:2px solid var(--color-highlight);color:var(--ink);font:13px/1.5 Motion,Arial,sans-serif;overflow-wrap:anywhere}
+.project-contact .contact-field-error[hidden]{display:none!important}
+.project-contact input[aria-invalid=true]{border-color:var(--color-highlight);box-shadow:0 0 0 1px var(--color-highlight)}
+.project-contact :is(input,select):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 .my-project #contact-local-note,.my-project #contact-save-status{font-size:14px;line-height:1.5}
 .my-project #contact-save-status:empty{display:none}
 .my-project .project-delivery-note{margin-top:16px}

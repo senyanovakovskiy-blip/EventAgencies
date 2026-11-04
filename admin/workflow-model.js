@@ -1,8 +1,9 @@
+import {normalizePreparation,validatePreparation} from './preparation-model.js';
 export const briefFields={goal:'Цель мероприятия',city:'Город проведения',date:'Дата или период',guests:'Количество гостей',services:'Нужные услуги',budget:'Уточнённый бюджет',stage:'Стадия выбора',expectations:'Ожидания заказчика'};
 export const responses={pending:'Ответ не получен',interested:'Есть интерес к обсуждению',declined:'Отказ',no_response:'Нет ответа после обращения'};
 export const consents={unknown:'Не получено',yes:'Получено',no:'Отказ'};
 export const evidenceFields={response:'responseBriefVersion',customerConsent:'customerConsentBriefVersion',agencyConsent:'agencyConsentBriefVersion'};
-export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[]});
+export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[],preparation:[]});
 export const emptyTeam=agencySlug=>({agencySlug,response:'pending',responseNote:'',refusalReason:'',customerConsent:'unknown',customerConsentNote:'',agencyConsent:'unknown',agencyConsentNote:'',responseBriefVersion:null,customerConsentBriefVersion:null,agencyConsentBriefVersion:null,contactsShared:false,contactNote:'',conversationHeld:false,conversationNote:'',nextStep:'',result:'',updatedAt:null,sharedAt:null,sharedBriefVersion:null,conversationAt:null});
 const version=v=>Number.isSafeInteger(v)&&v>0?v:null;
 // Read compatibility only: never rewrite the original receipt or old history snapshots.
@@ -19,14 +20,14 @@ export function normalizeWorkflow(value,original={}){
   for(const key of Object.values(evidenceFields))t[key]=version(rawTeam[key]);
   t.sharedBriefVersion=version(rawTeam.sharedBriefVersion);return t;
  });
- return {brief,teams};
+ return {brief,teams,preparation:normalizePreparation(value?.preparation)};
 }
 export const briefConfirmed=b=>Boolean(b?.confirmed&&b.confirmedVersion===b.version);
 export const evidenceCurrent=(t,b,key)=>Boolean(version(b?.version)&&t?.[evidenceFields[key]]===b.version);
 const fail=code=>{throw Object.assign(new Error(code),{status:400,code});};
 const text=(v,max=2000)=>{if(typeof v!=='string'||v.length>max)fail('invalid_workflow');return v.trim();};
 const bool=v=>{if(typeof v!=='boolean')fail('invalid_workflow');return v;};
-export function validateWorkflow(input,previous,catalog,now){
+export function validateWorkflow(input,previous,catalog,now,selection=[]){
  if(!input||!input.brief||!Array.isArray(input.teams)||input.teams.length>100)fail('invalid_workflow');
  previous=normalizeWorkflow(previous);
  const b=input.brief,old=previous.brief,brief={};
@@ -65,9 +66,10 @@ export function validateWorkflow(input,previous,catalog,now){
  });
  if(previous.teams.some(t=>!seen.has(t.agencySlug)))fail('keep_team_history');
  // Match read normalization, including key order, so an unchanged save stays a no-op.
- return normalizeWorkflow({brief,teams});
+ const preparation=validatePreparation(input.preparation,previous.preparation,catalog,selection);
+ return normalizeWorkflow({brief,teams,preparation});
 }
-export const stageLabels={brief:'Бриф',confirm:'Подтверждение',selection:'Подбор',introduction:'Знакомство',outcome:'Итог'};
+export const stageLabels={brief:'Бриф',confirm:'Подтверждение',selection:'Подбор',preparation:'Разговор и сценарий',introduction:'Знакомство',outcome:'Итог'};
 export function teamAction(t,b){
  if(t.result.trim())return 'Результат записан';
  if(t.conversationHeld)return 'Записать результат разговора';
