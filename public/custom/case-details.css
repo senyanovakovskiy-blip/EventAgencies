@@ -12,6 +12,13 @@
 .case-client-story h2{font-size:24px;line-height:1.2;letter-spacing:-.02em;margin:0 0 14px}
 .case-client-story p{font-size:18px;line-height:1.6;margin:0;overflow-wrap:anywhere}
 .case-source p{max-width:850px}
+.case-facts .case-fact-attendance{grid-column:1/-1;max-width:950px}
+.case-facts .case-fact-attendance dd{overflow-wrap:anywhere}
+.case-contribution{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:24px}
+.case-contribution>div{min-width:0}
+.case-contribution p{margin:10px 0 0;overflow-wrap:anywhere}
+.case-contribution>a{flex:none;display:inline-flex;align-items:center;min-height:44px;font-size:13px}
+@media(max-width:760px){.case-contribution{flex-direction:column;align-items:stretch;gap:10px;padding:20px;margin-top:20px}.case-contribution p{font-size:15px;line-height:1.6}.case-contribution>a{align-self:flex-start}}
 @media(max-width:760px){.case-client-story{grid-template-columns:1fr;gap:28px;margin:28px 0}.case-client-story p{font-size:16px}.case-client-story h2{font-size:22px}}
 
 /* Match the quiet photo treatment in the catalog. */

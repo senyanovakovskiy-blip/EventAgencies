@@ -54,7 +54,7 @@ function match(index,query){
 export function buildCatalogSearch(data){
  const projects=Array.isArray(data?.projects)?data.projects:[];
  const agencies=Array.isArray(data?.agencies)?data.agencies:[];
- const workIndexes=new Map(),agencyIndexes=new Map(),linkedFields=new Map();
+ const workIndexes=new Map(),agencyIndexes=new Map(),ownIndexes=new Map(),linkedFields=new Map(),ownedWorkFields=new Map();
 
  for(const work of projects){
   if(!hasSlug(work?.slug))continue;
@@ -73,11 +73,13 @@ export function buildCatalogSearch(data){
   for(const slug of slugs){
    if(!linkedFields.has(slug))linkedFields.set(slug,[]);
    linkedFields.get(slug).push(...fields);
+   ownedWorkFields.set(JSON.stringify([slug,work.slug]),fields);
   }
  }
 
  for(const agency of agencies){
   if(!hasSlug(agency?.slug))continue;
+  ownIndexes.set(agency.slug,makeIndex([...publicFields(agency),field('Название агентства',agency.name)]));
   agencyIndexes.set(agency.slug,makeIndex([
    ...publicFields(agency),
    ...(linkedFields.get(agency.slug)||[]),
@@ -89,6 +91,11 @@ export function buildCatalogSearch(data){
  // of workTitle marks a linked-work source, including an unnamed public work.
  return {
   searchWork:(slug,query)=>match(workIndexes.get(slug),query),
-  searchAgency:(slug,query)=>match(agencyIndexes.get(slug),query)
+  searchAgency:(slug,query)=>match(agencyIndexes.get(slug),query),
+  searchAgencyOwn:(slug,query)=>match(ownIndexes.get(slug),query),
+  searchAgencyWork:(agencySlug,workSlug,query)=>{
+   const fields=ownedWorkFields.get(JSON.stringify([agencySlug,workSlug]));
+   return match(fields?makeIndex([...(ownIndexes.get(agencySlug)?.entries||[]),...fields]):null,query);
+  }
  };
 }
