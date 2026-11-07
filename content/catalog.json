@@ -191,7 +191,7 @@
         "online",
         "culture"
       ],
-      "description": "",
+      "description": "Imagine Group создаёт конференции, B2B- и HR-события разных форматов и масштаба. На конференции «Импульс» для 3 000 гостей команда превратила павильон в мультимедийную IT-сцену; на Modest Fashion Day объединила бренды из семи стран.",
       "website": "https://imgevent.ru/",
       "works": [
         "portfolio-imagine-group-fd77444",
@@ -2422,19 +2422,21 @@
       "fullTitle": "Конференция «Импульс»",
       "year": "—",
       "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
-      "client": "Imagine Group",
+      "category": "IT-конференция",
+      "format": "Мультимедийная конференция на 3 000 гостей",
+      "client": "Клиент не указан",
       "agencySlug": "imagine-group",
       "agencySlugs": [
         "imagine-group"
       ],
       "agencyUrl": "/agency/imagine-group",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио Imagine Group. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио Imagine Group. Роль команды — в первоисточнике.",
+      "types": [
+        "business"
+      ],
+      "role": "Imagine Group создала технологичное пространство и превратила павильон в мультимедийную IT-сцену.",
+      "industry": "Павильон; название площадки не указано",
+      "description": "Конференция «Импульс» по IT-инженерии собрала 3 000 гостей. Imagine Group превратила павильон в мультимедийную IT-сцену. В кейсе агентство описывает задачу как создание технологичного пространства.",
+      "seoDescription": "Конференция «Импульс» Imagine Group: 3 000 гостей, IT-инженерия и павильон, превращённый в мультимедийную IT-сцену.",
       "source": "https://imgevent.ru/case#rec1055611251",
       "image": "/custom/library/3a9f81bf87.webp",
       "imageMobile": "/custom/library/3a9f81bf87.webp",
@@ -2484,7 +2486,7 @@
       "reelMobile": "/custom/optimized/5b4583716af61a-960.webp",
       "imageRatio": 1.4988290398126465,
       "eventCity": "",
-      "guestLabel": "",
+      "guestLabel": "3 000 гостей",
       "occasions": [
         "conference"
       ],
