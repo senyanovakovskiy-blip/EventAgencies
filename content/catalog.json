@@ -604,7 +604,7 @@
         "business",
         "corporate"
       ],
-      "description": "",
+      "description": "В первом саммите R7 IVS Group собрала более 1 000 партнёров в четырёх параллельных залах, дополнив деловую программу закрытыми стратегическими сессиями и церемонией награждения. Этот кейс показывает, как выстроить встречу, где важны и программа, и отношения между участниками.",
       "website": "https://ivsgroup.ru/",
       "works": [
         "portfolio-ivs-group-3a30833",
@@ -761,9 +761,10 @@
       "city": "Москва",
       "types": [
         "corporate",
-        "culture"
+        "culture",
+        "sport"
       ],
-      "description": "",
+      "description": "В фестивале QIWI МЕЛ превратило спортивные сообщества сотрудников в общую историю: у каждого появились свои активности, а сказочная тема прошла через кампанию до самого события.",
       "website": "https://mel-creative.ru/",
       "works": [
         "portfolio-kreativnoe-agentstvo-mel-e966ab4",
@@ -963,9 +964,10 @@
       "city": "Москва",
       "types": [
         "corporate",
-        "culture"
+        "culture",
+        "public"
       ],
-      "description": "",
+      "description": "В кейсе «Алые паруса — 2025» идея «Победы добра» раскрывается через воду, свет и механическую жар-птицу; кульминацией становится Седьмая симфония Шостаковича на Дворцовой площади. Это пример публичного шоу, где общий образ ведёт зрителя через весь вечер.",
       "website": "https://eraevent.ru/",
       "works": [
         "case-enriched-64",
@@ -5615,21 +5617,24 @@
       "slug": "portfolio-ivs-group-3a30833",
       "title": "Партнёрский саммит R7",
       "fullTitle": "Партнёрский саммит R7",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2024",
+      "eventDate": "2024",
+      "category": "Партнёрский саммит",
+      "format": "Деловой саммит с параллельными потоками",
       "client": "IVS Group",
       "agencySlug": "ivs-group",
       "agencySlugs": [
         "ivs-group"
       ],
       "agencyUrl": "/agency/ivs-group",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио IVS Group. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио IVS Group. Роль команды — в первоисточнике.",
+      "types": [
+        "business",
+        "corporate"
+      ],
+      "role": "IVS Group подготовила и провела первый саммит R7 под ключ: от концепции и формата до деловой и развлекательной программ.",
+      "industry": "",
+      "description": "Первый партнёрский саммит R7 собрал в Москве более 1 000 дистрибьюторов, интеграторов, сервисных и технологических партнёров. IVS Group подготовила событие под ключ: четыре зала работали параллельно, а программа соединила продуктовые презентации, отраслевые дискуссии, закрытые стратегические встречи и вечернее награждение.",
+      "seoDescription": "Первый саммит партнёров R7 в Москве: более 1 000 участников, четыре параллельных зала, деловая программа и закрытые встречи.",
       "source": "https://ivsgroup.ru/portfolio/bolshoj-partnjorskij-sammit-r7-moskva",
       "image": "/custom/library/71192a6c34.jpg",
       "imageMobile": "/custom/library/71192a6c34.jpg",
@@ -5647,7 +5652,7 @@
       "reelImage": "/custom/optimized/9a62545c3b9236-900.webp",
       "reelMobile": "/custom/optimized/9a62545c3b9236-900.webp",
       "imageRatio": 1.8,
-      "eventCity": "",
+      "eventCity": "Москва",
       "guestLabel": "",
       "occasions": [
         "conference"
@@ -6068,19 +6073,22 @@
       "fullTitle": "QIWI · Спорт в летнюю ночь",
       "year": "—",
       "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "category": "Корпоративный фестиваль",
+      "format": "Летний фестиваль сотрудников",
       "client": "Креативное агентство МЕЛ",
       "agencySlug": "kreativnoe-agentstvo-mel",
       "agencySlugs": [
         "kreativnoe-agentstvo-mel"
       ],
       "agencyUrl": "/agency/kreativnoe-agentstvo-mel",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио Креативное агентство МЕЛ. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио Креативное агентство МЕЛ. Роль команды — в первоисточнике.",
+      "types": [
+        "corporate",
+        "sport"
+      ],
+      "role": "МЕЛ разработало концепцию и провело фестиваль QIWI, включая тизинговую кампанию и программу на площадке.",
+      "industry": "",
+      "description": "Фестиваль QIWI о well-being и сообществах сотрудников получил ироничную сказочную тему. За четыре недели до события МЕЛ выпустило более 70 тизинговых коммуникаций, а на площадке создало отдельные спортивные зоны, матчи, фотозоны и финал с диджейкой на проекционном кубе. По данным кейса МЕЛ, во время кампании в сообщества вступили 27% сотрудников.",
+      "seoDescription": "Фестиваль QIWI о well-being: сказочная спортивная тема, 70+ тизинговых коммуникаций и активности сообществ сотрудников.",
       "source": "https://mel-creative.ru/cases/sport-v-letnuu-noch-qiwi",
       "image": "/custom/library/955a110b10.png",
       "imageMobile": "/custom/library/955a110b10.png",
@@ -6100,7 +6108,9 @@
       "imageRatio": 1.7777777777777777,
       "eventCity": "",
       "guestLabel": "",
-      "occasions": [],
+      "occasions": [
+        "corporate"
+      ],
       "preview": "/custom/optimized/3e24d9a968af43-960.webp",
       "imageWidth": 1680,
       "imageHeight": 945,
@@ -6333,21 +6343,24 @@
       "slug": "portfolio-era-6c166b2",
       "title": "Алые паруса 2025",
       "fullTitle": "Алые паруса 2025",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2025",
+      "eventDate": "2025",
+      "category": "Праздник выпускников",
+      "format": "Городское шоу на Дворцовой площади",
       "client": "ЭРА",
       "agencySlug": "era",
       "agencySlugs": [
         "era"
       ],
       "agencyUrl": "/agency/era",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио ЭРА. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио ЭРА. Роль команды — в первоисточнике.",
+      "types": [
+        "public",
+        "culture"
+      ],
+      "role": "ERA объединила сценографию, музыку и технологии вокруг темы концерта «Победа добра».",
+      "industry": "Дворцовая площадь",
+      "description": "«Алые паруса — 2025» раскрыли тему «Победы добра» через образ распахнутого окна, воду и фонтаны, механическую жар-птицу и динамический свет. Кульминацией концерта на Дворцовой площади стало исполнение Седьмой симфонии Шостаковича оркестром под управлением Николы Мельникова.",
+      "seoDescription": "«Алые паруса — 2025»: концерт на Дворцовой площади с темой «Победы добра», водной сценографией и Седьмой симфонией Шостаковича.",
       "source": "https://eraevent.ru/cases/alye-parusa-2025/",
       "image": "/custom/library/d943477d57.jpg",
       "imageMobile": "/custom/library/d943477d57.jpg",
@@ -6365,7 +6378,7 @@
       "reelImage": "/custom/optimized/8fcd5d370d2f12-1200.webp",
       "reelMobile": "/custom/optimized/8fcd5d370d2f12-960.webp",
       "imageRatio": 1.5,
-      "eventCity": "",
+      "eventCity": "Санкт-Петербург",
       "guestLabel": "",
       "occasions": [],
       "preview": "/custom/optimized/8fcd5d370d2f12-960.webp",
