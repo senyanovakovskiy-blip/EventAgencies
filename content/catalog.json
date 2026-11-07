@@ -707,7 +707,7 @@
         "online",
         "btl"
       ],
-      "description": "Петербургское агентство. В портфолио кейсы для «Дикси», «Магнита», «Балтики», G-Drive и МегаФона. Награды Silver Mercury, Red Apple, E+.",
+      "description": "В проекте G-Drive на ралли «Шёлковый путь» OXYGEN соединило B2B, PR, бренд-активации и цифровой квиз. Бренд сопровождал маршрут длиной 4 500 км на протяжении 10 дней.",
       "website": "https://www.oxygen-agency.ru/",
       "works": [
         "portfolio-oxygen-b9f344d",
@@ -846,7 +846,7 @@
         "public",
         "culture"
       ],
-      "description": "",
+      "description": "В кейсе ко Дню России у «Газпром Арены» участвовали резиденты Insight People из 74 регионов. Страница проекта отдельно указывает организатора события — «Газпром-Медиа Холдинг» при поддержке ПАО «Газпром».",
       "website": "https://insightpeople.ru/",
       "works": [
         "portfolio-insayt-lyudi-b7da2ad",
@@ -886,7 +886,7 @@
         "business",
         "pr"
       ],
-      "description": "Помимо ивентов у группы есть своё туристическое агентство, дизайн-студия и архитектурное бюро.",
+      "description": "Coca-Cola Pool Night в Дубае показывает подход DoctorTeam к международной бренд-вечеринке: закрытая аудитория, иммерсивная среда, визуальные инсталляции и полный цикл продакшна.",
       "website": "https://doctorteam.ru/",
       "works": [
         "portfolio-doctorteam-211cd87",
@@ -3479,9 +3479,7 @@
         "dpg-russia"
       ],
       "agencyUrl": "/agency/dpg-russia",
-      "types": [
-        "business"
-      ],
+      "types": ["business"],
       "role": "Креативная концепция, сценарий, оформление, деловая и вечерняя программа, питание и трансфер",
       "industry": "Тольятти, здание заводоуправления АвтоВАЗа",
       "description": "Дилерская конференция LADA в Тольятти. DPG Russia разработала концепцию и сценарий, оформление, деловую и вечернюю программу, организовала питание и трансфер.",
@@ -4460,21 +4458,24 @@
       "slug": "portfolio-doctorteam-211cd87",
       "title": "Coca-Cola Private Night · Дубай",
       "fullTitle": "Coca-Cola Private Night · Дубай",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2025",
+      "eventDate": "Август 2025",
+      "category": "Бренд-вечеринка",
+      "format": "Закрытая pool party для инфлюенсеров",
       "client": "DoctorTeam",
       "agencySlug": "doctorteam",
       "agencySlugs": [
         "doctorteam"
       ],
       "agencyUrl": "/agency/doctorteam",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио DoctorTeam. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио DoctorTeam. Роль команды — в первоисточнике.",
+      "types": [
+        "pr",
+        "btl"
+      ],
+      "role": "DoctorTeam отвечал за полный цикл: концепцию, дизайн пространства и света, музыкальную программу, координацию площадки и гостевой сервис.",
+      "industry": "",
+      "description": "В августе 2025 года DoctorTeam провёл в Дубае закрытую Coca-Cola Pool Night для 90 гостей. Иммерсивное пространство объединило бренд-инсталляции, фотозоны и фуд-активации с лаунжами, DJ и нетворкингом. Агентство отвечало за полный цикл — от концепции и дизайна пространства до координации площадки и гостевого сервиса.",
+      "seoDescription": "Закрытая Coca-Cola Pool Night в Дубае для 90 гостей. DoctorTeam отвечал за концепцию, дизайн пространства, программу и полный цикл продакшна.",
       "source": "https://doctorteam.ru/blog/portfolios/coca-cola-private-night-privatnaya-vecherinka-inflyuenserov-v-dubae/",
       "image": "/custom/library/54767e86f2.webp",
       "imageMobile": "/custom/library/54767e86f2.webp",
@@ -4505,9 +4506,11 @@
       "reelImage": "/custom/optimized/2eb780670791cd-1600.webp",
       "reelMobile": "/custom/optimized/2eb780670791cd-960.webp",
       "imageRatio": 0.75,
-      "eventCity": "",
-      "guestLabel": "",
-      "occasions": [],
+      "eventCity": "Дубай",
+      "guestLabel": "90 гостей",
+      "occasions": [
+        "private"
+      ],
       "preview": "/custom/optimized/2eb780670791cd-960.webp",
       "imageWidth": 1800,
       "imageHeight": 2400,
@@ -5950,21 +5953,25 @@
       "slug": "portfolio-oxygen-b9f344d",
       "title": "G-Drive · Шёлковый путь",
       "fullTitle": "G-Drive · Шёлковый путь",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2022",
+      "eventDate": "2022 · 10 дней",
+      "category": "Спортивная бренд-активация",
+      "format": "Интеграция G-Drive в ралли «Шёлковый путь»",
       "client": "OXYGEN",
       "agencySlug": "oxygen",
       "agencySlugs": [
         "oxygen"
       ],
       "agencyUrl": "/agency/oxygen",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио OXYGEN. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио OXYGEN. Роль команды — в первоисточнике.",
+      "types": [
+        "sport",
+        "btl",
+        "pr"
+      ],
+      "role": "OXYGEN объединило брендинг, B2B-события, PR, спецпроекты, промоактивности, мерч и привлечение участников в приложение.",
+      "industry": "",
+      "description": "В 2022 году G-Drive сопровождал ралли «Шёлковый путь» на маршруте 4 500 км за 10 дней. OXYGEN объединило брендинг и B2B-события с PR, промо, мерчем и цифровой механикой: квиз набрал 546 000 просмотров и 5 189 участников. Наборы G-Drive получили 1 200 участников ралли, а на бивуаках раздали более 10 000 банок энергетика.",
+      "seoDescription": "Интеграция G-Drive в ралли «Шёлковый путь»: маршрут 4 500 км, 10 дней, B2B и PR, бренд-активации и квиз на 546 000 просмотров.",
       "source": "https://oxygen-agency.ru/gdrive-silkway",
       "image": "/custom/library/ee6905e651.jpg",
       "imageMobile": "/custom/library/ee6905e651.jpg",
@@ -5983,7 +5990,7 @@
       "reelMobile": "/custom/optimized/405f6aa95f8de4-960.webp",
       "imageRatio": 1.7777777777777777,
       "eventCity": "",
-      "guestLabel": "",
+      "guestLabel": "1 200 участников получили наборы G-Drive",
       "occasions": [],
       "preview": "/custom/optimized/405f6aa95f8de4-960.webp",
       "imageWidth": 1680,
@@ -6219,21 +6226,24 @@
       "slug": "portfolio-insayt-lyudi-b7da2ad",
       "title": "День России · Санкт-Петербург, 2023",
       "fullTitle": "День России · Санкт-Петербург, 2023",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2023",
+      "eventDate": "12 июня 2023 · 10 часов",
+      "category": "Городской праздник",
+      "format": "Концерт и фестиваль у «Газпром Арены»",
       "client": "Инсайт люди",
       "agencySlug": "insayt-lyudi",
       "agencySlugs": [
         "insayt-lyudi"
       ],
       "agencyUrl": "/agency/insayt-lyudi",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио Инсайт люди. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио Инсайт люди. Роль команды — в первоисточнике.",
+      "types": [
+        "public",
+        "culture"
+      ],
+      "role": "В кейсе Insight People отмечены резиденты центра из 74 регионов и прыжок его резидента Сергея Бойцова с Лахта Центра. Событие организовал «Газпром-Медиа Холдинг» при поддержке ПАО «Газпром».",
+      "industry": "У «Газпром Арены»",
+      "description": "12 июня 2023 года у «Газпром Арены» прошёл 10-часовой городской праздник с шестью тематическими зонами. В кейсе Insight People отмечены резиденты центра из 74 регионов; резидент Сергей Бойцов совершил прыжок с Лахта Центра. Итоговый блок проекта указывает 130 000 посетителей. Организатор события — «Газпром-Медиа Холдинг» при поддержке ПАО «Газпром».",
+      "seoDescription": "День России у «Газпром Арены»: программа на 10 часов, шесть тематических зон и резиденты Insight People из 74 регионов. Организатор — «Газпром-Медиа Холдинг».",
       "source": "https://event.insightpeople.ru/den_rossii23",
       "image": "/custom/library/2a52491ba9.jpg",
       "imageMobile": "/custom/library/2a52491ba9.jpg",
@@ -6251,8 +6261,8 @@
       "reelImage": "/custom/optimized/a2c2cc729dea46-1600.webp",
       "reelMobile": "/custom/optimized/a2c2cc729dea46-960.webp",
       "imageRatio": 1.5,
-      "eventCity": "",
-      "guestLabel": "",
+      "eventCity": "Санкт-Петербург",
+      "guestLabel": "130 000 посетителей по итогам кейса",
       "occasions": [],
       "preview": "/custom/optimized/a2c2cc729dea46-960.webp",
       "imageWidth": 1680,
@@ -6862,7 +6872,9 @@
         "evraziyskiy-ivent-forum"
       ],
       "agencyUrl": "/agency/evraziyskiy-ivent-forum",
-      "types": ["business"],
+      "types": [
+        "business"
+      ],
       "role": "",
       "industry": "КЦ «ПетроКонгресс»",
       "description": "Работа из портфолио Евразийский ивент форум. Роль команды — в первоисточнике.",
@@ -7845,10 +7857,10 @@
       "slug": "case-enriched-54",
       "title": "Coca-Cola Private Night",
       "fullTitle": "Coca-Cola Private Night",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "PR",
-      "format": "Вечеринка для инфлюенсеров",
+      "year": "2025",
+      "eventDate": "Август 2025",
+      "category": "Бренд-вечеринка",
+      "format": "Закрытая pool party для инфлюенсеров",
       "client": "DoctorTeam",
       "agencySlug": "doctorteam",
       "agencySlugs": [
@@ -7856,13 +7868,14 @@
       ],
       "agencyUrl": "/agency/doctorteam",
       "types": [
-        "pr"
+        "pr",
+        "btl"
       ],
-      "role": "Проект в портфолио агентства",
+      "role": "DoctorTeam отвечал за полный цикл: концепцию, дизайн пространства и света, музыкальную программу, координацию площадки и гостевой сервис.",
       "industry": "Дубай",
-      "description": "Вечеринка для инфлюенсеров. Площадка: Дубай. Участники: 90 персон. Фотографии этого проекта пока не добавлены.",
-      "seoDescription": "Вечеринка для инфлюенсеров. Площадка: Дубай. Участники: 90 персон. Фотографии этого проекта пока не добавлены.",
-      "source": "https://doctorteam.ru/",
+      "description": "В августе 2025 года DoctorTeam провёл в Дубае закрытую Coca-Cola Pool Night для 90 гостей. Формат объединил бренд-инсталляции, фотозоны и фуд-активации с лаунжами, DJ и нетворкингом. Фотографии этой записи не добавлены — снимки той же вечеринки смотрите в отдельной работе DoctorTeam.",
+      "seoDescription": "Coca-Cola Pool Night в Дубае для 90 гостей: иммерсивная среда, бренд-инсталляции, фотозоны и полный цикл продакшна DoctorTeam.",
+      "source": "https://doctorteam.ru/blog/portfolios/coca-cola-private-night-privatnaya-vecherinka-inflyuenserov-v-dubae/",
       "image": "/custom/empty/case-enriched-54.svg",
       "imageMobile": "/custom/empty/case-enriched-54.svg",
       "ogImage": "/custom/empty/case-enriched-54.svg",
@@ -7877,7 +7890,7 @@
       "reelTitle": "Coca-Cola Private Night",
       "featured": false,
       "eventCity": "Дубай",
-      "guestLabel": "90 персон",
+      "guestLabel": "90 гостей",
       "occasions": []
     },
     {
