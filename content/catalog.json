@@ -255,7 +255,7 @@
         "corporate",
         "sport"
       ],
-      "description": "",
+      "description": "В INTERVALS 2026 Dreamlaser участвовал в городской медиавыставке и вместе с партнёрами создал инсталляции Strata для Т-Банка и Transmission для T2. Фестиваль развернулся более чем на 20 площадках Нижнего Новгорода.",
       "website": "https://dreamlaser.ru/",
       "works": [
         "portfolio-dream-laser-15dd06e",
@@ -296,7 +296,7 @@
         "corporate",
         "public"
       ],
-      "description": "",
+      "description": "В кейсе для франчайзи на Futurione команда UTS заранее спроектировала рассадку и маршрут гостей, а когда деловая часть сдвинулась — перестроила программу и сохранила общий ритм события.",
       "website": "https://uts-event.ru/",
       "works": [
         "portfolio-uts-88e9f9e",
@@ -545,7 +545,7 @@
         "business",
         "online"
       ],
-      "description": "Первое место в рейтинге National Event Services 2023. Базируется в Екатеринбурге. 100+ экспертов и около 300 проектов в год.",
+      "description": "В ежегодной конференции «Газпромбанк Автолизинг» Be Brand People связала деловые итоги с темой времени: часовым стендом, живой работой мастера и персональным вручением часов «Ракета».",
       "website": "https://bebrand.ru/event",
       "works": [
         "portfolio-be-brand-people-25d27b5",
@@ -925,7 +925,7 @@
         "pr",
         "business"
       ],
-      "description": "",
+      "description": "Для DODO BRANDS команда объединила 15-летие компании и премию сотрудникам в высокогорный фестиваль «DODO Экспедиция» с общей программой и неформальным награждением.",
       "website": "https://ludidobrie.com/",
       "works": [
         "portfolio-lyudi-dobrye-ba9ea67",
@@ -2615,21 +2615,24 @@
       "slug": "portfolio-dream-laser-15dd06e",
       "title": "Фестиваль INTERVALS 2026",
       "fullTitle": "Фестиваль INTERVALS 2026",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2026",
+      "eventDate": "23–26 апреля 2026",
+      "category": "Городской фестиваль медиаискусства",
+      "format": "Международный фестиваль мультимедийного искусства",
       "client": "Dream Laser",
       "agencySlug": "dream-laser",
       "agencySlugs": [
         "dream-laser"
       ],
       "agencyUrl": "/agency/dream-laser",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио Dream Laser. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио Dream Laser. Роль команды — в первоисточнике.",
+      "types": [
+        "culture",
+        "public"
+      ],
+      "role": "Dreamlaser участвовал в медиавыставке и совместно с metanoeia studio создал инсталляцию Strata для Т-Банка, а с T2 — работу Transmission.",
+      "industry": "",
+      "description": "С 23 по 26 апреля 2026 года Нижний Новгород стал картой медиаискусства: более 20 площадок, выставочная, перформативная, музыкальная и образовательная программы вокруг темы «Знак / Символ». По данным Dreamlaser, программу увидели 530 000 зрителей. Команда участвовала в медиавыставке и совместно с партнёрами создала инсталляции Strata для Т-Банка и Transmission для T2.",
+      "seoDescription": "INTERVALS 2026 в Нижнем Новгороде: более 20 площадок, тема «Знак / Символ» и 530 000 зрителей по данным Dreamlaser.",
       "source": "https://www.dreamlaser.ru/news/kak-proshyol-festival-intervals-2026",
       "image": "/custom/library/423c7c2c36.webp",
       "imageMobile": "/custom/library/423c7c2c36.webp",
@@ -2690,8 +2693,8 @@
       "reelImage": "/custom/optimized/a9d2185ff86d77-1600.webp",
       "reelMobile": "/custom/optimized/a9d2185ff86d77-960.webp",
       "imageRatio": 1.5,
-      "eventCity": "",
-      "guestLabel": "",
+      "eventCity": "Нижний Новгород",
+      "guestLabel": "530 000 зрителей программы — по данным Dreamlaser",
       "occasions": [],
       "preview": "/custom/optimized/a9d2185ff86d77-960.webp",
       "imageWidth": 1800,
@@ -2779,19 +2782,22 @@
       "fullTitle": "Партнёрская конференция Invitro",
       "year": "—",
       "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "category": "Партнёрская конференция",
+      "format": "Конференция для франчайзи",
       "client": "UTS",
       "agencySlug": "uts",
       "agencySlugs": [
         "uts"
       ],
       "agencyUrl": "/agency/uts",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио UTS. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио UTS. Роль команды — в первоисточнике.",
+      "types": [
+        "business",
+        "corporate"
+      ],
+      "role": "UTS спланировала рассадку, входную группу и маршрут гостей, а при сдвиге тайминга изменила порядок активностей, сохранив ритм конференции.",
+      "industry": "Futurione",
+      "description": "На конференции для 320 франчайзи площадка Futurione с ограниченным залом, плотной рассадкой и затемнённой навигацией стала частью концепции. UTS заранее продумала вход и маршрут гостей, а когда деловая программа сдвинулась, перестроила последовательность активностей и сохранила общий ритм.",
+      "seoDescription": "Партнёрская конференция UTS для 320 франчайзи в Futurione: сложная навигация, заранее спланированный маршрут и перестройка программы по ходу события.",
       "source": "https://uts-event.ru/case-invitro",
       "image": "/custom/library/55dc4b0cc1.jpg",
       "imageMobile": "/custom/library/55dc4b0cc1.jpg",
@@ -2809,8 +2815,8 @@
       "reelImage": "/custom/optimized/118e432925350c-1600.webp",
       "reelMobile": "/custom/optimized/118e432925350c-960.webp",
       "imageRatio": 1.5,
-      "eventCity": "",
-      "guestLabel": "",
+      "eventCity": "Москва",
+      "guestLabel": "320 участников",
       "occasions": [
         "conference"
       ],
@@ -4586,21 +4592,23 @@
       "slug": "portfolio-lyudi-dobrye-ba9ea67",
       "title": "Dodo Brands · Премия Dodo Prime",
       "fullTitle": "Dodo Brands · Премия Dodo Prime",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2026",
+      "eventDate": "2026",
+      "category": "Корпоративный фестиваль-премия",
+      "format": "Высокогорный фестиваль и неформальная премия",
       "client": "Люди Добрые",
       "agencySlug": "lyudi-dobrye",
       "agencySlugs": [
         "lyudi-dobrye"
       ],
       "agencyUrl": "/agency/lyudi-dobrye",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио Люди Добрые. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио Люди Добрые. Роль команды — в первоисточнике.",
+      "types": [
+        "corporate"
+      ],
+      "role": "В проекте для DODO BRANDS годовая рамка «DODO Экспедиция» соединила премию сотрудникам и 15-летие компании.",
+      "industry": "",
+      "description": "Премия для сотрудников и 15-летие DODO BRANDS объединились в высокогорный фестиваль «DODO Экспедиция». В одной программе — неформальное награждение, музыкальный лайн-ап, интерактивные точки и фотозоны. На странице кейса указаны 900 участников.",
+      "seoDescription": "DODO PRIME: высокогорный фестиваль-премия к 15-летию DODO BRANDS с музыкальной программой и 900 участниками.",
       "source": "https://ludidobrie.com/dodo-brands-premiya-dodo-prime-2026",
       "image": "/custom/library/cf602ef23f.webp",
       "imageMobile": "/custom/library/cf602ef23f.webp",
@@ -4650,7 +4658,7 @@
       "reelMobile": "/custom/optimized/ad354d9f80acac-960.webp",
       "imageRatio": 1.4992603550295858,
       "eventCity": "",
-      "guestLabel": "",
+      "guestLabel": "900 участников",
       "occasions": [],
       "preview": "/custom/optimized/ad354d9f80acac-960.webp",
       "imageWidth": 2027,
@@ -5435,21 +5443,24 @@
       "slug": "portfolio-be-brand-people-25d27b5",
       "title": "Газпромбанк Автолизинг · Ежегодная конференция",
       "fullTitle": "Газпромбанк Автолизинг · Ежегодная конференция",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "year": "2025",
+      "eventDate": "2025",
+      "category": "Корпоративная конференция",
+      "format": "Годовая конференция с награждением",
       "client": "Be Brand People",
       "agencySlug": "be-brand-people",
       "agencySlugs": [
         "be-brand-people"
       ],
       "agencyUrl": "/agency/be-brand-people",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио Be Brand People. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио Be Brand People. Роль команды — в первоисточнике.",
+      "types": [
+        "business",
+        "corporate"
+      ],
+      "role": "Be Brand People разработала тему «Наше время», деловую программу и интеграцию часового бренда «Ракета» в стенд и церемонию награждения.",
+      "industry": "",
+      "description": "Ежегодную конференцию «Газпромбанк Автолизинг» выстроили вокруг идеи времени как самого ценного ресурса. В деловую программу вошла лекция об управлении временем, а бренд «Ракета» поддержал тему стендом, часовщиком, крупными планами работы мастера и ASMR-звуком часового механизма. Более 50 сотрудников получили часы с индивидуальной гравировкой; по данным Be Brand People, всего было 1 000+ участников.",
+      "seoDescription": "«Наше время» для Газпромбанк Автолизинг: конференция о ценности времени, часовщик в прямом эфире и 1 000+ участников.",
       "source": "https://bebrand.ru/event/cases/nashevremya_gazprom",
       "image": "/custom/library/68bedd6061.png",
       "imageMobile": "/custom/library/68bedd6061.png",
@@ -5468,7 +5479,7 @@
       "reelMobile": "/custom/optimized/298bfb00d17b4b-640.webp",
       "imageRatio": 1.7777777777777777,
       "eventCity": "",
-      "guestLabel": "",
+      "guestLabel": "1 000+ участников",
       "occasions": [
         "conference"
       ],
@@ -7914,10 +7925,10 @@
       "slug": "case-enriched-55",
       "title": "DODO PRIME",
       "fullTitle": "DODO PRIME",
-      "year": "—",
-      "eventDate": "Дата не указана",
+      "year": "2026",
+      "eventDate": "2026",
       "category": "Для команды",
-      "format": "HR-премия",
+      "format": "Высокогорный фестиваль-премия",
       "client": "Люди Добрые",
       "agencySlug": "lyudi-dobrye",
       "agencySlugs": [
@@ -7927,11 +7938,11 @@
       "types": [
         "corporate"
       ],
-      "role": "Работа в портфолио агентства для DODO Brands",
-      "industry": "Место не указано",
-      "description": "HR-премия. Работа команды: Работа в портфолио агентства для DODO Brands. Фотографии этого проекта пока не добавлены.",
-      "seoDescription": "HR-премия. Работа команды: Работа в портфолио агентства для DODO Brands. Фотографии этого проекта пока не добавлены.",
-      "source": "https://ludidobrie.com/",
+      "role": "В проекте для DODO BRANDS годовая рамка «DODO Экспедиция» соединила премию сотрудникам и 15-летие компании.",
+      "industry": "",
+      "description": "Награждение лучших сотрудников стало частью общего праздника: премия DODO BRANDS и 15-летие компании объединились в высокогорном фестивале «DODO Экспедиция». На странице кейса агентство указывает 900 участников.",
+      "seoDescription": "DODO PRIME объединил премию сотрудникам и 15-летие DODO BRANDS в высокогорном фестивале для 900 участников.",
+      "source": "https://ludidobrie.com/dodo-brands-premiya-dodo-prime-2026",
       "image": "/custom/empty/case-enriched-55.svg",
       "imageMobile": "/custom/empty/case-enriched-55.svg",
       "ogImage": "/custom/empty/case-enriched-55.svg",
@@ -7946,7 +7957,7 @@
       "reelTitle": "DODO PRIME",
       "featured": false,
       "eventCity": "",
-      "guestLabel": "",
+      "guestLabel": "900 участников",
       "occasions": [
         "corporate"
       ]
