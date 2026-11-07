@@ -33,3 +33,5 @@
 #catalog-results .catalog-work-evidence>a:hover{color:var(--color-highlight)}
 #catalog-results .catalog-work-evidence>a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
 #catalog-results .catalog-work-evidence>p{margin:0;font-size:12px}
+
+.work-participation{margin:12px 0 0;padding:10px 0 0 12px;border-left:2px solid var(--color-highlight)}.work-participation>span{display:block;margin-bottom:5px;font:9px/1.5 MotionMono,monospace;letter-spacing:.03em;text-transform:uppercase;color:var(--muted)}.work-participation p{margin:0;color:var(--ink);font:12px/1.55 Motion,Arial,sans-serif}
