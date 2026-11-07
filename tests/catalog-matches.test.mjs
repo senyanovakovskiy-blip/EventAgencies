@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import fs from 'node:fs';
+import {presentCatalog} from '../client-presentation.mjs';
 import {buildCatalogSearch} from '../public/custom/catalog-search.js';
 import {buildCatalogMatches} from '../public/custom/catalog-matches.js';
 
@@ -27,8 +29,22 @@ test('own agency description combines with a real case, retains exact names and 
  assert.equal(matcher.agency(agency,{query:'Первая команда',format:'sport'}).works[0].slug,'sports');
  const withoutCases=matcher.agency(data.agencies[1],{query:'личный подход'});
  assert.equal(withoutCases.matches,true); assert.deepEqual(withoutCases.works,[]);
+ assert.equal(withoutCases.contextual,false);
  assert.equal(matcher.agency(data.agencies[1],{photos:true}).matches,false);
  assert.equal(matcher.agency(agency,{}).contextual,false);
+});
+
+test('a named INDITEX case cannot become the agency\'s unrelated festival or corporate event',()=>{
+ const real=presentCatalog(JSON.parse(fs.readFileSync(new URL('../content/catalog.json',import.meta.url),'utf8')),JSON.parse(fs.readFileSync(new URL('../content/client-presentation.json',import.meta.url),'utf8')));
+ const match=buildCatalogMatches(real,buildCatalogSearch(real));
+ const hq=real.agencies.find(agency=>agency.slug==='hq-events');
+ const result=match.agency(hq,{query:'INDITEX'});
+ assert.equal(result.matches,true);
+ assert.deepEqual(result.works.map(work=>work.slug),['case-26']);
+ assert.equal(result.queryInWork,true);
+ assert.equal(match.agency(hq,{query:'INDITEX',occasion:'corporate'}).matches,false);
+ assert.deepEqual(match.agency(hq,{query:'INDITEX',occasion:'corporate'}).works,[]);
+ assert.equal(match.agency(hq,{query:'INDITEX фестиваль'}).matches,false);
 });
 
 test('team city and event city keep distinct meanings and shared authorship is preserved',()=>{

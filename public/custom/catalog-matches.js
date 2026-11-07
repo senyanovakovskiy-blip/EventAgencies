@@ -15,10 +15,15 @@ export function buildCatalogMatches(data,search){
  return {
   agency(agency,filters){
    const terms=searchTerms(filters.query),hasWorkFilters=Boolean(filters.format||filters.occasion||filters.photos);
-   const works=(worksByAgency.get(agency.slug)||[]).filter(work=>workFits(work,filters)&&(!terms.length||search.searchAgencyWork(agency.slug,work.slug,terms).matches));
+   const owned=worksByAgency.get(agency.slug)||[];
+   // Agency introductions often name several cases. If a query term occurs in
+   // the work itself, it must stay attached to that work even when the agency's
+   // introduction repeats it. A different event cannot stand in as evidence.
+   const workTerms=terms.filter(term=>owned.some(work=>search.searchWork(work.slug,[term]).matches));
+   const works=owned.filter(work=>workFits(work,filters)&&(!terms.length||search.searchAgencyWork(agency.slug,work.slug,terms).matches)&&(!workTerms.length||search.searchWork(work.slug,workTerms).matches));
    const direct=search.searchAgencyOwn(agency.slug,terms).matches;
-   const matches=(!filters.scope||filters.scope===agency.slug)&&(!filters.city||filters.city===agency.city)&&(hasWorkFilters?works.length>0:!terms.length||direct||works.length>0);
-   return {matches,works,contextual:Boolean(terms.length||hasWorkFilters)};
+   const matches=(!filters.scope||filters.scope===agency.slug)&&(!filters.city||filters.city===agency.city)&&((hasWorkFilters||workTerms.length)?works.length>0:!terms.length||direct);
+   return {matches,works,contextual:Boolean(workTerms.length||hasWorkFilters),queryInWork:workTerms.length>0};
   },
   work(work,filters){
    return (!filters.scope||[work.agencySlug,...(work.agencySlugs||[])].includes(filters.scope))&&(!filters.city||work.eventCity===filters.city)&&workFits(work,filters)&&search.searchWork(work.slug,filters.query).matches;

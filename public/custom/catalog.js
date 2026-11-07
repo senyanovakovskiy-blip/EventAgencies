@@ -48,7 +48,7 @@ async function startCatalog(){
    <div class="card-meta"><span>${esc(a.city)}</span><span>${a.works.length} ${plural(a.works.length,['работа','работы','работ'])}</span></div>
    <h2><a href="${agencyUrl}">${esc(a.name)}</a></h2><p class="company-lead">${esc(lead)}</p>
    <p>${a.types.slice(0,3).map(t=>esc(data.types[t])).join(' · ')}</p>
-   ${evidence?`<div class="catalog-work-evidence"><span>Работа к вашему запросу</span><a href="${workUrl}">${esc(evidence.fullTitle)} ↗</a><p>${[evidence.format,evidence.year&&evidence.year!=='—'?evidence.year:''].filter(Boolean).map(esc).join(' · ')}</p></div>`:searchContext('agency',a.slug,terms,[a.name,lead].join(' '))}
+   ${evidence?`<div class="catalog-work-evidence"><span>${match.queryInWork?'Работа к вашему запросу':'Работа по выбранным условиям'}</span><a href="${workUrl}">${esc(evidence.fullTitle)} ↗</a><p>${[evidence.format,evidence.year&&evidence.year!=='—'?evidence.year:''].filter(Boolean).map(esc).join(' · ')}</p></div>`:searchContext('agency',a.slug,terms,[a.name,lead].join(' '))}
    <div class="card-actions"><button class="ea-save-button" data-save-agency="${a.slug}" ${evidence?`data-save-work="${evidence.slug}" aria-label="Добавить ${esc(a.name)} с работой «${esc(evidence.fullTitle)}»"`:''}>${evidence?'В проект с этой работой':'В мой проект'}</button></div>
   </article>`;
  }
