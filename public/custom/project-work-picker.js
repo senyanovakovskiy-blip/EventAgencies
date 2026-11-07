@@ -79,7 +79,7 @@ export function setupProjectWorkPicker({getState,getData,canChoose,onChoose,onEr
   try{
    const agencySlug=opener.dataset.openWorkPicker,data=await getData(),entry=getState().selection.find(item=>item.agencySlug===agencySlug),agency=data.agencies.find(item=>item.slug===agencySlug);
    if(!entry||!agency){onError('Агентство больше не выбрано. Добавьте его в проект, чтобы выбрать работу.');return;}
-   const works=data.projects.filter(work=>workFor(work,agencySlug));
+   const works=data.projects.filter(work=>workFor(work,agencySlug)&&(!work.duplicateOf||work.slug===entry.workSlug));
    active={agencySlug,expected:entry.workSlug,works,searchIndex:buildCatalogSearch({projects:works}),mode:'all',saved:new Set(),notes:new Map(),agencyNames:new Map(data.agencies.map(item=>[item.slug,item.name]))};selected=entry.workSlug===null?null:works.some(work=>work.slug===entry.workSlug)?entry.workSlug:undefined;
    search.value='';status.textContent=selected===undefined?'Прежняя работа больше недоступна. Выберите другую или оставьте агентство без работы.':'';
    dialog.querySelector('[data-work-picker-agency]').textContent=agency.name;

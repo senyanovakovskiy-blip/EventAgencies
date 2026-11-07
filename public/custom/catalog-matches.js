@@ -7,6 +7,7 @@ const workFits=(work,filters)=>(!filters.format||work.types?.includes(filters.fo
 export function buildCatalogMatches(data,search){
  const worksByAgency=new Map();
  for(const work of data.projects){
+  if(work.duplicateOf)continue;
   for(const slug of new Set([work.agencySlug,...(work.agencySlugs||[])].filter(Boolean))){
    if(!worksByAgency.has(slug))worksByAgency.set(slug,[]);
    worksByAgency.get(slug).push(work);
@@ -26,7 +27,7 @@ export function buildCatalogMatches(data,search){
    return {matches,works,contextual:Boolean(workTerms.length||hasWorkFilters),queryInWork:workTerms.length>0};
   },
   work(work,filters){
-   return (!filters.scope||[work.agencySlug,...(work.agencySlugs||[])].includes(filters.scope))&&(!filters.city||work.eventCity===filters.city)&&workFits(work,filters)&&search.searchWork(work.slug,filters.query).matches;
+   return !work.duplicateOf&&(!filters.scope||[work.agencySlug,...(work.agencySlugs||[])].includes(filters.scope))&&(!filters.city||work.eventCity===filters.city)&&workFits(work,filters)&&search.searchWork(work.slug,filters.query).matches;
   }
  };
 }

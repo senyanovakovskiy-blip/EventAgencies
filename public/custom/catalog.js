@@ -64,7 +64,7 @@ async function startCatalog(){
  function draw(write=true){
   const terms=searchTerms(search.value),filters={query:terms,city:city.value,format:format.value,occasion:occasion.value,photos:photos.checked,scope};let items;
   if(view==='companies')items=data.agencies.filter(a=>{const match=matcher.agency(a,filters);agencyMatches.set(a.slug,match);return match.matches;});
-  else items=data.projects.filter(p=>matcher.work(p,filters));
+  else items=data.projects.filter(p=>!p.duplicateOf&&matcher.work(p,filters));
   results.innerHTML=items.length?items.map(item=>view==='companies'?companyCard(item,terms):projectCard(item,terms)).join(''):empty();
   results.querySelectorAll('.work-cover:not(.is-empty)').forEach(cover=>{
    const photo=cover.querySelector('img');if(!photo)return;
