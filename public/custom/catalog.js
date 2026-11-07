@@ -42,12 +42,13 @@ async function startCatalog(){
  }
  function empty(){return '<div class="empty-state"><span class="empty-mark" aria-hidden="true">↗</span><h2>Ничего не найдено.</h2><p>Попробуйте другое название или уберите часть фильтров.</p><button class="clear-empty text-button">Сбросить фильтры ↺</button></div>';}
  function companyCard(a,terms){
-  const lead=a.presentation?.lead||a.description||'',match=agencyMatches.get(a.slug),evidence=match?.contextual?(match.works.find(p=>p.hasPhotos)||match.works[0]):null;
+  const lead=a.presentation?.lead||a.description||'',match=agencyMatches.get(a.slug),evidence=match?.contextual?(match.works.find(p=>p.hasPhotos)||match.works[0]):null,workCount=match?.contextual?match.works.length:a.works.length;
+  const workCountLabel=match?.contextual?plural(workCount,['подходящая работа','подходящие работы','подходящих работ'])+' по условиям':workCount+' '+plural(workCount,['работа','работы','работ']);
   const coverWork=evidence||projectMap.get(a.coverWork),cover=evidence?(evidence.hasPhotos?evidence.preview||evidence.reelMobile||evidence.image:''):coverWork?.preview||coverWork?.reelMobile||a.cover;
   const agencyUrl='/agency/'+a.slug+'?from='+encodeURIComponent(route()),workUrl=evidence?'/work/'+evidence.slug+'?from='+encodeURIComponent(route()):'';
   return `<article class="company-card" data-catalog-key="agency:${a.slug}">
    <a class="work-cover ${cover?'':'is-empty'}" href="${agencyUrl}" aria-label="Открыть компанию ${esc(a.name)}">${cover?`<img src="${esc(cover)}" srcset="${esc(coverWork?.previewSrcSet||'')}" sizes="(max-width:600px) 100vw, (max-width:900px) 50vw, 40vw" width="${coverWork?.imageWidth||1500}" height="${coverWork?.imageHeight||1000}" alt="${esc(coverWork?.fullTitle||'Работа '+a.name)}" loading="lazy" decoding="async">`:`<span class="company-monogram" aria-hidden="true">${esc(a.name.slice(0,2))}</span><span>${evidence?'У этой работы пока нет фотографий':'Портфолио пока без фотографий'}</span>`}<span class="open-arrow" aria-hidden="true">↗</span></a>
-   <div class="card-meta"><span>${esc(a.city)}</span><span>${a.works.length} ${plural(a.works.length,['работа','работы','работ'])}</span></div>
+   <div class="card-meta"><span>${esc(a.city)}</span><span>${workCountLabel}</span></div>
    <h2><a href="${agencyUrl}">${esc(a.name)}</a></h2><p class="company-lead">${esc(lead)}</p>
    <p>${a.types.slice(0,3).map(t=>esc(data.types[t])).join(' · ')}</p>
    ${evidence?`<div class="catalog-work-evidence"><span>${match.queryInWork?'Работа к вашему запросу':'Работа по выбранным условиям'}</span><a href="${workUrl}">${esc(evidence.fullTitle)} ↗</a><p>${[evidence.format,evidence.year&&evidence.year!=='—'?evidence.year:''].filter(Boolean).map(esc).join(' · ')}</p></div>`:searchContext('agency',a.slug,terms,[a.name,lead].join(' '))}
@@ -68,7 +69,7 @@ async function startCatalog(){
   });
   results.setAttribute('aria-busy','false');count.textContent=items.length+' '+plural(items.length,view==='companies'?['компания','компании','компаний']:['работа','работы','работ']);
   document.querySelectorAll('[data-view]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.view===view)));
-  document.querySelector('.catalog-hint').textContent=[scope?'Работы '+agencyMap.get(scope).name:'',view==='companies'&&(filters.format||filters.occasion||filters.photos)?'Показываем команды, у которых одна работа соответствует выбранным условиям.':''].filter(Boolean).join(' · ');
+  document.querySelector('.catalog-hint').textContent=[scope?'Работы '+agencyMap.get(scope).name:'',view==='companies'&&(filters.format||filters.occasion||filters.photos)?'Показываем команды, у которых есть работы, подходящие под выбранные условия.':''].filter(Boolean).join(' · ');
   results.querySelector('.clear-empty')?.addEventListener('click',reset);
   document.getElementById('city-field-label').textContent=view==='companies'?'Город команды':'Город события';
   if(write)history.replaceState(history.state,'',route());
