@@ -480,7 +480,7 @@
         "btl",
         "sport"
       ],
-      "description": "",
+      "description": "People работает с корпоративными, спортивными и MICE-событиями, включая проекты для HR и внутренних коммуникаций. В «Формуле молодёжи Уралхим» команда собрала 150 молодых сотрудников из разных городов в трёхдневную программу с деловой, спортивной и неформальной частью.",
       "website": "https://people.moscow/",
       "works": [
         "tmh-league",
@@ -805,7 +805,7 @@
         "business",
         "online"
       ],
-      "description": "",
+      "description": "Портфолио Good Brand соединяет корпоративные фестивали, конференции и гибридные события. Для летнего фестиваля на 2 500 гостей команда создала пространство с игровыми площадками, фреш-зоной, арт-объектами и лаунжами.",
       "website": "https://gbnn.ru/",
       "works": [
         "portfolio-event-agency-good-brand-8c60f78",
@@ -4391,19 +4391,23 @@
       "fullTitle": "Летний корпоративный фестиваль",
       "year": "—",
       "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "category": "Корпоративный фестиваль",
+      "format": "Летний праздник для сотрудников и гостей",
       "client": "Event Agency Good Brand",
       "agencySlug": "event-agency-good-brand",
       "agencySlugs": [
         "event-agency-good-brand"
       ],
       "agencyUrl": "/agency/event-agency-good-brand",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио Event Agency Good Brand. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио Event Agency Good Brand. Роль команды — в первоисточнике.",
+      "types": [
+        "corporate",
+        "public",
+        "culture"
+      ],
+      "role": "Good Brand разработал концепцию летнего фестиваля и пространство с игровыми и лаунж-зонами, фреш-зоной и арт-объектами.",
+      "industry": "",
+      "description": "В Нижнем Новгороде Good Brand устроил летний фестиваль ко дню рождения компании для 2 500 сотрудников и гостей. Пространство сразу задавало настроение: цветные флаги, гамаки, свежие фрукты, игровые площадки, фотогеничные арт-объекты и лаунж-зоны. Задача события — дать команде общий летний день и поддержать мотивацию сотрудников.",
+      "seoDescription": "Летний корпоративный фестиваль Good Brand в Нижнем Новгороде: 2 500 гостей, игровые площадки, фреш-зона и лаунжи.",
       "source": "https://gbnn.ru/portfolio#summer-corporate-festival",
       "image": "/custom/library/6e0a3153c1.webp",
       "imageMobile": "/custom/library/6e0a3153c1.webp",
@@ -4446,9 +4450,11 @@
       "reelImage": "/custom/optimized/27521db8b754fe-1600.webp",
       "reelMobile": "/custom/optimized/27521db8b754fe-960.webp",
       "imageRatio": 1.5,
-      "eventCity": "",
-      "guestLabel": "",
-      "occasions": [],
+      "eventCity": "Нижний Новгород",
+      "guestLabel": "2 500 сотрудников и гостей",
+      "occasions": [
+        "corporate"
+      ],
       "preview": "/custom/optimized/27521db8b754fe-960.webp",
       "imageWidth": 1680,
       "imageHeight": 1120,
@@ -5733,19 +5739,23 @@
       "fullTitle": "Уралхим · Формула молодёжи",
       "year": "—",
       "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "category": "Молодёжная корпоративная программа",
+      "format": "Трёхдневный старт движения для сотрудников",
       "client": "People",
       "agencySlug": "people",
       "agencySlugs": [
         "people"
       ],
       "agencyUrl": "/agency/people",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио People. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио People. Роль команды — в первоисточнике.",
+      "types": [
+        "corporate",
+        "sport",
+        "business"
+      ],
+      "role": "People организовало первое мероприятие молодёжного движения: экскурсию, командную игру, деловую и спортивную программу, встречу с руководителями и презентацию инициативы.",
+      "industry": "",
+      "description": "Первый слёт движения «Формула молодёжи Уралхим» собрал в Москве 150 молодых сотрудников из разных городов. За три дня участники познакомились на экскурсии и бизнес-игре, обсудили развитие компании с руководителями, вышли на забег «Уралхим Run Factory» и представили молодёжное движение. Для проекта также создали его гимн.",
+      "seoDescription": "Трёхдневная «Формула молодёжи Уралхим» в Москве: 150 молодых сотрудников, деловая программа, забег и запуск молодёжного движения.",
       "source": "https://people.moscow/formula-molodezhi/",
       "image": "/custom/library/c488f00416.jpg",
       "imageMobile": "/custom/library/c488f00416.jpg",
@@ -5763,9 +5773,11 @@
       "reelImage": "/custom/optimized/74cc65c2cd10b8-1200.webp",
       "reelMobile": "/custom/optimized/74cc65c2cd10b8-960.webp",
       "imageRatio": 1.0067114093959733,
-      "eventCity": "",
-      "guestLabel": "",
-      "occasions": [],
+      "eventCity": "Москва",
+      "guestLabel": "150 молодых сотрудников",
+      "occasions": [
+        "corporate"
+      ],
       "preview": "/custom/optimized/74cc65c2cd10b8-960.webp",
       "imageWidth": 1200,
       "imageHeight": 1192,
