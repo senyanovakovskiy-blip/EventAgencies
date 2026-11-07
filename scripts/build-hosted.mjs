@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
+import {packProtectedAssets} from './protected-assets.mjs';
 
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const target=path.join(root,'.sites-build','static');
@@ -39,6 +40,8 @@ await rewrite('admin/index.html',[
  ['Только на этом компьютере','Владелец и приглашённый администратор'],
  ['<form id="login-form"','<a class="primary" href="/signin-with-chatgpt?return_to=/admin" target="_top">Войти в мой аккаунт</a><form hidden id="login-form"'],
 ]);
+const protectedCount=await packProtectedAssets(target,path.join(root,'.sites-build','protected-assets.mjs'));
+console.log(`Bundled ${protectedCount} protected pages and scripts behind the Worker access gate.`);
 const framework=spawnSync(process.execPath,['scripts/run-framework.mjs','build'],{cwd:root,stdio:'inherit'});
 if(framework.status!==0)process.exit(framework.status??1);
 console.log('Hosted build includes static pages, protected API and D1 migrations.');

@@ -4,6 +4,8 @@ import type { ConnectorBinding } from "../lib/connector-contract.mjs";
 import { handleCloudApi } from '../cloud/api.mjs';
 import { protectAdminPage } from '../cloud/admin-access.mjs';
 import { authorizeSite } from '../cloud/guest-access.mjs';
+import protectedAssets from '../.sites-build/protected-assets.mjs';
+import { serveProtectedAsset } from '../cloud/protected-assets.mjs';
 
 const worker = {
   fetch(request: Request, env: Cloudflare.Env, ctx: ExecutionContext<{ CONNECTORS?: ConnectorBinding }>) {
@@ -36,6 +38,8 @@ const worker = {
       if (!['GET','HEAD'].includes(request.method)) return new Response('Method not allowed', {status:405});
       const adminResponse = protectAdminPage(request, env, access);
       if (adminResponse) return adminResponse;
+      const protectedAsset = serveProtectedAsset(request, protectedAssets);
+      if (protectedAsset) return protectedAsset;
       if (env.ASSETS) {
         // The asset binding maps directory index files to clean URLs.
         const asset = await env.ASSETS.fetch(new Request(url, request));
