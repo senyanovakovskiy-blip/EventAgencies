@@ -36,7 +36,7 @@ await rewrite('my-project/index.html',[
 await rewrite('admin/index.html',[
  ['<body>','<body data-hosted="true">'],
  ['Локальная версия · без рассылок','Личное рабочее пространство · без рассылок'],
- ['Только на этом компьютере','Доступ только владельцу'],
+ ['Только на этом компьютере','Владелец и приглашённый администратор'],
  ['<form id="login-form"','<a class="primary" href="/signin-with-chatgpt?return_to=/admin" target="_top">Войти в мой аккаунт</a><form hidden id="login-form"'],
 ]);
 const framework=spawnSync(process.execPath,['scripts/run-framework.mjs','build'],{cwd:root,stdio:'inherit'});

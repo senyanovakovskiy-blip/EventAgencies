@@ -2,6 +2,7 @@ import { createCloudStore, digest, problem } from './store.mjs';
 import { createProjectCopyStore } from './project-copies.mjs';
 import { isAdministrator } from './admin-access.mjs';
 import { createCloudAdminStore } from './admin-store.mjs';
+import { clearInvitationCookie } from './guest-access.mjs';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY' };
 const reply = (status, data) => new Response(JSON.stringify(data), { status, headers });
@@ -26,22 +27,26 @@ async function readBody(request, limit) {
   try { return JSON.parse(new TextDecoder().decode(bytes)); } catch { throw problem(400, 'invalid_json'); }
 }
 
-export async function handleCloudApi(request, env) {
+export async function handleCloudApi(request, env, access = null) {
   const url = new URL(request.url);
   if (!url.pathname.startsWith('/api/')) return null;
-  // This header is supplied by Sites' authenticated gateway, never by app login.
-  const ownerId = request.headers.get('oai-authenticated-user-id');
+  // Access is a server-verified capability, never a browser header or JSON role.
+  const ownerId = access?.ownerId || request.headers.get('oai-authenticated-user-id');
   if (!ownerId?.trim()) return reply(401, { error: 'authentication_required' });
   try {
     const mutation = !['GET', 'HEAD'].includes(request.method);
     if (request.headers.get('sec-fetch-site') === 'cross-site' || (request.headers.has('origin') && request.headers.get('origin') !== url.origin) || (mutation && request.headers.get('origin') !== url.origin)) throw problem(403, 'forbidden_origin');
     const isAdmin = url.pathname.startsWith('/api/admin/');
-    if (isAdmin && !isAdministrator(request, env)) throw problem(403, 'admin_required');
+    if (isAdmin && !isAdministrator(request, env, access)) throw problem(403, 'admin_required');
     const csrf = isAdmin ? await csrfFor(ownerId, url.origin) : null;
     if (isAdmin && mutation && request.headers.get('x-csrf-token') !== csrf) throw problem(403, 'csrf_required');
     if (url.pathname === '/api/health' && request.method === 'GET') return reply(200, { service: 'eventagencies-cloud-inquiries', storage: 'd1', notifications: false });
-    if (url.pathname === '/api/admin/session' && request.method === 'GET') return reply(200, { authenticated: true, username: 'Владелец', csrf });
-    if (url.pathname === '/api/admin/logout' && request.method === 'POST') return reply(200, { ok: true, signOutUrl: '/signout-with-chatgpt?return_to=/admin' });
+    if (url.pathname === '/api/admin/session' && request.method === 'GET') return reply(200, { authenticated: true, username: access ? 'Администратор по приглашению' : 'Владелец', csrf, ...(access ? { accessKind: access.kind, expiresAt: access.expiresAt } : {}) });
+    if (url.pathname === '/api/admin/logout' && request.method === 'POST') {
+      const response = reply(200, { ok: true, signOutUrl: access ? '/invite' : '/signout-with-chatgpt?return_to=/admin' });
+      response.headers.set('Set-Cookie', clearInvitationCookie());
+      return response;
+    }
     if (url.pathname === '/api/admin/login') return reply(405, { error: 'sign_in_with_chatgpt_required' });
     if (url.pathname === '/api/project-copies') {
       const copies = createProjectCopyStore(env.DB, ownerId);

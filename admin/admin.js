@@ -9,7 +9,7 @@ const emptyDetail=$('#request-detail').innerHTML;
 const format=v=>occasions[v]||(v==='other'?'Другой формат':'Формат нужно уточнить');
 const date=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
 try{if(localStorage.getItem('zizi-theme')==='dark')document.documentElement.dataset.theme='dark';}catch{}
-let csrf='',current=null,catalog=null,catalogPromise=null,page=1,listVersion=0,detailVersion=0,saving=false,loggingOut=false;
+let csrf='',accessKind='',current=null,catalog=null,catalogPromise=null,page=1,listVersion=0,detailVersion=0,saving=false,loggingOut=false;
 const getCatalog=()=>catalogPromise||(catalogPromise=api('/api/admin/catalog').then(data=>(catalog=data)).catch(error=>{catalogPromise=null;throw error;}));
 const dirty=()=>editorChanged($('#operator-form'),current);
 const allowLeave=()=>!dirty()||confirm('Есть несохранённые изменения. Уйти без сохранения?');
@@ -27,17 +27,24 @@ async function api(url,options={}){
  return data;
 }
 function showLogin(){ $('#login-view').hidden=false;$('#workspace').hidden=true;$('#logout').hidden=true;$('#initial-status').hidden=true; }
-async function showWorkspace(session){csrf=session.csrf;$('#login-view').hidden=true;$('#workspace').hidden=false;$('#logout').hidden=false;$('#reauth').hidden=true;$('#initial-status').hidden=true;await loadList();if(!current){const match=/^#request-(\d+)$/.exec(location.hash);if(match)await openDetail(Number(match[1]));}}
+async function showWorkspace(session){csrf=session.csrf;accessKind=session.accessKind||'';$('#login-view').hidden=true;$('#workspace').hidden=false;$('#logout').hidden=false;$('#reauth').hidden=true;$('#initial-status').hidden=true;await loadList();if(!current){const match=/^#request-(\d+)$/.exec(location.hash);if(match)await openDetail(Number(match[1]));}}
 $('#login-form').addEventListener('submit',async event=>{event.preventDefault();const form=event.currentTarget,button=form.querySelector('button');button.disabled=true;$('#login-status').textContent='Проверяем вход…';try{const session=await api('/api/admin/login',{method:'POST',body:JSON.stringify({username:form.elements.username.value,password:form.elements.password.value})});form.elements.password.value='';$('#login-status').textContent='';await showWorkspace(session);}catch(error){$('#login-status').textContent=error.message;}finally{button.disabled=false;}});
 $('#logout').addEventListener('click',async()=>{
  if(loggingOut||saving||!allowLeave())return;
  loggingOut=true;++detailVersion;++listVersion;
  setEditorBusy($('#operator-form'),true);$('#logout').disabled=true;
- try{const result=await api('/api/admin/logout',{method:'POST'});csrf='';current=null;$('#request-detail').innerHTML=emptyDetail;$('#request-list').replaceChildren();$('.inbox-layout').classList.remove('has-detail');history.replaceState(null,'','/admin');showLogin();if(result.signOutUrl==='/signout-with-chatgpt?return_to=/admin')location.assign(result.signOutUrl);}
+ try{const result=await api('/api/admin/logout',{method:'POST'});csrf='';current=null;$('#request-detail').innerHTML=emptyDetail;$('#request-list').replaceChildren();$('.inbox-layout').classList.remove('has-detail');history.replaceState(null,'','/admin');showLogin();if(['/signout-with-chatgpt?return_to=/admin','/invite'].includes(result.signOutUrl))location.assign(result.signOutUrl);}
  catch(error){$('#workspace-status').textContent=error.message;}
  finally{loggingOut=false;setEditorBusy($('#operator-form'),false);$('#logout').disabled=false;}
 });
-$('#reauth').addEventListener('click',()=>{if(document.body.dataset.hosted==='true'){location.assign('/signin-with-chatgpt?return_to=/admin');return;}showLogin();$('#login-form').elements.password.focus();});
+$('#reauth').addEventListener('click',async()=>{
+ if(accessKind==='invitation'){
+  try{const session=await api('/api/admin/session');csrf=session.csrf;$('#reauth').hidden=true;$('#workspace-status').textContent='Доступ восстановлен. Можно сохранить ваши изменения.';}
+  catch{$('#workspace-status').textContent='Откройте полную ссылку-приглашение в новой вкладке, затем нажмите «Войти снова» здесь. Если срок доступа истёк, попросите новую ссылку у владельца. Ваши изменения остаются на экране.';}
+  return;
+ }
+ if(document.body.dataset.hosted==='true'){location.assign('/signin-with-chatgpt?return_to=/admin');return;}showLogin();$('#login-form').elements.password.focus();
+});
 async function loadList(){
  const version=++listVersion,params=new URLSearchParams({q:$('#filters').elements.q.value,status:$('#filters').elements.status.value,page:String(page)});
  $('#workspace-status').textContent='Обновляем список…';
