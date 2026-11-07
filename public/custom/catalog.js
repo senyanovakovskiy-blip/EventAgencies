@@ -24,11 +24,13 @@ async function startCatalog(){
  const searchIndex=buildCatalogSearch(data),matcher=buildCatalogMatches(data,searchIndex),agencyMatches=new Map();
  const search=document.getElementById('catalog-search'),city=document.getElementById('catalog-city'),occasion=document.getElementById('catalog-occasion'),format=document.getElementById('catalog-format'),photos=document.getElementById('catalog-photos'),count=document.getElementById('catalog-count');
  let view='companies',scope='',timer;
+ const cityOptions=new Set([...data.agencies.map(a=>a.city).filter(Boolean),...data.projects.map(p=>p.eventCity).filter(Boolean)]);
+ const cityByView={companies:'',projects:''};
  const extra=document.querySelector('.filter-options'),mobile=matchMedia('(max-width:900px)');
  const fitFilters=()=>{extra.open=!mobile.matches||Boolean(city.value||format.value||occasion.value||photos.checked);};
  mobile.addEventListener('change',fitFilters);
- function readState(){const q=new URLSearchParams(location.search);view=q.get('view')==='projects'?'projects':'companies';scope=agencyMap.has(q.get('agency'))?q.get('agency'):'';search.value=q.get('q')||'';city.value=q.get('city')||'';format.value=q.get('format')||'';occasion.value=q.get('occasion')||'';photos.checked=q.get('photos')==='1';}
- function route(){const q=new URLSearchParams();if(view==='projects')q.set('view',view);if(search.value.trim())q.set('q',search.value.trim());if(city.value)q.set('city',city.value);if(format.value)q.set('format',format.value);if(occasion.value)q.set('occasion',occasion.value);if(photos.checked)q.set('photos','1');if(scope)q.set('agency',scope);return '/catalog'+(q.size?'?'+q:'');}
+ function readState(){const q=new URLSearchParams(location.search);view=q.get('view')==='projects'?'projects':'companies';scope=agencyMap.has(q.get('agency'))?q.get('agency'):'';search.value=q.get('q')||'';const legacy=q.get('city')||'',valid=value=>cityOptions.has(value)?value:'';cityByView.companies=valid(q.get('companyCity')??(view==='companies'?legacy:''));cityByView.projects=valid(q.get('eventCity')??(view==='projects'?legacy:''));city.value=cityByView[view];format.value=q.get('format')||'';occasion.value=q.get('occasion')||'';photos.checked=q.get('photos')==='1';}
+ function route(){cityByView[view]=city.value;const q=new URLSearchParams();if(view==='projects')q.set('view',view);if(search.value.trim())q.set('q',search.value.trim());if(cityByView.companies)q.set('companyCity',cityByView.companies);if(cityByView.projects)q.set('eventCity',cityByView.projects);if(format.value)q.set('format',format.value);if(occasion.value)q.set('occasion',occasion.value);if(photos.checked)q.set('photos','1');if(scope)q.set('agency',scope);return '/catalog'+(q.size?'?'+q:'');}
 
  function searchContext(kind,slug,terms,visibleText){
   const visible=normalizeSearchText(visibleText),missing=terms.filter(term=>!visible.includes(term));
@@ -72,10 +74,10 @@ async function startCatalog(){
   if(write)history.replaceState(history.state,'',route());
   document.dispatchEvent(new CustomEvent('ea:catalog-render',{detail:{write}}));
  }
- function reset(){clearTimeout(timer);search.value='';city.value='';format.value='';occasion.value='';photos.checked=false;scope='';draw();}
+ function reset(){clearTimeout(timer);search.value='';city.value='';cityByView.companies='';cityByView.projects='';format.value='';occasion.value='';photos.checked=false;scope='';draw();}
  search.addEventListener('input',()=>{clearTimeout(timer);timer=setTimeout(()=>{timer=null;draw();},150);});[city,format,occasion,photos].forEach(n=>n.addEventListener('change',()=>draw()));
  document.addEventListener('ea:catalog-flush',()=>{if(timer){clearTimeout(timer);timer=null;draw();}});
- document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{clearTimeout(timer);view=b.dataset.view;draw();}));
+ document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{clearTimeout(timer);cityByView[view]=city.value;view=b.dataset.view;city.value=cityByView[view];draw();}));
  document.getElementById('catalog-reset').addEventListener('click',reset);
  addEventListener('popstate',()=>{readState();draw(false);});readState();fitFilters();draw(false);
 }
