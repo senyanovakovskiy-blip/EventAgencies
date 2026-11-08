@@ -384,9 +384,10 @@
         "t-dvor",
         "case-8",
         "case-enriched-91",
-        "case-enriched-127"
+        "case-enriched-127",
+        "case-enriched-140"
       ],
-      "caseCount": 4,
+      "caseCount": 5,
       "photoCount": 14,
       "cover": "/custom/library/48d4ad8b2b.webp",
       "coverWork": "t-dvor"
@@ -12126,6 +12127,62 @@
           "url": "https://vm.ru/news/1285580-ceremoniya-nagrazhdeniya-premiej-lyudi-slova-sostoyalas-v-moskovskom-kinoteatre"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-140",
+      "title": "«Борись и побеждай»: забег ПМЭФ на 5 км",
+      "fullTitle": "Спортивная программа ПМЭФ 2025: забег «Борись и побеждай» от Eventum Premo",
+      "year": "2025",
+      "eventDate": "19 июня 2025",
+      "category": "Спортивная программа делового форума",
+      "format": "5 км в смешанных командах, разминка, кофе-рейв и деловой завтрак",
+      "client": "ПМЭФ · спортивная программа",
+      "agencySlug": "eventum-premo",
+      "agencySlugs": [
+        "eventum-premo"
+      ],
+      "agencyUrl": "/agency/eventum-premo",
+      "types": [
+        "public",
+        "business"
+      ],
+      "role": "Eventum Premo формулирует задачу как организацию спортивного события и полноценного опыта для участников и гостей, а также сообщает, что проект реализовала его команда. ПМЭФ и независимый телеканал подтверждают, что забег вошёл в спортивную программу форума. Источники не называют заказчика агентства и не заявляют его единственным организатором.",
+      "industry": "Деловые события, спорт и инклюзия",
+      "description": "Утро ПМЭФ началось с разминки от создателей «Бег вреден» и кофе-рейва с DJ, а затем участники вышли на пятикилометровый командный маршрут по центру Петербурга. В командах бежали бизнесмены и инклюзивные спортсмены; после финиша разговор о связи спорта и бизнеса продолжился за завтраком с экспертами Московского марафона и «Газпром нефти». Eventum Premo описывает это как полноценный опыт — от старта до встречи за столом.",
+      "seoDescription": "Забег «Борись и побеждай» на ПМЭФ: 5 км смешанными командами, разминка, кофе-рейв и завтрак-разговор о спорте и бизнесе. Проект Eventum Premo.",
+      "source": "https://eventum-premo.ru/projects/integratsiya-v-zabeg-v-ramkah-pmef",
+      "image": "/custom/empty/case-enriched-140.svg",
+      "imageMobile": "/custom/empty/case-enriched-140.svg",
+      "ogImage": "/custom/empty/case-enriched-140.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-140",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#111f2a,#87a6a9)",
+      "curated": false,
+      "reelTitle": "ПМЭФ · пять километров до делового дня",
+      "featured": false,
+      "eventCity": "Санкт-Петербург · Исаакиевская площадь",
+      "occasions": [
+        "public",
+        "business"
+      ],
+      "sources": [
+        {
+          "label": "Eventum Premo · сценарий, 5 км и роль команды агентства",
+          "url": "https://eventum-premo.ru/projects/integratsiya-v-zabeg-v-ramkah-pmef"
+        },
+        {
+          "label": "ПМЭФ · официальная спортивная программа и площадка забега",
+          "url": "https://cdn.forumspb.com/upload/iblock/710/hm8mtipf0r477jnlyudbmicvqovflz3x/FP_PMEF_2025_Sp_v4.pdf"
+        },
+        {
+          "label": "Телеканал «Санкт-Петербург» · дата, маршрут и дистанция",
+          "url": "https://tvspb.ru/news/2025/06/19/v-czentre-peterburga-proshel-zabeg-boris-i-pobezhdaj-stavshij-neotemlemoj-chastyu-sportivnoj-programmy-pmef"
+        }
+      ]
     }
   ],
   "types": {
@@ -12140,8 +12197,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 149,
-    "works": 196,
+    "cases": 150,
+    "works": 197,
     "photos": 263
   }
 }
