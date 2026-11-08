@@ -9457,5 +9457,68 @@
         "url": "https://www.kinometro.ru/photo/show/album/prem_trudnobytbogom_02092026"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-133",
+    "title": "Signal 2024: орбита МТС на Meadow",
+    "fullTitle": "Интеграция МТС в Signal 2024: световая и цифровая «Орбита»",
+    "year": "2024",
+    "eventDate": "15–19 августа 2024",
+    "category": "Интеграция в фестиваль",
+    "format": "Световая бренд-зона и аудиовизуальный перформанс на Meadow",
+    "client": "МТС",
+    "agencySlug": "orange",
+    "agencySlugs": [
+      "orange"
+    ],
+    "agencyUrl": "/agency/orange",
+    "types": [
+      "btl",
+      "public",
+      "culture"
+    ],
+    "role": "Карточка проекта Sostav перечисляет ООО «Орандж», МТС и Radugadesign среди команд проекта. Конкретные задачи Orange отдельно не распределены.",
+    "industry": "Музыка, фестивали и бренд-коммуникации",
+    "description": "На Signal 2024 пространство Meadow стало «Орбитой» МТС: свет и цифровой контент связали сцену и публику в общую композицию. 120 световых и цифровых носителей синхронизировали с полукруглым экраном; звук и ощутимая вибрация поддерживали идею кругового движения. Sostav указывает ООО «Орандж» среди команд проекта вместе с МТС и Radugadesign, но не распределяет между ними задачи. В 2025 году проект получил серебро Silver Mercury в номинации «Лучшее спонсорство мероприятия».",
+    "seoDescription": "Интеграция МТС на Signal 2024: Meadow как световая «Орбита», 120 синхронизированных носителей и полукруглый экран. ООО «Орандж» указано среди команд проекта; серебро Silver Mercury 2025.",
+    "source": "https://ratings.sostav.ru/companies/1085/works/1796",
+    "image": "/custom/empty/case-enriched-133.svg",
+    "imageMobile": "/custom/empty/case-enriched-133.svg",
+    "ogImage": "/custom/empty/case-enriched-133.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-133",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#101529,#536f83)",
+    "curated": false,
+    "reelTitle": "Signal · орбита Meadow",
+    "featured": false,
+    "eventCity": "Калужская область · арт-парк Никола-Ленивец",
+    "guestLabel": "",
+    "occasions": [
+      "public",
+      "culture",
+      "btl"
+    ],
+    "sources": [
+      {
+        "label": "Sostav · концепция, команда и устройство интеграции",
+        "url": "https://ratings.sostav.ru/companies/1085/works/1796"
+      },
+      {
+        "label": "Silver Mercury · описание проекта и награда 2025 года",
+        "url": "https://silvermercury.ru/winners/integratsiya-v-festival-signal-2025-5726"
+      },
+      {
+        "label": "Сноб · сцена MEADOW × МТС и команда Radugadesign",
+        "url": "https://snob.ru/music/gid-po-festivaliu-elektronnoi-muzyki-signal-2024/"
+      },
+      {
+        "label": "Archi.ru · даты фестиваля и Никола-Ленивец",
+        "url": "https://archi.ru/events/21424/signal"
+      }
+    ]
   }
 ]
