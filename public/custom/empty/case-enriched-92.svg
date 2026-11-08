@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#1e2738"/>
+  <circle cx="1190" cy="460" r="260" fill="#313b59" stroke="#8593c0" stroke-width="4"/>
+  <ellipse cx="1190" cy="460" rx="390" ry="120" fill="none" stroke="#6f9eb4" stroke-width="5" transform="rotate(-24 1190 460)"/>
+  <ellipse cx="1190" cy="460" rx="390" ry="120" fill="none" stroke="#ad87c0" stroke-width="4" transform="rotate(34 1190 460)"/>
+  <circle cx="880" cy="280" r="18" fill="#f1d18a"/>
+  <circle cx="1430" cy="585" r="18" fill="#a7d5db"/>
+  <circle cx="1115" cy="770" r="16" fill="#eab38b"/>
+  <path d="M150 800h570M220 740h430M290 680h290" stroke="#516279" stroke-width="4"/>
+  <g fill="#f3f1ec" font-family="Arial,sans-serif">
+    <text x="120" y="175" font-size="28" letter-spacing="3">IVS GROUP × РТК-ЦОД</text>
+    <text x="120" y="465" font-size="86" font-weight="700">TECH FEST</text>
+    <text x="120" y="560" font-size="48">Технологии · космос · команда</text>
+    <text x="120" y="1085" font-size="26" fill="#c0c8d1">Иллюстративная карточка · фотографии не добавлены</text>
+  </g>
+</svg>

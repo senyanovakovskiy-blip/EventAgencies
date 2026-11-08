@@ -7063,6 +7063,47 @@
     ]
   },
   {
+    "slug": "case-enriched-92",
+    "title": "Tech Fest РТК-ЦОД — технологии и космос",
+    "fullTitle": "Корпоративный фестиваль Tech Fest для РТК-ЦОД",
+    "year": "2025",
+    "eventDate": "2025",
+    "category": "Корпоратив",
+    "format": "Корпоративный техно-фестиваль с деловой и вечерней программой",
+    "client": "РТК-ЦОД",
+    "agencySlug": "ivs-group",
+    "agencySlugs": [
+      "ivs-group"
+    ],
+    "agencyUrl": "/agency/ivs-group",
+    "types": [
+      "corporate"
+    ],
+    "role": "Концепция, визуальный стиль и механика корпоративного фестиваля.",
+    "industry": "Технологии и корпоративные события",
+    "description": "В 2025 году IVS Group собрала 1 300 сотрудников РТК-ЦОД на корпоративном Tech Fest. Тема технологий и космоса связала концепцию, визуальный стиль и механику; участники проходили цифровые и офлайн-активности и командные задания, затем программа переходила от деловой части к вечерней. Число сотрудников приводит агентство. Точная дата, город и площадка в кейсе не названы.",
+    "seoDescription": "Tech Fest для РТК-ЦОД от IVS Group: 1 300 сотрудников, цифровые и офлайн-активности, деловая и вечерняя части. Число участников — данные агентства.",
+    "source": "https://ivsgroup.ru/portfolio/korporativnyj-festival-tech-fest-dlya-rtk-tsod",
+    "image": "/custom/empty/case-enriched-92.svg",
+    "imageMobile": "/custom/empty/case-enriched-92.svg",
+    "ogImage": "/custom/empty/case-enriched-92.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-92",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#1f2c40,#4b4f74)",
+    "curated": false,
+    "reelTitle": "Tech Fest РТК-ЦОД",
+    "featured": false,
+    "eventCity": "",
+    "guestLabel": "1 300 сотрудников (по данным IVS Group)",
+    "occasions": [
+      "corporate"
+    ]
+  },
+  {
     "slug": "case-enriched-86",
     "title": "Открытие «Российской студенческой весны» — 2021",
     "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
