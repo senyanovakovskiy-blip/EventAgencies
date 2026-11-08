@@ -7442,6 +7442,47 @@
     ]
   },
   {
+    "slug": "case-enriched-101",
+    "title": "Yandex Buddy Fest 2025 — Город Бадди",
+    "fullTitle": "Фестиваль сообщества бадди Яндекса: Город Бадди",
+    "year": "2025",
+    "eventDate": "2025",
+    "category": "Тимбилдинг",
+    "format": "Фестиваль сообщества сотрудников",
+    "client": "Яндекс",
+    "agencySlug": "bigbird",
+    "agencySlugs": [
+      "bigbird"
+    ],
+    "agencyUrl": "/agency/bigbird",
+    "types": [
+      "corporate"
+    ],
+    "role": "Разработка концепции, механики и визуального языка фестиваля; тематические зоны, навигация и интерактивы на трёх этажах.",
+    "industry": "Внутреннее сообщество и корпоративные события",
+    "description": "Для сообщества бадди Яндекса BigBird разработала концепцию, механику и визуальный язык Yandex Buddy Fest 2025. «Город Бадди» занял три этажа: тематические пространства соединили лекции и стендапы, нетворкинг, игровые задания, активности и награждение. Портфолио BigBird указывает 350 гостей; в статье агентство сообщает о более чем 300 офлайн-участниках, явке около 70%, средней оценке 9,3 и готовности 100% участников рекомендовать стать бадди. Точные дата и площадка не названы.",
+    "seoDescription": "Yandex Buddy Fest 2025 от BigBird: трёхэтажный Город Бадди с обучением, нетворкингом, игровыми зонами и награждением.",
+    "source": "https://bigbird.events/blog",
+    "image": "/custom/empty/case-enriched-101.svg",
+    "imageMobile": "/custom/empty/case-enriched-101.svg",
+    "ogImage": "/custom/empty/case-enriched-101.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-101",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#394a68,#b17b67)",
+    "curated": false,
+    "reelTitle": "Yandex Buddy Fest — Город Бадди",
+    "featured": false,
+    "eventCity": "",
+    "guestLabel": "350 гостей по портфолио; статья сообщает о 300+ офлайн-участниках",
+    "occasions": [
+      "corporate"
+    ]
+  },
+  {
     "slug": "case-enriched-86",
     "title": "Открытие «Российской студенческой весны» — 2021",
     "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",

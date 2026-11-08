@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#283450"/>
+  <circle cx="1290" cy="180" r="118" fill="#e6c786"/>
+  <g fill="#35486a" stroke="#d9bc7e" stroke-width="7">
+    <path d="M900 330h420v190H900z"/>
+    <path d="M960 555h420v190H960z"/>
+    <path d="M900 780h420v190H900z"/>
+  </g>
+  <g fill="#e8c986">
+    <circle cx="980" cy="390" r="22"/><circle cx="1060" cy="390" r="22"/><circle cx="1140" cy="390" r="22"/>
+    <circle cx="1040" cy="615" r="22"/><circle cx="1120" cy="615" r="22"/><circle cx="1200" cy="615" r="22"/>
+    <circle cx="980" cy="840" r="22"/><circle cx="1060" cy="840" r="22"/><circle cx="1140" cy="840" r="22"/>
+  </g>
+  <g fill="none" stroke="#dba574" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M210 745V500h490v245M165 500l290-220 290 220"/>
+    <path d="M270 745V610h95v135M505 745V610h95v135"/>
+    <path d="M240 465h45M340 400h45M445 360h45M550 400h45"/>
+    <path d="M760 425h95M760 650h95M760 875h95" stroke-dasharray="18 18"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="110" y="135" font-size="30" letter-spacing="4">BIGBIRD × ЯНДЕКС · 2025</text>
+    <text x="110" y="285" font-size="77" font-weight="700">ГОРОД БАДДИ</text>
+    <text x="114" y="370" font-size="39" fill="#e8c986">Yandex Buddy Fest · фестиваль сообщества</text>
+    <text x="114" y="455" font-size="34" fill="#ccd4df">Три этажа · обучение · обмен опытом</text>
+    <text x="110" y="1090" font-size="26" fill="#cbd2db">Иллюстрация кейса · фотографии проекта не добавлены</text>
+  </g>
+</svg>
