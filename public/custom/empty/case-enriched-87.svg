@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#20332e"/>
+  <path d="M0 800Q350 650 700 800t900 0v400H0z" fill="#2b463b"/>
+  <path d="M0 925Q350 790 700 925t900 0" fill="none" stroke="#72805a" stroke-width="4"/>
+  <circle cx="1220" cy="330" r="108" fill="#d4bf84" opacity=".92"/>
+  <path d="M930 700 1120 420l190 280M1080 700l140-205 140 205" fill="none" stroke="#b9c9a0" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M1118 700v180M1310 700v180" stroke="#b9c9a0" stroke-width="10"/>
+  <g fill="#f3f0e7" font-family="Arial,sans-serif">
+    <text x="120" y="190" font-size="28" letter-spacing="3">UTS TRAVEL &amp; EVENTS</text>
+    <text x="120" y="470" font-size="78" font-weight="700">ФАБРИКА</text>
+    <text x="120" y="565" font-size="78" font-weight="700">ПРИКЛЮЧЕНИЙ</text>
+    <text x="120" y="655" font-size="38">Командный день на открытом воздухе</text>
+    <text x="120" y="1080" font-size="26" fill="#c3cdb6">Иллюстративная карточка · фотографии не добавлены</text>
+  </g>
+</svg>
