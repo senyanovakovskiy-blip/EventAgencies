@@ -479,12 +479,13 @@
         "public",
         "business"
       ],
-      "description": "Основали четыре бывшие коллеги, работавшие в одной команде наёмными сотрудницами. Среди кейсов — Family Day для 5,5 тысячи сотрудников завода Hyundai. Есть своя онлайн-школа TZ School для начинающих ивентеров.",
+      "description": "Основали четыре бывшие коллеги, работавшие в одной команде наёмными сотрудницами. Среди кейсов — Family Day для 5,5 тысячи сотрудников завода Hyundai. Есть своя онлайн-школа TZ School для начинающих ивентеров. На Pulse Camp 2025 для Т-Инвестиции Team for Dream превратило пятидневный выезд на Алтай в игру по легенде Чуйского торгового пути — с горными маршрутами, конными переходами, рафтингом, инвестиционными заданиями и внутренней валютой «пульсары». ",
       "website": "https://tfd-agency.ru/",
       "works": [
-        "tbank-hoteliers"
+        "tbank-hoteliers",
+        "case-enriched-131"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 8,
       "cover": "/custom/library/675f243ec8-thumb.webp",
       "coverWork": "tbank-hoteliers"
@@ -11572,6 +11573,59 @@
           "url": "https://ratings.sostav.ru/companies/945/works/3904"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-131",
+      "title": "Pulse Camp 2025 — караван инвестора на Алтае",
+      "fullTitle": "Pulse Camp 2025: пятидневная инвестиционная игра Т-Инвестиции на Алтае",
+      "year": "2025",
+      "eventDate": "",
+      "category": "Клиентский выездной MICE-проект",
+      "format": "Пятидневный кэмп: инвестиционная игра, outdoor-маршруты и создание контента",
+      "client": "Т-Инвестиции · Т-Банк",
+      "agencySlug": "team-for-dream",
+      "agencySlugs": [
+        "team-for-dream"
+      ],
+      "agencyUrl": "/agency/team-for-dream",
+      "types": [
+        "business",
+        "corporate"
+      ],
+      "role": "BEMA и Sostav называют Team for Dream исполнителем проекта. В описании команда раскрывает игровую систему по легенде Чуйского торгового пути: горные и конные маршруты, рафтинг, инвестиционные решения, «пульсары» и встроенное создание контента. Полный перечень продакшн-обязанностей не опубликован.",
+      "industry": "Инвестиции и финансовые сервисы",
+      "description": "Pulse Camp превратил встречу инвесторского сообщества в пятидневное приключение по легенде Чуйского торгового пути. Команды проходили горные маршруты, конные переходы и рафтинг, зарабатывали «пульсары» — внутреннюю валюту — и включались в инвестиционную игру. Team for Dream выступило исполнителем и связало физические испытания, стратегию и создание контента в общей игровой системе. По данным Sostav, на кэмп на Алтае в 2025 году приехали 50+ инвест-блогеров, авторов Пульса и экспертов. Мастер-класс по Reels и ежедневная съёмка помогли участникам создать десятки роликов. Проект получил два серебра BEMA 2026.",
+      "seoDescription": "Pulse Camp 2025 от Т-Инвестиции и Team for Dream: пятидневная игра на Алтае по легенде Чуйского торгового пути, с горными маршрутами, рафтингом, «пульсарами» и инвестиционными заданиями.",
+      "source": "https://bemafestival.ru/winners/pulse-camp-2025-motivaczionnoe-vyezdnoe-meropriyatie-dlya-klientov-i-partnerov-t-investiczii-2/",
+      "image": "/custom/empty/case-enriched-131.svg",
+      "imageMobile": "/custom/empty/case-enriched-131.svg",
+      "ogImage": "/custom/empty/case-enriched-131.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-131",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#1d3a39,#dc9c49)",
+      "curated": false,
+      "reelTitle": "Pulse Camp · Чуйский торговый путь",
+      "featured": false,
+      "eventCity": "Алтай",
+      "guestLabel": "50+ инвест-блогеров, авторов Пульса и экспертов",
+      "occasions": [
+        "business",
+        "corporate"
+      ],
+      "sources": [
+        {
+          "label": "BEMA · заказчик, исполнитель и концепция",
+          "url": "https://bemafestival.ru/winners/pulse-camp-2025-motivaczionnoe-vyezdnoe-meropriyatie-dlya-klientov-i-partnerov-t-investiczii-2/"
+        },
+        {
+          "label": "Sostav · масштаб, программа и две награды BEMA 2026",
+          "url": "https://ratings.sostav.ru/works/4080"
+        }
+      ]
     }
   ],
   "types": {
@@ -11586,8 +11640,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 140,
-    "works": 187,
+    "cases": 141,
+    "works": 188,
     "photos": 263
   }
 }

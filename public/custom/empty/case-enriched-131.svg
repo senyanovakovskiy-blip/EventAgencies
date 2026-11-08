@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Pulse Camp 2025 на Алтае</title>
+  <desc id="desc">Концептуальная карта-иллюстрация игрового маршрута по Алтаю с горными испытаниями, рафтингом и внутренними пульсарами. Это не фотография проекта.</desc>
+  <defs>
+    <linearGradient id="dawn" x2="1" y2="1"><stop stop-color="#173b3d"/><stop offset=".55" stop-color="#527363"/><stop offset="1" stop-color="#db9849"/></linearGradient>
+    <linearGradient id="gold" x2=".8" y2="1"><stop stop-color="#ffe18a"/><stop offset="1" stop-color="#e6a344"/></linearGradient>
+    <linearGradient id="river" x2="1" y2=".2"><stop stop-color="#6bc6c8"/><stop offset=".55" stop-color="#42989c"/><stop offset="1" stop-color="#d9e5b0"/></linearGradient>
+    <pattern id="contour" width="145" height="75" patternUnits="userSpaceOnUse"><path d="M-20 56q36-37 72 0t72 0 72 0M-16 71q36-37 72 0t72 0 72 0" fill="none" stroke="#e4e4bf" stroke-opacity=".15" stroke-width="1.4"/></pattern>
+    <filter id="mist"><feGaussianBlur stdDeviation="20"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="#eee4d0"/>
+  <rect x="28" y="28" width="1144" height="744" rx="18" fill="url(#dawn)"/>
+  <circle cx="910" cy="215" r="142" fill="#f1c36c" opacity=".2" filter="url(#mist)"/>
+  <path d="M49 419 218 222l103 121 146-186 174 214 122-180 181 221 91-122 117 129v127H49z" fill="#284943"/>
+  <path d="m218 222 45 53-42-15-21 22zm249-65 62 83-59-24-31 32zm296 34 54 65-58-24-31 32zm273 15 45 56-50-18-25 25z" fill="#e1d1a5" opacity=".86"/>
+  <path d="M49 419 218 222l103 121 146-186 174 214 122-180 181 221 91-122 117 129" fill="none" stroke="#f2d392" stroke-width="4" stroke-linejoin="round" opacity=".72"/>
+  <path d="M55 451q80-48 157-3t144-18 157 16 147-28 146 22 138-16 153 26" fill="none" stroke="url(#river)" stroke-width="34" stroke-linecap="round" opacity=".87"/>
+  <path d="M55 451q80-48 157-3t144-18 157 16 147-28 146 22 138-16 153 26" fill="none" stroke="#dff1cf" stroke-width="3" stroke-dasharray="5 18" stroke-linecap="round"/>
+  <rect x="28" y="28" width="1144" height="520" rx="18" fill="url(#contour)"/>
+  <g fill="none" stroke="#f8d772" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M155 365q117-121 249-49t170 36 194-104 218 83" stroke-dasharray="8 13"/>
+    <path d="M828 339q88 58 143 7"/>
+  </g>
+  <g fill="#fff0bd" stroke="#173b3d" stroke-width="5">
+    <circle cx="155" cy="365" r="18"/><circle cx="402" cy="316" r="18"/><circle cx="574" cy="352" r="18"/><circle cx="768" cy="248" r="18"/><circle cx="986" cy="331" r="18"/>
+  </g>
+  <g font-family="Arial,sans-serif" font-weight="900" text-anchor="middle" fill="#183838">
+    <text x="155" y="372" font-size="17">1</text><text x="402" y="323" font-size="17">2</text><text x="574" y="359" font-size="17">3</text><text x="768" y="255" font-size="17">4</text><text x="986" y="338" font-size="17">5</text>
+  </g>
+  <g transform="translate(871 366)">
+    <path d="M0 22q38-26 77 0t77 0v36q-39-26-77 0T0 58z" fill="#e8b84e" stroke="#fff0bf" stroke-width="4"/>
+    <path d="M12 23v34m35-39v40m35-35v31m35-35v40" stroke="#416b68" stroke-width="3"/>
+    <path d="M24 10h104" stroke="#fff0bf" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(957 157)">
+    <circle cx="76" cy="75" r="57" fill="url(#gold)" stroke="#fff0bd" stroke-width="5"/>
+    <circle cx="76" cy="75" r="42" fill="none" stroke="#9e713b" stroke-width="2"/>
+    <text x="76" y="71" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="900" fill="#35534b">ПУЛЬСАР</text>
+    <text x="76" y="96" text-anchor="middle" font-family="Arial,sans-serif" font-size="23" font-weight="900" fill="#35534b">✦</text>
+  </g>
+  <text x="82" y="83" font-family="Arial,sans-serif" font-size="20" font-weight="800" letter-spacing="5" fill="#f9e4ac">Т-ИНВЕСТИЦИИ · TEAM FOR DREAM</text>
+  <rect x="64" y="565" width="1072" height="165" rx="10" fill="#f2e9d8"/>
+  <text x="100" y="610" font-family="Arial,sans-serif" font-size="19" font-weight="800" letter-spacing="4" fill="#69785e">АЛТАЙ · 5 ДНЕЙ · ИНВЕСТИЦИОННЫЙ КЭМП</text>
+  <text x="94" y="676" font-family="Arial,sans-serif" font-size="57" font-weight="900" letter-spacing="-1.8" fill="#213f3d">PULSE CAMP 2025</text>
+  <text x="100" y="711" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="3" fill="#677164">ЧУЙСКИЙ ПУТЬ · РАФТИНГ · СТРАТЕГИЯ · ПУЛЬСАРЫ</text>
+</svg>
