@@ -132,13 +132,14 @@
         "business",
         "online"
       ],
-      "description": "Начинал в 2005 году в Красноярске. Поставил рекорд Гиннесса и взял золото BEA World. 20-летие отметил на «Мосфильме» для 500 гостей.",
+      "description": "Начинал в 2005 году в Красноярске. Поставил рекорд Гиннесса и взял золото BEA World. 20-летие отметил на «Мосфильме» для 500 гостей. Для Big Tech Night команда помогала Яндексу с застройкой, логистикой между офисами и единым пространством; REDDAY сообщает о 3 600+ гостях.",
       "website": "https://www.redday.events/",
       "works": [
         "case-5",
-        "case-6"
+        "case-6",
+        "case-enriched-104"
       ],
-      "caseCount": 2,
+      "caseCount": 3,
       "photoCount": 1,
       "cover": "/custom/library/38291ff36f.png",
       "coverWork": "case-5"
@@ -9730,6 +9731,48 @@
       ]
     },
     {
+      "slug": "case-enriched-104",
+      "title": "Big Tech Night — фестиваль в офисах пяти IT-компаний",
+      "fullTitle": "Big Tech Night: «Ночь музеев» в мире IT для Яндекса",
+      "year": "2025",
+      "eventDate": "Сентябрь 2025",
+      "category": "Фестиваль",
+      "format": "Многоплощадочный IT-фестиваль",
+      "client": "Яндекс",
+      "agencySlug": "redday",
+      "agencySlugs": [
+        "redday"
+      ],
+      "agencyUrl": "/agency/redday",
+      "types": [
+        "public",
+        "business"
+      ],
+      "role": "REDDAY помогала Яндексу с застройкой, общей логистикой между офисами соорганизаторов и созданием единого пространства.",
+      "industry": "Технологии и IT",
+      "description": "В сентябре 2025 года Яндекс придумал Big Tech Night — фестиваль в Москве, где пять крупных IT-компаний одновременно открыли офисы для гостей. REDDAY помогала команде Яндекса с застройкой, логистикой между офисами соорганизаторов и созданием общего пространства. По данным агентства, фестиваль собрал 3 600+ гостей, включал 60+ офлайн-докладов и дискуссий, 15 выступлений в онлайн-студии и 50+ активностей; всего на площадках и онлайн выступили 122 спикера.",
+      "seoDescription": "Big Tech Night для Яндекса от REDDAY: пять IT-компаний, 3 600+ гостей, доклады, онлайн-студия и активности на нескольких площадках.",
+      "source": "https://www.redday.events/projects/yandex/big-tech-nignt",
+      "image": "/custom/empty/case-enriched-104.svg",
+      "imageMobile": "/custom/empty/case-enriched-104.svg",
+      "ogImage": "/custom/empty/case-enriched-104.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-104",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#25374c,#ad7859)",
+      "curated": false,
+      "reelTitle": "Big Tech Night — Ночь музеев в IT",
+      "featured": false,
+      "eventCity": "Москва",
+      "guestLabel": "3 600+ гостей; 122 спикера (по данным REDDAY)",
+      "occasions": [
+        "public"
+      ]
+    },
+    {
       "slug": "case-enriched-86",
       "title": "Открытие «Российской студенческой весны» — 2021",
       "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
@@ -10316,8 +10359,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 113,
-    "works": 160,
+    "cases": 114,
+    "works": 161,
     "photos": 263
   }
 }

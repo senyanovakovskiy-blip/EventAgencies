@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#25374c"/>
+  <circle cx="1325" cy="185" r="145" fill="#dbb87e" opacity=".9"/>
+  <g fill="#304962" stroke="#dcb97e" stroke-width="7">
+    <path d="M920 375h190v420H920z"/><path d="M1180 375h190v420h-190z"/>
+    <path d="M1050 670h190v230h-190z"/>
+  </g>
+  <g fill="#e6c98d">
+    <path d="M960 430h110v20H960zM960 475h110v20H960zM960 520h110v20H960z"/>
+    <path d="M1220 430h110v20h-110zM1220 475h110v20h-110zM1220 520h110v20h-110z"/>
+  </g>
+  <g fill="none" stroke="#dcb97e" stroke-width="8" stroke-linecap="round" stroke-dasharray="15 18">
+    <path d="M650 445h220M650 635h220M650 825h350"/>
+    <path d="M385 530c85-90 170-90 255 0M385 720c85 90 170 90 255 0"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="105" y="142" font-size="31" letter-spacing="4">REDDAY × ЯНДЕКС · МОСКВА · 2025</text>
+    <text x="100" y="345" font-size="74" font-weight="700">BIG TECH</text>
+    <text x="105" y="435" font-size="74" font-weight="700" fill="#e2c38f">NIGHT</text>
+    <text x="105" y="535" font-size="32" fill="#d6ded6">Пять IT-компаний · единый маршрут по офисам</text>
+    <text x="105" y="610" font-size="31" fill="#d6ded6">3 600+ гостей · программа очно и онлайн</text>
+    <text x="100" y="1090" font-size="25" fill="#cbd2db">Условная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+</svg>
