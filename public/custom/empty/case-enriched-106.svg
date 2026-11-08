@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#28534b"/>
+  <circle cx="1315" cy="185" r="145" fill="#e0bd80" opacity=".9"/>
+  <path d="M915 470c105-115 210-115 315 0v405H915z" fill="#316359" stroke="#e0bd80" stroke-width="7"/>
+  <path d="M1000 545h145v210h-145z" fill="#294c47" stroke="#e5cb96" stroke-width="6"/>
+  <path d="M1050 755h45v120h-45z" fill="#bb8552"/>
+  <g fill="none" stroke="#dfbf83" stroke-width="9" stroke-linecap="round">
+    <path d="M930 410c-70-90-145-80-195 0M1215 410c70-90 145-80 195 0"/>
+    <path d="M745 490c-60-65-120-65-180 0M1415 490c60-65 120-65 180 0"/>
+  </g>
+  <g fill="#e8cd91">
+    <path d="m420 675 150-80v160z"/><path d="m1510 675-150-80v160z"/>
+    <circle cx="970" cy="505" r="17"/><circle cx="1030" cy="505" r="17"/><circle cx="1090" cy="505" r="17"/><circle cx="1150" cy="505" r="17"/>
+  </g>
+  <g fill="none" stroke="#d9c39a" stroke-width="7" stroke-linecap="round" stroke-dasharray="14 18">
+    <path d="M600 850h255M1245 850h180M525 930h905"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="105" y="142" font-size="31" letter-spacing="4">N:OW · 5 ИЮНЯ 2025 · 180 ГОСТЕЙ</text>
+    <text x="100" y="345" font-size="72" font-weight="700">ХАКАТОН</text>
+    <text x="105" y="435" font-size="62" font-weight="700" fill="#e2c38f">В СЕРФЕРСКОМ СТИЛЕ</text>
+    <text x="105" y="535" font-size="32" fill="#d6ded6">Рабочие команды · фудтрак · награждение на крыше</text>
+    <text x="100" y="1090" font-size="25" fill="#cbd2db">Условная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+</svg>
