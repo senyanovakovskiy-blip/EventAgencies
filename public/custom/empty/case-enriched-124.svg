@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">День молодёжи в МЕГА Химки</title>
+  <desc id="desc">Иллюстративный постер городского фестиваля с концертной сценой, световыми лучами и творческими площадками.</desc>
+  <defs>
+    <linearGradient id="night" x2="0.9" y2="1">
+      <stop stop-color="#2e216d"/>
+      <stop offset=".55" stop-color="#3547a0"/>
+      <stop offset="1" stop-color="#087d94"/>
+    </linearGradient>
+    <linearGradient id="floor" x2="1" y2="0">
+      <stop stop-color="#ee5b83"/>
+      <stop offset=".52" stop-color="#ffb950"/>
+      <stop offset="1" stop-color="#35d2c7"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop stop-color="#fff6aa" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#fff6aa" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="18" height="18" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="4" r="1.3" fill="#fff" opacity=".23"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="#f4eddf"/>
+  <rect x="28" y="28" width="1144" height="744" rx="30" fill="url(#night)"/>
+  <circle cx="610" cy="337" r="305" fill="url(#glow)"/>
+  <path d="M346 92 577 391 461 425 245 128zm154-45 115 331-113 4-99-320zm176 0-2 342-106-29 1-312zm180 56-121 296-100-57 135-279zm130 110-220 228-80-83 246-198z" fill="#b9bbff" opacity=".17"/>
+  <g opacity=".85" fill="#e9eeff">
+    <path d="M83 164h170v12H83zm42 30h128v7H125zm-35 18h166v7H90z"/>
+    <path d="M1010 150h112v9h-112zm-20 23h132v7H990zm37 19h95v7h-95z"/>
+  </g>
+  <g transform="translate(125 258)">
+    <path d="M0 234V71l44-39 44 39v163zm89 0V96l44-39 44 39v138zm87 0V49l48-42 48 42v185z" fill="#15274f" stroke="#62dfd1" stroke-width="5"/>
+    <rect x="18" y="104" width="22" height="37" rx="4" fill="#ffa94e"/>
+    <rect x="58" y="104" width="22" height="37" rx="4" fill="#ff7195"/>
+    <rect x="108" y="126" width="22" height="37" rx="4" fill="#ffd165"/>
+    <rect x="149" y="126" width="22" height="37" rx="4" fill="#5be0d0"/>
+    <rect x="201" y="90" width="22" height="43" rx="4" fill="#ff7195"/>
+    <rect x="240" y="90" width="22" height="43" rx="4" fill="#ffa94e"/>
+  </g>
+  <g transform="translate(386 286)">
+    <path d="M24 246V89q0-27 28-27h328q28 0 28 27v157" fill="#161c43" stroke="#f0d985" stroke-width="7"/>
+    <path d="M49 220V100q0-14 15-14h304q15 0 15 14v120z" fill="#26336d"/>
+    <path d="M49 184h334v36H49z" fill="url(#floor)"/>
+    <path d="M24 246h384" stroke="#e9efff" stroke-width="9" stroke-linecap="round"/>
+    <path d="M106 169v-43m55 43v-59m54 59v-47m55 47v-67m55 67v-52" fill="none" stroke="#f8efff" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="271" cy="55" r="15" fill="#ffca5a"/>
+    <path d="M260 47q11-16 22 0l12 39h-47z" fill="#ffca5a"/>
+    <path d="M228 84h67" stroke="#ffca5a" stroke-width="5" stroke-linecap="round"/>
+    <path d="m176 46 20-23 20 23-20 20z" fill="#5ce3d3"/>
+  </g>
+  <g transform="translate(895 322)">
+    <path d="M10 66q0-45 45-45h135q45 0 45 45v49q0 37-37 37H48q-38 0-38-37z" fill="#e5dcff"/>
+    <path d="M23 85h199" stroke="#8c78df" stroke-width="13" stroke-linecap="round"/>
+    <rect x="62" y="72" width="58" height="46" rx="20" fill="#3c367f"/>
+    <rect x="128" y="72" width="58" height="46" rx="20" fill="#3c367f"/>
+    <path d="M51 157 30 204m167-47 24 47" stroke="#f5bb5d" stroke-width="13" stroke-linecap="round"/>
+    <path d="M111 29V3m0 0L93 16m18-13 18 13" fill="none" stroke="#5be0d0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <path d="M52 526h1096" stroke="#ffffff" stroke-opacity=".3" stroke-width="2"/>
+  <path d="M67 540h1066v190H67z" fill="#f4eddf"/>
+  <text x="99" y="586" font-family="Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="5" fill="#4b478d">МЕГА ХИМКИ · 27 ИЮНЯ 2026</text>
+  <text x="94" y="659" font-family="Arial,sans-serif" font-size="61" font-weight="900" letter-spacing="-2" fill="#29235d">ДЕНЬ МОЛОДЁЖИ</text>
+  <text x="100" y="700" font-family="Arial,sans-serif" font-size="20" font-weight="700" letter-spacing="4" fill="#087d94">КОНЦЕРТ · VR · ГОРОДСКОЙ КВЕСТ · ТВОРЧЕСТВО</text>
+  <path d="M27 28h1146v744H27z" fill="url(#dots)" rx="30" pointer-events="none"/>
+</svg>

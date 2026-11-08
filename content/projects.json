@@ -8985,5 +8985,58 @@
         "url": "https://visitodintsovo.ru/o-odintsovskom-gorodskom-okruge/novosti/2349/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-124",
+    "title": "День молодёжи в МЕГА Химки — концерт, VR и городские активности",
+    "fullTitle": "Фестиваль ко Дню молодёжи в МЕГА Химки: концерт, интерактивы и полный цикл от TT Events",
+    "year": "2026",
+    "eventDate": "27 июня 2026",
+    "category": "Публичное событие",
+    "format": "Городской фестиваль ко Дню молодёжи",
+    "client": "День молодёжи городского округа Химки · площадка — ТРЦ МЕГА Химки",
+    "agencySlug": "tt-events",
+    "agencySlugs": [
+      "tt-events"
+    ],
+    "agencyUrl": "/agency/tt-events",
+    "types": [
+      "public",
+      "culture"
+    ],
+    "role": "TT Events заявляет полный цикл работ: разработку концепции и оформление пространства, концертную программу и сценарий, подбор артистов и ведущих, интерактивные и граффити-зоны, техническое сопровождение площадок и координацию в день фестиваля.",
+    "industry": "Городские события и молодёжные проекты",
+    "description": "27 июня 2026 года МЕГА Химки стала площадкой фестиваля ко Дню молодёжи: концерт и награждение активистов дополнили VR, мастер-классы, спортивные и творческие зоны и городской квест. TT Events описывает полный цикл работ — от концепции и оформления пространства до сценария концертной программы, технического сопровождения и координации участников; агентство также организовало граффити-зону с конкурсом арт-объектов. Число гостей в опубликованных источниках не указано.",
+    "seoDescription": "Фестиваль ко Дню молодёжи прошёл 27 июня 2026 года в МЕГА Химки. Программа объединила концерт, VR, мастер-классы, квест и городские активности; TT Events описывает организацию и техническое сопровождение полного цикла.",
+    "source": "https://ttevents.ru/case/post/festival-molodezh-himki",
+    "image": "/custom/empty/case-enriched-124.svg",
+    "imageMobile": "/custom/empty/case-enriched-124.svg",
+    "ogImage": "/custom/empty/case-enriched-124.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-124",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#3c2d82,#08a7ac)",
+    "curated": false,
+    "reelTitle": "День молодёжи · МЕГА Химки",
+    "featured": false,
+    "eventCity": "Химки, Московская область · ТРЦ МЕГА Химки",
+    "guestLabel": "",
+    "occasions": [
+      "public",
+      "culture"
+    ],
+    "sources": [
+      {
+        "label": "РИАМО · программа и участие администрации Химок",
+        "url": "https://riamo.ru/news/obschestvo/glava-himok-inna-fedotova-otkryla-den-molodezhi-festivalem-v-mege-himki/"
+      },
+      {
+        "label": "Федерация шахмат Московской области · дата, площадка и шахматная зона",
+        "url": "https://50chess.ru/molodezh-igraet-v-shahmaty/"
+      }
+    ]
   }
 ]
