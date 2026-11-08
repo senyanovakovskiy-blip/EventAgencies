@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#202833"/>
+  <path d="M0 850h1600v350H0z" fill="#303a43"/>
+  <path d="M0 920h1600M0 1010h1600M280 850v350M540 850v350M800 850v350M1060 850v350M1320 850v350" stroke="#52616a" stroke-width="3" opacity=".72"/>
+  <path d="M250 730V420h300v310M650 730V330h300v400M1050 730V450h300v280" fill="#35464c" stroke="#8b684c" stroke-width="4"/>
+  <path d="M400 420v-90M800 330V220M1200 450V345" stroke="#e6ae6a" stroke-width="9"/>
+  <circle cx="400" cy="300" r="16" fill="#e6ae6a"/>
+  <circle cx="800" cy="200" r="16" fill="#e6ae6a"/>
+  <circle cx="1200" cy="325" r="16" fill="#e6ae6a"/>
+  <g fill="#f5f2ea" font-family="Arial,sans-serif">
+    <text x="120" y="170" font-size="28" letter-spacing="3">АДР × РУССКАЯ МЕДНАЯ КОМПАНИЯ</text>
+    <text x="120" y="585" font-size="82" font-weight="700">ЭНЕРГИЯ РМК</text>
+    <text x="120" y="665" font-size="40">Фестиваль · Екатеринбург · 2025</text>
+    <text x="120" y="1090" font-size="26" fill="#c4c8c5">Иллюстративная карточка · фотографии не добавлены</text>
+  </g>
+</svg>

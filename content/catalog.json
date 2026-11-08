@@ -1915,6 +1915,25 @@
       "photoCount": 0,
       "cover": null,
       "coverWork": null
+    },
+    {
+      "slug": "adr",
+      "name": "АДР",
+      "city": "",
+      "types": [
+        "public",
+        "pr",
+        "online"
+      ],
+      "description": "АДР соединило фестиваль «Энергия РМК» в Екатеринбурге с городской и онлайн-аудиторией: квест, Telegram-канал, брендированная фура, оформление площадки и контент. Посещаемость в 100 000 человек приводит агентство.",
+      "website": "",
+      "works": [
+        "case-enriched-88"
+      ],
+      "caseCount": 1,
+      "photoCount": 0,
+      "cover": null,
+      "coverWork": null
     }
   ],
   "projects": [
@@ -9113,6 +9132,49 @@
       ]
     },
     {
+      "slug": "case-enriched-88",
+      "title": "«Энергия РМК» — фестиваль в Екатеринбурге",
+      "fullTitle": "Комплексное продвижение фестиваля «Энергия РМК» для Русской медной компании",
+      "year": "2025",
+      "eventDate": "17 августа 2025",
+      "category": "Фестиваль",
+      "format": "Городской спортивный фестиваль и комплексное продвижение",
+      "client": "Русская медная компания",
+      "agencySlug": "adr",
+      "agencySlugs": [
+        "adr"
+      ],
+      "agencyUrl": "/agency/adr",
+      "types": [
+        "public",
+        "pr",
+        "online"
+      ],
+      "role": "Комплексное продвижение: квест, Telegram-канал, брендированная фура, оформление площадки и контент для соцсетей.",
+      "industry": "Городские фестивали и коммуникации",
+      "description": "Летом 2025 года АДР связало фестиваль «Энергия РМК» с городом и онлайн-аудиторией: запустило квест и Telegram-канал, брендировало фуру и спортивный квартал «Архангел Михаил», подготовило контент для соцсетей. Фестиваль прошёл 17 августа в Екатеринбурге. По данным АДР, его посетили 100 000 человек.",
+      "seoDescription": "АДР продвигало фестиваль «Энергия РМК» в Екатеринбурге через квест, Telegram, брендированную фуру, оформление площадки и соцсети. 100 000 посетителей — по данным агентства.",
+      "source": "https://m.adrgroup.su/portfolio/kompleksnoe-prodvizhenie-festivalya-energiya-rmk-dlya-russkoj-mednoj-kompanii",
+      "image": "/custom/empty/case-enriched-88.svg",
+      "imageMobile": "/custom/empty/case-enriched-88.svg",
+      "ogImage": "/custom/empty/case-enriched-88.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-88",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#252c37,#553c32)",
+      "curated": false,
+      "reelTitle": "Фестиваль «Энергия РМК»",
+      "featured": false,
+      "eventCity": "Екатеринбург, спортивный квартал «Архангел Михаил»",
+      "guestLabel": "100 000 посетителей (по данным АДР)",
+      "occasions": [
+        "public"
+      ]
+    },
+    {
       "slug": "case-round2-84",
       "title": "Презентация «Битва титанов 2020»",
       "fullTitle": "Презентация «Битва титанов 2020»",
@@ -9488,9 +9550,9 @@
     "pr": "PR-события"
   },
   "stats": {
-    "agencies": 100,
-    "cases": 97,
-    "works": 144,
+    "agencies": 101,
+    "cases": 98,
+    "works": 145,
     "photos": 263
   }
 }
