@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Горы. Звёзды. Разговоры по душам — иллюстрация к кейсу EVENTEX</title>
+<desc id="desc">Концептуальный ночной маршрут через горные вершины к месту встречи; это иллюстрация, а не фотография поездки.</desc>
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#11233e"/><stop offset=".6" stop-color="#344e63"/><stop offset="1" stop-color="#bd7757"/></linearGradient>
+ <linearGradient id="peak" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#647e8c"/><stop offset="1" stop-color="#213b50"/></linearGradient>
+ <radialGradient id="moon"><stop stop-color="#ffd78a" stop-opacity=".7"/><stop offset="1" stop-color="#ffd78a" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="38"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+<circle cx="1210" cy="215" r="170" fill="url(#moon)" filter="url(#blur)"/>
+<circle cx="1210" cy="215" r="49" fill="#ffe4ae" opacity=".82"/>
+<g fill="#fff" opacity=".8"><circle cx="942" cy="165" r="3"/><circle cx="1055" cy="111" r="4"/><circle cx="1374" cy="118" r="3"/><circle cx="1475" cy="250" r="4"/><circle cx="905" cy="270" r="3"/></g>
+<path d="M640 650 910 309l143 172 161-256 386 425z" fill="url(#peak)"/>
+<path d="m910 309 68 87-74-15-55 69-31-41zM1214 225l82 136-81-32-47 61-61-91z" fill="#f0e9d5" opacity=".72"/>
+<path d="M0 664 295 421l160 151 216-202 290 294z" fill="#29495d"/>
+<path d="M0 714q262-67 482-6t475 0 643 17v175H0z" fill="#172d43"/>
+<path d="M282 720c139-42 177 26 271-11s159-8 253 16 137-41 216-14 133 8 228-15" fill="none" stroke="#e4a36c" stroke-width="5" opacity=".78"/>
+<g fill="#ffd58a"><circle cx="553" cy="711" r="6"/><circle cx="806" cy="723" r="6"/><circle cx="1048" cy="721" r="6"/></g>
+<text x="110" y="151" fill="#d0d9df" font-family="Arial,sans-serif" font-size="22" letter-spacing="5">EVENTEX · АРХЫЗ · 2024</text>
+<text x="104" y="344" fill="#fff" font-family="Arial,sans-serif" font-size="57" font-weight="700">ГОРЫ.</text>
+<text x="104" y="414" fill="#fff" font-family="Arial,sans-serif" font-size="57" font-weight="700">ЗВЁЗДЫ.</text>
+<text x="104" y="484" fill="#ffd58a" font-family="Arial,sans-serif" font-size="52" font-weight="700">РАЗГОВОРЫ</text>
+<text x="110" y="540" fill="#e5eaf0" font-family="Arial,sans-serif" font-size="26">четыре дня общего пути</text>
+<rect x="108" y="598" width="310" height="64" rx="32" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".28"/>
+<text x="151" y="640" fill="#fff" font-family="Arial,sans-serif" font-size="23">30 человек · по данным EVENTEX</text>
+<text x="110" y="822" fill="#d5dce2" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ИЛЛЮСТРАЦИЯ · НЕ ФОТО СОБЫТИЯ</text>
+</svg>
