@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">Тимбилдинг ВК на Круглом Озере — концептуальная иллюстрация</title>
+<desc id="desc">Стилизованная команда проходит маршрут активностей у озера и леса. Концептуальная иллюстрация, не фотография события.</desc>
+<defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#d9eee8"/><stop offset=".68" stop-color="#9fcec1"/><stop offset="1" stop-color="#629a8e"/></linearGradient>
+  <linearGradient id="lake" x2="1" y2="1"><stop stop-color="#5eaaa5"/><stop offset="1" stop-color="#397e83"/></linearGradient>
+  <linearGradient id="land" x2="0" y2="1"><stop stop-color="#7cae83"/><stop offset="1" stop-color="#355e56"/></linearGradient>
+  <linearGradient id="sun" x2="1" y2="1"><stop stop-color="#fff0bd"/><stop offset="1" stop-color="#efa866"/></linearGradient>
+</defs>
+<rect width="1600" height="1200" fill="url(#sky)"/>
+<circle cx="1298" cy="247" r="113" fill="url(#sun)"/>
+<path d="M0 567 166 335l132 220 181-286 224 301 197-256 185 260 160-242 179 245 176-174v402H0Z" fill="#416e66" opacity=".72"/>
+<path d="M0 640 139 437l153 206 180-245 200 244 194-232 184 231 185-211 173 222 192-176v305H0Z" fill="#477b6e"/>
+<path d="M0 653c253-65 390-27 592 36 173 55 294 64 478 20 192-46 346-32 530 35v456H0Z" fill="url(#lake)"/>
+<path d="M0 811c231-68 405-58 581 3 213 75 366 65 555 15 184-48 310-46 464 1" fill="none" stroke="#b4dfce" stroke-width="9" opacity=".67"/>
+<path d="M0 940c215-63 348-53 528 9 195 67 334 81 523 35 214-52 369-62 549-6v222H0Z" fill="#347377" opacity=".74"/>
+<path d="M0 1054c243-78 381-57 569 5 199 66 372 75 551 24 182-52 324-56 480-13v130H0Z" fill="#2e6669" opacity=".7"/>
+<path d="M0 693c145-52 310-47 448 9 92 38 138 96 200 156 66 63 145 98 252 82 94-14 170-62 267-116 106-59 249-90 433-61v246c-225-55-348-30-508 24-167 56-287 107-474 73-165-30-257-105-347-182-95-81-183-107-271-81Z" fill="url(#land)"/>
+<path d="M145 755c199-43 314-9 425 81 108 88 178 123 290 111 94-10 174-51 257-99 99-57 194-78 347-65" fill="none" stroke="#f0d09a" stroke-width="17" stroke-linecap="round" stroke-dasharray="2 28"/>
+<g stroke="#f3d29a" stroke-width="7" fill="none"><circle cx="282" cy="745" r="39"/><circle cx="565" cy="866" r="39"/><circle cx="865" cy="949" r="39"/><circle cx="1158" cy="817" r="39"/></g>
+<g fill="#f3d29a" font-family="Arial,sans-serif" font-weight="700" font-size="28" text-anchor="middle"><text x="282" y="755">1</text><text x="565" y="876">2</text><text x="865" y="959">3</text><text x="1158" y="827">4</text></g>
+<g stroke="#244b46" stroke-width="15" stroke-linecap="round" fill="none"><path d="M650 684v-94m0 53-45 36m45-36 47 27"/><path d="M727 675v-101m0 57-44 33m44-33 51 18"/><path d="M809 693v-92m0 51-47 32m47-32 43 28"/><path d="M886 688v-105m0 56-44 35m44-35 53 25"/></g>
+<g fill="#efad72"><circle cx="650" cy="576" r="21"/><circle cx="727" cy="563" r="21"/><circle cx="809" cy="582" r="21"/><circle cx="886" cy="573" r="21"/></g>
+<g fill="#e9f2e7" font-family="Arial,sans-serif"><text x="105" y="111" font-size="26" letter-spacing="5" fill="#356c62">AVANTAGE PROJECT · ВНУТРЕННИЕ КОММУНИКАЦИИ</text><text x="99" y="219" font-size="74" font-weight="700" letter-spacing="-3" fill="#173b3b">ТИМБИЛДИНГ ВК</text><text x="104" y="275" font-size="28" letter-spacing="2" fill="#244d4c">КРУГЛОЕ ОЗЕРО · КОМАНДНЫЙ МАРШРУТ · 2023</text><rect x="100" y="1004" width="810" height="91" rx="15" fill="#123b3b" opacity=".88"/><text x="132" y="1061" font-size="30" fill="#f6e9c9">15+ заданий · общий финал у костра</text><text x="100" y="1157" font-size="22" fill="#eef3e8">Концептуальная иллюстрация · фотографии проекта не добавлены</text></g>
+</svg>

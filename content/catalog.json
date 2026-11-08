@@ -640,12 +640,13 @@
         "business",
         "online"
       ],
-      "description": "Организованный ими MICE Excellence Forum получил премию «Событие года» за деловое мероприятие.",
+      "description": "В портфолио AVANTAGE PROJECT — разные деловые форматы: онлайн-CyberCamp с лекциями и киберучениями и тимбилдинг ВК на «Круглом Озере», построенный вокруг 15+ командных активностей и общего вечера у костра. Для команды агентство показывает формат, где совместный опыт становится частью программы; подробности участия описаны в кейсах.",
       "website": "https://avantage-event.com/ru",
       "works": [
-        "case-enriched-37"
+        "case-enriched-37",
+        "case-enriched-118"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 2,
       "cover": "/custom/library/c8a070179e-thumb.webp",
       "coverWork": "case-enriched-37"
@@ -10915,6 +10916,53 @@
       "occasions": [
         "public"
       ]
+    },
+    {
+      "slug": "case-enriched-118",
+      "title": "Тимбилдинг ВК — более 15 активностей",
+      "fullTitle": "Тимбилдинг ВК на open-air «Круглое Озеро»",
+      "year": "2023",
+      "eventDate": "2023",
+      "category": "Тимбилдинг",
+      "format": "Командная программа на open-air с 15+ заданиями",
+      "client": "ВК",
+      "agencySlug": "avantage-project",
+      "agencySlugs": [
+        "avantage-project"
+      ],
+      "agencyUrl": "/agency/avantage-project",
+      "types": [
+        "corporate"
+      ],
+      "role": "AVANTAGE PROJECT описывает задачу как объединение двух бизнес-юнитов с помощью более 15 заданий и активностей. Другие обязанности в опубликованном кейсе не уточняются.",
+      "industry": "Внутренние коммуникации",
+      "description": "Два бизнес-юнита ВК встретились на open-air «Круглое Озеро»: больше 15 заданий и активностей помогали коллегам пройти многочасовую командную программу. После игры — фуршет, костёр и музыка DJ Zolotov. AVANTAGE PROJECT указывает, что общая численность подразделений small medium business и рекламных технологий составляла 600 человек; фактическое число гостей не раскрыто.",
+      "seoDescription": "Тимбилдинг ВК от AVANTAGE PROJECT на open-air «Круглое Озеро»: более 15 командных активностей, фуршет, костёр и DJ Zolotov. В кейсе 2023 года число гостей не указано.",
+      "source": "https://avantage-event.com/ru/cases/5",
+      "image": "/custom/empty/case-enriched-118.svg",
+      "imageMobile": "/custom/empty/case-enriched-118.svg",
+      "ogImage": "/custom/empty/case-enriched-118.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-118",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#144f55,#e39b62)",
+      "curated": false,
+      "reelTitle": "Тимбилдинг ВК · Круглое Озеро",
+      "featured": false,
+      "eventCity": "Open-air «Круглое Озеро»",
+      "guestLabel": "",
+      "occasions": [
+        "teambuilding"
+      ],
+      "sources": [
+        {
+          "label": "Год и клиент · каталог кейсов AVANTAGE PROJECT",
+          "url": "https://avantage-event.com/ru/cases"
+        }
+      ]
     }
   ],
   "types": {
@@ -10929,8 +10977,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 127,
-    "works": 174,
+    "cases": 128,
+    "works": 175,
     "photos": 263
   }
 }
