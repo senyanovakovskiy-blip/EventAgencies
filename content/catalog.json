@@ -723,13 +723,14 @@
         "online",
         "btl"
       ],
-      "description": "В проекте G-Drive на ралли «Шёлковый путь» OXYGEN соединило B2B, PR, бренд-активации и цифровой квиз. Бренд сопровождал маршрут длиной 4 500 км на протяжении 10 дней.",
+      "description": "В проекте G-Drive на ралли «Шёлковый путь» OXYGEN соединило B2B, PR, бренд-активации и цифровой квиз. Бренд сопровождал маршрут длиной 4 500 км на протяжении 10 дней. В промо Flash UP OXYGEN описывает «энергетический патруль» в 25 городах и сообщает о 600 000+ эффективных контактов за 689 промодней.",
       "website": "https://www.oxygen-agency.ru/",
       "works": [
         "portfolio-oxygen-b9f344d",
-        "case-enriched-43"
+        "case-enriched-43",
+        "case-enriched-110"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 1,
       "cover": "/custom/library/ee6905e651-thumb.webp",
       "coverWork": "portfolio-oxygen-b9f344d"
@@ -10543,8 +10544,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 119,
-    "works": 166,
+    "cases": 120,
+    "works": 167,
     "photos": 263
   }
 }

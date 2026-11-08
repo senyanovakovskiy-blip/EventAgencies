@@ -8366,5 +8366,43 @@
     "featured": false,
     "guestLabel": "",
     "occasions": []
+  },
+  {
+    "slug": "case-enriched-110",
+    "title": "Flash UP — промо для молодёжной аудитории",
+    "fullTitle": "Многогородское промо Flash UP в 25 городах России",
+    "year": "Год не указан",
+    "eventDate": "",
+    "category": "Активация",
+    "format": "Многогородское промо и презентация продукта",
+    "client": "Flash UP",
+    "agencySlug": "oxygen",
+    "agencyUrl": "/agency/oxygen",
+    "types": [
+      "btl",
+      "public",
+      "pr"
+    ],
+    "role": "Креативная презентация продукта для молодёжной аудитории: «энергетический патруль», фестивальные и студенческие площадки, механика для контента в соцсетях.",
+    "industry": "Энергетические напитки",
+    "description": "«Энергетический патруль» встречал молодую аудиторию на фестивалях и студенческих площадках: команда представляла Flash UP, а экипировка с аккумуляторами помогала заряжать гироскутеры и оставаться в движении. По данным OXYGEN, кампания в 25 городах длилась три месяца, включала два крупных фестиваля и дала более 600 000 эффективных контактов за 689 промодней.",
+    "seoDescription": "Промо Flash UP от OXYGEN: 25 городов, два крупных фестиваля и 600 000+ эффективных контактов за 689 промодней по данным агентства.",
+    "source": "https://oxygen-agency.ru/flash-up",
+    "image": "/custom/empty/case-enriched-110.svg",
+    "imageMobile": "/custom/empty/case-enriched-110.svg",
+    "ogImage": "/custom/empty/case-enriched-110.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-110",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#17294e,#b71f61)",
+    "curated": false,
+    "reelTitle": "Flash UP · Энергетический патруль",
+    "featured": false,
+    "eventCity": "25 городов России",
+    "guestLabel": "",
+    "occasions": []
   }
 ]
