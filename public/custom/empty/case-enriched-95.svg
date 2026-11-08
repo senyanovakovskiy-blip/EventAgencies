@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#342e3a"/>
+  <circle cx="1190" cy="380" r="238" fill="#e9ae55"/>
+  <circle cx="1190" cy="380" r="188" fill="none" stroke="#ffe0a0" stroke-width="8" stroke-dasharray="2 28" stroke-linecap="round"/>
+  <path d="M0 820q300-170 600 0t600 0 600 0v380H0Z" fill="#69434c"/>
+  <path d="M0 920q300-150 600 0t600 0 600 0" fill="none" stroke="#d98258" stroke-width="12"/>
+  <g transform="translate(930 640)">
+    <ellipse cx="160" cy="105" rx="188" ry="38" fill="#edc87c"/>
+    <ellipse cx="160" cy="72" rx="168" ry="34" fill="#e8b65f"/>
+    <ellipse cx="160" cy="40" rx="146" ry="31" fill="#f0ce82"/>
+    <path d="M55 34q105 34 210 0M70 67q90 30 180 0M95 99q65 24 130 0" fill="none" stroke="#c77b53" stroke-width="7" opacity=".75"/>
+  </g>
+  <g fill="#f4efe5" font-family="Arial,sans-serif">
+    <text x="110" y="145" font-size="30" letter-spacing="4">IVS GROUP × МАГНИТ ЭКСТРА</text>
+    <text x="110" y="370" font-size="84" font-weight="700">МАСЛЕНИЦА</text>
+    <text x="114" y="455" font-size="40" fill="#f0ce82">городской праздник в Екатеринбурге</text>
+    <text x="110" y="555" font-size="32" fill="#dfc7c0">народные гуляния · семейные активности</text>
+    <text x="110" y="1090" font-size="26" fill="#d0c6c8">Иллюстрация кейса · фотографии проекта не добавлены</text>
+  </g>
+</svg>

@@ -7188,6 +7188,49 @@
     ]
   },
   {
+    "slug": "case-enriched-95",
+    "title": "Масленица для «Магнит Экстра» — Екатеринбург",
+    "fullTitle": "Городской праздник Масленицы для сети «Магнит Экстра», Екатеринбург",
+    "year": "Год не указан",
+    "eventDate": "",
+    "category": "Культура",
+    "format": "Городской праздник Масленицы",
+    "client": "Магнит Экстра",
+    "agencySlug": "ivs-group",
+    "agencySlugs": [
+      "ivs-group"
+    ],
+    "agencyUrl": "/agency/ivs-group",
+    "types": [
+      "public",
+      "culture"
+    ],
+    "role": "Организация городского праздника Масленицы с народными гуляниями и семейными активностями.",
+    "industry": "Ритейл и городские события",
+    "description": "IVS Group организовала в Екатеринбурге городскую Масленицу для сети «Магнит Экстра»: народные гуляния дополнили семейными активностями. Год, площадка и число гостей в портфолио агентства не указаны.",
+    "seoDescription": "Масленица для «Магнит Экстра» в Екатеринбурге от IVS Group: городской праздник с народными гуляниями и семейными активностями.",
+    "source": "https://ivsgroup.ru/portfolio",
+    "image": "/custom/empty/case-enriched-95.svg",
+    "imageMobile": "/custom/empty/case-enriched-95.svg",
+    "ogImage": "/custom/empty/case-enriched-95.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-95",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#673f46,#d79450)",
+    "curated": false,
+    "reelTitle": "Масленица Магнит Экстра Екатеринбург",
+    "featured": false,
+    "eventCity": "Екатеринбург",
+    "guestLabel": "",
+    "occasions": [
+      "public",
+      "culture"
+    ]
+  },
+  {
     "slug": "case-enriched-86",
     "title": "Открытие «Российской студенческой весны» — 2021",
     "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
