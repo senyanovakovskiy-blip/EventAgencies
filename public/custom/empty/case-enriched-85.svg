@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#252323"/>
+  <path d="M0 260h1600M0 940h1600" stroke="#59413d" stroke-width="2"/>
+  <circle cx="1270" cy="610" r="285" fill="none" stroke="#8e4a3c" stroke-width="4"/>
+  <circle cx="1270" cy="610" r="18" fill="#d16a52"/>
+  <path d="M1270 325v570M985 610h570" stroke="#8e4a3c" stroke-width="2" opacity=".7"/>
+  <g fill="#f6f1ec" font-family="Arial,sans-serif">
+    <text x="120" y="225" font-size="28" letter-spacing="3">DPG RUSSIA × KFC</text>
+    <text x="120" y="510" font-size="92" font-weight="700">KFC BATTLE</text>
+    <text x="120" y="610" font-size="46">Футбол · стритбол · 28 городов</text>
+    <text x="120" y="1010" font-size="28" fill="#c9bfba">Фотографии проекта пока не добавлены</text>
+  </g>
+</svg>

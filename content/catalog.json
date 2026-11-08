@@ -423,12 +423,13 @@
         "public",
         "business"
       ],
-      "description": "DPG Russia связывает деловую и вечернюю программы общей идеей и оформлением пространства. Для конференции LADA 2026 команда придумала «Энергию партнёрства», оформила здание заводоуправления АвтоВАЗа и разместила там экспозицию из 16 автомобилей.",
+      "description": "DPG Russia работает с деловыми событиями и спортивными кампаниями: для LADA 2026 команда оформила конференцию и экспозицию из 16 автомобилей, а KFC Battle превратила в молодёжные чемпионаты по футболу и стритболу в 28 городах.",
       "website": "https://dpgrussia.com/",
       "works": [
-        "lada-conference"
+        "lada-conference",
+        "case-enriched-85"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 7,
       "cover": "/custom/library/044ba5a2d2-thumb.webp",
       "coverWork": "lada-conference"
@@ -8985,6 +8986,48 @@
       "occasions": []
     },
     {
+      "slug": "case-enriched-85",
+      "title": "KFC Battle: футбол и стритбол",
+      "fullTitle": "KFC Battle — чемпионаты по футболу и стритболу",
+      "year": "2019",
+      "eventDate": "2019",
+      "category": "Спорт",
+      "format": "Молодёжные чемпионаты по футболу и стритболу",
+      "client": "KFC",
+      "agencySlug": "dpg-russia",
+      "agencySlugs": [
+        "dpg-russia"
+      ],
+      "agencyUrl": "/agency/dpg-russia",
+      "types": [
+        "sport",
+        "public"
+      ],
+      "role": "Креативная концепция и механика кампании 360, чемпионаты, скаутская система и звёздные наставники.",
+      "industry": "Спорт и молодёжная аудитория",
+      "description": "DPG Russia разработала и реализовала кампанию KFC Battle: чемпионаты по футболу и стритболу для юношей и девушек 14–30 лет в 28 городах России, Казахстана и Кыргызстана. В проект вошли скаутская система и звёздные наставники, в том числе игрок NBA Тимофей Мозгов. По данным DPG, в чемпионатах участвовали 92 063 человека, а число контактов с брендом составило 120 млн.",
+      "seoDescription": "KFC Battle от DPG Russia: футбольные и стритбольные чемпионаты в 28 городах трёх стран. 92 063 участника и 120 млн контактов с брендом — по данным агентства.",
+      "source": "https://dpgrussia.com/project/kfc-battle/",
+      "image": "/custom/empty/case-enriched-85.svg",
+      "imageMobile": "/custom/empty/case-enriched-85.svg",
+      "ogImage": "/custom/empty/case-enriched-85.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-85",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#252323,#492b27)",
+      "curated": false,
+      "reelTitle": "KFC Battle — футбол и стритбол",
+      "featured": false,
+      "eventCity": "28 городов России, Казахстана и Кыргызстана",
+      "guestLabel": "92 063 участника",
+      "occasions": [
+        "public"
+      ]
+    },
+    {
       "slug": "case-round2-84",
       "title": "Презентация «Битва титанов 2020»",
       "fullTitle": "Презентация «Битва титанов 2020»",
@@ -9361,8 +9404,8 @@
   },
   "stats": {
     "agencies": 100,
-    "cases": 94,
-    "works": 141,
+    "cases": 95,
+    "works": 142,
     "photos": 263
   }
 }
