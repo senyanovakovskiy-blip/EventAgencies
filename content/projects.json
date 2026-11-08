@@ -8890,5 +8890,47 @@
         "url": "https://www.arscom.ru/projects/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-122",
+    "title": "«Эвотор» в 90-е — #BACK2THE80EVOTOR",
+    "fullTitle": "#BACK2THE80EVOTOR: корпоратив «Эвотора» как путешествие в 90-е",
+    "year": "Год не указан",
+    "eventDate": "",
+    "category": "Корпоратив",
+    "format": "Историческая реконструкция 90-х для сотрудников",
+    "client": "Эвотор",
+    "agencySlug": "c4",
+    "agencySlugs": [
+      "c4",
+      "c4-group"
+    ],
+    "agencyUrl": "/agency/c4",
+    "types": [
+      "corporate"
+    ],
+    "role": "C4 перечисляет автора идеи, руководителя и менеджеров проекта, продакшн-менеджера и специалиста по реквизиту; страница не раскрывает полный перечень обязанностей агентства.",
+    "industry": "Онлайн-кассы и программное обеспечение",
+    "description": "Касса «Эвотора» стала машиной времени, которая отправила команду в 90-е: видеосалон PAL/SECAM, чемпионат по кубику Рубика, значки с Брюсом Ли и Терминатором, восьмибитные игры в «Марио» и «Черепашек-ниндзя» и бар с коктейлями эпохи. В команде C4 перечислены авторы идеи, руководитель, менеджеры, продакшн-менеджер и специалист по реквизиту. Дата, площадка и число гостей на странице не указаны.",
+    "seoDescription": "Корпоратив «Эвотора» от C4 — историческая реконструкция 90-х с видеосалоном PAL/SECAM, кубиком Рубика, восьмибитными играми и тематическим баром.",
+    "source": "https://c4group.ru/portfolio/korporativnye-meropriyatiya/BACK2THE80EVOTOR/",
+    "image": "/custom/empty/case-enriched-122.svg",
+    "imageMobile": "/custom/empty/case-enriched-122.svg",
+    "ogImage": "/custom/empty/case-enriched-122.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-122",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#28253e,#c67a53)",
+    "curated": false,
+    "reelTitle": "Эвотор · машина времени в 90-е",
+    "featured": false,
+    "eventCity": "",
+    "guestLabel": "",
+    "occasions": [
+      "corporate"
+    ]
   }
 ]

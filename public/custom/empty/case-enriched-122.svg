@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">Корпоратив «Эвотора» в стиле 90-х — концептуальная иллюстрация</title>
+<desc id="desc">Стилизованные видеосалон, кубик Рубика и восьмибитный игровой экран в цветах ретро-эпохи. Концептуальная иллюстрация, не фотография события.</desc>
+<defs>
+  <linearGradient id="room" x2="0" y2="1"><stop stop-color="#34324a"/><stop offset=".62" stop-color="#70515c"/><stop offset="1" stop-color="#ce8a5d"/></linearGradient>
+  <linearGradient id="tv" x2="1" y2="1"><stop stop-color="#587475"/><stop offset="1" stop-color="#263e49"/></linearGradient>
+  <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#b97f5b"/><stop offset="1" stop-color="#493b49"/></linearGradient>
+  <linearGradient id="neon" x2="1" y2="1"><stop stop-color="#f6d179"/><stop offset="1" stop-color="#e6806b"/></linearGradient>
+</defs>
+<rect width="1600" height="1200" fill="url(#room)"/>
+<path d="M0 730h1600v470H0z" fill="url(#floor)"/><path d="M0 727h1600" stroke="#f3cf82" stroke-width="9" opacity=".7"/>
+<path d="M77 726V294h344v432m758 0V255h345v471" fill="#473d4b" stroke="#d6b486" stroke-width="7"/>
+<path d="M111 343h276v146H111zm0 176h276v174H111zm1091-213h272v175h-272zm0 205h272v202h-272z" fill="#82626a" opacity=".55"/>
+<path d="M134 380h230v71H134zm0 211h230v82H134zm1091-19h230v92h-230zm0-194h230v74h-230z" fill="#e3be80" opacity=".72"/>
+<rect x="448" y="333" width="701" height="384" rx="34" fill="#d9bd91" stroke="#f1dba7" stroke-width="9"/><rect x="486" y="367" width="625" height="320" rx="18" fill="url(#tv)"/>
+<path d="M534 625c57-51 109-47 151 0 43-47 91-49 144 0 57-63 114-63 177 0v39H534Z" fill="#95a28c" opacity=".8"/>
+<path d="M570 576v-74h55v74m59 0V457h56v119m59 0v-65h53v65m67 0V481h56v95" fill="none" stroke="#f0cf83" stroke-width="16" stroke-linecap="square"/>
+<g fill="#e4c685"><rect x="527" y="400" width="45" height="23"/><rect x="586" y="400" width="45" height="23"/><rect x="645" y="400" width="45" height="23"/></g>
+<path d="M800 721v68m-112 37h224" stroke="#c3a476" stroke-width="22" stroke-linecap="round"/>
+<g transform="translate(1252 770)"><g stroke="#43394a" stroke-width="4"><rect width="150" height="150" rx="8" fill="#ebd09a"/><path d="M50 0v150m50-150v150M0 50h150M0 100h150"/></g><g fill="#d85862"><rect x="5" y="5" width="40" height="40"/><rect x="55" y="55" width="40" height="40"/><rect x="105" y="105" width="40" height="40"/></g><g fill="#6b9c8d"><rect x="55" y="5" width="40" height="40"/><rect x="105" y="55" width="40" height="40"/><rect x="5" y="105" width="40" height="40"/></g><g fill="#e5a34f"><rect x="105" y="5" width="40" height="40"/><rect x="5" y="55" width="40" height="40"/><rect x="55" y="105" width="40" height="40"/></g></g>
+<g transform="translate(564 802)" fill="#342f45"><path d="M15 99v-65c0-31 19-51 47-51h24c27 0 46 20 46 51v65H15z"/><path d="M0 38h138v51H0z" fill="#cf4d53"/><path d="M26 38v51m30-51v51m30-51v51m30-51v51" stroke="#eed29b" stroke-width="8"/><path d="M12 99h145" stroke="#1c2636" stroke-width="11"/></g>
+<g fill="#1d2939"><circle cx="423" cy="814" r="16"/><circle cx="474" cy="842" r="15"/><circle cx="1080" cy="815" r="16"/><circle cx="1140" cy="839" r="14"/><path d="M408 832h30v111h-30zm51 24h30v89h-30zm605-24h31v111h-31zm60 21h29v90h-29z"/></g>
+<g fill="#f0e5d1" font-family="Arial,sans-serif"><text x="100" y="110" font-size="25" letter-spacing="5" fill="#f1d291">C4 · ЭВОТОР</text><text x="94" y="212" font-size="71" font-weight="700" letter-spacing="-2">МАШИНА</text><text x="98" y="286" font-size="71" font-weight="700" fill="#f0cc7f" letter-spacing="-2">ВРЕМЕНИ</text><text x="101" y="343" font-size="26" letter-spacing="3">КОРПОРАТИВ В СТИЛЕ 90-Х</text><rect x="99" y="1070" width="663" height="62" rx="12" fill="#29273c" opacity=".92"/><text x="126" y="1110" font-size="22" fill="#f3e6d1">Концептуальная иллюстрация · фото не добавлены</text></g>
+</svg>
