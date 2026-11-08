@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#243c43"/>
+  <circle cx="1280" cy="205" r="150" fill="#e8ba76"/>
+  <path d="M0 630h1600v570H0Z" fill="#36595b"/>
+  <path d="M0 850q260-85 520 0t520 0 560 0v350H0Z" fill="#4d7569"/>
+  <path d="M0 920q260-85 520 0t520 0 560 0" fill="none" stroke="#d79a62" stroke-width="10"/>
+  <g transform="translate(870 470)">
+    <path d="M40 360h540v-250H40Z" fill="#805a55"/>
+    <path d="M10 110h600L545 30H75Z" fill="#e5b66c"/>
+    <path d="M115 360V235h115v125M305 360V235h115v125" fill="#b98563"/>
+    <path d="M80 170h460M80 205h460" stroke="#d9c69a" stroke-width="10"/>
+  </g>
+  <g fill="none" stroke="#e5bd79" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M190 740V505h455v235M150 505l268-205 268 205"/>
+    <path d="M270 740V620h90v120M470 740V620h90v120"/>
+    <path d="M260 485h30M335 430h30M415 365h30M500 430h30"/>
+  </g>
+  <g fill="#f4efe5" font-family="Arial,sans-serif">
+    <text x="110" y="140" font-size="30" letter-spacing="4">TT EVENTS · ГРЕБНЕВО · 2025</text>
+    <text x="110" y="285" font-size="74" font-weight="700">ГЛАВНАЯ СЦЕНА</text>
+    <text x="114" y="370" font-size="42" fill="#e9c47d">детский фестиваль в усадьбе Гребнево</text>
+    <text x="114" y="455" font-size="34" fill="#cbd8ce">Звук · свет · техническая координация</text>
+    <text x="110" y="1090" font-size="26" fill="#cbd5cd">Иллюстрация кейса · фотографии не добавлены</text>
+  </g>
+</svg>
