@@ -395,15 +395,17 @@
         "public",
         "btl",
         "online",
-        "sport"
+        "sport",
+        "business"
       ],
-      "description": "Один из старейших игроков рынка — работает с 1995 года. Среди клиентов Лента, Татнефть, Роснефть, Ozon, Avito и Сбер. В рейтинге 2023 года занял второе место, в 2025 — первое.",
+      "description": "Один из старейших игроков рынка — работает с 1995 года. Среди клиентов Лента, Татнефть, Роснефть, Ozon, Avito и Сбер. В рейтинге 2023 года занял второе место, в 2025 — первое. В E-CODE для Ozon Tech TVIN оформил пространство вокруг темы everything as code: бар-серверную и фотоспот, который менял дизайн после считывания RFID-бейджа.",
       "website": "https://tvin-imc.ru/",
       "works": [
         "sber-golf-cup",
-        "case-2"
+        "case-2",
+        "case-enriched-134"
       ],
-      "caseCount": 2,
+      "caseCount": 3,
       "photoCount": 5,
       "cover": "/custom/library/9f8bab74bd.webp",
       "coverWork": "sber-golf-cup"
@@ -11748,6 +11750,72 @@
           "url": "https://archi.ru/events/21424/signal"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-134",
+      "title": "E-CODE: конференция Ozon Tech",
+      "fullTitle": "E-CODE — конференция Ozon Tech для IT-специалистов",
+      "year": "2024",
+      "eventDate": "28–29 сентября 2024",
+      "category": "IT-конференция",
+      "format": "Два дня, 7 треков, игровые активности и интерактивное пространство",
+      "client": "Ozon Tech",
+      "agencySlug": "tvin",
+      "agencySlugs": [
+        "tvin"
+      ],
+      "agencyUrl": "/agency/tvin",
+      "types": [
+        "business",
+        "corporate"
+      ],
+      "role": "BEMA называет Ozon Tech заказчиком и TVIN исполнителем. TVIN описывает пространство конференции и RFID-фотоспот. Sostav отмечает участие внутренней команды Ozon в подготовке программы и активностей.",
+      "industry": "IT, технологии и профессиональные сообщества",
+      "description": "E-CODE продолжил идею everything as code за пределами сцены: в пространстве конференции появились бар-серверная и фотоспот, который менял оформление после считывания RFID-бейджа. Квесты, баллы и мерч превращали участие в игру. BEMA называет TVIN исполнителем проекта; Sostav отдельно отмечает вклад внутренней команды Ozon в программу и активности. В материалах BEMA указаны 7 треков, 50+ спикеров, 3 000 гостей офлайн и 200 000+ просмотров онлайн. Конференция получила два первых места BEMA 2025 — за деловое событие и командообразующий проект.",
+      "seoDescription": "E-CODE Ozon Tech от TVIN: IT-конференция с баром-серверной, фотоспотом с RFID, квестами и 7 треками. Два первых места BEMA 2025; роли агентства и команды Ozon указаны по источникам.",
+      "source": "https://tvin-imc.ru/article/e-code-konferenciia-dlia-it-specialistov-ot-ozon-tech",
+      "image": "/custom/empty/case-enriched-134.svg",
+      "imageMobile": "/custom/empty/case-enriched-134.svg",
+      "ogImage": "/custom/empty/case-enriched-134.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-134",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#131a46,#8c76ff)",
+      "curated": false,
+      "reelTitle": "E-CODE · everything as code",
+      "featured": false,
+      "eventCity": "Москва",
+      "guestLabel": "3 000 гостей офлайн (по данным BEMA)",
+      "occasions": [
+        "business",
+        "corporate",
+        "conference"
+      ],
+      "sources": [
+        {
+          "label": "TVIN · бар-серверная, RFID-фотоспот и визуальные детали",
+          "url": "https://tvin-imc.ru/article/e-code-konferenciia-dlia-it-specialistov-ot-ozon-tech"
+        },
+        {
+          "label": "BEMA · заказчик, исполнитель, масштаб и две награды",
+          "url": "https://bemafestival.ru/winners/e-code-konferencziya-ozon-tech-luchshee-delovoe-sobytie-dlya-sotrudnikov/"
+        },
+        {
+          "label": "Ozon Tech · даты конференции 28–29 сентября 2024 года",
+          "url": "https://ozon.tech/events/"
+        },
+        {
+          "label": "Sostav · программа и участие внутренней команды Ozon",
+          "url": "https://www.sostav.ru/publication/e-code-ot-ozon-70887.html"
+        },
+        {
+          "label": "Рейтинг Sostav · награды BEMA 2025",
+          "url": "https://ratings.sostav.ru/works/1042"
+        }
+      ]
     }
   ],
   "types": {
@@ -11762,8 +11830,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 143,
-    "works": 190,
+    "cases": 144,
+    "works": 191,
     "photos": 263
   }
 }
