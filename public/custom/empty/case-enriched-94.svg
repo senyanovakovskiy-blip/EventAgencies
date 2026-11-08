@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#172b35"/>
+  <path d="M0 830 460 510l300 165 350-300 490 300v525H0Z" fill="#21434a"/>
+  <path d="M0 920 470 595l285 158 365-306 480 295" fill="none" stroke="#5f8f82" stroke-width="6" opacity=".7"/>
+  <g fill="none" stroke="#d8ad62" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M240 795 510 625l260 135 340-280 275 170"/>
+    <path d="m1180 650 38-1-4-38"/>
+  </g>
+  <g fill="#e9c876" stroke="#172b35" stroke-width="10">
+    <circle cx="240" cy="795" r="22"/><circle cx="510" cy="625" r="22"/><circle cx="770" cy="760" r="22"/><circle cx="1110" cy="480" r="22"/><circle cx="1385" cy="650" r="22"/>
+  </g>
+  <g fill="#d8ad62" opacity=".8">
+    <path d="M1000 740h110v20h-110zM1045 680h20v120h-20z"/>
+    <path d="M1320 790h120v18h-120zM1370 740h18v120h-18z"/>
+  </g>
+  <g fill="#f4f0e6" font-family="Arial,sans-serif">
+    <text x="110" y="145" font-size="30" letter-spacing="4">STRELKA AGENCY × ВИ TECH</text>
+    <text x="110" y="370" font-size="92" font-weight="700">CODE CITY</text>
+    <text x="110" y="470" font-size="92" font-weight="700">FEST</text>
+    <text x="116" y="550" font-size="36" fill="#bdd0c8">Летний фестиваль · квесты · командная игра</text>
+    <text x="110" y="1090" font-size="26" fill="#c5cbd0">Иллюстрация кейса · фотографии проекта не добавлены</text>
+  </g>
+</svg>

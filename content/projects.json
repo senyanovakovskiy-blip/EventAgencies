@@ -7146,6 +7146,48 @@
     ]
   },
   {
+    "slug": "case-enriched-94",
+    "title": "CODE CITY FEST — летний фестиваль ВИ TECH",
+    "fullTitle": "ВИ TECH: корпоративный летний фестиваль CODE CITY FEST",
+    "year": "2025",
+    "eventDate": "2025",
+    "category": "Корпоратив",
+    "format": "Летний игровой фестиваль для команды",
+    "client": "ВИ TECH",
+    "agencySlug": "strelka-agency",
+    "agencySlugs": [
+      "strelka-agency"
+    ],
+    "agencyUrl": "/agency/strelka-agency",
+    "types": [
+      "corporate",
+      "public"
+    ],
+    "role": "Корпоративный фестиваль с уличными квестами, играми и командными соревнованиями.",
+    "industry": "Технологии и корпоративные события",
+    "description": "В 2025 году Strelka Agency провело для ВИ TECH летний корпоративный фестиваль CODE CITY FEST, чтобы сплотить коллектив. Идея превращала офисную рутину в испытания для героев: уличные квесты, игры и командные соревнования. В оформлении использовались урбан-графика, яркие цвета и игровые элементы. Число гостей, площадка, регион и итоговые метрики в кейсе не указаны.",
+    "seoDescription": "CODE CITY FEST для ВИ TECH от Strelka Agency: уличные квесты, игры и командные соревнования в ярком городском оформлении.",
+    "source": "https://strelka-agency.ru/cases/vi-tech-korporativnyy-letniy-festival/",
+    "image": "/custom/empty/case-enriched-94.svg",
+    "imageMobile": "/custom/empty/case-enriched-94.svg",
+    "ogImage": "/custom/empty/case-enriched-94.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-94",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#263842,#59704e)",
+    "curated": false,
+    "reelTitle": "CODE CITY FEST ВИ TECH",
+    "featured": false,
+    "eventCity": "",
+    "guestLabel": "",
+    "occasions": [
+      "corporate"
+    ]
+  },
+  {
     "slug": "case-enriched-86",
     "title": "Открытие «Российской студенческой весны» — 2021",
     "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
