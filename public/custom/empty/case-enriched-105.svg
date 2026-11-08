@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#263d48"/>
+  <circle cx="1325" cy="180" r="145" fill="#dfbd82" opacity=".9"/>
+  <path d="M900 390h500v440H900z" fill="#2d4b55" stroke="#dfbd82" stroke-width="8"/>
+  <path d="M960 450h380M960 515h380M960 580h380" stroke="#d6c19a" stroke-width="5" opacity=".8"/>
+  <path d="M1035 635h230v195h-230z" fill="#a77950" stroke="#e5c889" stroke-width="6"/>
+  <g fill="#e8cc91">
+    <circle cx="980" cy="720" r="17"/><circle cx="1015" cy="720" r="17"/>
+    <circle cx="1285" cy="720" r="17"/><circle cx="1320" cy="720" r="17"/>
+  </g>
+  <g fill="none" stroke="#d8b77d" stroke-width="8" stroke-linecap="round" stroke-dasharray="15 18">
+    <path d="M590 475h245M590 630h245M590 785h245"/>
+    <path d="M315 545c90-90 180-90 270 0M315 715c90 90 180 90 270 0"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="105" y="142" font-size="31" letter-spacing="4">BEST PRACTICE · МОСКВА · 2024</text>
+    <text x="100" y="345" font-size="66" font-weight="700">РОСНЕФТЬ</text>
+    <text x="105" y="435" font-size="50" font-weight="700" fill="#e2c38f">СМАЗОЧНЫЕ МАТЕРИАЛЫ</text>
+    <text x="105" y="535" font-size="32" fill="#d6ded6">Две конференции · 480 участников</text>
+    <text x="105" y="610" font-size="31" fill="#d6ded6">Деловая программа · спикеры · экскурсии</text>
+    <text x="100" y="1090" font-size="25" fill="#cbd2db">Условная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+</svg>
