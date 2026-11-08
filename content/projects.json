@@ -9079,5 +9079,58 @@
     "occasions": [
       "business"
     ]
+  },
+  {
+    "slug": "case-enriched-126",
+    "title": "Yandex E-com Open Air — фестиваль e-commerce-сообщества",
+    "fullTitle": "Yandex E-com Open Air 2024: B2B-фестиваль Яндекса на Хлебозаводе №9",
+    "year": "2024",
+    "eventDate": "23 августа 2024",
+    "category": "Бизнес-фестиваль",
+    "format": "B2B open-air для профессионального сообщества электронной коммерции",
+    "client": "Яндекс",
+    "agencySlug": "worlds",
+    "agencySlugs": [
+      "worlds"
+    ],
+    "agencyUrl": "/agency/worlds",
+    "types": [
+      "business",
+      "public"
+    ],
+    "role": "Worlds описывает бриф и решение: объединить e-commerce-сообщество офлайн в формате на стыке бизнеса и летнего фестиваля, с тематическими локациями и интерактивными зонами. Полный перечень работ агентства не опубликован.",
+    "industry": "Электронная коммерция и цифровые сервисы",
+    "description": "23 августа 2024 года Хлебозавод №9 стал площадкой Yandex E-com Open Air — первого B2B-фестиваля Яндекса для рынка онлайн-коммерции. Деловые разговоры о развитии e-commerce и обмен опытом соединились с летним open-air и интерактивными зонами для профессионального сообщества. По данным Worlds, фестиваль собрал 5 500 участников, занял 20 000 м² застройки, а монтаж площадки занял 50 часов.",
+    "seoDescription": "Yandex E-com Open Air прошёл 23 августа 2024 года на Хлебозаводе №9 в Москве. Worlds описывает первый B2B-фестиваль Яндекса для e-commerce-сообщества и указывает 5 500 участников.",
+    "source": "https://wrlds.ru/cases/Yandex%20E-com%20Open%20Air%202024",
+    "image": "/custom/empty/case-enriched-126.svg",
+    "imageMobile": "/custom/empty/case-enriched-126.svg",
+    "ogImage": "/custom/empty/case-enriched-126.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-126",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#182b44,#f58d39)",
+    "curated": false,
+    "reelTitle": "Yandex E-com Open Air · e-commerce",
+    "featured": false,
+    "eventCity": "Хлебозавод №9, Москва",
+    "guestLabel": "5 500 участников (по данным Worlds)",
+    "occasions": [
+      "business",
+      "public"
+    ],
+    "sources": [
+      {
+        "label": "Яндекс · первый B2B-фестиваль онлайн-коммерции",
+        "url": "https://b2b.yandex.ru/adv/news/yandex-ecom-open-air-kejsy"
+      },
+      {
+        "label": "Хлебозавод №9 · дата, площадка и время проведения",
+        "url": "https://t.me/s/Hlebozavod9/2934"
+      }
+    ]
   }
 ]

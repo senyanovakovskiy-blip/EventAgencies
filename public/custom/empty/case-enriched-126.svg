@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Yandex E-com Open Air</title>
+  <desc id="desc">Концептуальный плакат фестиваля электронной коммерции с городскими павильонами, сценой и графическими торговыми маршрутами.</desc>
+  <defs>
+    <linearGradient id="sky" x2="1" y2="1">
+      <stop stop-color="#172c46"/>
+      <stop offset=".57" stop-color="#264763"/>
+      <stop offset="1" stop-color="#d96c36"/>
+    </linearGradient>
+    <linearGradient id="sun" x2="0" y2="1">
+      <stop stop-color="#ffc85d"/>
+      <stop offset="1" stop-color="#f08143"/>
+    </linearGradient>
+    <linearGradient id="route" x2="1" y2="0">
+      <stop stop-color="#f8d464"/>
+      <stop offset=".5" stop-color="#5ce0d2"/>
+      <stop offset="1" stop-color="#fa806a"/>
+    </linearGradient>
+    <pattern id="grain" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="5" r="1" fill="#fff" opacity=".12"/>
+      <circle cx="14" cy="15" r=".7" fill="#fff" opacity=".09"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="#f3ead9"/>
+  <rect x="28" y="28" width="1144" height="744" rx="18" fill="url(#sky)"/>
+  <circle cx="900" cy="230" r="168" fill="url(#sun)"/>
+  <g fill="none" stroke="#f5e8d1" stroke-opacity=".28" stroke-width="2">
+    <circle cx="900" cy="230" r="125"/>
+    <circle cx="900" cy="230" r="91"/>
+    <path d="M732 230h336M900 62v336M781 111l238 238m0-238L781 349"/>
+  </g>
+  <path d="M64 414h1072v145H64z" fill="#1a2636" opacity=".5"/>
+  <g transform="translate(88 237)">
+    <path d="M0 206V62l92-54 93 54v144z" fill="#e7a444" stroke="#f6d36a" stroke-width="5"/>
+    <path d="M30 206V83l62-38 62 38v123z" fill="#23415a"/>
+    <path d="M51 204v-89h82v89" fill="#f6d36a"/>
+    <path d="M224 206V90l72-42 72 42v116z" fill="#54c9bc" stroke="#e6eee1" stroke-width="5"/>
+    <path d="M251 206V110l45-27 45 27v96z" fill="#24435b"/>
+    <path d="M270 204v-55h52v55" fill="#f3ead9"/>
+    <path d="M438 206V47l88-43 89 43v159z" fill="#d86344" stroke="#f6d36a" stroke-width="5"/>
+    <path d="M468 206V67l58-29 59 29v139z" fill="#23415a"/>
+    <path d="M487 206v-92h81v92" fill="#59d2c1"/>
+    <path d="M677 206V98l70-42 71 42v108z" fill="#f1b84f" stroke="#f3ead9" stroke-width="5"/>
+    <path d="M705 206v-88l42-26 43 26v88z" fill="#23415a"/>
+    <path d="M721 204v-50h53v50" fill="#fa806a"/>
+  </g>
+  <path d="M60 490q115-48 230 0t230 0 230 0 230 0 160 0" fill="none" stroke="url(#route)" stroke-width="8" stroke-linecap="round"/>
+  <g fill="#f7eedc" stroke="#172c46" stroke-width="3">
+    <circle cx="172" cy="489" r="12"/><circle cx="402" cy="489" r="12"/><circle cx="632" cy="489" r="12"/><circle cx="862" cy="489" r="12"/><circle cx="1092" cy="489" r="12"/>
+  </g>
+  <g transform="translate(930 312)">
+    <path d="M22 67h166v125H22z" fill="#f7eedc" stroke="#172c46" stroke-width="5"/>
+    <path d="M22 67 105 18l83 49" fill="#f6d36a" stroke="#172c46" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M46 93h117v76H46z" fill="#5ccfc1"/>
+    <path d="M46 117h117m-58-24v76" stroke="#172c46" stroke-width="4"/>
+    <circle cx="105" cy="132" r="8" fill="#f7eedc"/>
+  </g>
+  <g transform="translate(691 315)" fill="#f7eedc">
+    <path d="M0 24h116q12 0 12 12v60q0 12-12 12H70l-27 23 3-23H0q-12 0-12-12V36q0-12 12-12z"/>
+    <circle cx="25" cy="66" r="7" fill="#172c46"/><circle cx="57" cy="66" r="7" fill="#172c46"/><circle cx="89" cy="66" r="7" fill="#172c46"/>
+  </g>
+  <rect x="64" y="567" width="1072" height="162" rx="10" fill="#f3ead9"/>
+  <text x="100" y="610" font-family="Arial,sans-serif" font-size="22" font-weight="800" letter-spacing="5" fill="#bc5c3e">ЯНДЕКС · ХЛЕБОЗАВОД №9 · 23 АВГУСТА 2024</text>
+  <text x="96" y="676" font-family="Arial,sans-serif" font-size="57" font-weight="900" letter-spacing="-2" fill="#172c46">E-COM OPEN AIR</text>
+  <text x="100" y="713" font-family="Arial,sans-serif" font-size="18" font-weight="700" letter-spacing="4" fill="#277b7a">БИЗНЕС · СООБЩЕСТВО · ГОРОДСКОЙ ФЕСТИВАЛЬ</text>
+  <rect x="28" y="28" width="1144" height="744" rx="18" fill="url(#grain)" pointer-events="none"/>
+</svg>
