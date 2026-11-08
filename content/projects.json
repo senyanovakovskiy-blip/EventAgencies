@@ -7718,6 +7718,45 @@
     ]
   },
   {
+    "slug": "case-enriched-108",
+    "title": "PHDays 24 — «Кибервселенная»",
+    "fullTitle": "Киберфестиваль PHDays 24 «Кибервселенная» в «Лужниках»",
+    "year": "2024",
+    "eventDate": "Май 2024",
+    "category": "Фестиваль",
+    "format": "Киберфестиваль и деловая программа",
+    "client": "Positive Technologies",
+    "agencySlug": "lyra",
+    "agencyUrl": "/agency/lyra",
+    "types": [
+      "public",
+      "business"
+    ],
+    "role": "Организация киберфестиваля; размещение главной сцены деловой программы на трибуне «Лужников» из-за запрета строить на живом газоне.",
+    "industry": "Кибербезопасность и технологии",
+    "description": "В мае 2024 года LYRA организовала для Positive Technologies киберфестиваль PHDays 24 «Кибервселенная». По данным агентства, он объединил более 100 000 гостей. На живом футбольном газоне строить сцену было нельзя, поэтому главную сцену деловой программы разместили на трибуне «Лужников», заняв первые 13 рядов. Источник LYRA подробно описывает это решение, но не перечисляет другие обязанности команды.",
+    "seoDescription": "PHDays 24 «Кибервселенная» в «Лужниках»: 100 000+ гостей и главная сцена деловой программы на трибуне стадиона.",
+    "source": "https://lyra-agency.ru/phdays24_sostav",
+    "image": "/custom/empty/case-enriched-108.svg",
+    "imageMobile": "/custom/empty/case-enriched-108.svg",
+    "ogImage": "/custom/empty/case-enriched-108.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-108",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#292a56,#cc4984)",
+    "curated": false,
+    "reelTitle": "PHDays 24 · Кибервселенная",
+    "featured": false,
+    "eventCity": "Москва",
+    "guestLabel": "Более 100 000 гостей (по данным LYRA)",
+    "occasions": [
+      "conference"
+    ]
+  },
+  {
     "slug": "case-enriched-86",
     "title": "Открытие «Российской студенческой весны» — 2021",
     "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",

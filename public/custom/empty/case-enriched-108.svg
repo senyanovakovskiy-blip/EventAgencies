@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#292a56"/>
+  <circle cx="1325" cy="180" r="145" fill="#edc78a" opacity=".92"/>
+  <path d="M880 520h565v335H880z" fill="#37376f" stroke="#db62a0" stroke-width="8"/>
+  <path d="M930 855h465v32H930z" fill="#dd5d9d"/>
+  <g fill="#4f4f94" stroke="#e2c58f" stroke-width="6">
+    <path d="M980 520v-95h80v95M1100 520V380h80v140M1220 520v-190h80v190"/>
+    <path d="M940 900h90v70h-90zM1050 900h90v70h-90zM1160 900h90v70h-90zM1270 900h90v70h-90z"/>
+  </g>
+  <g fill="none" stroke="#db62a0" stroke-width="8" stroke-linecap="round" stroke-dasharray="16 18">
+    <path d="M570 500h235M570 670h235M570 840h235"/>
+    <path d="M300 560c90-95 180-95 270 0M300 755c90 95 180 95 270 0"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="100" y="142" font-size="31" letter-spacing="4">LYRA × POSITIVE TECHNOLOGIES · 2024</text>
+    <text x="95" y="345" font-size="76" font-weight="700">PHDAYS 24</text>
+    <text x="100" y="435" font-size="67" font-weight="700" fill="#e9a2bd">КИБЕРВСЕЛЕННАЯ</text>
+    <text x="100" y="535" font-size="32" fill="#d6ded6">Лужники · деловая сцена на трибуне</text>
+    <text x="100" y="610" font-size="31" fill="#d6ded6">100 000+ гостей по данным агентства</text>
+    <text x="95" y="1090" font-size="25" fill="#cbd2db">Условная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+</svg>
