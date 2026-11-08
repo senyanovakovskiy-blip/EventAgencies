@@ -9132,5 +9132,57 @@
         "url": "https://t.me/s/Hlebozavod9/2934"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-127",
+    "title": "Яндекс Ecom Yard — выезд на гоночный трек",
+    "fullTitle": "Яндекс Ecom Yard 2024: закрытое клиентское событие на гоночном треке",
+    "year": "2024",
+    "eventDate": "",
+    "category": "Деловое событие",
+    "format": "Закрытый B2B-выезд для e-commerce-клиентов",
+    "client": "Яндекс.Реклама",
+    "agencySlug": "eventum-premo",
+    "agencySlugs": [
+      "eventum-premo"
+    ],
+    "agencyUrl": "/agency/eventum-premo",
+    "types": [
+      "business",
+      "corporate"
+    ],
+    "role": "BEMA указывает Eventum Premo как исполнителя. В описании кейса — закрытый выезд e-commerce-клиентов на гоночный трек с монстр-траками; полный перечень работ агентства не раскрыт.",
+    "industry": "Электронная коммерция и рекламные технологии",
+    "description": "Второй выпуск Yandex Ecom Yard в 2024 году превратил закрытую встречу клиентов Яндекс.Рекламы в выезд на гоночный трек с монстр-траками — вместо привычного ресторанного формата. BEMA отмечает, что задача события включала укрепление лояльности и рост интереса к e-commerce-продуктам Яндекса. В заявке проекта цель — собрать не менее 100 корпоративных клиентов; фактическое число гостей не указано. Проект получил третье место BEMA в номинации «Лучший коммуникационный проект для клиентов и партнёров».",
+    "seoDescription": "Yandex Ecom Yard 2024 — закрытый выезд Яндекс.Рекламы для e-commerce-клиентов на гоночный трек. BEMA называет Eventum Premo исполнителем; проект занял третье место в номинации для клиентских и партнёрских коммуникаций.",
+    "source": "https://bemafestival.ru/winners/yandeks-ecom-yard/",
+    "image": "/custom/empty/case-enriched-127.svg",
+    "imageMobile": "/custom/empty/case-enriched-127.svg",
+    "ogImage": "/custom/empty/case-enriched-127.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-127",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#142a43,#b94937)",
+    "curated": false,
+    "reelTitle": "Ecom Yard · гоночный трек",
+    "featured": false,
+    "eventCity": "",
+    "guestLabel": "",
+    "occasions": [
+      "business"
+    ],
+    "sources": [
+      {
+        "label": "Sostav · участники проекта и третье место BEMA",
+        "url": "https://ratings.sostav.ru/works/1036"
+      },
+      {
+        "label": "Eventum Premo · награды за 2024 год",
+        "url": "https://www.eventum.ru/awards"
+      }
+    ]
   }
 ]

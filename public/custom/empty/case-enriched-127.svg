@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Яндекс Ecom Yard</title>
+  <desc id="desc">Концептуальный плакат клиентского e-commerce-события на гоночном треке с монстр-траком и деловыми павильонами.</desc>
+  <defs>
+    <linearGradient id="night" x2="1" y2="1">
+      <stop stop-color="#14263f"/>
+      <stop offset=".58" stop-color="#24475f"/>
+      <stop offset="1" stop-color="#a83f35"/>
+    </linearGradient>
+    <linearGradient id="track" x2="1" y2="0">
+      <stop stop-color="#f3c654"/>
+      <stop offset=".5" stop-color="#4cd6c4"/>
+      <stop offset="1" stop-color="#f07a53"/>
+    </linearGradient>
+    <radialGradient id="sun">
+      <stop stop-color="#ffe5a2"/>
+      <stop offset="1" stop-color="#f3a34f"/>
+    </radialGradient>
+    <pattern id="check" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M0 0h12v12H0zm12 12h12v12H12z" fill="#f4ead5" opacity=".75"/>
+      <path d="M12 0h12v12H12zM0 12h12v12H0z" fill="#172b42" opacity=".72"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="#f2e8d7"/>
+  <rect x="28" y="28" width="1144" height="744" rx="18" fill="url(#night)"/>
+  <circle cx="900" cy="213" r="151" fill="url(#sun)"/>
+  <g fill="none" stroke="#f5e9d7" stroke-opacity=".26" stroke-width="2">
+    <circle cx="900" cy="213" r="119"/>
+    <circle cx="900" cy="213" r="84"/>
+    <path d="M749 213h302M900 62v302M793 106l214 214m0-214L793 320"/>
+  </g>
+  <path d="M43 431q170-118 341 0t341 0 341 0 163 0v137H43z" fill="#172235"/>
+  <path d="M43 480q170-118 341 0t341 0 341 0 163 0" fill="none" stroke="#f5e9d7" stroke-opacity=".27" stroke-width="5"/>
+  <path d="M44 514q170-118 341 0t341 0 341 0 163 0" fill="none" stroke="url(#track)" stroke-width="8" stroke-linecap="round"/>
+  <g transform="translate(84 260)">
+    <path d="M0 165V66l65-48 65 48v99z" fill="#e0a344" stroke="#f4d26c" stroke-width="5"/>
+    <path d="M22 165V81l43-31 43 31v84z" fill="#1b3b57"/>
+    <path d="M39 163v-47h51v47" fill="#54c8b9"/>
+    <path d="M170 165V76l55-39 55 39v89z" fill="#d45a43" stroke="#f4ead5" stroke-width="5"/>
+    <path d="M194 165V91l31-23 31 23v74z" fill="#1b3b57"/>
+    <path d="M208 163v-41h34v41" fill="#f1c55a"/>
+    <path d="M0 19h130m40 18h110" stroke="#f4ead5" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(475 281)">
+    <path d="M58 98h276q28 0 43 29l32 58-13 43H25l-16-41 19-59q7-26 30-30z" fill="#e5a847" stroke="#f4ead5" stroke-width="6"/>
+    <path d="m93 103 29-58h115l52 58" fill="#56cbbd" stroke="#172b42" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M142 53h76v48h-101z" fill="#172b42" opacity=".86"/>
+    <path d="m239 53 38 48h-53V53z" fill="#172b42" opacity=".86"/>
+    <path d="M39 169h339" stroke="#d64f3e" stroke-width="10"/>
+    <circle cx="94" cy="229" r="47" fill="#172235" stroke="#f2e8d7" stroke-width="9"/>
+    <circle cx="94" cy="229" r="19" fill="#f4c95d"/>
+    <circle cx="329" cy="229" r="47" fill="#172235" stroke="#f2e8d7" stroke-width="9"/>
+    <circle cx="329" cy="229" r="19" fill="#f4c95d"/>
+    <path d="M337 85 385 55m-9 56 47 1" stroke="#f4ead5" stroke-width="7" stroke-linecap="round"/>
+    <path d="M20 76 0 56m5 45L-25 100" stroke="#58d3c2" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(943 318)">
+    <path d="M0 50 60 0l61 50v97H0z" fill="#f3e9d7" stroke="#172b42" stroke-width="5"/>
+    <path d="M20 65h81v49H20z" fill="#57cabb"/>
+    <path d="M44 147v-48h33v48" fill="#d75a44"/>
+    <path d="M-16 165h156" stroke="#f2c85b" stroke-width="8" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(64 557)">
+    <rect width="166" height="34" fill="url(#check)"/>
+    <path d="M0 42h166" stroke="#f2c85b" stroke-width="5"/>
+  </g>
+  <rect x="64" y="611" width="1072" height="118" rx="9" fill="#f2e8d7"/>
+  <text x="98" y="650" font-family="Arial,sans-serif" font-size="21" font-weight="800" letter-spacing="5" fill="#a74436">ЗАКРЫТЫЙ ВЫЕЗД · E-COMMERCE · 2024</text>
+  <text x="94" y="708" font-family="Arial,sans-serif" font-size="56" font-weight="900" letter-spacing="-1" fill="#172b42">ЯНДЕКС ECOM YARD</text>
+</svg>
