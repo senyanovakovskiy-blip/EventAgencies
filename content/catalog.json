@@ -1935,6 +1935,24 @@
       "photoCount": 0,
       "cover": null,
       "coverWork": null
+    },
+    {
+      "slug": "areal-event",
+      "name": "AREAL EVENT",
+      "city": "",
+      "types": [
+        "public",
+        "pr"
+      ],
+      "description": "AREAL EVENT создало собственный фестиваль «Вкусы Казани»: набережная, гастропроекты, сцены, семейная зона и партнёрские интеграции. По данным агентства, за два дня событие посетили 92 000 человек.",
+      "website": "https://arealevent.ru/cases/vkusy-kazani",
+      "works": [
+        "case-enriched-90"
+      ],
+      "caseCount": 1,
+      "photoCount": 0,
+      "cover": null,
+      "coverWork": null
     }
   ],
   "projects": [
@@ -9218,6 +9236,48 @@
       ]
     },
     {
+      "slug": "case-enriched-90",
+      "title": "«Вкусы Казани» — городской гастрофестиваль",
+      "fullTitle": "Гастрономический фестиваль «Вкусы Казани»",
+      "year": "2026",
+      "eventDate": "5–6 сентября 2026",
+      "category": "Фестиваль",
+      "format": "Городской гастрофестиваль",
+      "client": "Собственный проект AREAL EVENT",
+      "agencySlug": "areal-event",
+      "agencySlugs": [
+        "areal-event"
+      ],
+      "agencyUrl": "/agency/areal-event",
+      "types": [
+        "public",
+        "pr"
+      ],
+      "role": "Собственный проект: концепция, отбор гастропроектов и партнёров, программа, безопасность и медиасопровождение.",
+      "industry": "Гастрономия и городские события",
+      "description": "5–6 сентября 2026 года AREAL EVENT провело на Кремлёвской набережной в Казани фестиваль «Вкусы Казани» со свободным входом, сценами, семейной зоной и партнёрскими интеграциями. Агентство указывает 100 гастропроектов и описывает фестиваль как собственный проект: команда отвечала за концепцию, отбор участников и партнёров, программу, безопасность и медиасопровождение. По данным AREAL EVENT, за два дня фестиваль посетили 92 000 человек.",
+      "seoDescription": "«Вкусы Казани» от AREAL EVENT: городской гастрофестиваль на Кремлёвской набережной 5–6 сентября 2026 года, 100 гастропроектов и 92 000 посетителей по данным агентства.",
+      "source": "https://arealevent.ru/cases/vkusy-kazani",
+      "image": "/custom/empty/case-enriched-90.svg",
+      "imageMobile": "/custom/empty/case-enriched-90.svg",
+      "ogImage": "/custom/empty/case-enriched-90.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-90",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#31383d,#78563b)",
+      "curated": false,
+      "reelTitle": "Гастрофестиваль «Вкусы Казани»",
+      "featured": false,
+      "eventCity": "Кремлёвская набережная, Казань",
+      "guestLabel": "92 000 посетителей за два дня (по данным AREAL EVENT)",
+      "occasions": [
+        "public"
+      ]
+    },
+    {
       "slug": "case-round2-84",
       "title": "Презентация «Битва титанов 2020»",
       "fullTitle": "Презентация «Битва титанов 2020»",
@@ -9593,9 +9653,9 @@
     "pr": "PR-события"
   },
   "stats": {
-    "agencies": 101,
-    "cases": 99,
-    "works": 146,
+    "agencies": 102,
+    "cases": 100,
+    "works": 147,
     "photos": 263
   }
 }
