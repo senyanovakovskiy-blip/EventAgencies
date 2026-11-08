@@ -96,9 +96,10 @@
       "works": [
         "portfolio-be-in-event-fbe0bbe",
         "case-enriched-57",
-        "case-enriched-58"
+        "case-enriched-58",
+        "case-enriched-148"
       ],
-      "caseCount": 2,
+      "caseCount": 3,
       "photoCount": 6,
       "cover": "/custom/library/4a4bf89ec6.webp",
       "coverWork": "portfolio-be-in-event-fbe0bbe"
@@ -12571,6 +12572,53 @@
           "url": "https://ods.ai/hubs/sber/news/5d408ca2-0785-4019-b344-ed845d568f94"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-148",
+      "title": "«Назад в детство»: семейные выходные AB InBev EFES",
+      "fullTitle": "FAMILY DAYS для сотрудников AB InBev EFES — Казань и Клин",
+      "year": "2024",
+      "eventDate": "3 и 24 августа 2024",
+      "category": "Семейные события для сотрудников",
+      "format": "Два летних семейных дня на природе: игры детства, мастер-классы и общий арт-финал",
+      "client": "AB InBev EFES",
+      "agencySlug": "be-in-event",
+      "agencySlugs": [
+        "be-in-event"
+      ],
+      "agencyUrl": "/agency/be-in-event",
+      "types": [
+        "corporate"
+      ],
+      "role": "BE IN включает Family Days в портфолио HR-мероприятий и описывает логистику, питание, активности и общий финал. На странице AB InBev EFES названа компанией, организовавшей семейные выходные для работников заводов; отдельное распределение ролей клиента и агентства не уточняется.",
+      "industry": "Производство напитков и внутренние коммуникации",
+      "description": "3 и 24 августа 2024 года для работников заводов AB InBev EFES прошли семейные выходные в Казани и Клину под девизом «Назад в детство!». В программу вошли эстафеты в мешках, «резиночки», городки и перетягивание каната; рядом работали аниматоры, аквагрим, шоу мыльных пузырей и мастер-классы. В финале семьи вместе раскрасили большой арт-объект и устроили танцевальный флешмоб. BE IN показывает проект в портфолио HR-событий; число гостей не опубликовано.",
+      "seoDescription": "Family Days AB InBev EFES в Казани и Клину: игры детства, мастер-классы и общий арт-финал. Даты и программа — по портфолио BE IN EVENT.",
+      "source": "https://beinevent.ru/hr-events",
+      "image": "/custom/empty/case-enriched-148.svg",
+      "imageMobile": "/custom/empty/case-enriched-148.svg",
+      "ogImage": "/custom/empty/case-enriched-148.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-148",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#193d49,#eea15c)",
+      "curated": false,
+      "reelTitle": "Назад в детство · Family Days",
+      "featured": false,
+      "eventCity": "Казань · Клин",
+      "guestLabel": "Число гостей не опубликовано",
+      "occasions": [
+        "corporate"
+      ],
+      "sources": [
+        {
+          "label": "BE IN EVENT · кейс Family Days, даты, города и программа",
+          "url": "https://beinevent.ru/hr-events"
+        }
+      ]
     }
   ],
   "types": {
@@ -12585,8 +12633,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 157,
-    "works": 204,
+    "cases": 158,
+    "works": 205,
     "photos": 263
   }
 }
