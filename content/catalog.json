@@ -923,13 +923,14 @@
         "corporate",
         "pr"
       ],
-      "description": "",
+      "description": "AVM Media участвует в проектах для детей и семей. В акции ВТБ «Мир без слёз» в больницы приезжает образовательный спектакль, а участвующие медучреждения получают сертификаты на оборудование. Публикация агентства не уточняет конкретные задачи команды.",
       "website": "https://avmmedia.ru/",
       "works": [
         "portfolio-avm-media-d9af9bf",
-        "case-round2-87"
+        "case-round2-87",
+        "case-enriched-114"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 6,
       "cover": "/custom/library/714d7d087a-thumb.webp",
       "coverWork": "portfolio-avm-media-d9af9bf"
@@ -10740,6 +10741,48 @@
       "occasions": [
         "corporate"
       ]
+    },
+    {
+      "slug": "case-enriched-114",
+      "title": "«Мир без слёз» — спектакль о финансовой грамотности",
+      "fullTitle": "Благотворительная акция ВТБ «Мир без слёз» в регионах России",
+      "year": "2025",
+      "eventDate": "",
+      "category": "Благотворительное событие",
+      "format": "Выездной образовательный спектакль в детских больницах",
+      "client": "Банк ВТБ",
+      "agencySlug": "avm-media",
+      "agencySlugs": [
+        "avm-media"
+      ],
+      "agencyUrl": "/agency/avm-media",
+      "types": [
+        "public",
+        "culture"
+      ],
+      "role": "AVM Media включает акцию в список своих проектов; публикация описывает программу и участие ВТБ, но не раскрывает конкретную зону ответственности агентства.",
+      "industry": "Благотворительность и медицинская помощь детям",
+      "description": "Хрюша, Степашка, Филя, Каркуша и робот Айтиша приезжают в детские больницы с интерактивным спектаклем о финансовой грамотности: фокусы и конкурсы помогают говорить с детьми о деньгах и мошенниках простым языком. ВТБ передаёт участвующим больницам сертификаты на нужное медицинское оборудование. По публикации AVM Media от 6 октября 2025 года, с марта акция уже охватила 13 регионов; сезон ещё продолжался. Конкретная роль агентства в источнике не раскрыта.",
+      "seoDescription": "Акция ВТБ «Мир без слёз»: выездной спектакль о финансовой грамотности для детей в больницах и сертификаты на медицинское оборудование. По публикации AVM Media от 6 октября 2025 года — 13 регионов на тот момент.",
+      "source": "https://avmmedia.ru/news/vsyo-radi-ulybok-detej-akcziya-mir-bez-slyoz-v-regionah-rf/",
+      "image": "/custom/empty/case-enriched-114.svg",
+      "imageMobile": "/custom/empty/case-enriched-114.svg",
+      "ogImage": "/custom/empty/case-enriched-114.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-114",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#355c65,#d69360)",
+      "curated": false,
+      "reelTitle": "Мир без слёз · ВТБ",
+      "featured": false,
+      "eventCity": "Детские больницы в регионах России",
+      "guestLabel": "",
+      "occasions": [
+        "public"
+      ]
     }
   ],
   "types": {
@@ -10754,8 +10797,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 123,
-    "works": 170,
+    "cases": 124,
+    "works": 171,
     "photos": 263
   }
 }
