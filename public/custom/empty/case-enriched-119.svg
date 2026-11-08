@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">«Стройфест 2023» — концептуальная иллюстрация</title>
+<desc id="desc">Стилизованный экскаватор, картонный город и семейные фигурки на открытой фестивальной площадке. Концептуальная иллюстрация, не фотография события.</desc>
+<defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#f4d7ad"/><stop offset=".62" stop-color="#e9b987"/><stop offset="1" stop-color="#bb795d"/></linearGradient>
+  <linearGradient id="field" x2="0" y2="1"><stop stop-color="#8fae83"/><stop offset="1" stop-color="#425d58"/></linearGradient>
+  <linearGradient id="machine" x2="1" y2="1"><stop stop-color="#ffd46b"/><stop offset="1" stop-color="#e88639"/></linearGradient>
+  <linearGradient id="shadow" x2="0" y2="1"><stop stop-color="#182d38"/><stop offset="1" stop-color="#263c43"/></linearGradient>
+</defs>
+<rect width="1600" height="1200" fill="url(#sky)"/>
+<circle cx="1290" cy="220" r="120" fill="#f8e3ac" opacity=".82"/>
+<path d="M0 626c230-75 436-75 637-17 221 64 395 56 579 5 139-39 271-43 384 2v584H0Z" fill="url(#field)"/>
+<path d="M0 832c205-66 357-66 550-6 193 61 344 78 511 36 177-45 359-84 539-27" fill="none" stroke="#d7c29a" stroke-width="17" stroke-linecap="round" opacity=".83"/>
+<path d="M0 1002c230-78 394-55 584 12 167 58 322 71 494 22 189-54 348-65 522-17v181H0Z" fill="#395655" opacity=".7"/>
+<g fill="#496b5f"><path d="m119 626 61-177 61 177zm124-2 72-210 72 210zm1118 5 58-168 58 168zm118 1 74-215 74 215z"/></g>
+<g fill="#d7b889" stroke="#8e6e57" stroke-width="6"><path d="M150 677v-123h128v123z"/><path d="M286 677V498h142v179z"/><path d="M442 677V552h117v125z"/><path d="M1025 680V542h143v138z"/><path d="M1176 680V471h156v209z"/><path d="M1340 680V560h120v120z"/></g>
+<g fill="#607980"><path d="M174 581h31v44h-31zm50 0h31v44h-31zm95-41h33v46h-33zm56 0h33v46h-33zm681 44h32v48h-32zm57 0h32v48h-32zm91-68h34v49h-34zm60 0h34v49h-34zm86 62h32v48h-32z"/></g>
+<g fill="#e9d5a8" opacity=".92"><path d="M179 606h20v18h-20zm52 0h20v18h-20zm101-39h22v20h-22zm57 0h22v20h-22zm648 43h21v21h-21zm57 0h21v21h-21zm94-65h23v22h-23zm61 0h23v22h-23z"/></g>
+<g transform="translate(486 581)">
+  <path d="M102 149H52l-34 55h70z" fill="#9b5d38"/>
+  <circle cx="87" cy="212" r="36" fill="#1d333d" stroke="#d5a65c" stroke-width="10"/><circle cx="250" cy="212" r="36" fill="#1d333d" stroke="#d5a65c" stroke-width="10"/>
+  <path d="M64 183h223l-18-118H89z" fill="url(#machine)" stroke="#8f522d" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M119 72h87c30 0 49 20 53 52l5 54H99l7-79c2-17 6-27 13-27z" fill="#2d5560" stroke="#8f522d" stroke-width="9"/>
+  <path d="M123 87h71c15 0 25 11 27 26l6 45H110l6-54c1-11 3-17 7-17z" fill="#b8d3cc"/>
+  <path d="M259 81 348 9l47 16-72 104 49 62-32 27-77-67 37-74z" fill="url(#machine)" stroke="#8f522d" stroke-width="10" stroke-linejoin="round"/>
+  <path d="m359 172 45 27-33 48-51-20z" fill="#c6773a" stroke="#8f522d" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M72 105H20l-11 30h49m239-26 43-23" fill="none" stroke="#ffe18e" stroke-width="12" stroke-linecap="round"/>
+</g>
+<g transform="translate(967 704)">
+  <g stroke="#233c43" stroke-width="13" stroke-linecap="round"><path d="M35 86v-59m-1 28-24 24m24-24 26 17"/><path d="M107 84V21m0 31-26 23m26-23 27 21"/><path d="M183 88V26m0 30-25 23m25-23 28 18"/><path d="M270 89V28m0 30-25 20m25-20 29 18"/><path d="M340 91V32m0 28-26 19m26-19 26 20"/></g>
+  <g fill="#d78050"><circle cx="34" cy="17" r="17"/><circle cx="107" cy="10" r="17"/><circle cx="183" cy="15" r="17"/><circle cx="270" cy="17" r="17"/><circle cx="340" cy="21" r="17"/></g>
+</g>
+<g transform="translate(752 752)" fill="none" stroke="#eccb88" stroke-width="9"><path d="M0 135v-102h192v102"/><path d="M27 33 96 0l69 33"/></g>
+<g fill="#ecd6ae"><path d="M790 855h27v37h-27zm48 0h27v37h-27zm-22-13h21v16h-21z"/><path d="M894 855h27v37h-27zm48 0h27v37h-27zm-22-13h21v16h-21z"/></g>
+<g fill="#f0ce84"><path d="M703 789h36v49h-36zm-6-19h48v21h-48z"/><path d="M1155 780h36v49h-36zm-6-19h48v21h-48z"/></g>
+<g fill="#edf0df" font-family="Arial,sans-serif"><text x="101" y="111" font-size="25" letter-spacing="5" fill="#765440">ВМЕСТЕ! · КРАСНОЯРСК</text><text x="96" y="216" font-size="78" font-weight="700" letter-spacing="-3" fill="#283e47">СТРОЙФЕСТ</text><text x="103" y="269" font-size="31" letter-spacing="3" fill="#6b4937">2023 · СЕМЕЙНЫЙ ПРАЗДНИК</text><rect x="100" y="1000" width="730" height="93" rx="16" fill="#203a42" opacity=".91"/><text x="131" y="1058" font-size="28" fill="#f7e7c8">ТЕХНИКА · КАРТОННЫЙ ГОРОД · МАСТЕР-КЛАССЫ</text><text x="101" y="1158" font-size="22" fill="#f2eee2">Концептуальная иллюстрация · фотографии проекта не добавлены</text></g>
+</svg>

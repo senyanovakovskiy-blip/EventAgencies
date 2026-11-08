@@ -8751,5 +8751,46 @@
         "url": "https://avantage-event.com/ru/cases"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-119",
+    "title": "«Стройфест 2023» — техника и семейный праздник",
+    "fullTitle": "Стройфест 2023 в Красноярске: фестиваль ко Дню строителя",
+    "year": "2023",
+    "eventDate": "13 августа 2023 года",
+    "category": "Фестиваль",
+    "format": "Семейный праздник с конкурсами на строительной технике и детской программой",
+    "client": "Не указан в источнике",
+    "agencySlug": "vmeste-event-group",
+    "agencySlugs": [
+      "vmeste-event-group"
+    ],
+    "agencyUrl": "/agency/vmeste-event-group",
+    "types": [
+      "public"
+    ],
+    "role": "«ВМЕСТЕ!» сообщает, что подготовило развлекательную программу фестиваля. Страница не подтверждает, что агентство отвечало за мероприятие целиком.",
+    "industry": "Строительная отрасль",
+    "description": "Строительная техника стала частью семейного праздника: конкурсы с настоящими машинами, картонный город, детская программа с аниматорами и мастер-классами, артисты региона и гриль-зона. 13 августа 2023 года в «Дрокино Парке» Красноярска собралось более 300 гостей. «ВМЕСТЕ!» пишет, что подготовило развлекательную программу; клиента страница не называет.",
+    "seoDescription": "Стройфест 2023 от «ВМЕСТЕ!» в «Дрокино Парке», Красноярск: семейная программа ко Дню строителя, конкурсы с техникой, картонный город и более 300 гостей.",
+    "source": "https://eventvmeste.com/cases/stroyfest-2023",
+    "image": "/custom/empty/case-enriched-119.svg",
+    "imageMobile": "/custom/empty/case-enriched-119.svg",
+    "ogImage": "/custom/empty/case-enriched-119.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-119",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#2c3d4c,#e28c48)",
+    "curated": false,
+    "reelTitle": "Стройфест · Красноярск",
+    "featured": false,
+    "eventCity": "«Дрокино Парк», Красноярск",
+    "guestLabel": "Более 300 гостей (по данным «ВМЕСТЕ!»)",
+    "occasions": [
+      "public"
+    ]
   }
 ]
