@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#283a54"/>
+  <circle cx="1325" cy="180" r="145" fill="#dcb77d" opacity=".92"/>
+  <path d="M900 360h510v510H900z" fill="#304765" stroke="#dfc28f" stroke-width="7"/>
+  <path d="M980 430h350v250H980z" fill="#1f3046" stroke="#d8bd89" stroke-width="5"/>
+  <path d="M1020 620h115v185h-115zM1175 620h115v185h-115z" fill="#3f5d78" stroke="#e1c78f" stroke-width="5"/>
+  <g fill="#e6ca91">
+    <circle cx="1035" cy="485" r="18"/><circle cx="1105" cy="485" r="18"/><circle cx="1175" cy="485" r="18"/><circle cx="1245" cy="485" r="18"/>
+    <path d="M945 905h420v20H945z"/>
+  </g>
+  <g fill="none" stroke="#d8b77d" stroke-width="8" stroke-linecap="round" stroke-dasharray="15 18">
+    <path d="M650 455h190M650 625h190M650 795h190"/>
+    <path d="M400 530c85-90 170-90 255 0M400 720c85 90 170 90 255 0"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="105" y="142" font-size="31" letter-spacing="4">OGGI × TCL · МОСКВА</text>
+    <text x="100" y="345" font-size="78" font-weight="700">ИССЛЕДУЙ</text>
+    <text x="105" y="435" font-size="70" font-weight="700" fill="#e2c38f">НЕИЗВЕДАННОЕ</text>
+    <text x="105" y="535" font-size="32" fill="#d6ded6">Пресс-запуск · экспозиция · онлайн-трансляция</text>
+    <text x="105" y="610" font-size="31" fill="#d6ded6">130 гостей · 72 представителя СМИ · 99 млн охвата</text>
+    <text x="100" y="1090" font-size="25" fill="#cbd2db">Условная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+</svg>
