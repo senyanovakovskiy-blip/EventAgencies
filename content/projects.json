@@ -10170,5 +10170,62 @@
         "url": "https://360.ru/news/obschestvo/final-kiberturnira-diktant-pobedy-sostojalsja-v-moskve/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-145",
+    "title": "T-Sync Conf: восемь инженерных контуров",
+    "fullTitle": "T-Sync Conf 2026 для Т-Банка — концепция и пространство N:OW",
+    "year": "2026",
+    "eventDate": "7 февраля 2026",
+    "category": "Инженерная конференция и технологический фестиваль",
+    "format": "Восемь технологических контуров, хакатон и data-инсталляция с аудиореактивным финалом",
+    "client": "Т-Банк",
+    "agencySlug": "n-ow",
+    "agencySlugs": [
+      "n-ow"
+    ],
+    "agencyUrl": "/agency/n-ow",
+    "types": [
+      "business",
+      "public"
+    ],
+    "role": "N:OW описывает свою роль как разработку концепции и опыта гостей, проектирование восьми контуров, логистику, безопасность и полный технический цикл производства. Финальный аудиореактивный перформанс создан совместно с Raduga Design и Generative Gallery; музыку исполнил Opensound Orchestra с композитором Александром Василенко.",
+    "industry": "Инженерные технологии, данные и разработка",
+    "description": "T-Sync Conf превратил конференцию в «город инфраструктур»: вместо единого маршрута гости выбирали между восемью инженерными контурами — от AI и Data до Security, UX/UI и Platform. В программу вошли хакатон с призом 500 000 ₽ и VIP-вечер. Центральная инсталляция Nessy T-Sync Center собирала данные о движении и активности гостей; в финале графика откликалась на живое исполнение оркестра. N:OW сообщает о более чем 2 000 гостях.",
+    "seoDescription": "T-Sync Conf 2026 для Т-Банка от N:OW: восемь инженерных контуров, хакатон и финальный аудиовизуальный перформанс по данным конференции.",
+    "source": "https://now-agency.ru/t/",
+    "image": "/custom/empty/case-enriched-145.svg",
+    "imageMobile": "/custom/empty/case-enriched-145.svg",
+    "ogImage": "/custom/empty/case-enriched-145.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-145",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#101a23,#6e93b2)",
+    "curated": false,
+    "reelTitle": "T-Sync Conf · город инженерных контуров",
+    "featured": false,
+    "eventCity": "Москва · TAU",
+    "guestLabel": "Более 2 000 гостей (по данным N:OW)",
+    "occasions": [
+      "business",
+      "public"
+    ],
+    "sources": [
+      {
+        "label": "N:OW · восемь контуров, хакатон, инсталляция и заявленный вклад команды",
+        "url": "https://now-agency.ru/t/"
+      },
+      {
+        "label": "Habr · анонс, дата, площадка и заявленные совместные авторы финала",
+        "url": "https://habr.com/ru/news/988762/"
+      },
+      {
+        "label": "TotalExpo · дата, TAU и Т-Банк как организатор мероприятия",
+        "url": "https://www.totalexpo.ru/expo/12457.aspx"
+      }
+    ]
   }
 ]
