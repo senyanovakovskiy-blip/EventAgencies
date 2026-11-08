@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Фиджитал-баскетбол на «Играх Будущего»</title>
+  <desc id="desc">Концептуальный плакат: схема LED-площадки соединяет цифровой баскетбол и матч 2×2. Это иллюстрация, не фотография проекта.</desc>
+  <defs>
+    <linearGradient id="courtBg" x2="1" y2="1"><stop stop-color="#17243d"/><stop offset=".58" stop-color="#173e56"/><stop offset="1" stop-color="#0d7e83"/></linearGradient>
+    <linearGradient id="led" x2="1" y2=".4"><stop stop-color="#3ce0d1"/><stop offset=".52" stop-color="#90f4d4"/><stop offset="1" stop-color="#64bfff"/></linearGradient>
+    <linearGradient id="ball" x2=".8" y2="1"><stop stop-color="#ffd56a"/><stop offset="1" stop-color="#f08b46"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#61f2dd" stop-opacity=".34"/><stop offset="1" stop-color="#61f2dd" stop-opacity="0"/></radialGradient>
+    <pattern id="pixels" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.2" fill="#d9fff7" opacity=".18"/></pattern>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0v32" fill="none" stroke="#69eee0" stroke-opacity=".14" stroke-width="1"/></pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="#eee5d2"/>
+  <rect x="28" y="28" width="1144" height="744" rx="20" fill="url(#courtBg)"/>
+  <circle cx="588" cy="337" r="315" fill="url(#glow)"/>
+  <ellipse cx="600" cy="416" rx="440" ry="210" fill="#39e5d1" opacity=".22" filter="url(#soft)"/>
+  <path d="M188 169h824l91 334H97z" fill="#102237" stroke="url(#led)" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M188 169h824l91 334H97z" fill="url(#grid)"/>
+  <path d="M188 169h824l91 334H97z" fill="url(#pixels)"/>
+  <g fill="none" stroke="#c8fff1" stroke-width="4" stroke-opacity=".82">
+    <path d="M188 169h824v334H97z"/>
+    <path d="M600 169v334"/>
+    <ellipse cx="600" cy="336" rx="112" ry="91"/>
+    <path d="M188 169v334m824-334v334"/>
+    <path d="M97 503c0-101 82-183 183-183h62v99h-62c-46 0-84 38-84 84m895 0c0-101-82-183-183-183h-62v99h62c46 0 84 38 84 84"/>
+  </g>
+  <g fill="none" stroke="#67fff0" stroke-width="3" stroke-linecap="round" opacity=".72">
+    <path d="M265 251q78-53 148-5t135 2" stroke-dasharray="7 12"/>
+    <path d="M671 418q83 36 151-8t105-7" stroke-dasharray="7 12"/>
+    <path d="M412 405q95-42 154-82" stroke-dasharray="5 13"/>
+  </g>
+  <g>
+    <circle cx="358" cy="247" r="17" fill="#ffb357" stroke="#fff1ce" stroke-width="4"/><circle cx="748" cy="414" r="17" fill="#f27669" stroke="#ffe3db" stroke-width="4"/>
+    <circle cx="523" cy="323" r="11" fill="#a2f7e4" stroke="#16334a" stroke-width="4"/><circle cx="899" cy="267" r="11" fill="#a2f7e4" stroke="#16334a" stroke-width="4"/>
+  </g>
+  <g transform="translate(513 275)">
+    <circle cx="87" cy="61" r="39" fill="url(#ball)" stroke="#182c43" stroke-width="4"/>
+    <path d="M53 42q34 19 68 0M87 22v78M61 34q25 27 26 55m27-55q-26 27-27 55" fill="none" stroke="#9d5638" stroke-width="3"/>
+  </g>
+  <g fill="#e7fff5" font-family="Arial,sans-serif" font-weight="800" letter-spacing="3">
+    <text x="123" y="145" font-size="18">DIGITAL</text><text x="924" y="145" font-size="18">2 × 2 · LIVE</text>
+  </g>
+  <g fill="#ccfff4" opacity=".9">
+    <circle cx="159" cy="199" r="3"/><circle cx="164" cy="220" r="2"/><circle cx="1042" cy="209" r="3"/><circle cx="1048" cy="232" r="2"/>
+  </g>
+  <rect x="64" y="560" width="1072" height="170" rx="10" fill="#f1e8d7"/>
+  <text x="99" y="608" font-family="Arial,sans-serif" font-size="20" font-weight="800" letter-spacing="4" fill="#087c7d">КАЗАНЬ · «ИГРЫ БУДУЩЕГО» · 2024</text>
+  <text x="95" y="670" font-family="Arial,sans-serif" font-size="47" font-weight="900" letter-spacing="-1.5" fill="#15243c">ФИДЖИТАЛ-БАСКЕТБОЛ</text>
+  <text x="100" y="710" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="3" fill="#385f6d">LED-ПОЛЕ 323 М² · СИМУЛЯТОР + МАТЧ 2×2</text>
+</svg>

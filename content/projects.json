@@ -9184,5 +9184,58 @@
         "url": "https://www.eventum.ru/awards"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-128",
+    "title": "Фиджитал-баскетбол на «Играх Будущего»",
+    "fullTitle": "Фиджитал-баскетбол со СБЕРОМ на «Играх Будущего» 2024",
+    "year": "2024",
+    "eventDate": "",
+    "category": "Спортивное событие",
+    "format": "Международный фиджитал-турнир: баскетбольный симулятор и матч 2×2 на LED-поле",
+    "client": "Фиджитал-баскетбол со СБЕРОМ · «Игры Будущего»",
+    "agencySlug": "dream-laser",
+    "agencySlugs": [
+      "dream-laser"
+    ],
+    "agencyUrl": "/agency/dream-laser",
+    "types": [
+      "sport",
+      "public"
+    ],
+    "role": "Dreamlaser участвовал в организации и отвечал за техническую реализацию: создал LED-поле площадью 323 м² и вывел визуальный контент с данными игроков в реальном времени. Трекинг и сбор данных обеспечивал партнёр b-sight.",
+    "industry": "Спорт и цифровые технологии",
+    "description": "Здесь цифровая игра не заканчивается у экрана: после баскетбольного симулятора команды выходили на матч 2×2 по реальному LED-полю. Dreamlaser участвовал в организации фиджитал-баскетбола на «Играх Будущего» и отвечал за техническую реализацию поля площадью 323 м². Вместе с b-sight команда настроила передачу данных спортсменов в реальном времени и их визуализацию через TouchDesigner. По данным организатора, в турнире дисциплины выступили 16 команд из 13 стран. Технология стала частью спортивной механики — площадка помогала соединить цифровой и физический этапы матча.",
+    "seoDescription": "Фиджитал-баскетбол на «Играх Будущего» 2024 в Казани: Dreamlaser создал LED-поле 323 м² и отвечал за техническую реализацию показа данных спортсменов в реальном времени. В турнире участвовали 16 команд из 13 стран.",
+    "source": "https://dreamlaser.ru/news/fidzhital-basketbol-na-igrah-budushego-2024-v-kazani",
+    "image": "/custom/empty/case-enriched-128.svg",
+    "imageMobile": "/custom/empty/case-enriched-128.svg",
+    "ogImage": "/custom/empty/case-enriched-128.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-128",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#15233f,#12b8b5)",
+    "curated": false,
+    "reelTitle": "Фиджитал-баскетбол · LED-поле",
+    "featured": false,
+    "eventCity": "Казань · «Казань Экспо»",
+    "guestLabel": "16 команд из 13 стран",
+    "occasions": [
+      "sport",
+      "public"
+    ],
+    "sources": [
+      {
+        "label": "Dreamlaser · техническая реализация LED-поля и система данных",
+        "url": "https://dreamlaser.ru/news/fidzhital-basketbol-na-igrah-budushego-2024-v-kazani"
+      },
+      {
+        "label": "Дирекция спортивных и социальных проектов · формат и итоги турнира",
+        "url": "https://dsspkazan.ru/media/pobedu-na-igrax-budushhego-mogu-nazvat-glavnoj-v-karere-itogi-fidzhital-basketbola-so-sberom-itogi-fidzhital-basketbola-so-sberom/"
+      }
+    ]
   }
 ]
