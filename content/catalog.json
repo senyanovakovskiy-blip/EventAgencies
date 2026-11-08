@@ -135,14 +135,15 @@
         "business",
         "online"
       ],
-      "description": "Начинал в 2005 году в Красноярске. Поставил рекорд Гиннесса и взял золото BEA World. 20-летие отметил на «Мосфильме» для 500 гостей. Для Big Tech Night команда помогала Яндексу с застройкой, логистикой между офисами и единым пространством; REDDAY сообщает о 3 600+ гостях.",
+      "description": "Начинал в 2005 году в Красноярске. Поставил рекорд Гиннесса и взял золото BEA World. 20-летие отметил на «Мосфильме» для 500 гостей. Для Big Tech Night команда помогала Яндексу с застройкой, логистикой между офисами и единым пространством; REDDAY сообщает о 3 600+ гостях. Для МТС True Tech Champ 2025 REDDAY указан исполнителем BEMA; агентство описывает совместный проект с MTS True Tech, где алгоритмический трек и программирование роботов завершились шоу-битвой.",
       "website": "https://www.redday.events/",
       "works": [
         "case-5",
         "case-6",
-        "case-enriched-104"
+        "case-enriched-104",
+        "case-enriched-136"
       ],
-      "caseCount": 3,
+      "caseCount": 4,
       "photoCount": 1,
       "cover": "/custom/library/38291ff36f.png",
       "coverWork": "case-5"
@@ -11881,6 +11882,69 @@
           "url": "https://ratings.sostav.ru/works/1003"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-136",
+      "title": "True Tech Champ — от кода к битве роботов",
+      "fullTitle": "МТС True Tech Champ 2025: шоу-финал алгоритмического и робототехнического чемпионата",
+      "year": "2025",
+      "eventDate": "21 ноября 2025",
+      "category": "IT-чемпионат и шоу-финал",
+      "format": "Два соревновательных трека, очный финал и битва роботов в гибридной реальности",
+      "client": "МТС Web Services",
+      "agencySlug": "redday",
+      "agencySlugs": [
+        "redday"
+      ],
+      "agencyUrl": "/agency/redday",
+      "types": [
+        "business",
+        "public",
+        "online"
+      ],
+      "role": "BEMA называет заказчиком ООО «МВС», исполнителем — REDDAY. Агентство описывает чемпионат как совместный проект с MTS True Tech; МТС подтверждает формат и содержание финала, не распределяя работу других подрядчиков.",
+      "industry": "Технологии, образование и IT-сообщество",
+      "description": "True Tech Champ превратил программирование в шоу с двумя треками: участники решали алгоритмические задачи или собирали и программировали роботов. После онлайн-отборов в очный финал вышли 350 человек; соревнование завершилось битвой роботов в гибридной реальности. МТС также сообщает о 14 000+ участниках чемпионата и описывает программу финала: ИТ-родео на механическом быке, челленджи, лекции и выступление группы NEMIGA. BEMA называет REDDAY исполнителем проекта, а агентство описывает его как совместную работу с MTS True Tech.",
+      "seoDescription": "МТС True Tech Champ 2025 от REDDAY: алгоритмический трек, программирование роботов и шоу-финал с битвой в гибридной реальности. IT-чемпионат объединил 14 000+ участников.",
+      "source": "https://redday.events/projects/mts/true-tech-champ2025",
+      "image": "/custom/empty/case-enriched-136.svg",
+      "imageMobile": "/custom/empty/case-enriched-136.svg",
+      "ogImage": "/custom/empty/case-enriched-136.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-136",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#171317,#a51e2c)",
+      "curated": false,
+      "reelTitle": "True Tech Champ · код и роботы",
+      "featured": false,
+      "eventCity": "Москва · МТС Live Холл",
+      "guestLabel": "350 финалистов · 14 000+ участников (по данным МТС)",
+      "occasions": [
+        "business",
+        "public",
+        "online"
+      ],
+      "sources": [
+        {
+          "label": "REDDAY · два трека, финалисты и совместный проект с МТС",
+          "url": "https://redday.events/projects/mts/true-tech-champ2025"
+        },
+        {
+          "label": "BEMA · заказчик ООО «МВС» и исполнитель REDDAY",
+          "url": "https://bemafestival.ru/winners/mts-true-tech-champ-2025/"
+        },
+        {
+          "label": "МТС · площадка, гибридный финал, треки и программа",
+          "url": "https://moskva.mts.ru/about/media-centr/soobshheniya-kompanii/novosti-mts-v-rossii-i-mire/2025-11-24/mts-provela-shou-final-vserossijskogo-it-chempionata-v-gibridnoj-realnosti"
+        },
+        {
+          "label": "FutureToday · дата, финал и анонс активностей",
+          "url": "https://it.fut.ru/event/mts/truetechchamp-guests"
+        }
+      ]
     }
   ],
   "types": {
@@ -11895,8 +11959,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 145,
-    "works": 192,
+    "cases": 146,
+    "works": 193,
     "photos": 263
   }
 }

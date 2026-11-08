@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Концептуальная иллюстрация True Tech Champ 2025</title>
+  <desc id="desc">Символическая арена, роботы, алгоритмический код и зрительский свет. Это концептуальная графика, не фотография события.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111116"/><stop offset=".55" stop-color="#28171d"/><stop offset="1" stop-color="#100f15"/></linearGradient>
+    <radialGradient id="red"><stop stop-color="#ff5963" stop-opacity=".76"/><stop offset=".42" stop-color="#d41f3b" stop-opacity=".32"/><stop offset="1" stop-color="#d41f3b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ff7782"/><stop offset=".5" stop-color="#fff0d9"/><stop offset="1" stop-color="#ff404e"/></linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#742536"/><stop offset="1" stop-color="#17141a"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="697" cy="400" r="350" fill="url(#red)"/>
+  <g opacity=".36" stroke="#ff6473" stroke-width="2"><path d="M0 595 600 367 1200 595"/><path d="M0 648 600 404 1200 648"/><path d="M92 800 600 420 1107 800"/><path d="M245 800 600 432 955 800"/></g>
+  <ellipse cx="600" cy="604" rx="460" ry="152" fill="url(#floor)" stroke="#ff6574" stroke-opacity=".55" stroke-width="3"/>
+  <ellipse cx="600" cy="604" rx="328" ry="104" fill="none" stroke="#ff9ba3" stroke-opacity=".72" stroke-width="2" stroke-dasharray="10 13"/>
+  <path d="M200 598h800" stroke="url(#beam)" stroke-opacity=".68" stroke-width="3"/>
+  <g transform="translate(154 302)">
+    <rect width="300" height="210" rx="18" fill="#17161e" stroke="#ff8290" stroke-opacity=".55" stroke-width="2"/>
+    <text x="25" y="42" fill="#f5e6e7" font-family="Arial,sans-serif" font-size="13" letter-spacing="3">ALGORITHM TRACK</text>
+    <path d="M34 83h38l25 26-22 29h53l25-31h49M35 161h50l24-25m25 0h56l27 25h44" fill="none" stroke="#ff7b89" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="34" cy="83" r="5" fill="#ffe3dc"/><circle cx="202" cy="107" r="5" fill="#ffe3dc"/><circle cx="261" cy="161" r="5" fill="#ffe3dc"/>
+    <text x="33" y="194" fill="#aa9da1" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">INPUT → LOGIC → OUTPUT</text>
+  </g>
+  <g transform="translate(606 337)">
+    <path d="M0 63 42 11h103l40 52v79H0z" fill="#201c23" stroke="#ffc0b5" stroke-width="3"/>
+    <path d="M23 63h139M46 11l15 52m82-52-16 52" stroke="#f47b84" stroke-width="3"/>
+    <circle cx="47" cy="145" r="16" fill="#111116" stroke="#ff7b89" stroke-width="4"/><circle cx="139" cy="145" r="16" fill="#111116" stroke="#ff7b89" stroke-width="4"/>
+    <path d="m35 11 17-23m96 23 16-23" stroke="#ffe5d8" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="80" cy="73" r="6" fill="#fff1db"/><circle cx="111" cy="73" r="6" fill="#fff1db"/>
+  </g>
+  <g transform="translate(842 357) scale(.78)">
+    <path d="M0 63 42 11h103l40 52v79H0z" fill="#29171e" stroke="#ff8e98" stroke-width="4"/>
+    <path d="M22 63h142m-95-52 14 52m67-52-16 52" stroke="#ff5366" stroke-width="4"/>
+    <circle cx="47" cy="145" r="16" fill="#111116" stroke="#ff5366" stroke-width="5"/><circle cx="139" cy="145" r="16" fill="#111116" stroke="#ff5366" stroke-width="5"/>
+    <path d="m35 11 17-23m96 23 16-23" stroke="#fff0d9" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <path d="M474 437 575 384m203 53 62-37" stroke="url(#beam)" stroke-width="3" stroke-dasharray="5 8"/>
+  <g fill="#fff1e8" opacity=".86"><circle cx="501" cy="287" r="3"/><circle cx="718" cy="234" r="4"/><circle cx="919" cy="265" r="3"/><circle cx="1044" cy="385" r="4"/><circle cx="566" cy="214" r="2"/></g>
+  <g font-family="Arial,sans-serif">
+    <text x="72" y="78" fill="#c8b9bd" font-size="15" letter-spacing="5">МТС WEB SERVICES · MOSCOW 2025</text>
+    <text x="72" y="699" fill="#f8f2f2" font-size="55" font-weight="700" letter-spacing="1">TRUE TECH CHAMP</text>
+    <text x="76" y="739" fill="#ff9da5" font-size="17" letter-spacing="3">АЛГОРИТМЫ × РОБОТЫ × ШОУ-ФИНАЛ</text>
+    <text x="1128" y="79" text-anchor="end" fill="#d5c7ca" font-size="12" letter-spacing="3">КОНЦЕПТУАЛЬНАЯ ИЛЛЮСТРАЦИЯ</text>
+  </g>
+</svg>
