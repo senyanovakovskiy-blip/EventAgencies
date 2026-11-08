@@ -10749,5 +10749,54 @@
         "url": "https://nfreg.ru/novosti/karavaj-vse-chto-hochesh-vybiraj/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-156",
+    "title": "«Это мы!»: день рождения команды Positive Technologies",
+    "fullTitle": "День рождения Positive Technologies — кейс 2CAPITALS",
+    "year": "2024",
+    "eventDate": "2024",
+    "category": "День рождения IT-компании",
+    "format": "Дневные активности, игровые зоны и вечерний концерт",
+    "client": "Positive Technologies",
+    "agencySlug": "2capitals",
+    "agencySlugs": [
+      "2capitals"
+    ],
+    "agencyUrl": "/agency/2capitals",
+    "types": [
+      "corporate",
+      "culture"
+    ],
+    "role": "2CAPITALS включает проект в раздел кейсов за 2024 год и описывает его программу. Страница не уточняет распределение производственных задач между командами.",
+    "industry": "Кибербезопасность и корпоративные события",
+    "description": "«Это мы!» — день рождения Positive Technologies в THE BIRCH в Подмосковье. Днём гости выбирали занятие по настроению: покерный турнир, спортивные активности, лазертаг, квесты, «отель гнева» и фирменный Posi X. Михаил Мун провёл «Что? Где? Когда?», а вечером сцена перешла к концерту с лазерами и живой музыкой. 2CAPITALS указывает 2 900 участников; подробный вклад агентства по блокам кейс не раскрывает.",
+    "seoDescription": "День рождения Positive Technologies «Это мы!» в THE BIRCH: дневные игры, лазертаг и квесты, шоу Михаила Муна и вечерний концерт. Аудитория — по данным кейса 2CAPITALS.",
+    "source": "https://2capitals.ru/kejsy/eto-my",
+    "image": "/custom/empty/case-enriched-156.svg",
+    "imageMobile": "/custom/empty/case-enriched-156.svg",
+    "ogImage": "/custom/empty/case-enriched-156.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-156",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#101b37,#e94479)",
+    "curated": false,
+    "reelTitle": "Это мы! · Positive Technologies",
+    "featured": false,
+    "eventCity": "Подмосковье · THE BIRCH",
+    "guestLabel": "2 900 участников (по данным 2CAPITALS)",
+    "occasions": [
+      "corporate",
+      "culture"
+    ],
+    "sources": [
+      {
+        "label": "2CAPITALS · описание события, программа и заявленная аудитория",
+        "url": "https://2capitals.ru/kejsy/eto-my"
+      }
+    ]
   }
 ]
