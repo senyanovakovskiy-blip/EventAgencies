@@ -1045,13 +1045,14 @@
         "btl",
         "business"
       ],
-      "description": "MARCON — коммуникационное агентство полного цикла; в событийном портфолио есть бренд-пространства и корпоративные праздники. Для BASF на ЮГАГРО команда создала двухэтажный стенд с собственной идеей и промоактивностями, а для московского девелопера — новогодний вечер от концепции до работы площадки.",
+      "description": "MARCON — коммуникационное агентство полного цикла; в событийном портфолио есть бренд-пространства и корпоративные праздники. Для BASF на ЮГАГРО команда создала двухэтажный стенд с собственной идеей и промоактивностями, а для московского девелопера — новогодний вечер от концепции до работы площадки. BASF GET-TOGETHER: внутреннее событие для 350 гостей с деловой и развлекательной программами; подготовка MARCON заняла две недели.",
       "website": "https://mar-con.ru/",
       "works": [
         "case-enriched-66",
-        "portfolio-marcon-9981c71"
+        "portfolio-marcon-9981c71",
+        "case-enriched-113"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 7,
       "cover": "/custom/library/cee97e4401-thumb.webp",
       "coverWork": "case-enriched-66"
@@ -10697,6 +10698,48 @@
       "occasions": [
         "public"
       ]
+    },
+    {
+      "slug": "case-enriched-113",
+      "title": "BASF GET-TOGETHER — корпоративное событие в Москве",
+      "fullTitle": "BASF GET-TOGETHER: корпоративное мероприятие для 350 гостей",
+      "year": "2022",
+      "eventDate": "15 сентября 2022",
+      "category": "Корпоратив",
+      "format": "Внутреннее мероприятие: деловая и развлекательная программы",
+      "client": "Концерн BASF",
+      "agencySlug": "marcon",
+      "agencySlugs": [
+        "marcon"
+      ],
+      "agencyUrl": "/agency/marcon",
+      "types": [
+        "corporate",
+        "business"
+      ],
+      "role": "Креативная концепция и сценарий; организационная поддержка, подбор площадки и персонала, режиссура, интерактивы, оформление локаций, техническое сопровождение и работа с подрядчиками.",
+      "industry": "Химическая промышленность",
+      "description": "Идея GET-TOGETHER стала точкой встречи 350 сотрудников BASF в LOFT HALL. MARCON подготовила деловую и развлекательную программы: от концепции и сценария до интерактивов, режиссуры, технического сопровождения, кейтеринга и работы с подрядчиками. Событие прошло 15 сентября 2022 года; подготовка заняла две недели. По итогам работу агентства отметили благодарственным письмом.",
+      "seoDescription": "BASF GET-TOGETHER от MARCON: корпоративное событие на 350 гостей в LOFT HALL, Москва. Концепция, сценарий, интерактивы и техническая организация за две недели.",
+      "source": "https://mar-con.ru/project/basf-corp-event/",
+      "image": "/custom/empty/case-enriched-113.svg",
+      "imageMobile": "/custom/empty/case-enriched-113.svg",
+      "ogImage": "/custom/empty/case-enriched-113.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-113",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#243a32,#b98a50)",
+      "curated": false,
+      "reelTitle": "BASF GET-TOGETHER · MARCON",
+      "featured": false,
+      "eventCity": "LOFT HALL, Москва",
+      "guestLabel": "350 гостей (по данным MARCON)",
+      "occasions": [
+        "corporate"
+      ]
     }
   ],
   "types": {
@@ -10711,8 +10754,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 122,
-    "works": 169,
+    "cases": 123,
+    "works": 170,
     "photos": 263
   }
 }
