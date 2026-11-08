@@ -8404,5 +8404,47 @@
     "eventCity": "25 городов России",
     "guestLabel": "",
     "occasions": []
+  },
+  {
+    "slug": "case-enriched-111",
+    "title": "«Ночной Велофест» — велозаезд по центру Казани",
+    "fullTitle": "«Ночной Велофест» в Казани: 18 км светового маршрута",
+    "year": "2025",
+    "eventDate": "2025",
+    "category": "Фестиваль",
+    "format": "Массовый ночной велозаезд с перекрытием центра",
+    "client": "Не указан в источнике",
+    "agencySlug": "areal-event",
+    "agencySlugs": [
+      "areal-event"
+    ],
+    "agencyUrl": "/agency/areal-event",
+    "types": [
+      "sport",
+      "public"
+    ],
+    "role": "Полный цикл согласований с шестью городскими службами, световое оформление маршрута и расстановка волонтёров для контроля безопасности (по данным AREAL EVENT).",
+    "industry": "Городские события и спорт",
+    "description": "Казань на одну ночь стала световой велотрассой: 18 км через исторический центр, 200+ световых установок, проекции на фасадах и LED-арки на старте и финише. AREAL EVENT описывает согласования с шестью городскими службами и работу волонтёров вдоль маршрута. По данным агентства, в заезде участвовали 4 500+ велосипедистов, а дорожных инцидентов не было. Заказчик на странице кейса не указан.",
+    "seoDescription": "Ночной Велофест от AREAL EVENT: 18 км маршрута через Казань, согласования с шестью городскими службами и 4 500+ участников по данным агентства.",
+    "source": "https://arealevent.ru/cases/nochnoj-velofest",
+    "image": "/custom/empty/case-enriched-111.svg",
+    "imageMobile": "/custom/empty/case-enriched-111.svg",
+    "ogImage": "/custom/empty/case-enriched-111.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-111",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#112c46,#ca7955)",
+    "curated": false,
+    "reelTitle": "Ночной Велофест · Казань",
+    "featured": false,
+    "eventCity": "Исторический центр, Казань",
+    "guestLabel": "4 500+ участников (по данным AREAL EVENT)",
+    "occasions": [
+      "sport"
+    ]
   }
 ]

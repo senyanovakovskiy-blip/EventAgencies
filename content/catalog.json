@@ -1957,12 +1957,13 @@
         "public",
         "pr"
       ],
-      "description": "AREAL EVENT создало собственный фестиваль «Вкусы Казани»: набережная, гастропроекты, сцены, семейная зона и партнёрские интеграции. По данным агентства, за два дня событие посетили 92 000 человек.",
+      "description": "AREAL EVENT создало собственный фестиваль «Вкусы Казани»: набережная, гастропроекты, сцены, семейная зона и партнёрские интеграции. По данным агентства, за два дня событие посетили 92 000 человек. В «Ночном Велофесте» агентство описывает 18-километровый маршрут через центр Казани, согласования с шестью городскими службами и 4 500+ участников по своим данным.",
       "website": "https://arealevent.ru/cases/vkusy-kazani",
       "works": [
-        "case-enriched-90"
+        "case-enriched-90",
+        "case-enriched-111"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 0,
       "cover": null,
       "coverWork": null
@@ -10530,6 +10531,123 @@
       "eventCity": "Москва",
       "guestLabel": "",
       "occasions": []
+    },
+    {
+      "slug": "case-enriched-109",
+      "title": "«Сезон кода» — ИТ-фестиваль Т-Банка",
+      "fullTitle": "«Сезон кода»: ИТ-фестиваль Т-Банка в экстрим-парке",
+      "year": "Год не указан",
+      "eventDate": "",
+      "category": "Фестиваль",
+      "format": "ИТ-фестиваль open-air в двух городах",
+      "client": "Т-Банк",
+      "agencySlug": "imagine-group",
+      "agencyUrl": "/agency/imagine-group",
+      "types": [
+        "public",
+        "business",
+        "culture"
+      ],
+      "role": "Open-air с лайвами и летней айдентикой; заявленная задача — объединить локальное ИТ-сообщество и познакомить его с брендом.",
+      "industry": "Финансовые технологии и ИТ",
+      "description": "Представьте ИТ-фестиваль не в зале, а в настоящем экстрим-парке: технологии, уличная культура, лайвы и летняя атмосфера. Imagine Group описывает «Сезон кода» Т-Банка как open-air в двух городах, созданный для объединения локальных ИТ-сообществ и знакомства с брендом. Агентство называет его первым ИТ-фестивалем в России, прошедшим в настоящем экстрим-парке.",
+      "seoDescription": "«Сезон кода» Т-Банка от Imagine Group — ИТ-фестиваль open-air с лайвами и летней айдентикой в двух городах. По заявлению агентства, он прошёл в настоящем экстрим-парке.",
+      "source": "https://imgevent.ru/case",
+      "image": "/custom/empty/case-enriched-109.svg",
+      "imageMobile": "/custom/empty/case-enriched-109.svg",
+      "ogImage": "/custom/empty/case-enriched-109.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-109",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#173a3d,#d35470)",
+      "curated": false,
+      "reelTitle": "Сезон кода · Т-Банк",
+      "featured": false,
+      "guestLabel": "",
+      "occasions": []
+    },
+    {
+      "slug": "case-enriched-110",
+      "title": "Flash UP — промо для молодёжной аудитории",
+      "fullTitle": "Многогородское промо Flash UP в 25 городах России",
+      "year": "Год не указан",
+      "eventDate": "",
+      "category": "Активация",
+      "format": "Многогородское промо и презентация продукта",
+      "client": "Flash UP",
+      "agencySlug": "oxygen",
+      "agencyUrl": "/agency/oxygen",
+      "types": [
+        "btl",
+        "public",
+        "pr"
+      ],
+      "role": "Креативная презентация продукта для молодёжной аудитории: «энергетический патруль», фестивальные и студенческие площадки, механика для контента в соцсетях.",
+      "industry": "Энергетические напитки",
+      "description": "«Энергетический патруль» встречал молодую аудиторию на фестивалях и студенческих площадках: команда представляла Flash UP, а экипировка с аккумуляторами помогала заряжать гироскутеры и оставаться в движении. По данным OXYGEN, кампания в 25 городах длилась три месяца, включала два крупных фестиваля и дала более 600 000 эффективных контактов за 689 промодней.",
+      "seoDescription": "Промо Flash UP от OXYGEN: 25 городов, два крупных фестиваля и 600 000+ эффективных контактов за 689 промодней по данным агентства.",
+      "source": "https://oxygen-agency.ru/flash-up",
+      "image": "/custom/empty/case-enriched-110.svg",
+      "imageMobile": "/custom/empty/case-enriched-110.svg",
+      "ogImage": "/custom/empty/case-enriched-110.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-110",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#17294e,#b71f61)",
+      "curated": false,
+      "reelTitle": "Flash UP · Энергетический патруль",
+      "featured": false,
+      "eventCity": "25 городов России",
+      "guestLabel": "",
+      "occasions": []
+    },
+    {
+      "slug": "case-enriched-111",
+      "title": "«Ночной Велофест» — велозаезд по центру Казани",
+      "fullTitle": "«Ночной Велофест» в Казани: 18 км светового маршрута",
+      "year": "2025",
+      "eventDate": "2025",
+      "category": "Фестиваль",
+      "format": "Массовый ночной велозаезд с перекрытием центра",
+      "client": "Не указан в источнике",
+      "agencySlug": "areal-event",
+      "agencySlugs": [
+        "areal-event"
+      ],
+      "agencyUrl": "/agency/areal-event",
+      "types": [
+        "sport",
+        "public"
+      ],
+      "role": "Полный цикл согласований с шестью городскими службами, световое оформление маршрута и расстановка волонтёров для контроля безопасности (по данным AREAL EVENT).",
+      "industry": "Городские события и спорт",
+      "description": "Казань на одну ночь стала световой велотрассой: 18 км через исторический центр, 200+ световых установок, проекции на фасадах и LED-арки на старте и финише. AREAL EVENT описывает согласования с шестью городскими службами и работу волонтёров вдоль маршрута. По данным агентства, в заезде участвовали 4 500+ велосипедистов, а дорожных инцидентов не было. Заказчик на странице кейса не указан.",
+      "seoDescription": "Ночной Велофест от AREAL EVENT: 18 км маршрута через Казань, согласования с шестью городскими службами и 4 500+ участников по данным агентства.",
+      "source": "https://arealevent.ru/cases/nochnoj-velofest",
+      "image": "/custom/empty/case-enriched-111.svg",
+      "imageMobile": "/custom/empty/case-enriched-111.svg",
+      "ogImage": "/custom/empty/case-enriched-111.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-111",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#112c46,#ca7955)",
+      "curated": false,
+      "reelTitle": "Ночной Велофест · Казань",
+      "featured": false,
+      "eventCity": "Исторический центр, Казань",
+      "guestLabel": "4 500+ участников (по данным AREAL EVENT)",
+      "occasions": [
+        "sport"
+      ]
     }
   ],
   "types": {
@@ -10544,8 +10662,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 120,
-    "works": 167,
+    "cases": 121,
+    "works": 168,
     "photos": 263
   }
 }
