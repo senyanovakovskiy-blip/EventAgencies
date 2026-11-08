@@ -1201,13 +1201,14 @@
         "corporate",
         "business"
       ],
-      "description": "Citymetria сосредоточена на HR-событиях и создаёт очные и онлайн-форматы для команд. На десятилетие YOTA агентство собрало 700 участников в горах: участники сформировали кланы в приложении, готовились к подъёму и создали собственное шоу. Для Systeme Electric агентство координировало четырёхдневный саммит и выставку в Экспоцентре; проект получил серебро «Серебряного Меркурия 2025» в номинации «Лучшее деловое мероприятие».",
+      "description": "Citymetria сосредоточена на HR-событиях и создаёт очные и онлайн-форматы для команд. На десятилетие YOTA агентство собрало 700 участников в горах: участники сформировали кланы в приложении, готовились к подъёму и создали собственное шоу. Для Systeme Electric агентство координировало четырёхдневный саммит и выставку в Экспоцентре; проект получил серебро «Серебряного Меркурия 2025» в номинации «Лучшее деловое мероприятие». Для Mondelez Citymetria превратила деловую программу в игру Above&Beyond: сцена, маршруты параллельных сессий и тематическая ярмарка брендов работали в общей механике «Джуманджи».",
       "website": "https://citymetria.com/ru/",
       "works": [
         "portfolio-citymetria-group-8a0bb7d",
-        "case-enriched-73"
+        "case-enriched-73",
+        "case-enriched-160"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 1,
       "cover": "/custom/library/7e7350678c-thumb.webp",
       "coverWork": "portfolio-citymetria-group-8a0bb7d"
@@ -13242,6 +13243,57 @@
           "url": "https://parifest.ru/2025"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-160",
+      "title": "Above&Beyond: стратегию Mondelez разыграли как «Джуманджи»",
+      "fullTitle": "S&M Conference 2024 для Mondelez — кейс Citymetria",
+      "year": "2024",
+      "eventDate": "2024; точная дата не указана",
+      "category": "Конференция для подразделений компании",
+      "format": "Сценический перформанс, музыкальные номера, игровые маршруты и ярмарка брендов",
+      "client": "Mondelez",
+      "agencySlug": "citymetria-group",
+      "agencySlugs": [
+        "citymetria-group"
+      ],
+      "agencyUrl": "/agency/citymetria-group",
+      "types": [
+        "business",
+        "corporate",
+        "culture"
+      ],
+      "role": "Citymetria описывает задачу объединить участников и провести одну концепцию через основные и параллельные сессии. В кейсе агентство указывает решение Above&Beyond. Make your move по механике «Джуманджи»; распределение других производственных задач источник не уточняет.",
+      "industry": "Потребительские товары и корпоративные конференции",
+      "description": "На S&M Conference 2024 для Mondelez в московском CDP деловую стратегию предложили не только обсудить, но и пройти как игру. Концепция Above&Beyond. Make your move опиралась на механику «Джуманджи»: содержание выступлений стало сценическим перформансом с музыкальными номерами и визуализацией данных, параллельные сессии превратились в игровые маршруты, а ярмарку брендов компании оформили в общей теме. Citymetria указывает 600 участников; точную дату кейс не сообщает.",
+      "seoDescription": "S&M Conference 2024 для Mondelez: Citymetria связала деловую программу с механикой «Джуманджи» — перформанс на сцене, маршруты параллельных сессий и тематическая ярмарка брендов.",
+      "source": "https://citymetria.com/ru/case/sm-conference-2024/",
+      "image": "/custom/empty/case-enriched-160.svg",
+      "imageMobile": "/custom/empty/case-enriched-160.svg",
+      "ogImage": "/custom/empty/case-enriched-160.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-160",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#18364a,#df9348)",
+      "curated": false,
+      "reelTitle": "Mondelez · сыграй свою стратегию",
+      "featured": false,
+      "eventCity": "Москва · CDP",
+      "guestLabel": "600 участников (по данным Citymetria)",
+      "occasions": [
+        "business",
+        "corporate",
+        "culture"
+      ],
+      "sources": [
+        {
+          "label": "Citymetria · задача, концепция, программа и число участников",
+          "url": "https://citymetria.com/ru/case/sm-conference-2024/"
+        }
+      ]
     }
   ],
   "types": {
@@ -13256,8 +13308,8 @@
   },
   "stats": {
     "agencies": 109,
-    "cases": 169,
-    "works": 216,
+    "cases": 170,
+    "works": 217,
     "photos": 263
   }
 }
