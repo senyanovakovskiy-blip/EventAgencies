@@ -1982,9 +1982,10 @@
       "description": "АДР соединило фестиваль «Энергия РМК» в Екатеринбурге с городской и онлайн-аудиторией: квест, Telegram-канал, брендированная фура, оформление площадки и контент. Посещаемость в 100 000 человек приводит агентство.",
       "website": "",
       "works": [
-        "case-enriched-88"
+        "case-enriched-88",
+        "case-enriched-150"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 0,
       "cover": null,
       "coverWork": null
@@ -12669,6 +12670,58 @@
           "url": "https://beinevent.ru/hr-events"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-150",
+      "title": "100+ TECHNO BUILD: городские экраны за 24 часа",
+      "fullTitle": "Наружная рекламная кампания форума 100+ TECHNO BUILD в Екатеринбурге — АДР",
+      "year": "2025",
+      "eventDate": "30 сентября — 3 октября 2025",
+      "category": "Рекламная кампания для отраслевого форума",
+      "format": "Цифровые экраны Екатеринбурга: выбор локаций, адаптация креативов и запуск роликов",
+      "client": "Организаторы форума 100+ TECHNO BUILD",
+      "agencySlug": "adr",
+      "agencySlugs": [
+        "adr"
+      ],
+      "agencyUrl": "/agency/adr",
+      "types": [
+        "business",
+        "pr"
+      ],
+      "role": "АДР сообщает, что организаторы форума обратились к агентству за наружной рекламой в Екатеринбурге. Команда описывает выбор цифровых экранов, адаптацию роликов и запуск в эфир в течение 24 часов; организацию самого форума агентству не приписываем.",
+      "industry": "Строительство, архитектура и городская среда",
+      "description": "Перед 100+ TECHNO BUILD организаторам нужно было рассказать о форуме архитекторам, застройщикам и горожанам. АДР пишет, что выбрало цифровые экраны в местах с высоким трафиком, адаптировало ролики под формат и запустило их в эфир в течение 24 часов. Форум прошёл в Екатеринбург-Экспо 30 сентября — 3 октября 2025 года. Отдельные показатели рекламной кампании не опубликованы.",
+      "seoDescription": "АДР разместило городскую рекламную кампанию для форума 100+ TECHNO BUILD в Екатеринбурге: цифровые экраны и запуск адаптированных роликов за 24 часа.",
+      "source": "https://anapa.adrgroup.su/portfolio/mezhdunarodnyij-forum-100-techno-build",
+      "image": "/custom/empty/case-enriched-150.svg",
+      "imageMobile": "/custom/empty/case-enriched-150.svg",
+      "ogImage": "/custom/empty/case-enriched-150.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-150",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#182936,#c98b47)",
+      "curated": false,
+      "reelTitle": "100+ TECHNO BUILD · городской экран",
+      "featured": false,
+      "eventCity": "Екатеринбург · Екатеринбург-Экспо",
+      "guestLabel": "Охват рекламной кампании не указан",
+      "occasions": [
+        "business"
+      ],
+      "sources": [
+        {
+          "label": "АДР · наружная рекламная кампания, выбор экранов и сроки запуска",
+          "url": "https://anapa.adrgroup.su/portfolio/mezhdunarodnyij-forum-100-techno-build"
+        },
+        {
+          "label": "100+ TECHNO BUILD · дата и площадка форума",
+          "url": "https://forum-100.ru/novosti/nachalas-registratsiya-na-mezhdunarodnyy-stroitelnyy-forum-i-vystavku-100-technobuild-28195315/"
+        }
+      ]
     }
   ],
   "types": {
@@ -12683,8 +12736,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 159,
-    "works": 206,
+    "cases": 160,
+    "works": 207,
     "photos": 263
   }
 }
