@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Концептуальная иллюстрация Openspace 1100</title>
+  <desc id="desc">Зимние горы, открытый коворкинг и ноутбук между спуском и рабочим созвоном. Иллюстрация условная, не фотография проекта.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#101b37"/><stop offset=".58" stop-color="#335274"/><stop offset="1" stop-color="#b1d5de"/></linearGradient>
+    <radialGradient id="sun"><stop stop-color="#fff2c0" stop-opacity=".78"/><stop offset=".35" stop-color="#ffd875" stop-opacity=".3"/><stop offset="1" stop-color="#ffd875" stop-opacity="0"/></radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9be7ed" stop-opacity=".48"/><stop offset="1" stop-color="#382e70" stop-opacity=".86"/></linearGradient>
+    <linearGradient id="snow" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5f7ff"/><stop offset="1" stop-color="#9ebcd4"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="838" cy="286" r="260" fill="url(#sun)"/>
+  <path d="M0 485 170 261 286 402 451 178 635 415 787 218 980 435 1105 278 1200 387V800H0Z" fill="#7393ad"/>
+  <path d="m170 261 52 69-52-17-46 54zM451 178l75 96-71-28-51 54zM787 218l73 87-66-24-57 47zM1105 278l48 59-51-18-41 38z" fill="#f4f7ff"/>
+  <path d="M0 530 151 421 309 495 467 365 630 506 800 380 964 508 1100 403 1200 468V800H0Z" fill="url(#snow)"/>
+  <path d="M0 650c160-71 273-98 421-44 154 57 230 5 360-31 149-41 277 26 419 62v163H0Z" fill="#d4e6ee"/>
+  <circle cx="604" cy="510" r="164" fill="#91d9de" opacity=".18" filter="url(#soft)"/>
+  <g transform="translate(448 368)">
+    <path d="M0 132V8h293v124" fill="url(#glass)" stroke="#d2f4f5" stroke-opacity=".82" stroke-width="3"/>
+    <path d="M-16 8 145-57 309 8" fill="#28365f" stroke="#c7e6ec" stroke-width="3"/>
+    <path d="M31 29v91M88 29v91M146 29v91M204 29v91M261 29v91" stroke="#ddf6f8" stroke-opacity=".47" stroke-width="2"/>
+    <path d="M0 75h293" stroke="#ddf6f8" stroke-opacity=".45" stroke-width="2"/>
+    <rect x="109" y="87" width="80" height="45" rx="6" fill="#101b37" stroke="#a4edf1" stroke-width="2"/>
+    <path d="M120 98h24m-24 9h43m-43 9h30" stroke="#7fe4e8" stroke-width="2" stroke-linecap="round"/>
+    <path d="M-24 134h341" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  </g>
+  <path d="M214 600c78-47 123-68 198-75m390 17c91-8 154 9 237 48" fill="none" stroke="#f6d875" stroke-width="3" stroke-dasharray="8 11" opacity=".92"/>
+  <g transform="translate(263 485) rotate(-13)">
+    <path d="M0 70c40-5 86-12 130-22l18 9c-48 18-94 31-143 34-12 1-18-14-5-21z" fill="#f3b94f"/>
+    <circle cx="38" cy="59" r="11" fill="#16233f"/><circle cx="106" cy="45" r="11" fill="#16233f"/>
+    <path d="M66 54 78 17l17-14 11 6-13 17 19 19-7 6-22-14-11 26z" fill="#202b4b"/>
+  </g>
+  <g transform="translate(898 500)">
+    <rect width="82" height="55" rx="12" fill="#182344" stroke="#d8f6f7" stroke-opacity=".8" stroke-width="2"/>
+    <path d="M19 19h44M19 29h34M19 39h25" stroke="#8be9ed" stroke-width="3" stroke-linecap="round"/>
+    <path d="m18 55-8 14 26-14" fill="#182344" stroke="#d8f6f7" stroke-opacity=".8" stroke-width="2"/>
+  </g>
+  <g font-family="Arial,sans-serif">
+    <text x="72" y="78" fill="#d4e5f6" font-size="15" letter-spacing="5">NEW STAR CAMP · ROSA KHUTOR · 2024</text>
+    <text x="72" y="699" fill="#14223c" font-size="58" font-weight="700" letter-spacing="1">OPENSPACE 1100</text>
+    <text x="76" y="739" fill="#294262" font-size="17" letter-spacing="3">WORK-RIDE BALANCE</text>
+    <text x="1128" y="79" text-anchor="end" fill="#f3f6fc" font-size="12" letter-spacing="3">КОНЦЕПТУАЛЬНАЯ ИЛЛЮСТРАЦИЯ</text>
+  </g>
+</svg>

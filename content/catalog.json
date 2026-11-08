@@ -346,18 +346,20 @@
         "corporate",
         "public",
         "online",
-        "business"
+        "business",
+        "btl"
       ],
-      "description": "Работает в России и Казахстане с крупным технологичным бизнесом. В портфолио проекты для Яндекса, Авито, Т-Банка, VK и Wildberries. На бизнес-ивенте для 1 500 гостей N:OW связала 13 спикеров, световое интро, награждение и трансляцию, а на следующий день продолжила встречу за городом. Для хакатона IT-компании на 180 гостей агентство подготовило регистрацию, сцену, экран, кейтеринг и серферское оформление, а завершило день вечеринкой награждения на крыше. Для Family Day «В кругу семьи» Т-Бизнес Клуба N:OW создало «Современную дачу»: 1 200+ гостей, 15 партнёрских зон и плёночный фотоаппарат для каждой семьи, чтобы после праздника остался персональный альбом.",
+      "description": "Работает в России и Казахстане с крупным технологичным бизнесом. В портфолио проекты для Яндекса, Авито, Т-Банка, VK и Wildberries. На бизнес-ивенте для 1 500 гостей N:OW связала 13 спикеров, световое интро, награждение и трансляцию, а на следующий день продолжила встречу за городом. Для хакатона IT-компании на 180 гостей агентство подготовило регистрацию, сцену, экран, кейтеринг и серферское оформление, а завершило день вечеринкой награждения на крыше. Для Family Day «В кругу семьи» Т-Бизнес Клуба N:OW создало «Современную дачу»: 1 200+ гостей, 15 партнёрских зон и плёночный фотоаппарат для каждой семьи, чтобы после праздника остался персональный альбом. Для Яндекса на New Star Camp N:OW создало Openspace 1100 — коворкинг на высоте 1100 метров с форматом work-ride balance. Агентство сообщает о более чем 1 300 гостях и полной заполняемости рабочих мест.",
       "website": "https://now-agency.ru/",
       "works": [
         "vk-cloud-conf",
         "vk-team-ranch",
         "case-enriched-99",
         "case-enriched-106",
-        "case-enriched-130"
+        "case-enriched-130",
+        "case-enriched-135"
       ],
-      "caseCount": 5,
+      "caseCount": 6,
       "photoCount": 14,
       "cover": "/custom/library/6b37101c77.webp",
       "coverWork": "vk-cloud-conf",
@@ -11816,6 +11818,69 @@
           "url": "https://ratings.sostav.ru/works/1042"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-135",
+      "title": "Openspace 1100 — созвон после спуска",
+      "fullTitle": "Коворкинг Яндекса Openspace 1100 на фестивале New Star Camp",
+      "year": "2024",
+      "eventDate": "25–31 марта 2024",
+      "category": "Фестивальная бренд-интеграция",
+      "format": "Открытый коворкинг в горах: рабочие места, консультации и игровые активации",
+      "client": "Яндекс Team",
+      "agencySlug": "n-ow",
+      "agencySlugs": [
+        "n-ow"
+      ],
+      "agencyUrl": "/agency/n-ow",
+      "types": [
+        "public",
+        "business",
+        "btl"
+      ],
+      "role": "BEMA относит к зоне N:OW креатив, застройку и проведение коворкинга на New Star Camp. Отдельное пространство в «Гараже» вел Punchy; свои блоки готовили команды Яндекса.",
+      "industry": "Спортивные фестивали, IT и HR-бренд",
+      "description": "На высоте 1100 метров рабочий созвон начинался сразу после спуска: Openspace позволял чередовать катание, работу и атмосферу Яндекса. Telegram-бот связывал активации сервисов, баллы и мерч; в программе были карьерные консультации, 360-открытки, баланс-борд Yandex Cloud и Random Coffee. BEMA указывает, что N:OW отвечало за креатив, застройку и мероприятия коворкинга на New Star Camp; другие пространства проекта делали отдельные команды. По данным N:OW, коворкинг посетили более 1 300 гостей, а рабочие места были заполнены на 100%.",
+      "seoDescription": "Openspace 1100 от N:OW и Яндекса на New Star Camp: коворкинг в горах, где после катания можно было подключиться к созвону, пройти карьерную консультацию и сыграть в сервисные активации.",
+      "source": "https://now-agency.ru/yandex_coworking/",
+      "image": "/custom/empty/case-enriched-135.svg",
+      "imageMobile": "/custom/empty/case-enriched-135.svg",
+      "ogImage": "/custom/empty/case-enriched-135.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-135",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#152447,#5e9bb2)",
+      "curated": false,
+      "reelTitle": "Openspace 1100 · work-ride balance",
+      "featured": false,
+      "eventCity": "Сочи · Роза Хутор",
+      "guestLabel": ">1 300 гостей (по данным N:OW)",
+      "occasions": [
+        "public",
+        "business",
+        "btl"
+      ],
+      "sources": [
+        {
+          "label": "N:OW · концепция, программа коворкинга и результаты по данным агентства",
+          "url": "https://now-agency.ru/yandex_coworking/"
+        },
+        {
+          "label": "BEMA · распределение ролей между N:OW, Punchy и Яндексом",
+          "url": "https://bemafestival.ru/winners/yandex-openspace-test-drajv-kultury-yandeksa-pop-ap-kovorkingi-dlya-vseh/"
+        },
+        {
+          "label": "OK! · даты New Star Camp и коворкинг Openspace1100",
+          "url": "https://www.ok-magazine.ru/style/afisha/409091-zavershilsya-yubilejnyj-festival-quiksilver-new-star-camp-2024"
+        },
+        {
+          "label": "Рейтинг Sostav · первое место BEMA 2025 за спонсорскую интеграцию",
+          "url": "https://ratings.sostav.ru/works/1003"
+        }
+      ]
     }
   ],
   "types": {
@@ -11830,8 +11895,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 144,
-    "works": 191,
+    "cases": 145,
+    "works": 192,
     "photos": 263
   }
 }
