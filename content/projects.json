@@ -9237,5 +9237,58 @@
         "url": "https://dsspkazan.ru/media/pobedu-na-igrax-budushhego-mogu-nazvat-glavnoj-v-karere-itogi-fidzhital-basketbola-so-sberom-itogi-fidzhital-basketbola-so-sberom/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-129",
+    "title": "Вилла Т-Банка на PHDays Fest",
+    "fullTitle": "Двухэтажная бренд-активация Т-Банка на фестивале PHDays Fest",
+    "year": "Год не указан",
+    "eventDate": "",
+    "category": "Фестивальная бренд-активация",
+    "format": "Двухэтажный стенд: интерактивы по кибербезопасности, лаунж и кафе",
+    "client": "Т-Банк",
+    "agencySlug": "2capitals",
+    "agencySlugs": [
+      "2capitals"
+    ],
+    "agencyUrl": "/agency/2capitals",
+    "types": [
+      "public",
+      "btl"
+    ],
+    "role": "2CAPITALS создало для Т-Банка двухэтажный стенд на PHDays Fest. На первом этаже проходили задания по кибербезопасности и «Фрод-рулетка», на втором разместились лаунж, кафе и диджей. Полный перечень работ агентство не публикует.",
+    "industry": "Банковские услуги и кибербезопасность",
+    "description": "На стенде Т-Банка тему цифровой безопасности можно было не только обсуждать, но и прожить в игре. 2CAPITALS создало для PHDays Fest двухэтажную «Виллу»: на первом этаже гостей ждали задания по кибербезопасности и «Фрод-рулетка» — попробовать удержать мошенника на линии и получить фирменный мерч. Наверху разместились лаунж, собственное кафе с напитками и диджей, а из зоны отдыха открывался вид на главную сцену фестиваля. Так в одной локации соединились короткая игровая механика, место для общения и возможность смотреть программу.",
+    "seoDescription": "2CAPITALS создало для Т-Банка на PHDays Fest двухэтажную «Виллу»: задания по кибербезопасности и «Фрод-рулетка» внизу, лаунж, кафе и диджей с видом на главную сцену — наверху.",
+    "source": "https://2capitals.ru/kejsy/t-bank",
+    "image": "/custom/empty/case-enriched-129.svg",
+    "imageMobile": "/custom/empty/case-enriched-129.svg",
+    "ogImage": "/custom/empty/case-enriched-129.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-129",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#202536,#f1bc35)",
+    "curated": false,
+    "reelTitle": "Вилла Т-Банка · PHDays Fest",
+    "featured": false,
+    "eventCity": "Москва · «Лужники»",
+    "guestLabel": "",
+    "occasions": [
+      "public",
+      "btl"
+    ],
+    "sources": [
+      {
+        "label": "2CAPITALS · состав стенда и задачи агентства",
+        "url": "https://2capitals.ru/kejsy/t-bank"
+      },
+      {
+        "label": "«Хакер» · независимый репортаж о «Вилле Т-Банка» на PHDays Fest",
+        "url": "https://xakep.ru/2025/06/18/phdfest3-report/"
+      }
+    ]
   }
 ]
