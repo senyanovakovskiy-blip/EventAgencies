@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#1f2c3d"/>
+  <path d="M0 760h1600v440H0Z" fill="#263a4e"/>
+  <path d="M1130 225h350v310h-350z" fill="#344d61"/>
+  <path d="M1180 280h250v200h-250z" fill="#263a4e" stroke="#e2b66f" stroke-width="8"/>
+  <path d="M1220 435h170" stroke="#d58b57" stroke-width="12"/>
+  <g transform="translate(125 410)">
+    <path d="M0 370h880" stroke="#dba35e" stroke-width="10"/>
+    <path d="M80 370V170h220v200M320 370V95h250v275M590 370V195h210v175" fill="#31485d" stroke="#d9b673" stroke-width="8"/>
+    <path d="M115 210h150M355 145h180M355 195h180M630 235h130" stroke="#e9e1d2" stroke-width="8"/>
+    <path d="M415 90V25M480 90V25M545 90V25" stroke="#d18461" stroke-width="14"/>
+  </g>
+  <g fill="#e6b86b">
+    <circle cx="220" cy="745" r="13"/><circle cx="310" cy="745" r="13"/><circle cx="400" cy="745" r="13"/><circle cx="490" cy="745" r="13"/><circle cx="580" cy="745" r="13"/>
+    <circle cx="670" cy="745" r="13"/><circle cx="760" cy="745" r="13"/><circle cx="850" cy="745" r="13"/><circle cx="940" cy="745" r="13"/>
+  </g>
+  <g fill="#f1eee8" font-family="Arial,sans-serif">
+    <text x="110" y="135" font-size="30" letter-spacing="4">N:OW · 20 ИЮНЯ 2025</text>
+    <text x="110" y="280" font-size="78" font-weight="700">БИЗНЕС-ИВЕНТ</text>
+    <text x="114" y="370" font-size="42" fill="#e4bf7c">1 500 гостей · концертный зал «Москва»</text>
+    <text x="114" y="865" font-size="34" fill="#ccd4d8">13 спикеров · награждение · трансляция</text>
+    <text x="110" y="1090" font-size="26" fill="#c4cbd1">Иллюстрация кейса · фотографии проекта не добавлены</text>
+  </g>
+</svg>
