@@ -2179,6 +2179,30 @@
         "Интеграция трансляций",
         "Live VJing"
       ]
+    },
+    {
+      "slug": "affarts",
+      "name": "AffArts",
+      "city": "Оренбург",
+      "types": [
+        "business",
+        "culture",
+        "public"
+      ],
+      "description": "Дизайн-центричное агентство из Оренбурга. В собственном Дизайн-джеме AffArts соединила ИИ-айдентику, сайт и мерч с лекциями и живым сообществом дизайнеров; число гостей и продажи билетов агентство приводит в своём кейсе.",
+      "website": "https://affarts.ru/",
+      "works": [
+        "case-enriched-163"
+      ],
+      "caseCount": 1,
+      "photoCount": 0,
+      "cover": null,
+      "coverWork": null,
+      "services": [
+        "Айдентика и фирменный стиль",
+        "Сайт мероприятия и регистрация",
+        "Мерч и оформление площадки"
+      ]
     }
   ],
   "projects": [
@@ -13423,6 +13447,65 @@
           "url": "https://www.share.sc/"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-163",
+      "title": "Дизайн-джем AffArts: граффити, ИИ и клубничное варенье",
+      "fullTitle": "Собственный Дизайн-джем AffArts в Оренбурге — кейс AffArts",
+      "year": "2025",
+      "eventDate": "4 октября 2025",
+      "category": "Собственное профессиональное дизайн-мероприятие",
+      "format": "Лекции, разбор портфолио, интерактивы, нетворкинг и afterparty",
+      "client": "Собственное мероприятие AffArts",
+      "agencySlug": "affarts",
+      "agencySlugs": [
+        "affarts"
+      ],
+      "agencyUrl": "/agency/affarts",
+      "types": [
+        "business",
+        "culture",
+        "public"
+      ],
+      "role": "AffArts сама придумала и провела мероприятие для дизайнерского сообщества Оренбурга. Команда разработала айдентику с помощью ИИ-генераций, подготовила мерч и сайт с билетами через Timepad, собрала программу, сняла проморолики и оформила площадку. В кейсе AffArts сообщает о 120 участниках и продаже всех билетов за три дня.",
+      "industry": "Дизайн, цифровые продукты и профессиональные сообщества",
+      "description": "AffArts устроила собственный дизайн-джем, чтобы собрать в Оренбурге дизайнеров, маркетологов и IT-специалистов — не на строгую конференцию, а на день лекций, интерактивов, разбора портфолио и afterparty. Айдентика началась с игры слов: граффити и яркие 3D-образы для «джема» дополнили банки клубничного варенья в мерче. Команда также сделала сайт регистрации и проморолики. По кейсу AffArts, пришли 120 человек, а билеты продались за три дня.",
+      "seoDescription": "Собственный Дизайн-джем AffArts в Оренбурге: ИИ-айдентика, граффити, разбор портфолио и клубничный джем в мерче. 120 участников и распродажа билетов за три дня — данные кейса агентства.",
+      "source": "https://workspace.ru/cases/dizayn-dzhem-aydentika-sgenerirovannaya-ii-dlya-pervogo-dizayn-meropriyatiya-v-orenburge/",
+      "image": "/custom/empty/case-enriched-163.svg",
+      "imageMobile": "/custom/empty/case-enriched-163.svg",
+      "ogImage": "/custom/empty/case-enriched-163.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-163",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#29213c,#e74c62)",
+      "curated": false,
+      "reelTitle": "Дизайн-джем · идеи, которые можно намазать",
+      "featured": false,
+      "eventCity": "Оренбург · тапрум «Степь и ветер»",
+      "guestLabel": "120 участников (по кейсу AffArts)",
+      "occasions": [
+        "business",
+        "culture",
+        "public"
+      ],
+      "sources": [
+        {
+          "label": "AffArts · организатор, дата, площадка и формат события",
+          "url": "https://affartsjam.ru/"
+        },
+        {
+          "label": "AffArts · собственный кейс, айдентика, мерч, сайт и заявленные результаты",
+          "url": "https://workspace.ru/cases/dizayn-dzhem-aydentika-sgenerirovannaya-ii-dlya-pervogo-dizayn-meropriyatiya-v-orenburge/"
+        },
+        {
+          "label": "AffArts · дизайн-центричное агентство из Оренбурга",
+          "url": "https://affarts.ru/"
+        }
+      ]
     }
   ],
   "types": {
@@ -13436,9 +13519,9 @@
     "pr": "PR-события"
   },
   "stats": {
-    "agencies": 110,
-    "cases": 172,
-    "works": 219,
+    "agencies": 111,
+    "cases": 173,
+    "works": 220,
     "photos": 263
   }
 }

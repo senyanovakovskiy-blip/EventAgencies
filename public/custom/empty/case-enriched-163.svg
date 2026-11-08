@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Дизайн-джем AffArts — иллюстрация к собственному событию агентства</title>
+<desc id="desc">Абстрактные граффити-формы, трёхмерная клубника и банка варенья; иллюстрация, а не фотография мероприятия.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#21172e"/><stop offset=".55" stop-color="#48203d"/><stop offset="1" stop-color="#d9554d"/></linearGradient>
+ <linearGradient id="berry" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff876f"/><stop offset=".55" stop-color="#f03e62"/><stop offset="1" stop-color="#7b2c61"/></linearGradient>
+ <linearGradient id="jar" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ffe2ad" stop-opacity=".76"/><stop offset="1" stop-color="#ffc560" stop-opacity=".38"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#ffd270" stop-opacity=".55"/><stop offset="1" stop-color="#ffd270" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="42"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<circle cx="1204" cy="420" r="260" fill="url(#glow)" filter="url(#blur)"/>
+<path d="M1035 250q75-93 155 0t155 0 160 0" fill="none" stroke="#ffbf75" stroke-width="9" stroke-linecap="round" opacity=".62"/>
+<path d="m1064 401 165-160 150 130-181 179z" fill="url(#berry)" stroke="#ffd2ad" stroke-width="3"/>
+<path d="m1227 253 2-89m0 0-48-32m48 32 48-35" stroke="#a4d07b" stroke-width="15" stroke-linecap="round"/>
+<g fill="#ffe5a9"><ellipse cx="1140" cy="371" rx="7" ry="12" transform="rotate(32 1140 371)"/><ellipse cx="1222" cy="325" rx="7" ry="12" transform="rotate(32 1222 325)"/><ellipse cx="1310" cy="379" rx="7" ry="12" transform="rotate(32 1310 379)"/><ellipse cx="1200" cy="440" rx="7" ry="12" transform="rotate(32 1200 440)"/><ellipse cx="1300" cy="463" rx="7" ry="12" transform="rotate(32 1300 463)"/></g>
+<path d="M1381 553h128l22 53v174q0 24-25 24h-125q-25 0-25-24V606z" fill="url(#jar)" stroke="#ffe3b1" stroke-width="3"/>
+<rect x="1371" y="533" width="146" height="38" rx="9" fill="#e9a35e" stroke="#ffe3b1" stroke-width="3"/>
+<text x="1391" y="664" fill="#4b2840" font-family="Arial,sans-serif" font-size="22" font-weight="700">КЛУБНИЧНЫЙ</text><text x="1411" y="694" fill="#4b2840" font-family="Arial,sans-serif" font-size="22" font-weight="700">ДЖЕМ</text>
+<g fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="3"><path d="M1096 592q60-77 120 0t120 0"/><path d="M1088 623q70-95 140 0t140 0"/></g>
+<text x="110" y="151" fill="#f4c6bb" font-family="Arial,sans-serif" font-size="22" letter-spacing="5">AFFARTS · ОРЕНБУРГ · 4 ОКТЯБРЯ 2025</text>
+<text x="104" y="352" fill="#fff" font-family="Arial,sans-serif" font-size="70" font-weight="700">ДИЗАЙН-</text>
+<text x="104" y="432" fill="#ffd270" font-family="Arial,sans-serif" font-size="70" font-weight="700">ДЖЕМ</text>
+<text x="110" y="501" fill="#f6dfd5" font-family="Arial,sans-serif" font-size="27">свободно, полезно, со вкусом</text>
+<rect x="108" y="611" width="349" height="64" rx="32" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".3"/>
+<text x="147" y="653" fill="#fff" font-family="Arial,sans-serif" font-size="23">120 участников · по кейсу AffArts</text>
+<text x="110" y="822" fill="#e4d8dd" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ИЛЛЮСТРАЦИЯ · НЕ ФОТО СОБЫТИЯ</text>
+</svg>
