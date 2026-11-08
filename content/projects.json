@@ -10058,5 +10058,54 @@
         "url": "https://www.expo2025.or.jp/wp/wp-content/themes/expo2025orjp_2022/assets/pdf/future-index/art/projectionmapping/program_C_en.pdf"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-143",
+    "title": "T-Vault: постапокалипсис после Чёрной пятницы",
+    "fullTitle": "Вечеринка Т-Бизнеса T-Vault от N:OW",
+    "year": "Год не указан",
+    "eventDate": "4 декабря",
+    "category": "Клиентская вечеринка для e-commerce",
+    "format": "Постапокалиптическое убежище, игровые фракции, испытания и DJ-сет",
+    "client": "Т-Бизнес",
+    "agencySlug": "n-ow",
+    "agencySlugs": [
+      "n-ow"
+    ],
+    "agencyUrl": "/agency/n-ow",
+    "types": [
+      "business",
+      "corporate"
+    ],
+    "role": "N:OW описывает вечеринку Т-Бизнеса как собственный проект с постапокалиптической концепцией, командными фракциями и игровыми испытаниями. Агентство приводит дату 4 декабря, но не указывает год; 200 гостей — данные со страницы N:OW.",
+    "industry": "E-commerce, финтех и корпоративные события",
+    "description": "После Чёрной пятницы команда e-commerce выбралась из операционки в постапокалиптическое убежище T-Vault: коробки стали арт-объектами, гости разделились на фракции, соревновались в гонках на тележках и проходили испытания. Затем сюжет сменился фуршетом, DJ-сетом и разговором об онлайн-торговле. N:OW указывает 200 гостей; год события в источнике не назван.",
+    "seoDescription": "N:OW превратило вечеринку Т-Бизнеса T-Vault в постапокалиптический мир с фракциями, гонками на тележках и игровыми испытаниями.",
+    "source": "https://now-agency.ru/en/t-vault-%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%BF%D0%BE%D0%BA%D0%B0%D0%BB%D0%B8%D0%BF%D1%81%D0%B8%D1%81-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5-%D1%87%D1%91%D1%80%D0%BD%D0%BE%D0%B9-%D0%BF%D1%8F%D1%82%D0%BD%D0%B8/",
+    "image": "/custom/empty/case-enriched-143.svg",
+    "imageMobile": "/custom/empty/case-enriched-143.svg",
+    "ogImage": "/custom/empty/case-enriched-143.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-143",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#15191e,#a96f3c)",
+    "curated": false,
+    "reelTitle": "T-Vault · постапокалипсис e-commerce",
+    "featured": false,
+    "eventCity": "Москва",
+    "guestLabel": "200 гостей (по данным N:OW)",
+    "occasions": [
+      "business",
+      "corporate"
+    ],
+    "sources": [
+      {
+        "label": "N:OW Agency · концепция, механики, 4 декабря и 200 гостей по данным агентства; год не указан",
+        "url": "https://now-agency.ru/en/t-vault-%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%BF%D0%BE%D0%BA%D0%B0%D0%BB%D0%B8%D0%BF%D1%81%D0%B8%D1%81-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5-%D1%87%D1%91%D1%80%D0%BD%D0%BE%D0%B9-%D0%BF%D1%8F%D1%82%D0%BD%D0%B8/"
+      }
+    ]
   }
 ]
