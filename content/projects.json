@@ -9712,5 +9712,68 @@
         "url": "https://it.fut.ru/event/mts/truetechchamp-guests"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-137",
+    "title": "Т-Банк на ИТ-Пикнике: лабиринт «Орбита»",
+    "fullTitle": "Бренд-интеграция REDDAY для Т-Банка на ИТ-Пикнике 2024",
+    "year": "2024",
+    "eventDate": "17 августа 2024",
+    "category": "Фестивальная бренд-интеграция",
+    "format": "Лабиринт-орбита с продуктовыми корнерами, играми, квизами и мерчем",
+    "client": "Т-Банк",
+    "agencySlug": "redday",
+    "agencySlugs": [
+      "redday"
+    ],
+    "agencyUrl": "/agency/redday",
+    "types": [
+      "public",
+      "btl",
+      "business"
+    ],
+    "role": "REDDAY описывает работу как бренд-интеграцию Т-Банка и совместную с клиентом концепцию зоны. Страница кейса не приписывает агентству организацию всего фестиваля.",
+    "industry": "Технологии, банковские сервисы и финтех",
+    "description": "Корнеры Т-Банка стали «планетами» в лабиринте технологической орбиты: гости переходили от сервиса к сервису, выполняли игровые и квизовые задания, собирали ачивки и обменивали их на мерч. В сценарий вошли программа лояльности «Орбита», T-Game, умная камера, фрод-рулетка, T-Pay и T-ID; для бизнес-аудитории показывали Time, Sage, Digital Interview и T-API. REDDAY описывает интеграцию как совместную работу с клиентом и сообщает о более чем 8 000 гостях бренд-зоны.",
+    "seoDescription": "REDDAY для Т-Банка на ИТ-Пикнике: лабиринт технологической орбиты с продуктовыми зонами, квизами, игровыми заданиями и ачивками, которые гости меняли на мерч.",
+    "source": "https://redday.events/projects/t-bank/it-piknik",
+    "image": "/custom/empty/case-enriched-137.svg",
+    "imageMobile": "/custom/empty/case-enriched-137.svg",
+    "ogImage": "/custom/empty/case-enriched-137.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-137",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#101d33,#307ea1)",
+    "curated": false,
+    "reelTitle": "Т-Банк · лабиринт технологической орбиты",
+    "featured": false,
+    "eventCity": "Москва · Коломенское",
+    "guestLabel": "8 000+ гостей бренд-зоны (по данным REDDAY)",
+    "occasions": [
+      "public",
+      "btl",
+      "business"
+    ],
+    "sources": [
+      {
+        "label": "REDDAY · концепция зоны, механики и показатели по данным агентства",
+        "url": "https://redday.events/projects/t-bank/it-piknik"
+      },
+      {
+        "label": "MSK1 · ИТ-Пикник в Коломенском 17 августа 2024 года",
+        "url": "https://msk1.ru/text/entertainment/2024/08/17/73973345/"
+      },
+      {
+        "label": "Хабр · репортаж с фестиваля и очереди у активностей в целом",
+        "url": "https://habr.com/ru/articles/839002/"
+      },
+      {
+        "label": "BEMA · организаторы ИТ-Пикника как фестиваля",
+        "url": "https://bemafestival.ru/winners/it-piknik/"
+      }
+    ]
   }
 ]

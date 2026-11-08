@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Концептуальная иллюстрация орбиты Т-Банка на ИТ-Пикнике</title>
+  <desc id="desc">Условный лабиринт из продуктовых планет, соединённых маршрутом вокруг центральной орбиты. Это концептуальная графика, не фотография стенда.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0d1829"/><stop offset=".55" stop-color="#19324a"/><stop offset="1" stop-color="#101622"/></linearGradient>
+    <radialGradient id="halo"><stop stop-color="#82dafa" stop-opacity=".5"/><stop offset=".5" stop-color="#3189ad" stop-opacity=".22"/><stop offset="1" stop-color="#3189ad" stop-opacity="0"/></radialGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#9df4e7"/><stop offset=".5" stop-color="#70c9f4"/><stop offset="1" stop-color="#ffd37c"/></linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#284662"/><stop offset="1" stop-color="#18273b"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="20"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <circle cx="630" cy="405" r="360" fill="url(#halo)"/>
+  <g opacity=".2" stroke="#80cee2" stroke-width="1"><path d="M0 185H1200M0 245H1200M0 305H1200M0 365H1200M0 425H1200M0 485H1200M0 545H1200"/><path d="M130 0V620M210 0V620M290 0V620M370 0V620M450 0V620M530 0V620M610 0V620M690 0V620M770 0V620M850 0V620M930 0V620M1010 0V620"/></g>
+  <path d="M158 431c0-143 136-252 306-252h250c194 0 328 94 328 252 0 130-117 221-315 221H400c-155 0-242-76-242-221z" fill="none" stroke="url(#line)" stroke-width="4" stroke-dasharray="12 12"/>
+  <path d="M253 431c0-83 83-144 211-144h234c122 0 211 58 211 144s-89 143-211 143H464c-128 0-211-60-211-143z" fill="none" stroke="#9be9e8" stroke-opacity=".42" stroke-width="2"/>
+  <g transform="translate(477 301)">
+    <circle cx="122" cy="126" r="124" fill="#14243a" stroke="#b1ecf0" stroke-opacity=".78" stroke-width="2"/>
+    <circle cx="122" cy="126" r="94" fill="none" stroke="#7fd9ea" stroke-opacity=".5" stroke-width="2" stroke-dasharray="4 8"/>
+    <text x="122" y="119" text-anchor="middle" fill="#f5fbff" font-family="Arial,sans-serif" font-size="18" letter-spacing="3">Т-БАНК</text>
+    <text x="122" y="148" text-anchor="middle" fill="#a7ccd9" font-family="Arial,sans-serif" font-size="11" letter-spacing="3">ОРБИТА</text>
+  </g>
+  <g fill="url(#panel)" stroke="#a6e7eb" stroke-width="2">
+    <circle cx="294" cy="285" r="52"/><circle cx="401" cy="512" r="48"/><circle cx="821" cy="290" r="56"/><circle cx="930" cy="501" r="51"/><circle cx="615" cy="202" r="44"/>
+  </g>
+  <g font-family="Arial,sans-serif" text-anchor="middle" fill="#ecf8fb">
+    <text x="294" y="291" font-size="13" letter-spacing="2">T-GAME</text>
+    <text x="401" y="518" font-size="12" letter-spacing="1">T-PAY</text>
+    <text x="821" y="296" font-size="12" letter-spacing="1">КАМЕРА</text>
+    <text x="930" y="507" font-size="12" letter-spacing="1">T-ID</text>
+    <text x="615" y="207" font-size="11" letter-spacing="1">SAGE</text>
+  </g>
+  <g fill="#c6fff2" filter="url(#glow)" opacity=".8"><circle cx="294" cy="285" r="14"/><circle cx="821" cy="290" r="15"/><circle cx="930" cy="501" r="12"/><circle cx="401" cy="512" r="12"/></g>
+  <g fill="#fff0c9"><circle cx="354" cy="231" r="4"/><circle cx="849" cy="422" r="4"/><circle cx="494" cy="223" r="3"/><circle cx="734" cy="536" r="3"/><circle cx="1004" cy="324" r="3"/></g>
+  <g font-family="Arial,sans-serif">
+    <text x="72" y="79" fill="#b4cbd8" font-size="15" letter-spacing="5">Т-БАНК · ИТ-ПИКНИК · 2024</text>
+    <text x="72" y="696" fill="#f3f8fb" font-size="50" font-weight="700" letter-spacing="1">ТЕХНО-ОРБИТА</text>
+    <text x="76" y="737" fill="#9cd8df" font-size="16" letter-spacing="3">ПРОДУКТЫ · ИГРА · МАРШРУТ</text>
+    <text x="1128" y="79" text-anchor="end" fill="#c8d8df" font-size="12" letter-spacing="3">КОНЦЕПТУАЛЬНАЯ ИЛЛЮСТРАЦИЯ</text>
+  </g>
+</svg>
