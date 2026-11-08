@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#202a31"/>
+  <circle cx="1330" cy="290" r="260" fill="#394b52" opacity=".55"/>
+  <path d="M120 140h1360M120 1060h1360" stroke="#62747a" stroke-width="2"/>
+  <g fill="#f7f5ef" font-family="Arial,sans-serif">
+    <text x="120" y="225" font-size="28" letter-spacing="3">BEETL × ИНГОССТРАХ</text>
+    <text x="120" y="510" font-size="84" font-weight="700">VK FEST 2025</text>
+    <text x="120" y="620" font-size="44">Интерактивная бренд-зона</text>
+    <text x="120" y="1010" font-size="28" fill="#c1c9c8">Фотографии проекта не предоставлены</text>
+  </g>
+</svg>

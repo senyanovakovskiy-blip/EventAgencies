@@ -6939,6 +6939,46 @@
     "occasions": []
   },
   {
+    "slug": "case-enriched-84",
+    "title": "Ингосстрах на VK Fest 2025",
+    "fullTitle": "Ингосстрах на VK Fest 2025",
+    "year": "2025",
+    "eventDate": "Июль 2025",
+    "category": "Активация",
+    "format": "Открытая бренд-зона на музыкальном фестивале",
+    "client": "Ингосстрах",
+    "agencySlug": "beetl",
+    "agencySlugs": [
+      "beetl"
+    ],
+    "agencyUrl": "/agency/beetl",
+    "types": [
+      "btl",
+      "public"
+    ],
+    "role": "Beetl разработало креативную концепцию и организовало интерактивную бренд-зону; агентство указывает среди целей узнаваемость у молодой аудитории и сбор контактов.",
+    "industry": "Страхование и фестивальные активации",
+    "description": "На VK Fest 2025 Beetl создало для «Ингосстраха» открытое пространство с мягкими формами и интерактивными зонами, адаптированное к атмосфере музыкального фестиваля. Гости могли участвовать в активностях, общаться с представителями бренда или просто отдохнуть; вечером площадку подсвечивали. Целями были узнаваемость у молодой аудитории и сбор релевантных контактов. По данным Beetl, за фестиваль пространство собрало около 4 200 контактов.",
+    "seoDescription": "Бренд-зона «Ингосстраха» на VK Fest 2025: интерактив, мягкие формы и вечерняя подсветка; около 4 200 контактов по данным Beetl.",
+    "source": "https://beetl.ru/portfolio/ingosstrakh-na-vk-fest/",
+    "image": "/custom/empty/case-enriched-84.svg",
+    "imageMobile": "/custom/empty/case-enriched-84.svg",
+    "ogImage": "/custom/empty/case-enriched-84.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-84",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#19252e,#353127)",
+    "curated": false,
+    "reelTitle": "Ингосстрах на VK Fest 2025",
+    "featured": false,
+    "eventCity": "Москва",
+    "guestLabel": "",
+    "occasions": []
+  },
+  {
     "slug": "case-round2-84",
     "title": "Презентация «Битва титанов 2020»",
     "fullTitle": "Презентация «Битва титанов 2020»",
