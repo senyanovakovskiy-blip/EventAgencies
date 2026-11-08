@@ -255,14 +255,15 @@
         "corporate",
         "sport"
       ],
-      "description": "В INTERVALS 2026 Dreamlaser участвовал в городской медиавыставке и вместе с партнёрами создал инсталляции Strata для Т-Банка и Transmission для T2. Фестиваль развернулся более чем на 20 площадках Нижнего Новгорода.",
+      "description": "В INTERVALS 2026 Dreamlaser участвовал в городской медиавыставке и вместе с партнёрами создал инсталляции Strata для Т-Банка и Transmission для T2. Фестиваль развернулся более чем на 20 площадках Нижнего Новгорода. В 2021 году Dreamlaser стал генеральным продюсером открытия «Российской студенческой весны» на стадионе в Нижнем Новгороде.",
       "website": "https://dreamlaser.ru/",
       "works": [
         "portfolio-dream-laser-15dd06e",
         "case-enriched-76",
-        "case-round2-91"
+        "case-round2-91",
+        "case-enriched-86"
       ],
-      "caseCount": 2,
+      "caseCount": 3,
       "photoCount": 8,
       "cover": "/custom/library/423c7c2c36.webp",
       "coverWork": "portfolio-dream-laser-15dd06e"
@@ -9028,6 +9029,48 @@
       ]
     },
     {
+      "slug": "case-enriched-86",
+      "title": "Открытие «Российской студенческой весны» — 2021",
+      "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
+      "year": "2021",
+      "eventDate": "Май 2021",
+      "category": "Культура",
+      "format": "Стадионное аудиовизуальное шоу",
+      "client": "Российская студенческая весна",
+      "agencySlug": "dream-laser",
+      "agencySlugs": [
+        "dream-laser"
+      ],
+      "agencyUrl": "/agency/dream-laser",
+      "types": [
+        "culture",
+        "public"
+      ],
+      "role": "Генеральное продюсирование совместно с командами ТПО108 и MF Group.",
+      "industry": "Событийный маркетинг и культура",
+      "description": "В мае 2021 года на стадионе «Нижний Новгород» прошла церемония открытия «Российской студенческой весны». Dreamlaser выступил генеральным продюсером вместе с командами ТПО108 и MF Group. Оригинальный саундтрек исполнили симфонический оркестр и академический хор; в шоу задействовали 24 проектора Christie, 12 Boxer, 145 м² LED-экранов и 1 000 LED-баров.",
+      "seoDescription": "Открытие «Российской студенческой весны — 2021» на стадионе в Нижнем Новгороде: оркестр, хор, проекции и LED-свет. Генеральный продюсер — Dreamlaser.",
+      "source": "https://www.dreamlaser.ru/news/ceremoniya-otkrytiya-vserossijskogo-festivalya-rossijskaya-studencheskaya-vesna-2021",
+      "image": "/custom/empty/case-enriched-86.svg",
+      "imageMobile": "/custom/empty/case-enriched-86.svg",
+      "ogImage": "/custom/empty/case-enriched-86.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-86",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#28202a,#4c303f)",
+      "curated": false,
+      "reelTitle": "Открытие студенческой весны — 2021",
+      "featured": false,
+      "eventCity": "Стадион «Нижний Новгород», Нижний Новгород",
+      "guestLabel": "",
+      "occasions": [
+        "public"
+      ]
+    },
+    {
       "slug": "case-round2-84",
       "title": "Презентация «Битва титанов 2020»",
       "fullTitle": "Презентация «Битва титанов 2020»",
@@ -9404,8 +9447,8 @@
   },
   "stats": {
     "agencies": 100,
-    "cases": 95,
-    "works": 142,
+    "cases": 96,
+    "works": 143,
     "photos": 263
   }
 }

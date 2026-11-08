@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#241f27"/>
+  <path d="M0 910Q800 700 1600 910v290H0z" fill="#332a36"/>
+  <path d="M110 870Q800 700 1490 870M190 920Q800 780 1410 920M285 970Q800 850 1315 970" fill="none" stroke="#74546b" stroke-width="5" opacity=".75"/>
+  <path d="M420 260 650 790M800 205v585M1180 260 950 790" stroke="#cf9ab9" stroke-width="9" opacity=".58"/>
+  <path d="M250 300 620 730M1350 300 980 730" stroke="#e7c9a3" stroke-width="5" opacity=".45"/>
+  <g fill="#f7f1ee" font-family="Arial,sans-serif">
+    <text x="120" y="190" font-size="28" letter-spacing="3">DREAMLASER × РОССИЙСКАЯ СТУДЕНЧЕСКАЯ ВЕСНА</text>
+    <text x="120" y="485" font-size="72" font-weight="700">ОТКРЫТИЕ 2021</text>
+    <text x="120" y="565" font-size="40">Стадион · оркестр · проекции</text>
+    <text x="120" y="1080" font-size="26" fill="#c5b8c3">Иллюстративная карточка · фото проекта не добавлены</text>
+  </g>
+</svg>
