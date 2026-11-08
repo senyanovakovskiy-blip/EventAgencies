@@ -2154,6 +2154,31 @@
         "Оформление и брендирование событий",
         "Аренда технического оборудования и мебели"
       ]
+    },
+    {
+      "slug": "share-studio",
+      "name": "share.",
+      "city": "",
+      "types": [
+        "culture",
+        "public",
+        "online"
+      ],
+      "description": "share. — студия производства контента. Для Chtivo Festival 2025 она разработала визуальный язык двух музыкальных сцен, соединив литературную тему фестиваля с графикой, интеграцией трансляций и live VJing.",
+      "website": "https://www.share.sc/",
+      "works": [
+        "case-enriched-162"
+      ],
+      "caseCount": 1,
+      "photoCount": 0,
+      "cover": null,
+      "coverWork": null,
+      "services": [
+        "Мультимедийный контент",
+        "Сценическая графика",
+        "Интеграция трансляций",
+        "Live VJing"
+      ]
     }
   ],
   "projects": [
@@ -13344,6 +13369,60 @@
           "url": "https://eventex.moscow/cases/arhyzgoryzvezdy"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-162",
+      "title": "Chtivo Festival: музыка на страницах раскрытой книги",
+      "fullTitle": "Визуальный контент двух сцен Chtivo Festival 2025 — кейс share.",
+      "year": "2025",
+      "eventDate": "2025; точная дата не указана",
+      "category": "Музыкальный фестиваль и сценический контент",
+      "format": "Визуалы двух музыкальных сцен, графика, поддержка трансляций и live VJing",
+      "client": "Chtivo",
+      "agencySlug": "share-studio",
+      "agencySlugs": [
+        "share-studio"
+      ],
+      "agencyUrl": "/agency/share-studio",
+      "types": [
+        "culture",
+        "public",
+        "online"
+      ],
+      "role": "share. называет себя командой, отвечавшей за визуалы обеих музыкальных сцен: создавала контент и поддерживающую графику, интегрировала трансляции и делала live VJing. Студии не приписываем организацию фестиваля или его сценического продакшна целиком.",
+      "industry": "Музыкальные фестивали и мультимедийный контент",
+      "description": "Визуальная идея Chtivo Festival 2025 продолжала литературную тему самого фестиваля: главная сцена была построена как раскрытая книга, а графика соединяла слова и выступления. Студия share. создала контент для обеих музыкальных сцен — Music и Sound, добавила поддерживающие визуалы, интеграцию трансляций и live VJing. В кейсе не названы точная дата и число гостей.",
+      "seoDescription": "Chtivo Festival 2025 в Москве: студия share. создала визуальный контент двух музыкальных сцен, связав раскрытую книгу на главной сцене с графикой, трансляциями и live VJing.",
+      "source": "https://www.share.sc/portfolio/chtivo-festival",
+      "image": "/custom/empty/case-enriched-162.svg",
+      "imageMobile": "/custom/empty/case-enriched-162.svg",
+      "ogImage": "/custom/empty/case-enriched-162.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-162",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#17213a,#d9a276)",
+      "curated": false,
+      "reelTitle": "Chtivo · музыка между страницами",
+      "featured": false,
+      "eventCity": "Москва",
+      "occasions": [
+        "culture",
+        "public",
+        "online"
+      ],
+      "sources": [
+        {
+          "label": "share. · год, место, клиент и визуальная работа на двух сценах",
+          "url": "https://www.share.sc/portfolio/chtivo-festival"
+        },
+        {
+          "label": "share. · студия производства контента",
+          "url": "https://www.share.sc/"
+        }
+      ]
     }
   ],
   "types": {
@@ -13357,9 +13436,9 @@
     "pr": "PR-события"
   },
   "stats": {
-    "agencies": 109,
-    "cases": 171,
-    "works": 218,
+    "agencies": 110,
+    "cases": 172,
+    "works": 219,
     "photos": 263
   }
 }
