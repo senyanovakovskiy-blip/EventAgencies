@@ -8329,5 +8329,42 @@
     "eventCity": "Москва",
     "guestLabel": "",
     "occasions": []
+  },
+  {
+    "slug": "case-enriched-109",
+    "title": "«Сезон кода» — ИТ-фестиваль Т-Банка",
+    "fullTitle": "«Сезон кода»: ИТ-фестиваль Т-Банка в экстрим-парке",
+    "year": "Год не указан",
+    "eventDate": "",
+    "category": "Фестиваль",
+    "format": "ИТ-фестиваль open-air в двух городах",
+    "client": "Т-Банк",
+    "agencySlug": "imagine-group",
+    "agencyUrl": "/agency/imagine-group",
+    "types": [
+      "public",
+      "business",
+      "culture"
+    ],
+    "role": "Open-air с лайвами и летней айдентикой; заявленная задача — объединить локальное ИТ-сообщество и познакомить его с брендом.",
+    "industry": "Финансовые технологии и ИТ",
+    "description": "Представьте ИТ-фестиваль не в зале, а в настоящем экстрим-парке: технологии, уличная культура, лайвы и летняя атмосфера. Imagine Group описывает «Сезон кода» Т-Банка как open-air в двух городах, созданный для объединения локальных ИТ-сообществ и знакомства с брендом. Агентство называет его первым ИТ-фестивалем в России, прошедшим в настоящем экстрим-парке.",
+    "seoDescription": "«Сезон кода» Т-Банка от Imagine Group — ИТ-фестиваль open-air с лайвами и летней айдентикой в двух городах. По заявлению агентства, он прошёл в настоящем экстрим-парке.",
+    "source": "https://imgevent.ru/case",
+    "image": "/custom/empty/case-enriched-109.svg",
+    "imageMobile": "/custom/empty/case-enriched-109.svg",
+    "ogImage": "/custom/empty/case-enriched-109.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-109",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#173a3d,#d35470)",
+    "curated": false,
+    "reelTitle": "Сезон кода · Т-Банк",
+    "featured": false,
+    "guestLabel": "",
+    "occasions": []
   }
 ]

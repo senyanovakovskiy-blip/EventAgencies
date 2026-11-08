@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+  <title id="title">«Сезон кода» — концептуальная иллюстрация фестиваля Т-Банка</title>
+  <desc id="desc">Стилизованный экстрим-парк с городской сценой, скейт-рампой, летними огнями и абстрактными линиями кода. Это иллюстрация, а не фотография мероприятия.</desc>
+  <defs>
+    <linearGradient id="sky" x2="1" y2="1"><stop stop-color="#123d3b"/><stop offset=".56" stop-color="#235c55"/><stop offset="1" stop-color="#e87c59"/></linearGradient>
+    <linearGradient id="stage" x2="0" y2="1"><stop stop-color="#b8f35b"/><stop offset="1" stop-color="#6dbd7c"/></linearGradient>
+    <linearGradient id="ramp" x2="0" y2="1"><stop stop-color="#ef7b68"/><stop offset="1" stop-color="#b74562"/></linearGradient>
+    <pattern id="grid" width="72" height="72" patternUnits="userSpaceOnUse"><path d="M72 0H0V72" fill="none" stroke="#d7efb7" stroke-opacity=".12" stroke-width="2"/></pattern>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#sky)"/>
+  <rect width="1600" height="1200" fill="url(#grid)"/>
+  <circle cx="1320" cy="220" r="118" fill="#f4ca79" opacity=".92"/>
+  <path d="M0 680 195 490l174 133 198-250 183 237 175-161 177 193 174-205 324 226v537H0Z" fill="#173c3c" opacity=".86"/>
+  <g fill="#25514b" opacity=".8"><path d="M70 513h92v167H70zM178 454h126v226H178zM333 518h88v162h-88zM1240 455h104v200h-104zM1360 500h148v180h-148z"/><path d="M88 550h18v20H88zm34 0h18v20h-18zm82-48h21v24h-21zm46 0h21v24h-21zm-46 49h21v24h-21zm46 0h21v24h-21zm101 1h18v21h-18zM1270 493h20v23h-20zm48 0h20v23h-20zm88 42h20v23h-20zm47 0h20v23h-20z" fill="#c0e59a" opacity=".75"/></g>
+  <path d="M0 796c206-62 394-78 584-29 175 45 343 52 498 6 192-57 356-39 518 29v398H0Z" fill="#19403d"/>
+  <path d="M800 406h490v286H800z" fill="#173b3b" stroke="#b8f35b" stroke-width="8"/>
+  <path d="M844 449h402v197H844z" fill="#245951"/>
+  <path d="M844 647h402v28H844z" fill="#e87c59"/>
+  <g fill="#b8f35b"><path d="M874 680h42v54h-42zm72 0h42v54h-42zm72 0h42v54h-42zm72 0h42v54h-42zm72 0h42v54h-42z"/><circle cx="900" cy="492" r="12"/><circle cx="965" cy="492" r="12"/><circle cx="1030" cy="492" r="12"/><circle cx="1095" cy="492" r="12"/><circle cx="1160" cy="492" r="12"/></g>
+  <path d="M962 614c31-83 63-125 96-125s65 42 96 125" fill="none" stroke="#f2c66e" stroke-width="12" stroke-linecap="round"/>
+  <path d="M128 916c31-134 104-202 220-202h104v339H128z" fill="url(#ramp)" stroke="#f5c270" stroke-width="8"/>
+  <path d="M140 910c39-115 108-172 208-172h93" fill="none" stroke="#ffd787" stroke-width="10" stroke-linecap="round"/>
+  <path d="M1167 923h310l62 131h-434z" fill="#235753" stroke="#b8f35b" stroke-width="8"/>
+  <path d="M1212 921c30-116 66-173 110-173s80 57 110 173" fill="none" stroke="#e87c59" stroke-width="12"/>
+  <g fill="none" stroke-linecap="round"><path d="M580 456h127m-127 42h90m-90 42h112" stroke="#b8f35b" stroke-width="8"/><path d="M540 620c48-42 96-42 144 0m-144 35c48-42 96-42 144 0" stroke="#ef9c72" stroke-width="7" opacity=".9"/></g>
+  <g fill="#f7f1dd" font-family="Arial,sans-serif">
+    <text x="104" y="123" font-size="29" letter-spacing="5" fill="#c9ebaa">IMAGINE GROUP × Т-БАНК</text>
+    <text x="98" y="257" font-size="90" font-weight="700" letter-spacing="-3">СЕЗОН КОДА</text>
+    <text x="104" y="325" font-size="33" fill="#d9e4c7">ИТ-ФЕСТИВАЛЬ · OPEN-AIR · ДВА ГОРОДА</text>
+    <text x="106" y="1086" font-size="25" fill="#d9e4c7">Концептуальная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+  <g fill="#f7f1dd" opacity=".9"><circle cx="510" cy="757" r="13"/><circle cx="551" cy="766" r="13"/><circle cx="588" cy="754" r="13"/><circle cx="633" cy="769" r="13"/><circle cx="681" cy="756" r="13"/><circle cx="727" cy="770" r="13"/><circle cx="1404" cy="823" r="13"/></g>
+</svg>
