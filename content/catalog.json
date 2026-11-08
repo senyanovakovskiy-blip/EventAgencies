@@ -1126,9 +1126,10 @@
       "description": "MaxMedium проводит стратегические сессии, конференции и MICE-проекты под ключ. Собственный «Забег корпораций» показывает спортивную и семейную сторону агентства: с 2016 года он объединяет сотрудников и их близких в Крылатском — с забегами, йогой, чек-апами и десятками активностей.",
       "website": "https://max-medium.ru/ru",
       "works": [
-        "case-enriched-69"
+        "case-enriched-69",
+        "case-enriched-155"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 1,
       "cover": "/custom/library/9ba54abefe-thumb.webp",
       "coverWork": "case-enriched-69"
@@ -12947,6 +12948,59 @@
           "url": "https://www.retail.ru/rbc/pressreleases/sbermarket-prigotovil-samyy-bolshoy-v-mire-salat-olive/"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-155",
+      "title": "Открытие «Каравая»: городской праздник от дня до концерта",
+      "fullTitle": "Торжественное открытие ТЦ «Каравай» в Наро-Фоминске — проект MaxMedium",
+      "year": "2018",
+      "eventDate": "21 июля 2018",
+      "category": "Открытие торгового центра и городской праздник",
+      "format": "Дневные активности для семей, церемония открытия и вечерний концерт",
+      "client": "ТЦ «Каравай»",
+      "agencySlug": "maxmedium",
+      "agencySlugs": [
+        "maxmedium"
+      ],
+      "agencyUrl": "/agency/maxmedium",
+      "types": [
+        "public",
+        "btl"
+      ],
+      "role": "MaxMedium описывает разработку программы открытия: церемонию с перерезанием ленты и официальными лицами, дневные семейные активности и вечернюю программу. Агентство сообщает, что проект подготовили за 2,5 недели. Муниципальный источник подтверждает открытие и программу; работу MaxMedium не распространяем на весь День города.",
+      "industry": "Розничная торговля и городские события",
+      "description": "21 июля 2018 года открытие ТЦ «Каравай» в Наро-Фоминске стало частью городского праздника. Днём проходили мастер-классы и конкурсы, вечером — концерт Натальи Королёвой, группы «На-на» и «Лазурного берега». MaxMedium пишет, что разработало программу церемонии, семейных активностей и вечерней части за 2,5 недели. Агентство сообщает о более чем 28 000 участниках; муниципальная публикация число гостей не подтверждает.",
+      "seoDescription": "Открытие ТЦ «Каравай» в Наро-Фоминске: дневные мастер-классы, семейная программа и концерт. MaxMedium описывает подготовку открытия в рамках Дня города.",
+      "source": "https://max-medium.ru/ru/proekty/tzkaravai",
+      "image": "/custom/empty/case-enriched-155.svg",
+      "imageMobile": "/custom/empty/case-enriched-155.svg",
+      "ogImage": "/custom/empty/case-enriched-155.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-155",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#294b57,#e3a55d)",
+      "curated": false,
+      "reelTitle": "Каравай · открытие с городским размахом",
+      "featured": false,
+      "eventCity": "Наро-Фоминск",
+      "guestLabel": "Более 28 000 участников (по данным MaxMedium)",
+      "occasions": [
+        "public",
+        "btl"
+      ],
+      "sources": [
+        {
+          "label": "MaxMedium · программа открытия, задачи и заявленное число участников",
+          "url": "https://max-medium.ru/ru/proekty/tzkaravai"
+        },
+        {
+          "label": "Администрация Наро-Фоминского округа · дата, открытие и публичная программа",
+          "url": "https://nfreg.ru/novosti/karavaj-vse-chto-hochesh-vybiraj/"
+        }
+      ]
     }
   ],
   "types": {
@@ -12961,8 +13015,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 164,
-    "works": 211,
+    "cases": 165,
+    "works": 212,
     "photos": 263
   }
 }
