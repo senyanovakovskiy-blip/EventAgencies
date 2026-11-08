@@ -97,9 +97,10 @@
         "portfolio-be-in-event-fbe0bbe",
         "case-enriched-57",
         "case-enriched-58",
-        "case-enriched-148"
+        "case-enriched-148",
+        "case-enriched-149"
       ],
-      "caseCount": 3,
+      "caseCount": 4,
       "photoCount": 6,
       "cover": "/custom/library/4a4bf89ec6.webp",
       "coverWork": "portfolio-be-in-event-fbe0bbe"
@@ -12619,6 +12620,55 @@
           "url": "https://beinevent.ru/hr-events"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-149",
+      "title": "«Город мечты»: команда строит общий город",
+      "fullTitle": "Командная игра на конференции AB InBev EFES — Казань, февраль 2025",
+      "year": "2025",
+      "eventDate": "5–7 февраля 2025",
+      "category": "Командообразующая игра на корпоративной конференции",
+      "format": "Ролевая командная игра с общей моделью города и размещением его объектов",
+      "client": "AB InBev EFES",
+      "agencySlug": "be-in-event",
+      "agencySlugs": [
+        "be-in-event"
+      ],
+      "agencyUrl": "/agency/be-in-event",
+      "types": [
+        "corporate",
+        "business"
+      ],
+      "role": "BE IN сообщает, что провело финальную командную игру «Город мечты» на конференции AB InBev EFES. Источник не приписывает агентству организацию всей конференции.",
+      "industry": "Производство напитков и командное развитие",
+      "description": "5–7 февраля 2025 года в Казани прошла конференция AB InBev EFES, которая завершилась игрой «Город мечты». Участники выбирали роли архитектора, инженера или главы района, вместе собирали макет города и решали, где разместить мэрию, больницу, жилые и культурные зоны и проложить дороги. BE IN описывает игру как финальный тимбилдинг, построенный на совместных решениях и договорённостях. Число участников не опубликовано.",
+      "seoDescription": "Игра «Город мечты» на конференции AB InBev EFES в Казани: участники вместе проектировали город и договаривались о размещении его районов. Кейс BE IN EVENT.",
+      "source": "https://beinevent.ru/hr-events",
+      "image": "/custom/empty/case-enriched-149.svg",
+      "imageMobile": "/custom/empty/case-enriched-149.svg",
+      "ogImage": "/custom/empty/case-enriched-149.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-149",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#244454,#d98b60)",
+      "curated": false,
+      "reelTitle": "Город мечты · командная игра",
+      "featured": false,
+      "eventCity": "Казань",
+      "guestLabel": "Число участников не опубликовано",
+      "occasions": [
+        "corporate",
+        "business"
+      ],
+      "sources": [
+        {
+          "label": "BE IN EVENT · дата и описание командной игры «Город мечты»",
+          "url": "https://beinevent.ru/hr-events"
+        }
+      ]
     }
   ],
   "types": {
@@ -12633,8 +12683,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 158,
-    "works": 205,
+    "cases": 159,
+    "works": 206,
     "photos": 263
   }
 }
