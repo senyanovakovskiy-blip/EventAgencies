@@ -200,9 +200,10 @@
       "works": [
         "portfolio-imagine-group-fd77444",
         "case-enriched-36",
-        "case-enriched-109"
+        "case-enriched-109",
+        "case-enriched-125"
       ],
-      "caseCount": 2,
+      "caseCount": 3,
       "photoCount": 7,
       "cover": "/custom/library/3a9f81bf87.webp",
       "coverWork": "portfolio-imagine-group-fd77444"
@@ -11257,6 +11258,47 @@
           "url": "https://50chess.ru/molodezh-igraet-v-shahmaty/"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-125",
+      "title": "PIK AI DAY — конференция ПИК об ИИ в бизнесе",
+      "fullTitle": "PIK AI DAY: первая внутренняя конференция ПИК об ИИ-технологиях в бизнесе",
+      "year": "Год не указан",
+      "eventDate": "",
+      "category": "Деловое событие",
+      "format": "Внутренняя конференция об ИИ-технологиях в бизнесе",
+      "client": "ПИК",
+      "agencySlug": "imagine-group",
+      "agencySlugs": [
+        "imagine-group"
+      ],
+      "agencyUrl": "/agency/imagine-group",
+      "types": [
+        "business"
+      ],
+      "role": "Imagine Group показывает в кейсе одну конкретную механику: зрители вместе с DJ БлокNote создали трек о конференции с помощью ИИ за семь минут. Дата, площадка и полный перечень работ агентства не указаны.",
+      "industry": "Бизнес и технологии",
+      "description": "PIK AI DAY — первая внутренняя конференция компании ПИК, посвящённая ИИ-технологиям в бизнесе. Imagine Group выделяет запоминающийся момент: зрители вместе с DJ БлокNote создали музыкальный трек о самой конференции с помощью ИИ всего за семь минут. Дата, площадка, число участников и другие работы агентства на странице не раскрыты.",
+      "seoDescription": "PIK AI DAY — первая внутренняя конференция ПИК об ИИ в бизнесе. Imagine Group сообщает, что зрители вместе с DJ БлокNote создали трек о событии с помощью ИИ за семь минут.",
+      "source": "https://imgevent.ru/",
+      "image": "/custom/empty/case-enriched-125.svg",
+      "imageMobile": "/custom/empty/case-enriched-125.svg",
+      "ogImage": "/custom/empty/case-enriched-125.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-125",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#4b2d92,#eb648d)",
+      "curated": false,
+      "reelTitle": "PIK AI DAY · трек за 7 минут",
+      "featured": false,
+      "eventCity": "",
+      "guestLabel": "",
+      "occasions": [
+        "business"
+      ]
     }
   ],
   "types": {
@@ -11271,8 +11313,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 134,
-    "works": 181,
+    "cases": 135,
+    "works": 182,
     "photos": 263
   }
 }
