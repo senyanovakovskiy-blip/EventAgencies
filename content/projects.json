@@ -10107,5 +10107,68 @@
         "url": "https://now-agency.ru/en/t-vault-%D0%BF%D0%BE%D1%81%D1%82%D0%B0%D0%BF%D0%BE%D0%BA%D0%B0%D0%BB%D0%B8%D0%BF%D1%81%D0%B8%D1%81-%D0%BF%D0%BE%D1%81%D0%BB%D0%B5-%D1%87%D1%91%D1%80%D0%BD%D0%BE%D0%B9-%D0%BF%D1%8F%D1%82%D0%BD%D0%B8/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-144",
+    "title": "«Диктант Победы»: путь из «Мира танков» в финал музея",
+    "fullTitle": "Кибертурнир «Диктанта Победы» для «Ростелеком Игр» — IVS Group, 2026",
+    "year": "2026",
+    "eventDate": "16 марта — 24 апреля 2026",
+    "category": "Онлайн-отбор и офлайн-финал кибертурнира",
+    "format": "15 боёв, исторический диктант, шоу-матч и финал в Музее Победы",
+    "client": "Ростелеком Игры",
+    "agencySlug": "ivs-group",
+    "agencySlugs": [
+      "ivs-group"
+    ],
+    "agencyUrl": "/agency/ivs-group",
+    "types": [
+      "online",
+      "public",
+      "business"
+    ],
+    "role": "IVS Group описывает свою работу через лендинг, коммуникацию с участниками, логистику, размещение, оформление площадок и медиасопровождение. В официальном списке организаторов «Ростелекома» названы другие организации; эту запись не приписываем IVS как статус соорганизатора турнира.",
+    "industry": "Киберспорт, образование и просветительские события",
+    "description": "Вход в онлайн-турнир проходил через «Мир танков» и Диктант Победы: нужно было провести не менее 15 боёв и написать диктант. По данным «Ростелекома», в квалификации участвовали более 65 000 человек из России и Беларуси, до очного финала дошли 14 игроков. В Музее Победы они написали диктант и сыграли решающий матч; раньше в Москве прошёл специальный шоу-матч с блогерами и историками. IVS описывает свой вклад как лендинг, связь с участниками, логистику, размещение, оформление и медиасопровождение.",
+    "seoDescription": "Кибертурнир «Диктант Победы» для «Ростелеком Игр»: более 65 000 участников отбора, 14 финалистов и решающий матч в Музее Победы. Вклад IVS Group — коммуникация и продакшн.",
+    "source": "https://ivsgroup.ru/portfolio/kiberturnir-diktanta-pobedy-dlya-rostelekom-igry-moskva",
+    "image": "/custom/empty/case-enriched-144.svg",
+    "imageMobile": "/custom/empty/case-enriched-144.svg",
+    "ogImage": "/custom/empty/case-enriched-144.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-144",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#14201d,#b7954a)",
+    "curated": false,
+    "reelTitle": "«Мир танков» · финал в Музее Победы",
+    "featured": false,
+    "eventCity": "Онлайн · Москва, Музей Победы",
+    "guestLabel": "65 000+ участников отбора · 14 финалистов (по данным «Ростелекома»)",
+    "occasions": [
+      "online",
+      "public",
+      "business"
+    ],
+    "sources": [
+      {
+        "label": "IVS Group · задачи агентства и формат проекта",
+        "url": "https://ivsgroup.ru/portfolio/kiberturnir-diktanta-pobedy-dlya-rostelekom-igry-moskva"
+      },
+      {
+        "label": "«Ростелеком» · даты, 65 000+ участников, 14 финалистов и список организаторов",
+        "url": "https://www.company.rt.ru/press/news/d477935/"
+      },
+      {
+        "label": "«Игры Ростелеком» · условия, этапы и поездка финалистов",
+        "url": "https://igrovoy.rt.ru/dp"
+      },
+      {
+        "label": "360.ru · финал и формат турнира (материал помечен как реклама «Ростелекома»)",
+        "url": "https://360.ru/news/obschestvo/final-kiberturnira-diktant-pobedy-sostojalsja-v-moskve/"
+      }
+    ]
   }
 ]
