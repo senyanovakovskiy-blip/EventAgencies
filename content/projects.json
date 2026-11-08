@@ -7523,6 +7523,45 @@
     ]
   },
   {
+    "slug": "case-enriched-103",
+    "title": "PT Open Day: Synthesis — день партнёров",
+    "fullTitle": "PT Open Day: Synthesis — ежегодная встреча партнёров PT",
+    "year": "Год не указан",
+    "eventDate": "13 марта (год не указан)",
+    "category": "Деловое событие",
+    "format": "Ежегодный день партнёров",
+    "client": "PT",
+    "agencySlug": "ars-com",
+    "agencyUrl": "/agency/ars-com",
+    "types": [
+      "business",
+      "corporate"
+    ],
+    "role": "Разработка активностей, техническое оснащение, логистика и организация пространства, оформление и производство партнёрских стендов, режиссура, персонал и безопасность, кейтеринг, трансферы и координация сервисов.",
+    "industry": "Партнёрские события компаний",
+    "description": "PT Open Day: Synthesis — ежегодная встреча партнёров PT в Lomonosov Cluster в Москве. ARS Communications отвечала за программу и активности, техническое оснащение, логистику и пространство, оформление и партнёрские стенды, режиссуру, персонал и безопасность, кейтеринг, трансферы и координацию сервисов. В кейсе агентства указаны 1 500 участников и явка 90%; событие прошло 13 марта, год не раскрыт.",
+    "seoDescription": "PT Open Day: Synthesis от ARS Communications: 1 500 участников, явка 90%, партнёрские стенды и полный комплекс событийных сервисов.",
+    "source": "https://www.arscom.ru/eng/projects/pt-open-day-synthesis/",
+    "image": "/custom/empty/case-enriched-103.svg",
+    "imageMobile": "/custom/empty/case-enriched-103.svg",
+    "ogImage": "/custom/empty/case-enriched-103.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-103",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#203d3b,#b58655)",
+    "curated": false,
+    "reelTitle": "PT Open Day: Synthesis",
+    "featured": false,
+    "eventCity": "Москва · Lomonosov Cluster",
+    "guestLabel": "1 500 участников; явка 90% (по данным ARS Communications)",
+    "occasions": [
+      "corporate"
+    ]
+  },
+  {
     "slug": "case-enriched-86",
     "title": "Открытие «Российской студенческой весны» — 2021",
     "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",

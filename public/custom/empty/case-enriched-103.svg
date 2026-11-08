@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#203d3b"/>
+  <circle cx="1325" cy="185" r="150" fill="#d8b87d" opacity=".9"/>
+  <path d="M890 335h560v565H890z" fill="#274c48" stroke="#d7b77b" stroke-width="8"/>
+  <path d="M960 420h175v375H960zM1205 420h175v375h-175z" fill="#345f58" stroke="#e2c892" stroke-width="6"/>
+  <path d="M1135 575h70v325h-70z" fill="#b98252"/>
+  <g fill="#e5c783">
+    <circle cx="1000" cy="485" r="16"/><circle cx="1050" cy="485" r="16"/><circle cx="1100" cy="485" r="16"/>
+    <circle cx="1248" cy="485" r="16"/><circle cx="1300" cy="485" r="16"/><circle cx="1350" cy="485" r="16"/>
+    <path d="M905 960h525v22H905z"/>
+  </g>
+  <g fill="none" stroke="#d7b77b" stroke-width="8" stroke-linecap="round" stroke-dasharray="16 18">
+    <path d="M760 465h100M760 635h100M760 805h100"/>
+    <path d="M470 555c95-95 185-95 270 0M470 715c95 95 185 95 270 0"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="105" y="142" font-size="31" letter-spacing="4">ARS COMMUNICATIONS · МОСКВА</text>
+    <text x="100" y="345" font-size="74" font-weight="700">PT OPEN DAY</text>
+    <text x="105" y="435" font-size="64" font-weight="700" fill="#e2c38f">SYNTHESIS</text>
+    <text x="105" y="535" font-size="32" fill="#d6ded6">Встреча партнёров · Lomonosov Cluster</text>
+    <text x="105" y="610" font-size="31" fill="#d6ded6">1 500 участников · явка 90% по кейсу агентства</text>
+    <text x="100" y="1090" font-size="25" fill="#cbd2db">Условная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+</svg>
