@@ -8840,5 +8840,55 @@
         "url": "https://www.arscom.ru/eng/projects/d-terra-convention-eurasia-2026/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-121",
+    "title": "Киберкубок доставки «Пятёрочки»",
+    "fullTitle": "Киберкубок доставки «Пятёрочки»: FIFA, Twitch и футбольное шоу",
+    "year": "2026",
+    "eventDate": "11 июля 2026 года",
+    "category": "Киберспортивное событие",
+    "format": "Турнир FIFA с ток-шоу, Twitch-трансляцией и викториной",
+    "client": "X5 Group / «Пятёрочка»",
+    "agencySlug": "ars-com",
+    "agencySlugs": [
+      "ars-com"
+    ],
+    "agencyUrl": "/agency/ars-com",
+    "types": [
+      "sport",
+      "online",
+      "business"
+    ],
+    "role": "ARS COM описывает общий менеджмент, концепцию и сценарий, ток-шоу, режиссуру и техническое обеспечение Twitch-трансляции, оформление, лендинг, футбольную викторину, призовые механики и работу со специальным гостем.",
+    "industry": "Доставка готовой еды",
+    "description": "Турнир FIFA превратил тему доставки в футбольное шоу: готовую еду «Пятёрочки» встроили в сюжет, а офлайн-площадку дополнили Twitch-трансляцией, викториной и призовыми механиками для обеих аудиторий. Специальным гостем стал Герман Эль Классико. 11 июля 2026 года в Сфере X5 в московском Парке Горького собрались 100 человек офлайн; трансляцию посмотрели 6 000 зрителей онлайн — по данным ARS COM.",
+    "seoDescription": "Киберкубок доставки «Пятёрочки» от ARS COM: турнир FIFA и Twitch-трансляция, 100 человек офлайн и 6 000 онлайн-зрителей по данным агентства.",
+    "source": "https://www.arscom.ru/projects/kiberkubok-dostavki-pyatyerochki/",
+    "image": "/custom/empty/case-enriched-121.svg",
+    "imageMobile": "/custom/empty/case-enriched-121.svg",
+    "ogImage": "/custom/empty/case-enriched-121.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-121",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#28264e,#de5865)",
+    "curated": false,
+    "reelTitle": "Киберкубок «Пятёрочки» · FIFA × Twitch",
+    "featured": false,
+    "eventCity": "Сфера X5, Парк Горького, Москва",
+    "guestLabel": "100 человек офлайн · 6 000 онлайн-зрителей (по данным ARS COM)",
+    "occasions": [
+      "sport",
+      "online"
+    ],
+    "sources": [
+      {
+        "label": "Клиент · каталог проектов ARS COM",
+        "url": "https://www.arscom.ru/projects/"
+      }
+    ]
   }
 ]

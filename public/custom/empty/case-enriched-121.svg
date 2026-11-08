@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">Киберкубок доставки «Пятёрочки» — концептуальная иллюстрация</title>
+<desc id="desc">Стилизованная киберспортивная сцена, футбольный мяч, экран трансляции и игровая аудитория. Концептуальная иллюстрация, не фотография события.</desc>
+<defs>
+  <linearGradient id="night" x2="0" y2="1"><stop stop-color="#171d3d"/><stop offset=".58" stop-color="#38315e"/><stop offset="1" stop-color="#c45466"/></linearGradient>
+  <linearGradient id="screen" x2="1" y2="1"><stop stop-color="#252e58"/><stop offset="1" stop-color="#514779"/></linearGradient>
+  <linearGradient id="pitch" x2="0" y2="1"><stop stop-color="#59856f"/><stop offset="1" stop-color="#244a52"/></linearGradient>
+  <linearGradient id="accent" x2="1" y2="1"><stop stop-color="#fff1c5"/><stop offset="1" stop-color="#ffcc65"/></linearGradient>
+</defs>
+<rect width="1600" height="1200" fill="url(#night)"/>
+<circle cx="1233" cy="211" r="114" fill="#ffcf82" opacity=".74"/>
+<path d="M0 625c221-83 390-83 593-18 216 70 370 77 557 17 171-56 309-56 450-5v581H0Z" fill="url(#pitch)"/>
+<path d="M0 833c209-68 371-61 554 2 204 70 366 72 544 24 185-51 341-52 502-7" fill="none" stroke="#acd0a5" stroke-width="8" opacity=".66"/>
+<path d="M0 1004c207-59 362-44 535 16 194 68 361 78 541 31 198-51 360-55 524-16v165H0Z" fill="#1c3948" opacity=".85"/>
+<rect x="392" y="258" width="815" height="442" rx="22" fill="#f2dbac" opacity=".94"/>
+<rect x="423" y="289" width="753" height="380" rx="14" fill="url(#screen)"/>
+<path d="M477 603c105-76 178-83 263-32 78 47 145 50 222 8 67-37 124-40 187-8v98H477Z" fill="#536d76" opacity=".9"/>
+<path d="M548 588c34-146 98-218 180-210 77 8 119 87 128 212" fill="none" stroke="#edc978" stroke-width="9" opacity=".8"/>
+<path d="M878 577c37-119 103-177 171-151 41 16 69 68 85 157" fill="none" stroke="#9bbca5" stroke-width="9" opacity=".8"/>
+<rect x="726" y="682" width="151" height="39" fill="#d2b37b"/><path d="M670 722h262l28 39H642Z" fill="#e4c58a"/>
+<g fill="#f3dcae"><rect x="476" y="325" width="104" height="47" rx="7"/><rect x="1014" y="325" width="123" height="47" rx="7"/></g>
+<text x="528" y="357" text-anchor="middle" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="#2d3554">FIFA</text>
+<text x="1075" y="355" text-anchor="middle" font-family="Arial,sans-serif" font-size="18" font-weight="700" fill="#2d3554">LIVE</text>
+<g transform="translate(765 453)"><circle r="76" fill="url(#accent)" stroke="#f9e9c9" stroke-width="8"/><path d="m0-28 26-19 31 11 11 32-19 25H-7l-20-25zm0-48v48m-56 0 29-10m84 0-28 10m-4 49-20-23m-34 0-18 24" fill="none" stroke="#24294a" stroke-width="8" stroke-linejoin="round"/></g>
+<path d="M0 687h1600v47H0z" fill="#e8c573" opacity=".84"/>
+<g fill="#f1d59b"><circle cx="184" cy="822" r="17"/><circle cx="273" cy="851" r="15"/><circle cx="354" cy="818" r="18"/><circle cx="1255" cy="821" r="18"/><circle cx="1340" cy="849" r="14"/><circle cx="1428" cy="820" r="17"/></g>
+<g fill="#202b49"><path d="M167 842h35v112h-35zm88 22h35v92h-35zm82-27h36v117h-36zm900 0h36v117h-36zm86 24h36v93h-36zm87-25h36v118h-36z"/></g>
+<g transform="translate(1025 786)"><rect width="280" height="93" rx="15" fill="#eee1c4"/><path d="M40 57c0-18 13-31 32-31h47c18 0 31 13 31 31v10c0 16-11 26-26 26H65C50 93 40 82 40 67z" fill="#f2cf7f" stroke="#343557" stroke-width="7"/><path d="M60 58h36m-18-18v36" stroke="#343557" stroke-width="7" stroke-linecap="round"/><circle cx="177" cy="52" r="7" fill="#343557"/><circle cx="202" cy="66" r="7" fill="#343557"/><circle cx="220" cy="43" r="7" fill="#d85a68"/></g>
+<g fill="#f4ece0" font-family="Arial,sans-serif"><text x="101" y="111" font-size="25" letter-spacing="5" fill="#f0c873">ARS COM · X5 GROUP</text><text x="96" y="217" font-size="68" font-weight="700" letter-spacing="-2">КИБЕРКУБОК</text><text x="101" y="272" font-size="29" letter-spacing="2" fill="#f1cd83">ДОСТАВКИ «ПЯТЁРОЧКИ»</text><text x="800" y="543" text-anchor="middle" font-size="24" font-weight="700" fill="#fff1c5">FIFA × TWITCH</text><rect x="99" y="1061" width="670" height="66" rx="12" fill="#161d3b" opacity=".92"/><text x="127" y="1104" font-size="23" fill="#f2e7d2">Концептуальная иллюстрация · фото не добавлены</text></g>
+</svg>

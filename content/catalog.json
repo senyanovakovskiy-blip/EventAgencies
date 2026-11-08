@@ -413,15 +413,16 @@
         "btl",
         "business"
       ],
-      "description": "ARS COM берёт на себя сложную операционную часть масштабных фестивалей: безопасность, работу с площадкой, застройку, логистику и координацию партнёров. На Positive Hack Days Fest 2025 команда собрала 250+ специалистов площадки, а на Rockin’ Russia 2026 обеспечила работу нового кампуса IXcellerate Vёshki. Для ежегодного PT Open Day: Synthesis агентство объединило программу, партнёрские стенды и сервисы гостей; в кейсе указаны 1 500 участников и явка 90%. Для конвенции dōTERRA 2026 ARS COM разработало концепцию «Благодари», визуальный стиль и сценическую программу, а также отвечало за застройку, логистику и координацию служб.",
+      "description": "ARS COM берёт на себя сложную операционную часть масштабных фестивалей: безопасность, работу с площадкой, застройку, логистику и координацию партнёров. На Positive Hack Days Fest 2025 команда собрала 250+ специалистов площадки, а на Rockin’ Russia 2026 обеспечила работу нового кампуса IXcellerate Vёshki. Для ежегодного PT Open Day: Synthesis агентство объединило программу, партнёрские стенды и сервисы гостей; в кейсе указаны 1 500 участников и явка 90%. Для конвенции dōTERRA 2026 ARS COM разработало концепцию «Благодари», визуальный стиль и сценическую программу, а также отвечало за застройку, логистику и координацию служб. В киберкубке доставки «Пятёрочки» агентство разработало FIFA-турнир, Twitch-трансляцию, викторину и призовые механики; по его данным, на площадке было 100 человек и 6 000 онлайн-зрителей.",
       "website": "https://www.arscom.ru/",
       "works": [
         "positive-hack-days",
         "portfolio-ars-com-3c46f1a",
         "case-enriched-103",
-        "case-enriched-120"
+        "case-enriched-120",
+        "case-enriched-121"
       ],
-      "caseCount": 3,
+      "caseCount": 4,
       "photoCount": 12,
       "cover": "/custom/library/7b580cf4f6.webp",
       "coverWork": "positive-hack-days"
@@ -11054,6 +11055,56 @@
           "url": "https://www.arscom.ru/eng/projects/d-terra-convention-eurasia-2026/"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-121",
+      "title": "Киберкубок доставки «Пятёрочки»",
+      "fullTitle": "Киберкубок доставки «Пятёрочки»: FIFA, Twitch и футбольное шоу",
+      "year": "2026",
+      "eventDate": "11 июля 2026 года",
+      "category": "Киберспортивное событие",
+      "format": "Турнир FIFA с ток-шоу, Twitch-трансляцией и викториной",
+      "client": "X5 Group / «Пятёрочка»",
+      "agencySlug": "ars-com",
+      "agencySlugs": [
+        "ars-com"
+      ],
+      "agencyUrl": "/agency/ars-com",
+      "types": [
+        "sport",
+        "online",
+        "business"
+      ],
+      "role": "ARS COM описывает общий менеджмент, концепцию и сценарий, ток-шоу, режиссуру и техническое обеспечение Twitch-трансляции, оформление, лендинг, футбольную викторину, призовые механики и работу со специальным гостем.",
+      "industry": "Доставка готовой еды",
+      "description": "Турнир FIFA превратил тему доставки в футбольное шоу: готовую еду «Пятёрочки» встроили в сюжет, а офлайн-площадку дополнили Twitch-трансляцией, викториной и призовыми механиками для обеих аудиторий. Специальным гостем стал Герман Эль Классико. 11 июля 2026 года в Сфере X5 в московском Парке Горького собрались 100 человек офлайн; трансляцию посмотрели 6 000 зрителей онлайн — по данным ARS COM.",
+      "seoDescription": "Киберкубок доставки «Пятёрочки» от ARS COM: турнир FIFA и Twitch-трансляция, 100 человек офлайн и 6 000 онлайн-зрителей по данным агентства.",
+      "source": "https://www.arscom.ru/projects/kiberkubok-dostavki-pyatyerochki/",
+      "image": "/custom/empty/case-enriched-121.svg",
+      "imageMobile": "/custom/empty/case-enriched-121.svg",
+      "ogImage": "/custom/empty/case-enriched-121.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-121",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#28264e,#de5865)",
+      "curated": false,
+      "reelTitle": "Киберкубок «Пятёрочки» · FIFA × Twitch",
+      "featured": false,
+      "eventCity": "Сфера X5, Парк Горького, Москва",
+      "guestLabel": "100 человек офлайн · 6 000 онлайн-зрителей (по данным ARS COM)",
+      "occasions": [
+        "sport",
+        "online"
+      ],
+      "sources": [
+        {
+          "label": "Клиент · каталог проектов ARS COM",
+          "url": "https://www.arscom.ru/projects/"
+        }
+      ]
     }
   ],
   "types": {
@@ -11068,8 +11119,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 130,
-    "works": 177,
+    "cases": 131,
+    "works": 178,
     "photos": 263
   }
 }
