@@ -1955,6 +1955,24 @@
       "photoCount": 0,
       "cover": null,
       "coverWork": null
+    },
+    {
+      "slug": "2capitals",
+      "name": "2CAPITALS",
+      "city": "",
+      "types": [
+        "public",
+        "culture"
+      ],
+      "description": "2CAPITALS создало Festival of the Future для Peterform: семейный фестиваль о будущем и технологиях в Upsala Park с шоу, мастер-классами, VR-зонами и арт-пространствами. 1 200 участников — по данным агентства.",
+      "website": "https://2capitals.ru/",
+      "works": [
+        "case-enriched-93"
+      ],
+      "caseCount": 1,
+      "photoCount": 0,
+      "cover": null,
+      "coverWork": null
     }
   ],
   "projects": [
@@ -9153,6 +9171,48 @@
       ]
     },
     {
+      "slug": "case-enriched-93",
+      "title": "Festival of the Future — семейный фестиваль Peterform",
+      "fullTitle": "Festival of the Future — семейный фестиваль о будущем и технологиях",
+      "year": "—",
+      "eventDate": "Дата не указана",
+      "category": "Фестиваль",
+      "format": "Семейный технологический фестиваль",
+      "client": "Peterform",
+      "agencySlug": "2capitals",
+      "agencySlugs": [
+        "2capitals"
+      ],
+      "agencyUrl": "/agency/2capitals",
+      "types": [
+        "public",
+        "culture"
+      ],
+      "role": "Семейная программа о будущем и технологиях: шоу, командные испытания, мастер-классы, VR-зоны и арт-пространства.",
+      "industry": "Семейные и технологические события",
+      "description": "В Upsala Park в Санкт-Петербурге прошёл Festival of the Future для Peterform. Программа о будущем и технологиях объединила интерактивное шоу «Битва за планету», командные испытания, детские мастер-классы, VR-зоны и арт-пространства. На странице 2CAPITALS указано 1 200 участников. Точная дата и год не приведены.",
+      "seoDescription": "Festival of the Future для Peterform от 2CAPITALS: семейная программа в Upsala Park с командными испытаниями, мастер-классами и VR. 1 200 участников — по данным агентства.",
+      "source": "https://2capitals.ru/kejsy/festivalofthefuture",
+      "image": "/custom/empty/case-enriched-93.svg",
+      "imageMobile": "/custom/empty/case-enriched-93.svg",
+      "ogImage": "/custom/empty/case-enriched-93.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-93",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#263340,#515176)",
+      "curated": false,
+      "reelTitle": "Festival of the Future",
+      "featured": false,
+      "eventCity": "Upsala Park, Санкт-Петербург",
+      "guestLabel": "1 200 участников (по данным 2CAPITALS)",
+      "occasions": [
+        "public"
+      ]
+    },
+    {
       "slug": "case-enriched-86",
       "title": "Открытие «Российской студенческой весны» — 2021",
       "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
@@ -9738,9 +9798,9 @@
     "pr": "PR-события"
   },
   "stats": {
-    "agencies": 102,
-    "cases": 102,
-    "works": 149,
+    "agencies": 103,
+    "cases": 103,
+    "works": 150,
     "photos": 263
   }
 }

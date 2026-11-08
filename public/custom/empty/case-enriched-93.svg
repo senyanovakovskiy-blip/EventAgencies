@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#202d3b"/>
+  <circle cx="1210" cy="430" r="260" fill="#334a5a" stroke="#7cb3c0" stroke-width="4"/>
+  <circle cx="1210" cy="430" r="178" fill="none" stroke="#e0b978" stroke-width="5"/>
+  <path d="M1210 165v530M945 430h530M1022 242l376 376M1398 242l-376 376" stroke="#819aa7" stroke-width="3" opacity=".8"/>
+  <path d="M220 790q160-270 320 0t320 0" fill="none" stroke="#8fb3b4" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="380" cy="570" r="18" fill="#e5bd79"/>
+  <circle cx="700" cy="570" r="18" fill="#d698a6"/>
+  <g fill="#f1f0e9" font-family="Arial,sans-serif">
+    <text x="120" y="170" font-size="28" letter-spacing="3">2CAPITALS × PETERFORM</text>
+    <text x="120" y="470" font-size="72" font-weight="700">FESTIVAL OF</text>
+    <text x="120" y="560" font-size="72" font-weight="700">THE FUTURE</text>
+    <text x="120" y="650" font-size="38">Семейный фестиваль о будущем и технологиях</text>
+    <text x="120" y="1085" font-size="26" fill="#c5cbd0">Иллюстративная карточка · фотографии не добавлены</text>
+  </g>
+</svg>
