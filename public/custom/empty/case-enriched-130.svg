@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">«В кругу семьи» — Family Day Т-Бизнес Клуба</title>
+  <desc id="desc">Концептуальный плакат семейного дня на современной даче с плёночным фотоаппаратом, садом и общим столом. Это иллюстрация, не фотография проекта.</desc>
+  <defs>
+    <linearGradient id="summer" x2="1" y2="1"><stop stop-color="#24483e"/><stop offset=".5" stop-color="#5b7560"/><stop offset="1" stop-color="#d78e4b"/></linearGradient>
+    <linearGradient id="paper" x2="0" y2="1"><stop stop-color="#fff4d7"/><stop offset="1" stop-color="#e5c895"/></linearGradient>
+    <linearGradient id="film" x2="1" y2="1"><stop stop-color="#f4d578"/><stop offset="1" stop-color="#d88950"/></linearGradient>
+    <pattern id="grain" width="25" height="25" patternUnits="userSpaceOnUse"><circle cx="4" cy="7" r="1.1" fill="#fff" opacity=".1"/><circle cx="19" cy="18" r=".8" fill="#fff" opacity=".08"/></pattern>
+    <filter id="shade"><feGaussianBlur stdDeviation="19"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="#eee4d0"/>
+  <rect x="28" y="28" width="1144" height="744" rx="18" fill="url(#summer)"/>
+  <circle cx="880" cy="250" r="180" fill="#f4ca69" opacity=".22" filter="url(#shade)"/>
+  <path d="M48 455q142-72 282 0t282 0 282 0 258 0v117H48z" fill="#27463c" opacity=".88"/>
+  <path d="M52 485q142-72 282 0t282 0 282 0 258 0" fill="none" stroke="#d8b66b" stroke-width="3" opacity=".6"/>
+  <g transform="translate(155 154)">
+    <path d="M35 177 250 49l212 128v240H35z" fill="#d5b978" stroke="#f5e8c8" stroke-width="6" stroke-linejoin="round"/>
+    <path d="m10 184 240-153 246 153-31 33-215-135-209 135z" fill="#5a5040" stroke="#f5e8c8" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M81 213h105v114H81zM307 213h105v114H307z" fill="#49685c" stroke="#f8eccd" stroke-width="5"/>
+    <path d="M81 265h105m-53-52v114m174-62h105m-53-52v114" stroke="#f3e5c2" stroke-width="4"/>
+    <path d="M214 259h76v158h-76z" fill="#7b6545" stroke="#f5e8c8" stroke-width="4"/>
+    <circle cx="273" cy="339" r="4" fill="#f8d475"/>
+    <path d="M44 414h411" stroke="#d4ad67" stroke-width="9" stroke-linecap="round"/>
+    <path d="M4 457h486" stroke="#f3d082" stroke-width="4" stroke-dasharray="4 16"/>
+    <g fill="#f2dda9">
+      <circle cx="69" cy="131" r="7"/><circle cx="96" cy="115" r="7"/><circle cx="123" cy="99" r="7"/>
+      <circle cx="367" cy="105" r="7"/><circle cx="393" cy="121" r="7"/><circle cx="419" cy="137" r="7"/>
+    </g>
+  </g>
+  <g transform="translate(754 171) rotate(-7)">
+    <rect width="258" height="184" rx="20" fill="#232c29" stroke="#f4d57e" stroke-width="7"/>
+    <rect x="29" y="35" width="115" height="88" rx="8" fill="#477c72" stroke="#b8d8bd" stroke-width="5"/>
+    <circle cx="186" cy="85" r="44" fill="#101a19" stroke="#e2bd5e" stroke-width="7"/>
+    <circle cx="186" cy="85" r="22" fill="#7fa79a" stroke="#f5dfa2" stroke-width="4"/>
+    <path d="M27 149h202" stroke="#cc9c50" stroke-width="7" stroke-linecap="round"/>
+    <path d="M90 18h76" stroke="#e8cf8b" stroke-width="6" stroke-linecap="round"/>
+    <text x="46" y="173" font-family="Arial,sans-serif" font-size="13" font-weight="800" letter-spacing="3" fill="#fff0c3">ПЛЁНОЧНЫЙ КАДР</text>
+  </g>
+  <g transform="translate(794 386)">
+    <rect width="184" height="115" rx="4" fill="url(#paper)" transform="rotate(8 92 58)"/>
+    <rect x="22" y="17" width="140" height="77" fill="url(#film)" transform="rotate(8 92 58)"/>
+    <path d="M43 78q25-42 52-4t51-23" fill="none" stroke="#fbf1d4" stroke-width="4" transform="rotate(8 92 58)"/>
+    <circle cx="93" cy="53" r="13" fill="#fbefcc" transform="rotate(8 92 58)"/>
+    <path d="M27 24h11m105 67h11" stroke="#f9efda" stroke-width="4" transform="rotate(8 92 58)"/>
+  </g>
+  <g fill="none" stroke="#f7dd9b" stroke-width="3" opacity=".85">
+    <path d="M708 173q-28 27-42 61m356-67q25 19 43 49"/>
+    <path d="M693 252q-18 24-27 51m382-39q19 20 28 46"/>
+  </g>
+  <g fill="#e1c77f">
+    <circle cx="109" cy="348" r="10"/><circle cx="1075" cy="338" r="9"/><circle cx="1052" cy="378" r="6"/>
+  </g>
+  <rect x="64" y="558" width="1072" height="172" rx="10" fill="#f3ead9"/>
+  <text x="100" y="605" font-family="Arial,sans-serif" font-size="19" font-weight="800" letter-spacing="4" fill="#67724d">Т-БИЗНЕС КЛУБ · FAMILY DAY · 27 СЕНТЯБРЯ 2025</text>
+  <text x="94" y="672" font-family="Arial,sans-serif" font-size="55" font-weight="900" letter-spacing="-1.5" fill="#263d35">В КРУГУ СЕМЬИ</text>
+  <text x="99" y="711" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="3" fill="#6f725f">СОВРЕМЕННАЯ ДАЧА · ПЛЁНКА · СЕМЕЙНЫЙ АЛЬБОМ</text>
+  <rect x="28" y="28" width="1144" height="744" rx="18" fill="url(#grain)" pointer-events="none"/>
+</svg>
