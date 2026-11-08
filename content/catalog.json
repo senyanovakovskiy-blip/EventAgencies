@@ -362,13 +362,14 @@
         "culture",
         "btl"
       ],
-      "description": "Работает с 2003 года, фирменный символ — «Человегель». В 2013 году открыл офис в Астане. Лидер рейтинга 2024 года вместе с TVIN и Redday.",
+      "description": "Работает с 2003 года, фирменный символ — «Человегель». В 2013 году открыл офис в Астане. Лидер рейтинга 2024 года вместе с TVIN и Redday. Для Winline Eventum Premo перенесло киберспортивный матч на борт самолёта и подготовило игровую зону и трансляцию.",
       "website": "https://eventum-premo.ru/",
       "works": [
         "t-dvor",
-        "case-8"
+        "case-8",
+        "case-enriched-91"
       ],
-      "caseCount": 2,
+      "caseCount": 3,
       "photoCount": 14,
       "cover": "/custom/library/48d4ad8b2b.webp",
       "coverWork": "t-dvor"
@@ -9068,6 +9069,48 @@
       ]
     },
     {
+      "slug": "case-enriched-91",
+      "title": "WINAIRLINE — матч Winline на высоте 10 000 м",
+      "fullTitle": "Winline: первый киберспортивный матч в воздухе",
+      "year": "—",
+      "eventDate": "Дата не указана",
+      "category": "Активация",
+      "format": "Киберспортивный матч и трансляция на борту самолёта",
+      "client": "Winline",
+      "agencySlug": "eventum-premo",
+      "agencySlugs": [
+        "eventum-premo"
+      ],
+      "agencyUrl": "/agency/eventum-premo",
+      "types": [
+        "btl",
+        "online"
+      ],
+      "role": "Брендинг рейса, игровая зона и оборудование, онлайн-связь и трансляция.",
+      "industry": "Киберспорт и авиация",
+      "description": "На борту самолёта на высоте 10 000 метров Eventum Premo устроило для Winline матч Counter-Strike 2 со стримерами в формате 5×5. Агентство брендировало рейс, оборудовало игровую зону, обеспечило онлайн-связь и трансляцию. Проект создал инфоповод на стыке киберспорта и авиации. Дата и число зрителей на странице не указаны.",
+      "seoDescription": "Eventum Premo провело для Winline матч Counter-Strike 2 на борту самолёта на высоте 10 000 метров: команды 5×5, игровая зона и трансляция.",
+      "source": "https://eventum-premo.ru/projects/winairlines",
+      "image": "/custom/empty/case-enriched-91.svg",
+      "imageMobile": "/custom/empty/case-enriched-91.svg",
+      "ogImage": "/custom/empty/case-enriched-91.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-91",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#222b38,#354f67)",
+      "curated": false,
+      "reelTitle": "Winline: матч в воздухе",
+      "featured": false,
+      "eventCity": "На борту самолёта, высота 10 000 м",
+      "guestLabel": "",
+      "occasions": [
+        "online"
+      ]
+    },
+    {
       "slug": "case-enriched-86",
       "title": "Открытие «Российской студенческой весны» — 2021",
       "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
@@ -9654,8 +9697,8 @@
   },
   "stats": {
     "agencies": 102,
-    "cases": 100,
-    "works": 147,
+    "cases": 101,
+    "works": 148,
     "photos": 263
   }
 }
