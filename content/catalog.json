@@ -409,14 +409,15 @@
         "sport",
         "business"
       ],
-      "description": "Один из старейших игроков рынка — работает с 1995 года. Среди клиентов Лента, Татнефть, Роснефть, Ozon, Avito и Сбер. В рейтинге 2023 года занял второе место, в 2025 — первое. В E-CODE для Ozon Tech TVIN оформил пространство вокруг темы everything as code: бар-серверную и фотоспот, который менял дизайн после считывания RFID-бейджа.",
+      "description": "Один из старейших игроков рынка — работает с 1995 года. Среди клиентов Лента, Татнефть, Роснефть, Ozon, Avito и Сбер. В рейтинге 2023 года занял второе место, в 2025 — первое. В E-CODE для Ozon Tech TVIN оформил пространство вокруг темы everything as code: бар-серверную и фотоспот, который менял дизайн после считывания RFID-бейджа. В мае 2026 года TVIN также описывает организацию московской конференции Data Fest в офисе Сбера: доклады, демо AI и пространство Sber AI Community.",
       "website": "https://tvin-imc.ru/",
       "works": [
         "sber-golf-cup",
         "case-2",
-        "case-enriched-134"
+        "case-enriched-134",
+        "case-enriched-147"
       ],
-      "caseCount": 3,
+      "caseCount": 4,
       "photoCount": 5,
       "cover": "/custom/library/9f8bab74bd.webp",
       "coverWork": "sber-golf-cup"
@@ -12519,6 +12520,57 @@
           "url": "https://lyra-agency.ru/stendnovgorod"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-147",
+      "title": "Data Fest в Сбере: AI можно не только обсуждать",
+      "fullTitle": "Московская площадка Data Fest 2026 в офисе Сбера — конференция TVIN",
+      "year": "2026",
+      "eventDate": "26 мая 2026",
+      "category": "Конференция об искусственном интеллекте и данных",
+      "format": "Доклады, постерная сессия, демо ИИ-решений, экскурсии и активности сообщества",
+      "client": "Сбер · московская площадка Data Fest",
+      "agencySlug": "tvin",
+      "agencySlugs": [
+        "tvin"
+      ],
+      "agencyUrl": "/agency/tvin",
+      "types": [
+        "business"
+      ],
+      "role": "TVIN описывает себя организатором AI-конференции Data Fest в офисе Сбера. Этот кейс охватывает московскую площадку; агентству не приписываем всю серию Data Fest и отдельное событие в Новосибирске.",
+      "industry": "Искусственный интеллект, данные и корпоративные технологии",
+      "description": "26 мая 2026 года московский Data Fest прошёл в офисе Сбера на Кутузовском проспекте. Доклады и постерная сессия соседствовали с демо ИИ-решений, экскурсиями по офису и встречами с командами, которые создают продукты. В зоне Sber AI Community можно было попробовать симулятор, прийти на воркшоп или включиться в LEGO-активности. TVIN сообщает, что организовало московскую конференцию; число гостей не опубликовано.",
+      "seoDescription": "Московский Data Fest 2026 в офисе Сбера: доклады, демо ИИ-решений, экскурсии и активности Sber AI Community. Организацию конференции описывает TVIN.",
+      "source": "https://tvin-imc.ru/article/data-fest-v-sbere-2026",
+      "image": "/custom/empty/case-enriched-147.svg",
+      "imageMobile": "/custom/empty/case-enriched-147.svg",
+      "ogImage": "/custom/empty/case-enriched-147.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-147",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#111923,#6d8a63)",
+      "curated": false,
+      "reelTitle": "Data Fest 2026 · AI в действии",
+      "featured": false,
+      "eventCity": "Москва · офис Сбера на Кутузовском",
+      "guestLabel": "Число гостей не опубликовано",
+      "occasions": [
+        "conference"
+      ],
+      "sources": [
+        {
+          "label": "TVIN · организация московской AI-конференции и программа",
+          "url": "https://tvin-imc.ru/article/data-fest-v-sbere-2026"
+        },
+        {
+          "label": "Сбер / Open Data Science · дата, программа и две отдельные городские площадки",
+          "url": "https://ods.ai/hubs/sber/news/5d408ca2-0785-4019-b344-ed845d568f94"
+        }
+      ]
     }
   ],
   "types": {
@@ -12533,8 +12585,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 156,
-    "works": 203,
+    "cases": 157,
+    "works": 204,
     "photos": 263
   }
 }
