@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Яндекс Пэй на ПАРИ ФЕСТ — иллюстрация к кейсу А-ГРУПП</title>
+<desc id="desc">Четыре абстрактные инсталляции образуют маршрут по фестивальному пространству; иллюстрация, не фотография проекта.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111d31"/><stop offset=".58" stop-color="#263b55"/><stop offset="1" stop-color="#863e3f"/></linearGradient>
+ <linearGradient id="warm" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffca64"/><stop offset=".52" stop-color="#ff7e55"/><stop offset="1" stop-color="#9be2d1"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#f69153" stop-opacity=".65"/><stop offset="1" stop-color="#f69153" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="42"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<circle cx="1160" cy="410" r="280" fill="url(#glow)" filter="url(#blur)"/>
+<path d="M760 610 1080 330 1320 610 1540 330" fill="none" stroke="url(#warm)" stroke-width="5" opacity=".8"/>
+<g fill="#ffffff" fill-opacity=".04" stroke="url(#warm)" stroke-width="3">
+ <path d="M820 605V360l116-66 116 66v245z"/>
+ <path d="M1045 430V205l106-60 106 60v225z"/>
+ <path d="M1260 610V370l105-61 105 61v240z"/>
+ <path d="M1442 425V248l82-47 82 47v177z"/>
+</g>
+<g fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2">
+ <path d="M881 605V386l55-32 55 32v219"/><path d="M1095 430V232l56-32 56 32v198"/>
+ <path d="M1314 610V397l51-29 51 29v213"/><path d="M1482 425V271l42-24 42 24v154"/>
+</g>
+<g fill="#ffd27a"><circle cx="936" cy="355" r="5"/><circle cx="1151" cy="200" r="5"/><circle cx="1365" cy="370" r="5"/><circle cx="1524" cy="248" r="4"/></g>
+<text x="110" y="152" fill="#c4ccda" font-family="Arial,sans-serif" font-size="22" letter-spacing="5">А-ГРУПП · ЯНДЕКС ПЭЙ · ПАРИ ФЕСТ · 2025</text>
+<text x="104" y="357" fill="#fff" font-family="Arial,sans-serif" font-size="66" font-weight="700">ВОЙТИ</text>
+<text x="104" y="434" fill="#fff" font-family="Arial,sans-serif" font-size="58" font-weight="700">В ПРОСТРАНСТВО</text>
+<text x="110" y="501" fill="#ffd27a" font-family="Arial,sans-serif" font-size="29">четыре зоны, четыре сценария участия</text>
+<rect x="108" y="610" width="352" height="65" rx="32" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".3"/>
+<text x="146" y="652" fill="#fff" font-family="Arial,sans-serif" font-size="23">АРТ · ФОРМА · СВЕТ</text>
+<text x="110" y="822" fill="#d5dce7" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ИЛЛЮСТРАЦИЯ · НЕ ФОТО СОБЫТИЯ</text>
+</svg>
