@@ -4489,7 +4489,7 @@
       "eventDate": "Август 2025",
       "category": "Бренд-вечеринка",
       "format": "Закрытая pool party для инфлюенсеров",
-      "client": "DoctorTeam",
+      "client": "Бренд события — Coca-Cola",
       "agencySlug": "doctorteam",
       "agencySlugs": [
         "doctorteam"
@@ -4499,10 +4499,10 @@
         "pr",
         "btl"
       ],
-      "role": "DoctorTeam отвечал за полный цикл: концепцию, дизайн пространства и света, музыкальную программу, координацию площадки и гостевой сервис.",
-      "industry": "",
-      "description": "В августе 2025 года DoctorTeam провёл в Дубае закрытую Coca-Cola Pool Night для 90 гостей. Иммерсивное пространство объединило бренд-инсталляции, фотозоны и фуд-активации с лаунжами, DJ и нетворкингом. Агентство отвечало за полный цикл — от концепции и дизайна пространства до координации площадки и гостевого сервиса.",
-      "seoDescription": "Закрытая Coca-Cola Pool Night в Дубае для 90 гостей. DoctorTeam отвечал за концепцию, дизайн пространства, программу и полный цикл продакшна.",
+      "role": "Полный цикл производства: концепция, дизайн пространства и света, музыкальная программа, координация площадки и hospitality-сервис.",
+      "industry": "Дубай, ОАЭ",
+      "description": "В августе 2025 года DoctorTeam собрал в Дубае закрытый вечер Coca-Cola Pool Night для digital-аудитории и лидеров мнений. Бренд-инсталляции и фотодетали поддерживали контент, а гастро-активации, коктейль-бар и лаунж-зоны оставляли пространство для общения; DJ-сеты задали ритм вечера. По данным DoctorTeam, на событии было 90 человек.",
+      "seoDescription": "Coca-Cola Pool Night — закрытая бренд-вечеринка в Дубае на 90 гостей. DoctorTeam: концепция, дизайн, свет, программа, координация площадки и сервис.",
       "source": "https://doctorteam.ru/blog/portfolios/coca-cola-private-night-privatnaya-vecherinka-inflyuenserov-v-dubae/",
       "image": "/custom/library/54767e86f2.webp",
       "imageMobile": "/custom/library/54767e86f2.webp",
@@ -4534,7 +4534,7 @@
       "reelMobile": "/custom/optimized/2eb780670791cd-960.webp",
       "imageRatio": 0.75,
       "eventCity": "Дубай",
-      "guestLabel": "90 гостей",
+      "guestLabel": "90 гостей (по данным DoctorTeam)",
       "occasions": [
         "private"
       ],
