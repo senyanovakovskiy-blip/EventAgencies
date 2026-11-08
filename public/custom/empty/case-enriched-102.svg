@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#253448"/>
+  <circle cx="1340" cy="180" r="145" fill="#dcb77c" opacity=".9"/>
+  <g fill="none" stroke="#dcb77c" stroke-width="17" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1050 860 870 440l290 165z"/>
+    <path d="m1050 860 5-450 225 260z"/>
+    <path d="m1050 860 180-410 145 315z"/>
+    <path d="m1050 860 355-300 55 350z"/>
+    <path d="m1050 860 450-140-80 340z"/>
+    <path d="m1050 860 440 80-200 270z"/>
+    <path d="m1050 860 300 300-365-10z"/>
+  </g>
+  <g fill="#efe8db" opacity=".82">
+    <path d="M835 905h465v28H835z"/>
+    <path d="M880 953h375v16H880z"/>
+  </g>
+  <g fill="#f3efe7" font-family="Arial,sans-serif">
+    <text x="105" y="142" font-size="31" letter-spacing="4">IVS GROUP × ЧЕБОКСАРЫ · 2025</text>
+    <text x="100" y="345" font-size="74" font-weight="700">ДОМ О СЕМИ</text>
+    <text x="100" y="432" font-size="74" font-weight="700">КРЫЛЬЯХ</text>
+    <text x="105" y="525" font-size="36" fill="#e2c38f">II Чувашская биеннале современного искусства</text>
+    <text x="105" y="615" font-size="31" fill="#ccd4df">4 площадки · 70+ художников · 100+ событий</text>
+    <text x="100" y="1090" font-size="25" fill="#cbd2db">Условная иллюстрация · фотографии проекта не добавлены</text>
+  </g>
+</svg>

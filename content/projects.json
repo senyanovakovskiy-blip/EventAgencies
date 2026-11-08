@@ -7483,6 +7483,46 @@
     ]
   },
   {
+    "slug": "case-enriched-102",
+    "title": "II Чувашская биеннале — Чебоксары",
+    "fullTitle": "II Чувашская биеннале современного искусства «Дом о семи крыльях»",
+    "year": "2025",
+    "eventDate": "19 июля — 10 августа 2025",
+    "category": "Культура",
+    "format": "Многоплощадочная биеннале современного искусства",
+    "client": "Клиент не указан",
+    "agencySlug": "ivs-group",
+    "agencyUrl": "/agency/ivs-group",
+    "types": [
+      "public",
+      "culture"
+    ],
+    "role": "Организация биеннале; четыре площадки, более 70 художников и свыше 100 событий.",
+    "industry": "Современное искусство и культура Чувашии",
+    "description": "IVS Group организовала II Чувашскую биеннале современного искусства в Чебоксарах под темой «Дом о семи крыльях». С 19 июля по 10 августа 2025 года выставки и программа из лекций, дискуссий, перформансов, мастер-классов, концертов и творческих встреч развернулись на четырёх площадках города. По данным IVS Group, биеннале объединила более 70 художников, свыше 100 событий и более 10 000 посетителей; медиаохват превысил 35 млн.",
+    "seoDescription": "II Чувашская биеннале от IVS Group: современное искусство и культура региона, четыре площадки, 70+ художников и 100+ событий.",
+    "source": "https://ivsgroup.ru/portfolio/ii-chuvashskaya-biennale-sovremennogo-iskusstva-cheboksary",
+    "image": "/custom/empty/case-enriched-102.svg",
+    "imageMobile": "/custom/empty/case-enriched-102.svg",
+    "ogImage": "/custom/empty/case-enriched-102.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-102",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(150deg,#253448,#aa784f)",
+    "curated": false,
+    "reelTitle": "Дом о семи крыльях · биеннале",
+    "featured": false,
+    "eventCity": "Чебоксары",
+    "guestLabel": "Более 10 000 посетителей (по данным IVS Group)",
+    "occasions": [
+      "public",
+      "culture"
+    ]
+  },
+  {
     "slug": "case-enriched-86",
     "title": "Открытие «Российской студенческой весны» — 2021",
     "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
