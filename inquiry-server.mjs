@@ -20,7 +20,7 @@ export function createInquiryStore(filename,catalog,operatorSources={}){
   );`);
  const find=db.prepare('SELECT * FROM inquiries WHERE key_hash=?');
  const insert=db.prepare('INSERT INTO inquiries(key_hash,payload_hash,created_at,snapshot_json) VALUES(?,?,?,?)');
- const receipt=row=>({id:`EA-${row.created_at.slice(0,4)}-${String(row.id).padStart(6,'0')}`,createdAt:row.created_at,recipient:'EventAgencies',localServer:true,...JSON.parse(row.snapshot_json)});
+ const receipt=row=>({id:`EA-${row.created_at.slice(0,4)}-${String(row.id).padStart(6,'0')}`,createdAt:row.created_at,recipient:'EventAgencies 101',localServer:true,...JSON.parse(row.snapshot_json)});
  const admin=createAdminStore(db,receipt,path.join(path.dirname(filename),'admin-access.txt'),catalog,operatorSources);
  return {
   admin,

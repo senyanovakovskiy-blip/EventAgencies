@@ -1,1 +1,1 @@
-export default function Home(){return <main><h1>EventAgencies</h1><a href="/catalog">Каталог агентств</a></main>}
+export default function Home(){return <main><h1>EventAgencies 101</h1><a href="/catalog">Каталог агентств</a></main>}

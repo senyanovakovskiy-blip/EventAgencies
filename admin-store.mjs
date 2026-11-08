@@ -38,7 +38,7 @@ export function createAdminStore(db,receipt,accessFile,catalog,operatorSources={
   const savedPassword=fs.existsSync(accessFile)?fs.readFileSync(accessFile,'utf8').match(/Пароль: ([A-Za-z0-9_-]{32})/)?.[1]:null;
   const password=savedPassword||randomBytes(24).toString('base64url'),salt=randomBytes(16).toString('hex');
   fs.mkdirSync(path.dirname(accessFile),{recursive:true});
-  if(!savedPassword)fs.writeFileSync(accessFile,`EventAgencies — локальная админка\nЛогин: admin\nПароль: ${password}\n\nВход: http://127.0.0.1:8780/admin\nЭтот файл не публикуется и не выдаётся сайтом. Храните его на своём компьютере.\n`,{encoding:'utf8',mode:0o600,flag:'wx'});
+  if(!savedPassword)fs.writeFileSync(accessFile,`EventAgencies 101 — локальная админка\nЛогин: admin\nПароль: ${password}\n\nВход: http://127.0.0.1:8780/admin\nЭтот файл не публикуется и не выдаётся сайтом. Храните его на своём компьютере.\n`,{encoding:'utf8',mode:0o600,flag:'wx'});
   db.prepare('INSERT INTO admin_account VALUES(?,?,?)').run('admin',salt,scryptSync(password,salt,64).toString('hex'));
  }
  const detail=id=>{
