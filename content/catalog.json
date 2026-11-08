@@ -566,9 +566,10 @@
       "works": [
         "case-13",
         "case-14",
-        "case-enriched-126"
+        "case-enriched-126",
+        "case-enriched-153"
       ],
-      "caseCount": 3,
+      "caseCount": 4,
       "photoCount": 2,
       "cover": "/custom/library/0ba3f5eb41-thumb.webp",
       "coverWork": "case-13"
@@ -12832,6 +12833,63 @@
           "url": "https://www.gazprom-media.com/ru/media/dom-molodezhi-vyzov-na-vfm-2024-ezhednevno-poseshchayut-bolee-shesti-tysyach-chelovek"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-153",
+      "title": "Young Con: девять миров для будущих айтишников",
+      "fullTitle": "Карьерный фестиваль Яндекса Young Con 2024 — кейс Worlds Agency",
+      "year": "2024",
+      "eventDate": "27 июня 2024",
+      "category": "Карьерный фестиваль и HR-бренд",
+      "format": "Девять тематических миров, мини-конференции, интерактивы и онлайн-участие",
+      "client": "Яндекс",
+      "agencySlug": "worlds",
+      "agencySlugs": [
+        "worlds"
+      ],
+      "agencyUrl": "/agency/worlds",
+      "types": [
+        "public",
+        "business"
+      ],
+      "role": "Worlds включает Young Con в портфолио и описывает концепцию и интерактивные решения; Sostav указывает команду Worlds Agency в составе команды проекта. Яндекс выступал владельцем фестиваля; агентство не заявляется единственным организатором.",
+      "industry": "IT, стажировки и начало карьеры",
+      "description": "27 июня 2024 года Яндекс провёл Young Con для студентов и молодых специалистов, которые присматриваются к карьере в IT. На Live Arena сервисы компании превратились в девять тематических миров с мини-конференциями и интерактивами. В кейсе Worlds — гонки роверов и роботизированная рука, сортирующая товары Яндекс Маркета. Sostav сообщает о 5 000 гостях офлайн и 5 000 зрителях онлайн — это аудитория всего фестиваля, не отдельный KPI агентства.",
+      "seoDescription": "Young Con 2024 от Яндекса: девять тематических миров, мини-конференции и интерактивы о карьере в IT. Концепция и решения — по кейсу Worlds Agency.",
+      "source": "https://www.wrlds.ru/cases/Young%D0%A1on%202024",
+      "image": "/custom/empty/case-enriched-153.svg",
+      "imageMobile": "/custom/empty/case-enriched-153.svg",
+      "ogImage": "/custom/empty/case-enriched-153.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-153",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#142747,#e4b932)",
+      "curated": false,
+      "reelTitle": "Young Con · девять миров Яндекса",
+      "featured": false,
+      "eventCity": "Москва · Live Arena",
+      "guestLabel": "Фестиваль: 5 000 гостей офлайн · 5 000 онлайн-зрителей",
+      "occasions": [
+        "public",
+        "business"
+      ],
+      "sources": [
+        {
+          "label": "Worlds Agency · концепция, девять миров и интерактивные решения",
+          "url": "https://www.wrlds.ru/cases/Young%D0%A1on%202024"
+        },
+        {
+          "label": "Яндекс · карьерный формат, дата, Live Arena и девять тематических миров",
+          "url": "https://yandex.ru/company/news/02-25-04-2024"
+        },
+        {
+          "label": "Sostav · команда Worlds и общая офлайн-/онлайн-аудитория фестиваля",
+          "url": "https://ratings.sostav.ru/companies/984/works/1053"
+        }
+      ]
     }
   ],
   "types": {
@@ -12846,8 +12904,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 162,
-    "works": 209,
+    "cases": 163,
+    "works": 210,
     "photos": 263
   }
 }
