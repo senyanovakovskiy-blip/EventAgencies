@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#242b31"/>
+  <circle cx="1260" cy="520" r="330" fill="#313b40" stroke="#ad7650" stroke-width="8"/>
+  <circle cx="1260" cy="520" r="255" fill="none" stroke="#d19a69" stroke-width="3" opacity=".75"/>
+  <path d="M1260 185v670M925 520h670M1023 283l474 474M1497 283l-474 474" stroke="#8b6045" stroke-width="3" opacity=".8"/>
+  <path d="M150 810h620M210 750h500M270 690h380" stroke="#6f7b80" stroke-width="4"/>
+  <g fill="#f3eee7" font-family="Arial,sans-serif">
+    <text x="120" y="190" font-size="28" letter-spacing="3">PEOPLE × ТМХ</text>
+    <text x="120" y="480" font-size="88" font-weight="700">20 ЛЕТ</text>
+    <text x="120" y="575" font-size="70" font-weight="700">ТМХ</text>
+    <text x="120" y="665" font-size="38">Юбилей · спорт · история · семья</text>
+    <text x="120" y="1085" font-size="26" fill="#c2c4c0">Иллюстративная карточка · фотографии не добавлены</text>
+  </g>
+</svg>
