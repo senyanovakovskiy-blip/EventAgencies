@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#273451"/>
+  <circle cx="1285" cy="220" r="138" fill="#e8c987"/>
+  <path d="M0 710h1600v490H0Z" fill="#38486c"/>
+  <path d="M0 850q240-120 480 0t480 0 640 0v350H0Z" fill="#625d82"/>
+  <g transform="translate(1000 440)">
+    <path d="M0 345h430V90H0Z" fill="#b76e6f"/>
+    <path d="M-30 90h490L360 10H70Z" fill="#e6bd77"/>
+    <path d="M50 160h100v115H50zM185 160h100v115H185zM320 160h70v115h-70z" fill="#d9c98f"/>
+    <path d="M180 345V275h75v70" fill="#775573"/>
+  </g>
+  <g fill="none" stroke="#edcf88" stroke-width="8" stroke-linecap="round">
+    <path d="M210 720V500h520v220M165 500l305-230 305 230"/>
+    <path d="M260 720V600h90v120M575 720V600h90v120"/>
+    <path d="M280 465h40M385 390h40M490 390h40M595 465h40"/>
+  </g>
+  <g fill="#f5f0e6" font-family="Arial,sans-serif">
+    <text x="110" y="140" font-size="30" letter-spacing="4">BIGBIRD × ЯНДЕКС · 2025/26</text>
+    <text x="110" y="300" font-size="72" font-weight="700">ВОЛШЕБНЫЙ ЦЕНТР</text>
+    <text x="110" y="385" font-size="72" font-weight="700">УПРАВЛЕНИЯ НОВЫМ ГОДОМ</text>
+    <text x="114" y="475" font-size="36" fill="#e7c98b">6 слотов · 1 900+ семей · 4 200 гостей</text>
+    <text x="110" y="1090" font-size="26" fill="#cbd2db">Иллюстрация кейса · фотографии проекта не добавлены</text>
+  </g>
+</svg>
