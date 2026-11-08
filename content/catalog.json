@@ -359,9 +359,10 @@
         "case-enriched-99",
         "case-enriched-106",
         "case-enriched-130",
-        "case-enriched-135"
+        "case-enriched-135",
+        "case-enriched-139"
       ],
-      "caseCount": 6,
+      "caseCount": 7,
       "photoCount": 14,
       "cover": "/custom/library/6b37101c77.webp",
       "coverWork": "vk-cloud-conf",
@@ -12072,6 +12073,59 @@
           "url": "https://t.me/s/dpg_online/1367"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-139",
+      "title": "«Люди слова»: премия Дзена в «Художественном»",
+      "fullTitle": "Премия Дзена «Люди слова» 2025 — режиссура и визуальная концепция N:OW",
+      "year": "2025",
+      "eventDate": "12 декабря 2025",
+      "category": "Церемония профессиональной премии",
+      "format": "Камерная церемония, режиссура, визуальная концепция, мерч, видео и оригинальное звуковое сопровождение",
+      "client": "Дзен",
+      "agencySlug": "n-ow",
+      "agencySlugs": [
+        "n-ow"
+      ],
+      "agencyUrl": "/agency/n-ow",
+      "types": [
+        "public",
+        "business"
+      ],
+      "role": "N:OW описывает свою работу как режиссуру и визуальную концепцию пространства, а также подготовку блоков от менеджмента площадки и производства мерча до видеоконтента и оригинального звукового сопровождения. Источник не приписывает агентству организацию премии целиком.",
+      "industry": "Медиа, культура и журналистика",
+      "description": "Камерная церемония в «Художественном» превратила идею «слово становится действием» в цельный вечер: режиссура и визуальный образ поддерживали ощущение признания, а видео и оригинальное звуковое сопровождение связывали его части. N:OW описывает полный цикл своего вклада — от работы с площадкой до мерча, контента и музыки. 270 гостей — по данным агентства.",
+      "seoDescription": "N:OW создало режиссуру и визуальную концепцию премии Дзена «Люди слова» в кинотеатре «Художественный», подготовив контент, мерч и оригинальный звук.",
+      "source": "https://now-agency.ru/%D0%BF%D1%80/",
+      "image": "/custom/empty/case-enriched-139.svg",
+      "imageMobile": "/custom/empty/case-enriched-139.svg",
+      "ogImage": "/custom/empty/case-enriched-139.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-139",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#21181f,#b2948a)",
+      "curated": false,
+      "reelTitle": "Дзен · премия «Люди слова»",
+      "featured": false,
+      "eventCity": "Москва · кинотеатр «Художественный»",
+      "guestLabel": "270 гостей (по данным N:OW)",
+      "occasions": [
+        "public",
+        "business"
+      ],
+      "sources": [
+        {
+          "label": "N:OW Agency · идея, вклад агентства и 270 гостей по данным агентства",
+          "url": "https://now-agency.ru/%D0%BF%D1%80/"
+        },
+        {
+          "label": "«Вечерняя Москва» · дата, площадка и премия Дзена",
+          "url": "https://vm.ru/news/1285580-ceremoniya-nagrazhdeniya-premiej-lyudi-slova-sostoyalas-v-moskovskom-kinoteatre"
+        }
+      ]
     }
   ],
   "types": {
@@ -12086,8 +12140,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 148,
-    "works": 195,
+    "cases": 149,
+    "works": 196,
     "photos": 263
   }
 }
