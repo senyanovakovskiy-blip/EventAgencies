@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Неделя HR и рекламы на Урале — иллюстрация к кейсу Be Brand People</title>
+<desc id="desc">Графическая карта профессиональной недели с площадками форума, хакатона и онлайн-стрима; не фотография события.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#14243d"/><stop offset=".58" stop-color="#263c57"/><stop offset="1" stop-color="#703d43"/></linearGradient>
+ <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffd26f"/><stop offset=".52" stop-color="#ff8068"/><stop offset="1" stop-color="#82e0c2"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#ffa35c" stop-opacity=".55"/><stop offset="1" stop-color="#ffa35c" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="44"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<circle cx="1150" cy="405" r="260" fill="url(#glow)" filter="url(#blur)"/>
+<path d="M810 460c140-182 226 182 365 0s225 182 395 0" fill="none" stroke="url(#accent)" stroke-width="5" opacity=".75"/>
+<path d="M810 460c140-182 226 182 365 0s225 182 395 0" fill="none" stroke="#fff" stroke-width="1.5" stroke-dasharray="6 14" opacity=".38"/>
+<g fill="#1c2d49" stroke="#fff" stroke-opacity=".35" stroke-width="2">
+ <rect x="810" y="288" width="210" height="126" rx="22"/><rect x="1012" y="515" width="212" height="126" rx="22"/>
+ <rect x="1245" y="284" width="220" height="126" rx="22"/><rect x="1450" y="514" width="156" height="126" rx="22"/>
+</g>
+<g fill="#ffd276"><circle cx="816" cy="460" r="9"/><circle cx="1024" cy="460" r="9"/><circle cx="1236" cy="460" r="9"/><circle cx="1450" cy="460" r="9"/></g>
+<g fill="#fff" font-family="Arial,sans-serif">
+ <text x="843" y="338" font-size="18" letter-spacing="2">HR FORUM</text><text x="843" y="382" font-size="29" font-weight="700">BIG FISH</text>
+ <text x="1047" y="566" font-size="18" letter-spacing="2">MARHR</text><text x="1047" y="610" font-size="29" font-weight="700">ХАКАТОН</text>
+ <text x="1280" y="334" font-size="18" letter-spacing="2">НРФ</text><text x="1280" y="378" font-size="29" font-weight="700">РЕГИОНЫ</text>
+ <text x="1468" y="566" font-size="16" letter-spacing="1">TOP50</text><text x="1468" y="610" font-size="22" font-weight="700">HR</text>
+</g>
+<text x="110" y="152" fill="#c0cbd9" font-family="Arial,sans-serif" font-size="23" letter-spacing="5">BE BRAND PEOPLE · ЕКАТЕРИНБУРГ · 2024</text>
+<text x="104" y="355" fill="#fff" font-family="Arial,sans-serif" font-size="68" font-weight="700">НЕДЕЛЯ</text>
+<text x="104" y="433" fill="#fff" font-family="Arial,sans-serif" font-size="58" font-weight="700">HR И РЕКЛАМЫ</text>
+<text x="110" y="500" fill="#ffd276" font-family="Arial,sans-serif" font-size="28">от дискуссий к реальным задачам</text>
+<rect x="108" y="610" width="388" height="66" rx="33" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".3"/>
+<text x="144" y="652" fill="#fff" font-family="Arial,sans-serif" font-size="23">&gt; 4 000 участников · вся неделя</text>
+<text x="110" y="822" fill="#d5dce7" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ИЛЛЮСТРАЦИЯ · НЕ ФОТО СОБЫТИЯ</text>
+</svg>

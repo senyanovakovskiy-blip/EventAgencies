@@ -10849,5 +10849,68 @@
         "url": "https://www.eventum-premo.ru/blog/keys-megaforum-oriflame"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-158",
+    "title": "Неделя HR и рекламы: реальные задачи для индустрии",
+    "fullTitle": "Национальная неделя HR и рекламы на Урале 2024 — кейс Be Brand People",
+    "year": "2024",
+    "eventDate": "16–20 сентября 2024; форумы — 18–19 сентября",
+    "category": "Профессиональный форум HR и рекламы",
+    "format": "HR Forum Big Fish, НРФ Регионы, онлайн-стрим, хакатон и бизнес-экскурсии",
+    "client": "АКАР, ЦРБК и АКАР Урал (партнёры недели)",
+    "agencySlug": "be-brand-people",
+    "agencySlugs": [
+      "be-brand-people"
+    ],
+    "agencyUrl": "/agency/be-brand-people",
+    "types": [
+      "business",
+      "online",
+      "public"
+    ],
+    "role": "Be Brand People включает Национальную неделю в портфолио и описывает её программу и коммуникационную кампанию. УрГЭУ называет Be Brand People ключевым организатором HR Forum Big Fish. Всю неделю организовали совместно: АКАР называет ЦРБК, Be Brand People, АКАР и АКАР Урал; не приписываем агентству единоличную организацию всех форумов.",
+    "industry": "HR, маркетинг и рекламная индустрия",
+    "description": "16–20 сентября 2024 года в Екатеринбурге прошла Национальная неделя HR и рекламы; два главных форума, HR Forum Big Fish и НРФ Регионы, состоялись 18–19 сентября в МВЦ «Екатеринбург-Экспо» и МТС Live Hall. Деловую программу дополнили 12-часовой MarHR-стрим и хакатон с реальными задачами брендов, экскурсии в уральские компании, мобильное приложение, премия TOP50 HR и afterparty. Официальная страница форума и УрГЭУ указывают более 4 000 участников — это общий масштаб недели. Be Brand People названа ключевым организатором HR Forum Big Fish; остальные части проходили в партнёрстве нескольких организаторов.",
+    "seoDescription": "Национальная неделя HR и рекламы в Екатеринбурге: HR Forum Big Fish, НРФ Регионы, 12-часовой стрим, хакатон на реальных задачах и экскурсии. Более 4 000 участников — общий масштаб недели.",
+    "source": "https://bebrand.ru/nedelya-hr-i-reklami-ekaterinburg-2024",
+    "image": "/custom/empty/case-enriched-158.svg",
+    "imageMobile": "/custom/empty/case-enriched-158.svg",
+    "ogImage": "/custom/empty/case-enriched-158.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-158",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#1b3152,#dc784a)",
+    "curated": false,
+    "reelTitle": "Неделя HR · от дискуссий к реальным задачам",
+    "featured": false,
+    "eventCity": "Екатеринбург · МВЦ «Екатеринбург-Экспо» / МТС Live Hall",
+    "guestLabel": "Более 4 000 участников (вся неделя, данные официальной страницы и УрГЭУ)",
+    "occasions": [
+      "business",
+      "online",
+      "public"
+    ],
+    "sources": [
+      {
+        "label": "Be Brand People · кейс, программа недели и заявленные результаты",
+        "url": "https://bebrand.ru/nedelya-hr-i-reklami-ekaterinburg-2024"
+      },
+      {
+        "label": "АКАР · сроки недели и состав партнёров-организаторов",
+        "url": "https://akarussia.ru/news/novosti-partnjorov/pojavilis-pervye-podrobnosti-delovoj-programmy-nedeli-hr-i-reklamy-na-urale/"
+      },
+      {
+        "label": "НРФ Регионы 2024 · даты форумов, площадка и общая аудитория",
+        "url": "https://regions-2024.advertisingforum.ru/"
+      },
+      {
+        "label": "УрГЭУ · роль ключевого организатора HR Forum Big Fish и участники",
+        "url": "https://www.usue.ru/novosti/novye-vyzovy-dlya-hr/"
+      }
+    ]
   }
 ]
