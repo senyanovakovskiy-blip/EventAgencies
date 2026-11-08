@@ -10640,5 +10640,61 @@
         "url": "https://ratings.sostav.ru/companies/984/works/1053"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-154",
+    "title": "Операция «Оливье»: 4 154 кг для города",
+    "fullTitle": "Новогодняя благотворительная акция СберМаркета в Новосибирске — проект ARS COM",
+    "year": "2022",
+    "eventDate": "24 декабря 2022",
+    "category": "Городская новогодняя благотворительная акция",
+    "format": "Приготовление рекордного салата и раздача жителям и благотворительным организациям",
+    "client": "СберМаркет",
+    "agencySlug": "ars-com",
+    "agencySlugs": [
+      "ars-com"
+    ],
+    "agencyUrl": "/agency/ars-com",
+    "types": [
+      "public",
+      "btl"
+    ],
+    "role": "ARS COM описывает свою работу как реализацию проекта под ключ в сжатые сроки и сообщает о сборе команды поваров за две недели. Публикация СберМаркета называет организатором акции сам сервис и упоминает поддержку городской администрации и поварского сообщества; агентство не заявляется единственным организатором.",
+    "industry": "Доставка продуктов, городские события и благотворительность",
+    "description": "24 декабря 2022 года в новосибирском ТЦ «Сибирский Молл» приготовили 4 154 кг оливье для жителей и благотворительных организаций. Реестр рекордов России подтвердил массу как рекорд. ARS COM описывает свою работу как подготовку проекта под ключ в сжатые сроки и сбор команды поваров за две недели; СберМаркет назван организатором акции. Число гостей не приводим: источники указывают разные значения.",
+    "seoDescription": "Акция СберМаркета «Операция “Оливье”» в Новосибирске: рекордная порция 4 154 кг и благотворительная раздача. ARS COM описывает работу над событием под ключ.",
+    "source": "https://www.arscom.ru/projects/sbermarket-prazdnik-olive/",
+    "image": "/custom/empty/case-enriched-154.svg",
+    "imageMobile": "/custom/empty/case-enriched-154.svg",
+    "ogImage": "/custom/empty/case-enriched-154.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-154",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#223f4a,#d7a354)",
+    "curated": false,
+    "reelTitle": "Операция «Оливье» · новогодний рекорд",
+    "featured": false,
+    "eventCity": "Новосибирск · ТЦ «Сибирский Молл»",
+    "occasions": [
+      "public",
+      "btl"
+    ],
+    "sources": [
+      {
+        "label": "ARS COM · роль команды, сроки и задачи проекта",
+        "url": "https://www.arscom.ru/projects/sbermarket-prazdnik-olive/"
+      },
+      {
+        "label": "Реестр рекордов России · вес, дата и рекордсмен",
+        "url": "https://reestrrekordov.ru/samyj-bolshoj-salat-olive/"
+      },
+      {
+        "label": "Retail.ru · СберМаркет как организатор акции и благотворительная раздача",
+        "url": "https://www.retail.ru/rbc/pressreleases/sbermarket-prigotovil-samyy-bolshoy-v-mire-salat-olive/"
+      }
+    ]
   }
 ]
