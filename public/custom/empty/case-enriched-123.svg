@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Ретрофестиваль «Время надежд»</title>
+  <desc id="desc">Плакат в стиле середины XX века с солнцем, виниловой пластинкой и сценой.</desc>
+  <defs>
+    <linearGradient id="paper" x2="1" y2="1">
+      <stop stop-color="#f7e8c7"/>
+      <stop offset="1" stop-color="#e5c99b"/>
+    </linearGradient>
+    <linearGradient id="sky" x2="0" y2="1">
+      <stop stop-color="#32728a"/>
+      <stop offset="1" stop-color="#173a58"/>
+    </linearGradient>
+    <radialGradient id="sun">
+      <stop stop-color="#ffe8a2"/>
+      <stop offset="1" stop-color="#e99d52"/>
+    </radialGradient>
+    <pattern id="grain" width="17" height="17" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="4" r="1" fill="#725942" opacity=".14"/>
+      <circle cx="12" cy="11" r=".7" fill="#725942" opacity=".11"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#paper)"/>
+  <rect x="28" y="28" width="1144" height="744" rx="4" fill="none" stroke="#173a58" stroke-width="3"/>
+  <path d="M40 42h1120v475H40z" fill="url(#sky)"/>
+  <circle cx="925" cy="240" r="163" fill="url(#sun)"/>
+  <g fill="#f7e8c7" opacity=".86">
+    <path d="m925 48 10 28 27-14-8 31 31 7-26 18 19 25-32-3-2 32-21-25-21 25-2-32-32 3 19-25-26-18 31-7-8-31 27 14z"/>
+    <path d="M110 88h132v6H110zm28 18h104v4H138zm-8 17h123v4H130z" opacity=".45"/>
+  </g>
+  <circle cx="925" cy="240" r="106" fill="none" stroke="#fff0c8" stroke-width="2" opacity=".55"/>
+  <circle cx="925" cy="240" r="88" fill="none" stroke="#fff0c8" stroke-width="2" opacity=".42"/>
+  <circle cx="925" cy="240" r="70" fill="none" stroke="#fff0c8" stroke-width="2" opacity=".32"/>
+  <path d="M40 455q120-72 240 0t240 0 240 0 240 0 160 0v62H40z" fill="#bf5247"/>
+  <path d="M40 486q120-55 240 0t240 0 240 0 240 0 160 0v31H40z" fill="#e6ab60"/>
+  <g transform="translate(770 296)">
+    <circle cx="150" cy="150" r="139" fill="#1b2536" stroke="#e9d4aa" stroke-width="7"/>
+    <circle cx="150" cy="150" r="107" fill="none" stroke="#79858b" stroke-width="2" opacity=".8"/>
+    <circle cx="150" cy="150" r="83" fill="none" stroke="#79858b" stroke-width="2" opacity=".65"/>
+    <circle cx="150" cy="150" r="57" fill="none" stroke="#79858b" stroke-width="2" opacity=".5"/>
+    <circle cx="150" cy="150" r="31" fill="#ca544a"/>
+    <circle cx="150" cy="150" r="7" fill="#f7e8c7"/>
+    <path d="M245 55l-46 53" fill="none" stroke="#f7e8c7" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="247" cy="52" r="10" fill="#f7e8c7"/>
+  </g>
+  <g transform="translate(95 315)">
+    <path d="M15 170V55q0-36 36-36h385q36 0 36 36v115" fill="none" stroke="#f4d49d" stroke-width="8"/>
+    <path d="M48 166V67q0-20 20-20h351q20 0 20 20v99z" fill="#254d68"/>
+    <path d="M48 142h391v24H48z" fill="#e3a753"/>
+    <g fill="#f4d49d">
+      <path d="M90 142v-63h12v63zm42 0V63h12v79zm42 0V77h12v65zm42 0V59h12v83zm42 0V72h12v70zm42 0V62h12v80zm42 0V79h12v63zm42 0V65h12v77z"/>
+    </g>
+    <path d="M196 19V0h58v19" fill="none" stroke="#f4d49d" stroke-width="7"/>
+    <path d="M204 0h42" stroke="#e3a753" stroke-width="8"/>
+  </g>
+  <g fill="#f7e8c7" opacity=".92">
+    <path d="M590 152q30-31 60 0-30 33-60 0zm44-13 28-22-3 42z"/>
+    <path d="M694 190q22-20 44 0-22 23-44 0zm34-9 20-16-2 31z"/>
+  </g>
+  <rect x="72" y="548" width="1056" height="180" fill="url(#paper)"/>
+  <path d="M72 548h1056" stroke="#bf5247" stroke-width="5"/>
+  <text x="92" y="603" font-family="Georgia,serif" font-size="30" font-weight="700" letter-spacing="7" fill="#b5463d">ЗВЕНИГОРОД · 19 ИЮЛЯ 2025</text>
+  <text x="88" y="685" font-family="Georgia,serif" font-size="66" font-weight="700" letter-spacing="1" fill="#173a58">ВРЕМЯ НАДЕЖД</text>
+  <text x="94" y="718" font-family="Arial,sans-serif" font-size="19" font-weight="700" letter-spacing="5" fill="#b5463d">МУЗЫКА · ПОЭЗИЯ · ВСТРЕЧА ПОКОЛЕНИЙ</text>
+  <rect width="1200" height="800" fill="url(#grain)" pointer-events="none"/>
+</svg>
