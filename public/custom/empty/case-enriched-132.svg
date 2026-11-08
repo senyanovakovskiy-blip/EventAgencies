@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Арканар в «Октябре» — премьера «Трудно быть богом»</title>
+  <desc id="desc">Концептуальный плакат: портал, трон и жетон выбора «наблюдать или вмешаться». Это иллюстрация, не фотография проекта.</desc>
+  <defs>
+    <linearGradient id="world" x2="1" y2="1"><stop stop-color="#182931"/><stop offset=".55" stop-color="#374b49"/><stop offset="1" stop-color="#9b6445"/></linearGradient>
+    <linearGradient id="portal" x2="0" y2="1"><stop stop-color="#b7e7dc"/><stop offset=".47" stop-color="#6dc9bd"/><stop offset="1" stop-color="#dfad63"/></linearGradient>
+    <linearGradient id="coin" x2=".8" y2="1"><stop stop-color="#ffe1a0"/><stop offset="1" stop-color="#c38343"/></linearGradient>
+    <radialGradient id="mist"><stop stop-color="#7ad5c6" stop-opacity=".38"/><stop offset="1" stop-color="#7ad5c6" stop-opacity="0"/></radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="21"/></filter>
+    <pattern id="stars" width="86" height="72" patternUnits="userSpaceOnUse"><circle cx="12" cy="16" r="1.4" fill="#f1dfb8" opacity=".55"/><circle cx="61" cy="45" r="1" fill="#f1dfb8" opacity=".35"/></pattern>
+  </defs>
+  <rect width="1200" height="800" fill="#eee3d0"/>
+  <rect x="28" y="28" width="1144" height="744" rx="18" fill="url(#world)"/>
+  <rect x="28" y="28" width="1144" height="508" rx="18" fill="url(#stars)"/>
+  <circle cx="576" cy="280" r="250" fill="url(#mist)" filter="url(#blur)"/>
+  <path d="M50 427 190 258l79 92 130-193 142 209 126-156 141 181 105-140 139 187v91H50z" fill="#263a3b" opacity=".88"/>
+  <path d="m190 258 51 62-53-22-24 29zm209-101 56 80-61-24-26 28zm268 53 54 63-56-22-25 27zm245 33 51 62-56-19-20 25z" fill="#d5c5a1" opacity=".72"/>
+  <g transform="translate(358 112)">
+    <path d="M55 378V124Q55 26 204 16q149 10 149 108v254" fill="none" stroke="#c58b55" stroke-width="28" stroke-linecap="round"/>
+    <path d="M80 378V128q0-81 124-90 124 9 124 90v250" fill="none" stroke="#e8c88b" stroke-width="5" opacity=".82"/>
+    <path d="M92 365V141q0-66 112-74 112 8 112 74v224" fill="url(#portal)" opacity=".74"/>
+    <path d="M92 365V141q0-66 112-74 112 8 112 74v224" fill="none" stroke="#e6e3c6" stroke-width="2" stroke-dasharray="4 11" opacity=".72"/>
+    <path d="M61 379h291" stroke="#e9c27b" stroke-width="12" stroke-linecap="round"/>
+    <path d="M62 399h289" stroke="#192b31" stroke-width="12" stroke-linecap="round"/>
+    <g transform="translate(130 240)">
+      <path d="M0 104V51l34-34 28 27 28-27 35 34v53h28v59H-16v-59z" fill="#8b6043" stroke="#ead2a0" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M33 163v-47q0-26 28-26t28 26v47m31-97v97" fill="none" stroke="#edcf8d" stroke-width="6"/>
+      <circle cx="62" cy="101" r="7" fill="#f9db9a"/>
+    </g>
+  </g>
+  <g transform="translate(812 198)">
+    <circle cx="108" cy="104" r="99" fill="url(#coin)" stroke="#f3dfb4" stroke-width="7"/>
+    <circle cx="108" cy="104" r="80" fill="none" stroke="#a66f43" stroke-width="3"/>
+    <path d="M80 97q28-49 56 0t56 0" fill="none" stroke="#754d38" stroke-width="5"/>
+    <text x="108" y="140" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" font-weight="900" letter-spacing="2" fill="#554436">ВЫБОР</text>
+    <path d="M108 202v69m-90 0h180" stroke="#d9bc80" stroke-width="3" stroke-dasharray="5 10"/>
+    <text x="108" y="307" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="800" letter-spacing="2" fill="#f0dfbd">НАБЛЮДАТЬ</text>
+    <text x="108" y="333" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" font-weight="800" letter-spacing="2" fill="#f0dfbd">ИЛИ ВМЕШАТЬСЯ</text>
+  </g>
+  <g fill="#dfc994" opacity=".78">
+    <circle cx="169" cy="180" r="3"/><circle cx="236" cy="131" r="2"/><circle cx="1001" cy="145" r="3"/><circle cx="1062" cy="221" r="2"/><circle cx="200" cy="403" r="2"/>
+  </g>
+  <rect x="64" y="564" width="1072" height="166" rx="10" fill="#f2e8d7"/>
+  <text x="100" y="609" font-family="Arial,sans-serif" font-size="19" font-weight="800" letter-spacing="4" fill="#8b6949">WINK · МОСКВА · 1 СЕНТЯБРЯ 2026</text>
+  <text x="94" y="673" font-family="Arial,sans-serif" font-size="48" font-weight="900" letter-spacing="-1.3" fill="#25373a">ТРУДНО БЫТЬ БОГОМ</text>
+  <text x="100" y="711" font-family="Arial,sans-serif" font-size="17" font-weight="700" letter-spacing="3" fill="#66706a">ЗАКРЫТАЯ ПРЕМЬЕРА · АРКАНАР ЗА ПРЕДЕЛАМИ ЭКРАНА</text>
+</svg>
