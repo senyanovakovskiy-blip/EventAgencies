@@ -9775,5 +9775,67 @@
         "url": "https://bemafestival.ru/winners/it-piknik/"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-138",
+    "title": "Яндекс Пэй на премии «Итоги года Яндекс Музыки»",
+    "fullTitle": "Бренд-зона Яндекс Пэй на Yandex Music Session 2025",
+    "year": "2025",
+    "eventDate": "3 декабря 2025",
+    "category": "Интеграция на музыкальной премии",
+    "format": "Серебристая арт-зона, застройка, техническое сопровождение и сценический реквизит",
+    "client": "Яндекс Пэй",
+    "agencySlug": "dpg-russia",
+    "agencySlugs": [
+      "dpg-russia"
+    ],
+    "agencyUrl": "/agency/dpg-russia",
+    "types": [
+      "public",
+      "btl",
+      "business"
+    ],
+    "role": "DPG называет себя техническим партнёром премии и описывает свою часть как создание бренд-зоны Яндекс Пэй, её застройку и техническое обслуживание, а также костюм для артиста. Источники не приписывают агентству организацию всей церемонии.",
+    "industry": "Музыка, культура и финтех",
+    "description": "Серебристый градиент и цифровые мотивы превратили бренд-зону Яндекс Пэй в арт-объект среди музыкальной премии. Интеграция вышла за пределы пространства: SQWOZ BAB появился на сцене с крупным платёжным чеком во время поздравления лауреата «Искры года». DPG отвечало за зону и её техническую часть, а не за всю церемонию.",
+    "seoDescription": "DPG создало серебристую бренд-зону Яндекс Пэй для премии «Итоги года Яндекс Музыки» и встроило платёжный чек в сценический момент.",
+    "source": "https://dpgrussia.com/project/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81-%D0%BF%D1%8D%D0%B9-%D0%BD%D0%B0-yandex-music-session/",
+    "image": "/custom/empty/case-enriched-138.svg",
+    "imageMobile": "/custom/empty/case-enriched-138.svg",
+    "ogImage": "/custom/empty/case-enriched-138.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-138",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#15171b,#aeb4bb)",
+    "curated": false,
+    "reelTitle": "Яндекс Пэй · серебряная арт-зона",
+    "featured": false,
+    "eventCity": "Москва · Международный Дом Музыки",
+    "occasions": [
+      "public",
+      "btl",
+      "business"
+    ],
+    "sources": [
+      {
+        "label": "DPG Russia · роль, бренд-зона и сценический элемент; название кейса — Yandex Music Session",
+        "url": "https://dpgrussia.com/project/%D1%8F%D0%BD%D0%B4%D0%B5%D0%BA%D1%81-%D0%BF%D1%8D%D0%B9-%D0%BD%D0%B0-yandex-music-session/"
+      },
+      {
+        "label": "Rozetked · дата, площадка и итоги премии Яндекс Музыки",
+        "url": "https://rozetked.me/news/43099-yandeks-muzyka-podvela-muzykal-nye-itogi-2025-i-nazvala-artistov-goda"
+      },
+      {
+        "label": "Яндекс Музыка · официальное видео премии",
+        "url": "https://www.youtube.com/watch?v=7oEoDNuaSa0"
+      },
+      {
+        "label": "DPG online · арт-зона и интеграция в сценическое действие",
+        "url": "https://t.me/s/dpg_online/1367"
+      }
+    ]
   }
 ]
