@@ -8452,5 +8452,47 @@
         "url": "https://go.kzn.ru/articles/nocnoi-velofest-soberet-tysiaci-velosipedistov-v-kazani"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-112",
+    "title": "Мэппинг Dreamlaser к 80-летию Победы",
+    "fullTitle": "Проекционный мэппинг на Кремлёвских башнях к 80-летию Победы",
+    "year": "2025",
+    "eventDate": "9–11 мая 2025",
+    "category": "Культура",
+    "format": "Проекционный мэппинг на архитектурных башнях",
+    "client": "Не указан в источнике",
+    "agencySlug": "dream-laser",
+    "agencySlugs": [
+      "dream-laser"
+    ],
+    "agencyUrl": "/agency/dream-laser",
+    "types": [
+      "culture",
+      "public"
+    ],
+    "role": "Подготовка мэппинга и проекционного контента; при создании анимации архивных снимков и музыкального сопровождения использовались Kandinsky и SymFormer.",
+    "industry": "Культура и городские события",
+    "description": "К 80-летию Победы Dreamlaser превратил две кремлёвские башни в страницы военного фотоальбома. С 9 по 11 мая мэппинг показывали на Дмитриевской башне Нижегородского Кремля и Спасской башне Казанского Кремля. Kandinsky и SymFormer помогли анимировать архивные снимки и создать музыкальное сопровождение; фотографии предоставили Национальный музей Республики Татарстан и Русский музей фотографии. Проект прошёл при поддержке Сбера. Год 2025 выводится из посвящения 80-летию Победы: в публикации Dreamlaser год не указан, заказчик не назван.",
+    "seoDescription": "Мэппинг Dreamlaser к 80-летию Победы: показы на Дмитриевской и Спасской башнях 9–11 мая, архивные фотографии, анимация и музыка с помощью Kandinsky и SymFormer.",
+    "source": "https://dreamlaser.ru/news/mepping-ot-dreamlaser-v-chest-80-letiya-pobedy-mozhno-budet-uvidet-v-nizhnem-novgorode-i-kazani",
+    "image": "/custom/empty/case-enriched-112.svg",
+    "imageMobile": "/custom/empty/case-enriched-112.svg",
+    "ogImage": "/custom/empty/case-enriched-112.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-112",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#18233a,#b7463c)",
+    "curated": false,
+    "reelTitle": "Кремлёвские башни · 80 лет Победы",
+    "featured": false,
+    "eventCity": "Нижний Новгород и Казань",
+    "guestLabel": "",
+    "occasions": [
+      "public"
+    ]
   }
 ]
