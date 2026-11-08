@@ -8661,5 +8661,48 @@
     "eventCity": "Финал, Москва",
     "guestLabel": "",
     "occasions": []
+  },
+  {
+    "slug": "case-enriched-117",
+    "title": "«Парад чемпионов СКА» — трофей на Невском",
+    "fullTitle": "Парад чемпионов СКА на Невском проспекте и Дворцовой площади",
+    "year": "Год не указан",
+    "eventDate": "",
+    "category": "Городское спортивное событие",
+    "format": "Парад чемпионов и концерт на городской площади",
+    "client": "Не указан в источнике",
+    "agencySlug": "era",
+    "agencySlugs": [
+      "era"
+    ],
+    "agencyUrl": "/agency/era",
+    "types": [
+      "public",
+      "sport",
+      "culture"
+    ],
+    "role": "ERA включает событие в портфолио; публикация рассказывает о маршруте и финале, но не раскрывает конкретные обязанности команды.",
+    "industry": "Хоккей и городские события",
+    "description": "Обладатели Кубка Гагарина провезли трофей по Невскому проспекту, а праздник завершился концертом на Дворцовой площади. Так хоккейная победа стала маршрутом через город — от встречи чемпионов до общего финала. ERA разместила кейс в своём портфолио, но не указывает заказчика, год события и конкретный состав работ команды.",
+    "seoDescription": "Парад чемпионов СКА на Невском проспекте и концерт на Дворцовой площади. Публикация ERA не указывает дату, заказчика и обязанности команды.",
+    "source": "https://www.eraevent.ru/cases/parad-chempionov-na-nevskom-prospekte/",
+    "image": "/custom/empty/case-enriched-117.svg",
+    "imageMobile": "/custom/empty/case-enriched-117.svg",
+    "ogImage": "/custom/empty/case-enriched-117.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-117",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#132844,#a73138)",
+    "curated": false,
+    "reelTitle": "Парад чемпионов СКА · Санкт-Петербург",
+    "featured": false,
+    "eventCity": "Невский проспект и Дворцовая площадь, Санкт-Петербург",
+    "guestLabel": "",
+    "occasions": [
+      "public"
+    ]
   }
 ]
