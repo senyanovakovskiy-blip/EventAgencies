@@ -8578,5 +8578,47 @@
     "occasions": [
       "public"
     ]
+  },
+  {
+    "slug": "case-enriched-115",
+    "title": "«Северная Венеция» — показ коллекций очков",
+    "fullTitle": "Пятидневный показ и сезонный отбор коллекций очков в Санкт-Петербурге",
+    "year": "2024",
+    "eventDate": "2024",
+    "category": "Показ и деловая программа",
+    "format": "Сезонный отбор коллекций и пятидневная программа",
+    "client": "Итальянский производитель очков (название не указано)",
+    "agencySlug": "eventex",
+    "agencySlugs": [
+      "eventex"
+    ],
+    "agencyUrl": "/agency/eventex",
+    "types": [
+      "business",
+      "corporate"
+    ],
+    "role": "Разработка концепции «Северная Венеция», размещение гостей и проведение деловой программы, бренд-зоны, две вечеринки и экскурсионная программа.",
+    "industry": "Оптика и модные бренды",
+    "description": "Петербург стал местом сезонного отбора коллекций итальянского производителя очков: EVENTEX связала город с Венецией и собрала пятидневный маршрут. Агентство организовало проживание в отелях «Англетер» и «Астория», деловую часть, бренд-зоны Boss, ETRO, Carrera и David Beckham, две вечеринки и экскурсии. Название заказчика не раскрывается. В источнике расходятся цифры: 300 гостей в заголовке и три пересекающихся потока по 170 в описании, поэтому общее число участников не указываем.",
+    "seoDescription": "«Северная Венеция» от EVENTEX: пятидневный показ и сезонный отбор коллекций очков в Санкт-Петербурге, деловая программа, бренд-зоны, вечеринки и экскурсии.",
+    "source": "https://eventex.moscow/cases/severnaya-veneciya",
+    "image": "/custom/empty/case-enriched-115.svg",
+    "imageMobile": "/custom/empty/case-enriched-115.svg",
+    "ogImage": "/custom/empty/case-enriched-115.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-115",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#183d45,#c5a56f)",
+    "curated": false,
+    "reelTitle": "Северная Венеция · EVENTEX",
+    "featured": false,
+    "eventCity": "Санкт-Петербург · «Англетер» и «Астория»",
+    "guestLabel": "",
+    "occasions": [
+      "presentation"
+    ]
   }
 ]
