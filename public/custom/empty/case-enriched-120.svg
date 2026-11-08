@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="title desc">
+<title id="title">dōTERRA Конвенция Евразия 2026 — концептуальная иллюстрация</title>
+<desc id="desc">Стилизованная сцена, световые панели, ботанические формы и линия времени. Концептуальная иллюстрация, не фотография события.</desc>
+<defs>
+  <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#f5e9d8"/><stop offset=".66" stop-color="#dfc6a8"/><stop offset="1" stop-color="#b58f70"/></linearGradient>
+  <linearGradient id="stage" x2="0" y2="1"><stop stop-color="#668177"/><stop offset="1" stop-color="#294a48"/></linearGradient>
+  <linearGradient id="halo" x2="1" y2="1"><stop stop-color="#fff4dc"/><stop offset="1" stop-color="#d8b876"/></linearGradient>
+  <linearGradient id="leaf" x2="1" y2="1"><stop stop-color="#87a491"/><stop offset="1" stop-color="#42665a"/></linearGradient>
+</defs>
+<rect width="1600" height="1200" fill="url(#bg)"/>
+<circle cx="1265" cy="237" r="138" fill="url(#halo)" opacity=".9"/>
+<path d="M0 718c190-93 380-104 567-30 195 77 368 86 568 27 178-53 313-44 465 9v476H0Z" fill="#566d61" opacity=".86"/>
+<path d="M0 829c224-59 397-56 580 11 191 69 358 81 541 31 181-50 322-62 479-22v351H0Z" fill="#344e4d"/>
+<path d="M0 1000c227-61 401-44 573 18 189 68 345 69 526 22 193-50 344-54 501-17v177H0Z" fill="#263f43"/>
+<path d="M139 674V364h132v310m33 0V287h170v387m38 0V345h110v329m555 0V325h143v349m37 0V276h175v398" fill="#d4c2a4" opacity=".68"/>
+<path d="M172 399h68v185h-68zm258-63h88v249h-88zm65 21h36v39h-36zm500 1h61v225h-61zm196-13h84v239h-84zm217-43h109v290h-109z" fill="#8a9a84" opacity=".55"/>
+<path d="M481 711V424c0-161 128-289 287-289s287 128 287 289v287" fill="none" stroke="#f4e8d3" stroke-width="30" opacity=".92"/>
+<path d="M523 713V426c0-137 109-246 245-246s245 109 245 246v287" fill="none" stroke="#b99163" stroke-width="7" opacity=".8"/>
+<path d="M613 566c33-57 67-84 108-83 39 1 70 34 91 83-41 41-82 60-122 57-34-3-60-22-77-57z" fill="url(#leaf)"/>
+<path d="M821 555c11-65 32-103 69-116 36-12 78 8 123 49-25 53-56 87-94 100-34 11-67 0-98-33z" fill="#9aaf98"/>
+<path d="M697 482c-7-56 1-93 25-111 24-18 61-13 111 15-5 47-20 81-46 102-24 19-54 17-90-6z" fill="#d5bd83"/>
+<g fill="#f4e5cc"><rect x="167" y="817" width="75" height="90" rx="6"/><rect x="284" y="870" width="75" height="90" rx="6"/><rect x="401" y="817" width="75" height="90" rx="6"/><rect x="1122" y="817" width="75" height="90" rx="6"/><rect x="1239" y="870" width="75" height="90" rx="6"/><rect x="1356" y="817" width="75" height="90" rx="6"/></g>
+<path d="M177 850h55m-55 23h43m73 20h56m-56 23h42m76-66h56m-56 23h39m650 0h56m-56 23h39m78 19h56m-56 23h41m78-88h56m-56 23h40" stroke="#a9825e" stroke-width="5"/>
+<path d="M449 824h702" stroke="#d6b67e" stroke-width="8" stroke-linecap="round"/>
+<g fill="#f2d8aa" stroke="#425a50" stroke-width="5"><circle cx="486" cy="824" r="16"/><circle cx="650" cy="824" r="16"/><circle cx="815" cy="824" r="16"/><circle cx="980" cy="824" r="16"/><circle cx="1145" cy="824" r="16"/></g>
+<g fill="#20383c"><circle cx="295" cy="955" r="17"/><circle cx="353" cy="979" r="14"/><circle cx="420" cy="950" r="16"/><circle cx="1190" cy="958" r="16"/><circle cx="1260" cy="980" r="15"/><circle cx="1334" cy="952" r="17"/><path d="M280 973h30v94h-30zm58 18h29v78h-29zm68-18h30v94h-30zm769 0h30v94h-30zm70 20h29v74h-29zm61-20h31v94h-31z"/></g>
+<g fill="#f1e7d7" font-family="Arial,sans-serif"><text x="100" y="102" font-size="24" letter-spacing="5" fill="#5c7366">ARS COM · МОСКВА</text><text x="94" y="207" font-size="64" font-weight="700" letter-spacing="-2" fill="#294449">dōTERRA</text><text x="96" y="266" font-size="32" letter-spacing="2" fill="#627465">КОНВЕНЦИЯ ЕВРАЗИЯ · 2026</text><text x="799" y="454" font-size="37" font-weight="700" text-anchor="middle" fill="#fff4de">БЛАГОДАРИ</text><text x="800" y="503" font-size="19" text-anchor="middle" letter-spacing="3" fill="#f0d9aa">18 ЛЕТ ВМЕСТЕ</text><rect x="100" y="1080" width="600" height="58" rx="12" fill="#203b40" opacity=".9"/><text x="126" y="1118" font-size="22" fill="#f3e8d4">Концептуальная иллюстрация · фото не добавлены</text></g>
+</svg>

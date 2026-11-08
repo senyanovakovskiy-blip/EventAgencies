@@ -413,14 +413,15 @@
         "btl",
         "business"
       ],
-      "description": "ARS COM берёт на себя сложную операционную часть масштабных фестивалей: безопасность, работу с площадкой, застройку, логистику и координацию партнёров. На Positive Hack Days Fest 2025 команда собрала 250+ специалистов площадки, а на Rockin’ Russia 2026 обеспечила работу нового кампуса IXcellerate Vёshki. Для ежегодного PT Open Day: Synthesis агентство объединило программу, партнёрские стенды и сервисы гостей; в кейсе указаны 1 500 участников и явка 90%.",
+      "description": "ARS COM берёт на себя сложную операционную часть масштабных фестивалей: безопасность, работу с площадкой, застройку, логистику и координацию партнёров. На Positive Hack Days Fest 2025 команда собрала 250+ специалистов площадки, а на Rockin’ Russia 2026 обеспечила работу нового кампуса IXcellerate Vёshki. Для ежегодного PT Open Day: Synthesis агентство объединило программу, партнёрские стенды и сервисы гостей; в кейсе указаны 1 500 участников и явка 90%. Для конвенции dōTERRA 2026 ARS COM разработало концепцию «Благодари», визуальный стиль и сценическую программу, а также отвечало за застройку, логистику и координацию служб.",
       "website": "https://www.arscom.ru/",
       "works": [
         "positive-hack-days",
         "portfolio-ars-com-3c46f1a",
-        "case-enriched-103"
+        "case-enriched-103",
+        "case-enriched-120"
       ],
-      "caseCount": 2,
+      "caseCount": 3,
       "photoCount": 12,
       "cover": "/custom/library/7b580cf4f6.webp",
       "coverWork": "positive-hack-days"
@@ -11005,6 +11006,54 @@
       "occasions": [
         "public"
       ]
+    },
+    {
+      "slug": "case-enriched-120",
+      "title": "dōTERRA Конвенция Евразия 2026 — «Благодари»",
+      "fullTitle": "dōTERRA Конвенция Евразия 2026: 18-летие компании",
+      "year": "2026",
+      "eventDate": "25 апреля 2026 года",
+      "category": "Бизнес-событие",
+      "format": "Ежегодная конвенция бренда с продуктовой и сценической программой",
+      "client": "dōTERRA",
+      "agencySlug": "ars-com",
+      "agencySlugs": [
+        "ars-com"
+      ],
+      "agencyUrl": "/agency/ars-com",
+      "types": [
+        "business",
+        "corporate"
+      ],
+      "role": "ARS COM разработало концепцию «Благодари» и визуальный стиль, отвечало за сценическую программу, застройку площадки, логистику, техническое сопровождение и координацию служб.",
+      "industry": "Брендовые конвенции",
+      "description": "Ежегодная конвенция dōTERRA стала празднованием 18-летия компании. ARS COM придумало «Благодари» и провело идею через весенний визуальный стиль, фотозоны, навигацию и стенд-таймлайн об истории бренда. Сценическая программа объединила выступления, шоу-номера, запуски продуктов, интерактивы и квизы. 25 апреля 2026 года во Дворце Ирины Винер в Москве, по данным ARS COM, собралось 3 000 участников.",
+      "seoDescription": "Конвенция dōTERRA в Москве 25 апреля 2026 года: концепция «Благодари», сценическая программа, застройка и логистика от ARS COM; агентство указывает 3 000 участников.",
+      "source": "https://www.arscom.ru/projects/d-terra-konventsiya-evraziya-2026/",
+      "image": "/custom/empty/case-enriched-120.svg",
+      "imageMobile": "/custom/empty/case-enriched-120.svg",
+      "ogImage": "/custom/empty/case-enriched-120.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-120",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#315650,#d6a76c)",
+      "curated": false,
+      "reelTitle": "dōTERRA · Благодари",
+      "featured": false,
+      "eventCity": "Дворец Ирины Винер, Москва",
+      "guestLabel": "3 000 участников (по данным ARS COM)",
+      "occasions": [
+        "business"
+      ],
+      "sources": [
+        {
+          "label": "Уточнение числа участников · ARS COM (English)",
+          "url": "https://www.arscom.ru/eng/projects/d-terra-convention-eurasia-2026/"
+        }
+      ]
     }
   ],
   "types": {
@@ -11019,8 +11068,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 129,
-    "works": 176,
+    "cases": 130,
+    "works": 177,
     "photos": 263
   }
 }
