@@ -4,7 +4,7 @@ const pick=(source,keys)=>Object.fromEntries(keys.filter(key=>Object.hasOwn(sour
 // The last three agency fields and role/guestLabel remain the existing public
 // facts used by comparison and exports; these do not come from operatorCatalog.
 const agencyFields='slug name city types website works caseCount photoCount cover coverWork geography services budgetConditions'.split(' ');
-const workFields='slug title fullTitle year eventDate category format client agencySlug agencySlugs agencyUrl types industry role source image imageMobile ogImage thumb hasPhotos photoCount caseId duplicateOf kind gradient curated reelTitle featured reelImage reelMobile imageRatio eventCity guestLabel occasions preview imageWidth imageHeight previewSrcSet'.split(' ');
+const workFields='slug title fullTitle year eventDate category format client agencySlug agencySlugs agencyUrl types industry role source sources image imageMobile ogImage thumb hasPhotos photoCount caseId duplicateOf kind gradient curated reelTitle featured reelImage reelMobile imageRatio eventCity guestLabel occasions preview imageWidth imageHeight previewSrcSet'.split(' ');
 const copy=(entries,slug)=>{
  const value=entries?.[slug];
  if(!value||['lead','intro','fit'].some(key=>typeof value[key]!=='string'||!value[key].trim()))throw Error('Client presentation missing: '+slug);
