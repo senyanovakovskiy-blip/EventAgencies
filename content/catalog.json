@@ -898,9 +898,10 @@
       "website": "https://insightpeople.ru/",
       "works": [
         "portfolio-insayt-lyudi-b7da2ad",
-        "case-enriched-52"
+        "case-enriched-52",
+        "case-enriched-152"
       ],
-      "caseCount": 1,
+      "caseCount": 2,
       "photoCount": 1,
       "cover": "/custom/library/2a52491ba9-thumb.webp",
       "coverWork": "portfolio-insayt-lyudi-b7da2ad"
@@ -12774,6 +12775,63 @@
           "url": "https://legendgames.ru/"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-152",
+      "title": "«Вызов» на ВФМ-2024: молодёжный дом на 12 часов в день",
+      "fullTitle": "Организация работы дома молодёжи «Вызов» на Всемирном фестивале молодёжи — «Инсайт Люди»",
+      "year": "2024",
+      "eventDate": "1–7 марта 2024",
+      "category": "Фестивальное пространство и молодёжное сообщество",
+      "format": "Дом с ежедневной 12-часовой программой: медиа-мастерские, встречи, квартирники и партнёрские активности",
+      "client": "Клиент отдельно не назван",
+      "agencySlug": "insayt-lyudi",
+      "agencySlugs": [
+        "insayt-lyudi"
+      ],
+      "agencyUrl": "/agency/insayt-lyudi",
+      "types": [
+        "public",
+        "culture"
+      ],
+      "role": "«Газпром-Медиа Холдинг» сообщает, что продюсерский центр «Инсайт Люди» организовал работу дома молодёжи «Вызов». ВФМ-2024 организовывала Росмолодёжь; часть активностей дома проводили партнёры. Клиент агентства отдельно не назван.",
+      "industry": "Молодёжные сообщества и медиа",
+      "description": "С 1 по 7 марта 2024 года в Сириусе работал дом молодёжи «Вызов» на Всемирном фестивале молодёжи. «Газпром-Медиа Холдинг» сообщает, что работу дома организовал продюсерский центр «Инсайт Люди»; ежедневная программа длилась 12 часов. В расписании сочетались медиа-мастерские, встречи, квартирники, цирковые выступления, хакатон и шахматный турнир. Арт-мастерскую и часть активностей проводили партнёры фестиваля — их не приписываем агентству. Посещаемость не указываем: в публикациях о доме приведены разные цифры.",
+      "seoDescription": "Дом молодёжи «Вызов» на ВФМ-2024: ежедневная 12-часовая программа с медиа-мастерскими, встречами и культурными форматами. Работу дома организовал продюсерский центр «Инсайт Люди».",
+      "source": "https://www.gazprom-media.com/ru/media/akademiya-kontenta-multiformatnaya-studiya-i-vystupleniya-ekspertov-gazprom-media-holding-na-vsemirnom-festivale-molodezhi",
+      "image": "/custom/empty/case-enriched-152.svg",
+      "imageMobile": "/custom/empty/case-enriched-152.svg",
+      "ogImage": "/custom/empty/case-enriched-152.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-152",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#172947,#8867ac)",
+      "curated": false,
+      "reelTitle": "Дом «Вызов» · медиа, встречи и квартирники",
+      "featured": false,
+      "eventCity": "Сириус · Сочи",
+      "guestLabel": "Ежедневная программа — 12 часов",
+      "occasions": [
+        "public",
+        "culture"
+      ],
+      "sources": [
+        {
+          "label": "«Инсайт Люди» · интеграция сообщества «Вызов» в портфолио проектов",
+          "url": "https://insightpeople.ru/cases"
+        },
+        {
+          "label": "«Газпром-Медиа Холдинг» · роль «Инсайт Люди», фестивальные даты и партнёрская программа",
+          "url": "https://www.gazprom-media.com/ru/media/akademiya-kontenta-multiformatnaya-studiya-i-vystupleniya-ekspertov-gazprom-media-holding-na-vsemirnom-festivale-molodezhi"
+        },
+        {
+          "label": "«Газпром-Медиа Холдинг» · ежедневная 12-часовая программа дома",
+          "url": "https://www.gazprom-media.com/ru/media/dom-molodezhi-vyzov-na-vfm-2024-ezhednevno-poseshchayut-bolee-shesti-tysyach-chelovek"
+        }
+      ]
     }
   ],
   "types": {
@@ -12788,8 +12846,8 @@
   },
   "stats": {
     "agencies": 108,
-    "cases": 161,
-    "works": 208,
+    "cases": 162,
+    "works": 209,
     "photos": 263
   }
 }
