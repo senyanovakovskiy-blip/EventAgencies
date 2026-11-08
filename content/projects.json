@@ -10798,5 +10798,56 @@
         "url": "https://2capitals.ru/kejsy/eto-my"
       }
     ]
+  },
+  {
+    "slug": "case-enriched-157",
+    "title": "«ЭКСПО. Территория мечты»: мегафорум Oriflame",
+    "fullTitle": "Мегафорум и Банкет Директоров Oriflame — кейс Eventum Premo",
+    "year": "2016",
+    "eventDate": "18–19 июня 2016",
+    "category": "Мегафорум и торжественный банкет",
+    "format": "Павильоны-экспозиции, экран 360° и центральный подиум; затем — банкет в том же зале",
+    "client": "Oriflame",
+    "agencySlug": "eventum-premo",
+    "agencySlugs": [
+      "eventum-premo"
+    ],
+    "agencyUrl": "/agency/eventum-premo",
+    "types": [
+      "business",
+      "corporate",
+      "culture"
+    ],
+    "role": "Eventum Premo публикует проект в портфолио и описывает концепцию, сценографию и программу. Источник не распределяет отдельно производственные задачи между командами.",
+    "industry": "Красота, прямые продажи и корпоративные события",
+    "description": "18–19 июня 2016 года на ВДНХ Oriflame отмечала 20-летие прямых продаж в России двумя событиями: мегафорумом на 5 000 участников и Банкетом Директоров на 3 000 гостей — цифры указаны Eventum Premo. Вместо того чтобы оставить людей перед сценой, пространство окружили круговым экраном 360° и вывели подиум к центральной сцене. В павильонах-экспозициях рассказывали о направлениях и продуктах компании; в кейсе также указаны 262 метра проекции. За ночь зал перестроили под банкет.",
+    "seoDescription": "Мегафорум Oriflame на ВДНХ: круговой экран 360°, центральный подиум и павильоны о продуктах. Форум и Банкет Директоров для 5 000 и 3 000 гостей — по кейсу Eventum Premo.",
+    "source": "https://www.eventum-premo.ru/blog/keys-megaforum-oriflame",
+    "image": "/custom/empty/case-enriched-157.svg",
+    "imageMobile": "/custom/empty/case-enriched-157.svg",
+    "ogImage": "/custom/empty/case-enriched-157.svg",
+    "thumb": null,
+    "hasPhotos": false,
+    "photoCount": 0,
+    "caseId": "case-enriched-157",
+    "kind": "case",
+    "gallery": [],
+    "gradient": "linear-gradient(145deg,#13264b,#dc4e91)",
+    "curated": false,
+    "reelTitle": "Oriflame · гости внутри «Территории мечты»",
+    "featured": false,
+    "eventCity": "Москва · ВДНХ",
+    "guestLabel": "Мегафорум — 5 000 участников; банкет — 3 000 гостей (по данным Eventum Premo)",
+    "occasions": [
+      "business",
+      "corporate",
+      "culture"
+    ],
+    "sources": [
+      {
+        "label": "Eventum Premo · концепция, программа и заявленный масштаб двух событий",
+        "url": "https://www.eventum-premo.ru/blog/keys-megaforum-oriflame"
+      }
+    ]
   }
 ]
