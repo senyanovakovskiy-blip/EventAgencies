@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#233b41"/>
+  <circle cx="1250" cy="240" r="155" fill="#e7b36b"/>
+  <path d="M0 650h1600v550H0Z" fill="#315459"/>
+  <path d="M0 720q260-95 520 0t520 0 560 0" fill="none" stroke="#7eaa92" stroke-width="10"/>
+  <g transform="translate(1000 390)">
+    <path d="M0 280h420v260H0z" fill="#ba704e"/>
+    <path d="M-30 280h480l-35-70H5z" fill="#e6b46b"/>
+    <path d="M40 335h90v110H40zM170 335h90v110h-90zM300 335h80v110h-80z" fill="#d9c99d"/>
+    <path d="M0 470h420M25 495h370M50 520h320" stroke="#714d49" stroke-width="8"/>
+  </g>
+  <g fill="none" stroke="#e9c078" stroke-width="9" stroke-linecap="round">
+    <path d="M210 770h550M270 770v-200h430v200M325 570l160-125 160 125"/>
+    <path d="M365 770v-95h75v95M515 770v-95h75v95"/>
+  </g>
+  <g fill="#f3eee2" font-family="Arial,sans-serif">
+    <text x="110" y="145" font-size="30" letter-spacing="4">ЗАКУЛИСЬЕ · 2024</text>
+    <text x="110" y="330" font-size="75" font-weight="700">ЮБИЛЕЙ</text>
+    <text x="110" y="420" font-size="72" font-weight="700">ЗАВОДА</text>
+    <text x="114" y="500" font-size="36" fill="#e7c58d">городской праздник · уличный формат</text>
+    <text x="110" y="1090" font-size="26" fill="#cbd5cd">Иллюстрация кейса · фотографии не добавлены</text>
+  </g>
+</svg>

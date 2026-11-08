@@ -2010,6 +2010,24 @@
       "photoCount": 0,
       "cover": null,
       "coverWork": null
+    },
+    {
+      "slug": "zakulisie",
+      "name": "Закулисье",
+      "city": "Новосибирск",
+      "types": [
+        "business",
+        "corporate"
+      ],
+      "description": "В 2024 году «Закулисье» организовало для завода «Болотнинская Гофротара» юбилейный городской праздник в уличном формате — HR-событие для более чем 1 000 участников. Город, площадка и подробности программы в кейсе не указаны.",
+      "website": "https://xn---54-5cdzkipj5dt5i.xn--p1ai/",
+      "works": [
+        "case-enriched-97"
+      ],
+      "caseCount": 1,
+      "photoCount": 0,
+      "cover": null,
+      "coverWork": null
     }
   ],
   "projects": [
@@ -9376,6 +9394,49 @@
       ]
     },
     {
+      "slug": "case-enriched-97",
+      "title": "Юбилей завода «Болотнинская Гофротара» — городской праздник",
+      "fullTitle": "Юбилей завода «Болотнинская Гофротара»: городской праздник в уличном формате",
+      "year": "2024",
+      "eventDate": "2024",
+      "category": "Корпоратив",
+      "format": "Городской праздник в уличном формате",
+      "client": "Болотнинская Гофротара",
+      "agencySlug": "zakulisie",
+      "agencySlugs": [
+        "zakulisie"
+      ],
+      "agencyUrl": "/agency/zakulisie",
+      "types": [
+        "corporate",
+        "public"
+      ],
+      "role": "Юбилейное HR-событие завода в формате городского уличного праздника.",
+      "industry": "Производство и HR-события",
+      "description": "В 2024 году агентство «Закулисье» организовало юбилей завода «Болотнинская Гофротара» в формате городского уличного праздника. Кейс отмечен как HR-событие; агентство указывает более 1 000 участников. Город, площадка и подробности программы не раскрыты.",
+      "seoDescription": "Юбилей завода «Болотнинская Гофротара» от «Закулисья»: городской уличный HR-праздник 2024 года для 1 000+ участников.",
+      "source": "https://xn---54-5cdzkipj5dt5i.xn--p1ai/cases/",
+      "image": "/custom/empty/case-enriched-97.svg",
+      "imageMobile": "/custom/empty/case-enriched-97.svg",
+      "ogImage": "/custom/empty/case-enriched-97.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-97",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(150deg,#36585a,#c77a55)",
+      "curated": false,
+      "reelTitle": "Юбилей Болотнинской Гофротары",
+      "featured": false,
+      "eventCity": "",
+      "guestLabel": "1 000+ участников (по данным «Закулисья»)",
+      "occasions": [
+        "corporate",
+        "public"
+      ]
+    },
+    {
       "slug": "case-enriched-86",
       "title": "Открытие «Российской студенческой весны» — 2021",
       "fullTitle": "Церемония открытия Всероссийского фестиваля «Российская студенческая весна — 2021»",
@@ -9961,9 +10022,9 @@
     "pr": "PR-события"
   },
   "stats": {
-    "agencies": 105,
-    "cases": 106,
-    "works": 153,
+    "agencies": 106,
+    "cases": 107,
+    "works": 154,
     "photos": 263
   }
 }
