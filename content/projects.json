@@ -7932,15 +7932,40 @@
     "description": "20 июня 2025 года N:OW провела в концертном зале «Москва» в «Острове мечты» бизнес-ивент для 1 500 гостей. Два повода клиента объединили в один день: забрендировали фасад, организовали регистрацию и навигацию, подготовили выступления 13 руководителей, световое интро-шоу с 80 приборами, награждение и трансляцию на 24-метровом экране. На следующий день гости продолжили встречу на загородной площадке, название и точное место которой не указаны. Клиент не раскрыт; число гостей приводит N:OW.",
     "seoDescription": "Бизнес-ивент N:OW для 1 500 гостей: 13 спикеров, награждение и трансляция на 24-метровом экране в концертном зале «Москва».",
     "source": "https://now-agency.ru/%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%B8%D0%B2%D0%B5%D0%BD%D1%82-%D0%B4%D0%BB%D1%8F-1500-%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA/",
-    "image": "/custom/empty/case-enriched-99.svg",
-    "imageMobile": "/custom/empty/case-enriched-99.svg",
-    "ogImage": "/custom/empty/case-enriched-99.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/now-business1500-04-full-hall.webp",
+    "imageMobile": "/custom/optimized/now-business1500-04-full-hall-640.webp",
+    "ogImage": "/custom/library/now-business1500-04-full-hall.webp",
+    "thumb": "/custom/optimized/now-business1500-04-full-hall-640.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-enriched-99",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/now-business1500-01-venue.webp",
+        "ratio": 1.9320754716981132,
+        "alt": "Фасад концертного зала «Москва» оформлен графикой «Энергия роста» перед бизнес-ивентом N:OW. Фото: N:OW."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/now-business1500-02-visual-collage.webp",
+        "ratio": 1.9320754716981132,
+        "alt": "Коллаж бизнес-ивента: сцена, световое оформление, выступления и зрительный зал. Фото: N:OW."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/now-business1500-03-camera.webp",
+        "ratio": 1.9320754716981132,
+        "alt": "Оператор снимает программу события в концертном зале «Москва». Фото: N:OW."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/now-business1500-04-full-hall.webp",
+        "ratio": 1.9320754716981132,
+        "alt": "Полный зал на деловом событии для 1 500 гостей под фиолетовым светом. Фото: N:OW."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#263b52,#89785d)",
     "curated": false,
     "reelTitle": "Бизнес-ивент N:OW — 1 500 гостей",
@@ -7950,6 +7975,19 @@
     "occasions": [
       "business",
       "corporate"
+    ],
+    "preview": "/custom/optimized/now-business1500-04-full-hall-960.webp",
+    "reelImage": "/custom/library/now-business1500-04-full-hall.webp",
+    "reelMobile": "/custom/optimized/now-business1500-04-full-hall-640.webp",
+    "imageRatio": 1.9320754716981132,
+    "imageWidth": 1024,
+    "imageHeight": 530,
+    "previewSrcSet": "/custom/optimized/now-business1500-04-full-hall-640.webp 640w, /custom/optimized/now-business1500-04-full-hall-960.webp 960w, /custom/library/now-business1500-04-full-hall.webp 1024w",
+    "sources": [
+      {
+        "label": "N:OW · официальный кейс и фотогалерея проекта",
+        "url": "https://now-agency.ru/%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%B8%D0%B2%D0%B5%D0%BD%D1%82-%D0%B4%D0%BB%D1%8F-1500-%D1%87%D0%B5%D0%BB%D0%BE%D0%B2%D0%B5%D0%BA/"
+      }
     ]
   },
   {
