@@ -7252,15 +7252,52 @@
     "description": "В 2024 году EVENTEX провела в Зеленограде двухдневный «Фестиваль больших машин» для лидера рынка грузового транспорта на его собственной площадке. Агентство сообщает о 550 гостях и трёх неделях подготовки от идеи до реализации. Команда взяла на себя трансфер с выставки CTT в «Крокус Экспо», регистрацию, сцену и техоснащение, онлайн-трансляцию, шатры для отдыха, питания и активностей. В программу для аудитории, на 90% состоявшей из мужчин по данным EVENTEX, вошли граффити на кузове, танцы на прицепе, радиоуправляемая стройка и финальный флешмоб с тягачами и цветным дымом. Названия клиента и площадки не раскрыты.",
     "seoDescription": "Фестиваль больших машин EVENTEX в Зеленограде: двухдневный формат, 550 гостей и тематическая программа с техникой. Данные по числу гостей — от агентства.",
     "source": "https://eventex.moscow/cases/gts-fest",
-    "image": "/custom/empty/case-enriched-96.svg",
-    "imageMobile": "/custom/empty/case-enriched-96.svg",
-    "ogImage": "/custom/empty/case-enriched-96.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/eventex-gts-fest-01.webp",
+    "imageMobile": "/custom/library/eventex-gts-fest-02.webp",
+    "ogImage": "/custom/library/eventex-gts-fest-01.webp",
+    "thumb": "/custom/library/eventex-gts-fest-01.webp",
+    "hasPhotos": true,
+    "photoCount": 6,
     "caseId": "case-enriched-96",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-gts-fest-01.webp",
+        "ratio": 1.78,
+        "alt": "Колонна большегрузных автомобилей с дымовым шоу на фестивале. Фото: EVENTEX."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-gts-fest-02.webp",
+        "ratio": 0.56,
+        "alt": "Танцовщица выступает на прицепе грузового автомобиля. Фото: EVENTEX."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-gts-fest-03.webp",
+        "ratio": 1.78,
+        "alt": "Гости фестиваля собрались у ряда грузовых машин. Фото: EVENTEX."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-gts-fest-04.webp",
+        "ratio": 1.78,
+        "alt": "Навигация фестиваля и площадка с грузовыми автомобилями. Фото: EVENTEX."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-gts-fest-05.webp",
+        "ratio": 0.56,
+        "alt": "Музыкант выступает на сцене фестиваля. Фото: EVENTEX."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-gts-fest-06.webp",
+        "ratio": 1.78,
+        "alt": "Шатёр и выставленные тягачи на площадке фестиваля. Фото: EVENTEX."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#31586a,#c67a48)",
     "curated": false,
     "reelTitle": "Фестиваль больших машин EVENTEX",
@@ -7269,6 +7306,12 @@
     "guestLabel": "550 гостей (по данным EVENTEX)",
     "occasions": [
       "corporate"
+    ],
+    "sources": [
+      {
+        "label": "EVENTEX · официальная фотогалерея кейса",
+        "url": "https://eventex.moscow/cases/gts-fest"
+      }
     ]
   },
   {
