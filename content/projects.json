@@ -11525,15 +11525,28 @@
     "description": "В 2024 году парк «Зарядье» стал площадкой медиарт-фестиваля «Город света». Национальное агентство событий (НАС) пишет, что запустило проект, где свет и мультимедиа объединили работы художников в новый визуальный опыт. По данным агентства, в парке разместили 20 объектов и привлекли 40 российских и зарубежных художников; НАС оценивает посещаемость за полтора месяца в 1,9 млн. «Москва 24» подтверждает около 20 инсталляций, но сообщает почти о 2 млн посетителей всей площадки форума-фестиваля «Москва 2030» в «Зарядье», так что эту аудиторию нельзя независимо отнести только к «Городу света».",
     "seoDescription": "Медиарт-фестиваль «Город света» в парке «Зарядье»: Национальное агентство событий сообщает о 20 световых и мультимедийных объектах и работах 40 художников.",
     "source": "https://nasagency.ru/gorodsveta",
-    "image": "/custom/empty/case-enriched-170.svg",
-    "imageMobile": "/custom/empty/case-enriched-170.svg",
-    "ogImage": "/custom/empty/case-enriched-170.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/nas-city-light-m24.jpg",
+    "imageMobile": "/custom/library/nas-city-light-official-photo.jpg",
+    "ogImage": "/custom/library/nas-city-light-m24.jpg",
+    "thumb": "/custom/library/nas-city-light-m24.jpg",
+    "hasPhotos": true,
+    "photoCount": 2,
     "caseId": "case-enriched-170",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/nas-city-light-m24.jpg",
+        "ratio": 1.78,
+        "alt": "Световая инсталляция и посетители фестиваля в Зарядье. Фото: Москва 24 / Никита Симонов."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/nas-city-light-official-photo.jpg",
+        "ratio": 0.75,
+        "alt": "Инсталляция фестиваля «Город света» вечером. Фото: официальный канал парка «Зарядье»."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#101f3a,#65ddd1)",
     "curated": false,
     "reelTitle": "Город света · медиаарт в Зарядье",
@@ -11550,12 +11563,16 @@
         "url": "https://nasagency.ru/gorodsveta"
       },
       {
-        "label": "Москва 24 · подтверждение инсталляций и аудитории всей площадки форума-фестиваля",
+        "label": "Москва 24 · описание фестиваля и фото установки (Никита Симонов)",
         "url": "https://www.m24.ru/news/14092024/725688"
       },
       {
         "label": "НАС · услуги и продюсерская команда",
         "url": "https://nasagency.ru/"
+      },
+      {
+        "label": "Парк «Зарядье» · официальный Telegram, фотография с фестиваля",
+        "url": "https://t.me/zaryadye_official/9174?single"
       }
     ]
   }
