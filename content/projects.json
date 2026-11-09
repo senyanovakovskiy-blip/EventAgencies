@@ -5139,18 +5139,37 @@
     ],
     "role": "REDDAY адаптировала технологическую конференцию к пространству МХАТа: метафора «контрформы» связала объекты с окружающим их театральным пространством, а застройка охватила четыре этажа.",
     "industry": "Москва",
-    "description": "Yandex Scale 2024 под слоганом «Время создавать» связала технологическую конференцию с атмосферой МХАТа имени Горького. REDDAY использовала «контрформу» как визуальную метафору; застройка охватила четыре этажа. В программе было 31 доклад: 1 700 гостей пришли лично, трансляцию смотрели 15 000 человек, а главный доклад собрал более 900 слушателей. В карточке агентства фотографии этого проекта не добавлены.",
+    "description": "Yandex Scale 2024 под слоганом «Время создавать» связала технологическую конференцию с атмосферой МХАТа имени Горького. REDDAY использовала «контрформу» как визуальную метафору; застройка охватила четыре этажа. В программе было 31 доклад: 1 700 гостей пришли лично, трансляцию смотрели 15 000 человек, а главный доклад собрал более 900 слушателей.",
     "seoDescription": "Yandex Scale 2024 в МХАТе имени Горького: 1 700 гостей, 15 000 зрителей трансляции, 31 доклад и застройка на четырёх этажах. REDDAY связала технологическую тему и театральное пространство через «контрформу».",
     "source": "https://www.redday.events/projects/yandex/scale2024",
-    "image": "/custom/empty/case-6.svg",
-    "imageMobile": "/custom/empty/case-6.svg",
-    "ogImage": "/custom/empty/case-6.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/yandex-scale-2024-01.webp",
+    "imageMobile": "/custom/library/yandex-scale-2024-01.webp",
+    "ogImage": "/custom/library/yandex-scale-2024-01.webp",
+    "thumb": "/custom/library/yandex-scale-2024-01.webp",
+    "hasPhotos": true,
+    "photoCount": 3,
     "caseId": "case-6",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/yandex-scale-2024-01.webp",
+        "ratio": 1.5,
+        "alt": "Спикер на сцене Yandex Scale 2024 под надписью «Время создавать». Фото: REDDAY."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/yandex-scale-2024-02.webp",
+        "ratio": 1.5,
+        "alt": "Сцена Yandex Scale 2024 с графикой о технологиях Yandex Cloud. Фото: REDDAY."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/yandex-scale-2024-03.webp",
+        "ratio": 1.5,
+        "alt": "Дискуссия Scale Talks на сцене Yandex Scale 2024. Фото: REDDAY."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "Yandex Scale",
@@ -5159,6 +5178,15 @@
     "guestLabel": "1 700 гостей и 15 000 зрителей трансляции",
     "occasions": [
       "conference"
+    ],
+    "imageRatio": 1.5,
+    "imageWidth": 1680,
+    "imageHeight": 1117,
+    "sources": [
+      {
+        "label": "REDDAY · официальный кейс Yandex Scale 2024",
+        "url": "https://www.redday.events/projects/yandex/scale2024"
+      }
     ]
   },
   {

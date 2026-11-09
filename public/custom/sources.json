@@ -3273,5 +3273,41 @@
         "caseId": "case-enriched-167"
       }
     ]
+  },
+  {
+    "file": "/custom/library/yandex-scale-2024-01.webp",
+    "original": "https://static.tildacdn.com/tild3335-6464-4330-a132-323765353030/Yandex_Scale_-__-_00.jpg",
+    "source": "https://www.redday.events/projects/yandex/scale2024",
+    "credits": [
+      {
+        "agency": "REDDAY",
+        "title": "Yandex Scale 2024",
+        "caseId": "case-6"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/yandex-scale-2024-02.webp",
+    "original": "https://static.tildacdn.com/tild3433-3933-4635-b835-343133623764/yndx_scale-160.jpg",
+    "source": "https://www.redday.events/projects/yandex/scale2024",
+    "credits": [
+      {
+        "agency": "REDDAY",
+        "title": "Yandex Scale 2024",
+        "caseId": "case-6"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/yandex-scale-2024-03.webp",
+    "original": "https://static.tildacdn.com/tild3639-6532-4233-a338-303533393464/yndx_scale-221.jpg",
+    "source": "https://www.redday.events/projects/yandex/scale2024",
+    "credits": [
+      {
+        "agency": "REDDAY",
+        "title": "Yandex Scale 2024",
+        "caseId": "case-6"
+      }
+    ]
   }
 ]
