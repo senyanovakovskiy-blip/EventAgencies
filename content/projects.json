@@ -5254,7 +5254,7 @@
   {
     "slug": "case-enriched-32",
     "title": "Т-Банк PAYvolution. Биометрия в действии",
-    "fullTitle": "Т-Банк PAYvolution. Биометрия в действии",
+    "fullTitle": "PAYvolution для Т-Банка на «Финополисе 2025» — стенд и квест по биометрии",
     "year": "2025",
     "eventDate": "2025",
     "category": "Бизнес",
@@ -5271,25 +5271,39 @@
     ],
     "role": "Комплексное обслуживание проекта, инсталляция, квест и демонстрационные зоны",
     "industry": "Финополис 2025",
-    "description": "Выставочный стенд и интерактивная программа. Площадка: Финополис 2025. Работа команды: Комплексное обслуживание проекта, инсталляция, квест и демонстрационные зоны. Фотографии этого проекта пока не добавлены.",
-    "seoDescription": "Выставочный стенд и интерактивная программа. Площадка: Финополис 2025. Работа команды: Комплексное обслуживание проекта, инсталляция, квест и демонстрационные зоны. Фотографии этого проекта пока не добавлены.",
+    "description": "На «Финополисе 2025» LARNILANE создала для Т-Банка стенд, где знакомство с биометрией проходило в формате квеста. Рядом работали зона мультибанкинга и Lounge Dolce Vita; центральной точкой стала шестиметровая инсталляция в виде дерева.",
+    "seoDescription": "PAYvolution от Т-Банка на «Финополисе 2025»: стенд LARNILANE, квест по биометрии, зона мультибанкинга и шестиметровая инсталляция.",
     "source": "https://larnilane.com/page94099906.html",
-    "image": "/custom/empty/case-enriched-32.svg",
-    "imageMobile": "/custom/empty/case-enriched-32.svg",
-    "ogImage": "/custom/empty/case-enriched-32.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
+    "imageMobile": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
+    "ogImage": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
+    "thumb": "/custom/optimized/larnilane-tbank-payvolution-01-tree-installation-640.webp",
+    "hasPhotos": true,
+    "photoCount": 1,
     "caseId": "case-enriched-32",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
+        "ratio": 1.5,
+        "alt": "Центральная шестиметровая инсталляция-дерево на стенде Т-Банка PAYvolution на «Финополисе 2025». Фото: LARNILANE."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
-    "reelTitle": "Т-Банк PAYvolution.…",
+    "reelTitle": "PAYvolution · Т-Банк",
     "featured": false,
     "eventCity": "",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "reelImage": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
+    "reelMobile": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
+    "imageRatio": 1.5,
+    "preview": "/custom/optimized/larnilane-tbank-payvolution-01-tree-installation-640.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1067,
+    "previewSrcSet": "/custom/optimized/larnilane-tbank-payvolution-01-tree-installation-640.webp 640w, /custom/library/larnilane-tbank-payvolution-01-tree-installation.webp 1600w"
   },
   {
     "slug": "case-enriched-33",
@@ -7942,15 +7956,34 @@
     "description": "В сентябре 2025 года Яндекс придумал Big Tech Night — фестиваль в Москве, где пять крупных IT-компаний одновременно открыли офисы для гостей. REDDAY помогала команде Яндекса с застройкой, логистикой между офисами соорганизаторов и созданием общего пространства. По данным агентства, фестиваль собрал 3 600+ гостей, включал 60+ офлайн-докладов и дискуссий, 15 выступлений в онлайн-студии и 50+ активностей; всего на площадках и онлайн выступили 122 спикера.",
     "seoDescription": "Big Tech Night для Яндекса от REDDAY: пять IT-компаний, 3 600+ гостей, доклады, онлайн-студия и активности на нескольких площадках.",
     "source": "https://www.redday.events/projects/yandex/big-tech-nignt",
-    "image": "/custom/empty/case-enriched-104.svg",
-    "imageMobile": "/custom/empty/case-enriched-104.svg",
-    "ogImage": "/custom/empty/case-enriched-104.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/redday-big-tech-night-01-stage-discussion.webp",
+    "imageMobile": "/custom/library/redday-big-tech-night-02-crowd-sign.webp",
+    "ogImage": "/custom/library/redday-big-tech-night-01-stage-discussion.webp",
+    "thumb": "/custom/optimized/redday-big-tech-night-01-stage-discussion-640.webp",
+    "hasPhotos": true,
+    "photoCount": 3,
     "caseId": "case-enriched-104",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/redday-big-tech-night-01-stage-discussion.webp",
+        "ratio": 1.499,
+        "alt": "Обсуждение со сценой и аудиторией на фестивале Big Tech Night. Фото: REDDAY."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/redday-big-tech-night-02-crowd-sign.webp",
+        "ratio": 0.751,
+        "alt": "Гости у светящейся вывески Big Tech Night на площадке фестиваля. Фото: REDDAY."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/redday-big-tech-night-03-branded-talk.webp",
+        "ratio": 0.667,
+        "alt": "Выступление перед аудиторией на фоне айдентики Big Tech Night и логотипов партнёров. Фото: REDDAY."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#25374c,#ad7859)",
     "curated": false,
     "reelTitle": "Big Tech Night — Ночь музеев в IT",
@@ -7959,7 +7992,14 @@
     "guestLabel": "3 600+ гостей; 122 спикера (по данным REDDAY)",
     "occasions": [
       "public"
-    ]
+    ],
+    "reelImage": "/custom/library/redday-big-tech-night-01-stage-discussion.webp",
+    "reelMobile": "/custom/library/redday-big-tech-night-02-crowd-sign.webp",
+    "imageRatio": 1.499,
+    "preview": "/custom/optimized/redday-big-tech-night-01-stage-discussion-640.webp",
+    "imageWidth": 1382,
+    "imageHeight": 922,
+    "previewSrcSet": "/custom/optimized/redday-big-tech-night-01-stage-discussion-640.webp 640w, /custom/library/redday-big-tech-night-01-stage-discussion.webp 1382w"
   },
   {
     "slug": "case-enriched-105",
