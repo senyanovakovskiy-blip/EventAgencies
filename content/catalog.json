@@ -102,7 +102,7 @@
         "case-enriched-167"
       ],
       "caseCount": 5,
-      "photoCount": 13,
+      "photoCount": 16,
       "cover": "/custom/library/4a4bf89ec6.webp",
       "coverWork": "portfolio-be-in-event-fbe0bbe"
     },
@@ -8598,12 +8598,12 @@
     {
       "slug": "case-enriched-58",
       "title": "METRO MAGIC",
-      "fullTitle": "METRO MAGIC",
+      "fullTitle": "METRO MAGIC — новогодний корпоратив METRO",
       "year": "2024",
       "eventDate": "19.02.2024",
       "category": "Для команды",
       "format": "Новогодний корпоратив",
-      "client": "BE IN EVENT",
+      "client": "METRO Cash&Carry",
       "agencySlug": "be-in-event",
       "agencySlugs": [
         "be-in-event"
@@ -8614,27 +8614,53 @@
       ],
       "role": "Тематическое оформление, актёры, игровые зоны и программа",
       "industry": "Москва",
-      "description": "Новогодний корпоратив. Площадка: Москва. Работа команды: Тематическое оформление, актёры, игровые зоны и программа. Фотографии этого проекта пока не добавлены.",
-      "seoDescription": "Новогодний корпоратив. Площадка: Москва. Работа команды: Тематическое оформление, актёры, игровые зоны и программа. Фотографии этого проекта пока не добавлены.",
-      "source": "https://beinevent.ru/",
-      "image": "/custom/empty/case-enriched-58.svg",
-      "imageMobile": "/custom/empty/case-enriched-58.svg",
-      "ogImage": "/custom/empty/case-enriched-58.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "description": "Новогодний корпоратив METRO превратился в вечер в стиле «Поттерианы»: мириады свечей, тематические бары, «карта мародёров», тайная комната с предсказаниями профессора Трелони и фото с фантастическими существами с помощью зеркал дополненной реальности. Актёры и ведущий сопровождали гостей, а финалом стало «высвобождение» дракона под золотое конфетти.",
+      "seoDescription": "METRO MAGIC — новогодний корпоратив в стиле «Поттерианы» с тематическими барами, интерактивными зеркалами, актёрами и финальным появлением дракона под золотое конфетти.",
+      "source": "https://beinevent.ru/#popup:MAGIC",
+      "image": "/custom/library/metro-magic-2024-01.jpg",
+      "imageMobile": "/custom/optimized/metro-magic-2024-01-960.webp",
+      "ogImage": "/custom/optimized/metro-magic-2024-01-960.webp",
+      "thumb": "/custom/optimized/metro-magic-2024-01-640.webp",
+      "hasPhotos": true,
+      "photoCount": 3,
       "caseId": "case-enriched-58",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/metro-magic-2024-01.jpg",
+          "ratio": 1.5026833631484795,
+          "alt": "Световой зал METRO MAGIC с гостями и свечами"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/metro-magic-2024-02.jpg",
+          "ratio": 1.5026833631484795,
+          "alt": "Гость в зеркальной арт-инсталляции METRO MAGIC"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/metro-magic-2024-03.jpg",
+          "ratio": 1.5026833631484795,
+          "alt": "Золотое конфетти над гостями METRO MAGIC"
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
-      "curated": false,
+      "curated": true,
       "reelTitle": "METRO MAGIC",
       "featured": false,
       "eventCity": "Москва",
       "guestLabel": "",
       "occasions": [
         "corporate"
-      ]
+      ],
+      "reelImage": "/custom/optimized/metro-magic-2024-01-1600.webp",
+      "reelMobile": "/custom/optimized/metro-magic-2024-01-960.webp",
+      "imageRatio": 1.5026833631484795,
+      "preview": "/custom/optimized/metro-magic-2024-01-960.webp",
+      "imageWidth": 1680,
+      "imageHeight": 1118,
+      "previewSrcSet": "/custom/optimized/metro-magic-2024-01-640.webp 640w, /custom/optimized/metro-magic-2024-01-960.webp 960w, /custom/optimized/metro-magic-2024-01-1600.webp 1600w"
     },
     {
       "slug": "case-round2-88",
@@ -14179,6 +14205,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 303
+    "photos": 306
   }
 }
