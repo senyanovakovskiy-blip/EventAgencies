@@ -8012,15 +8012,40 @@
     "description": "Для детей сотрудников Яндекса BigBird создала новогодний проект «Волшебный центр управления Новым Годом». За два дня состоялось шесть повторяющихся слотов; агентство указывает более 1 900 семей и 4 200 гостей. В программу вошли авторский спектакль с героями, девять саундтреков, 60 минут контента 360°, волшебный декор, аквагрим, мастерские и фотозоны. Точные даты и площадка в портфолио не указаны.",
     "seoDescription": "Новогодняя программа BigBird для Яндекса: 4 200 гостей, шесть слотов за два дня, авторский спектакль и 360°-контент.",
     "source": "https://bigbird.events/portfolio",
-    "image": "/custom/empty/case-enriched-100.svg",
-    "imageMobile": "/custom/empty/case-enriched-100.svg",
-    "ogImage": "/custom/empty/case-enriched-100.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/bigbird-yandex-newyear-01-stage.webp",
+    "imageMobile": "/custom/optimized/bigbird-yandex-newyear-01-stage-640.webp",
+    "ogImage": "/custom/library/bigbird-yandex-newyear-01-stage.webp",
+    "thumb": "/custom/optimized/bigbird-yandex-newyear-01-stage-640.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-enriched-100",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/bigbird-yandex-newyear-01-stage.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Персонажи новогоднего спектакля выступают на сцене перед экраном со снежинками. Фото: BigBird."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bigbird-yandex-newyear-02-audience.webp",
+        "ratio": 1.3656998738965953,
+        "alt": "Дети смотрят новогоднее представление в зале. Фото: BigBird."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bigbird-yandex-newyear-03-workshop.webp",
+        "ratio": 1.3975155279503106,
+        "alt": "Дети раскрашивают рисунки за творческим столом. Фото: BigBird."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bigbird-yandex-newyear-04-brand.webp",
+        "ratio": 1.4116094986807388,
+        "alt": "Робот с логотипом Яндекса стоит среди новогодних подарков на семейном событии. Фото: BigBird."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#354365,#ae7967)",
     "curated": false,
     "reelTitle": "Волшебный центр управления Новым Годом",
@@ -8029,7 +8054,14 @@
     "guestLabel": "4 200 гостей и более 1 900 семей (по данным BigBird)",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "preview": "/custom/optimized/bigbird-yandex-newyear-01-stage-960.webp",
+    "reelImage": "/custom/library/bigbird-yandex-newyear-01-stage.webp",
+    "reelMobile": "/custom/optimized/bigbird-yandex-newyear-01-stage-640.webp",
+    "imageRatio": 1.5005861664712778,
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/bigbird-yandex-newyear-01-stage-640.webp 640w, /custom/optimized/bigbird-yandex-newyear-01-stage-960.webp 960w, /custom/library/bigbird-yandex-newyear-01-stage.webp 1280w"
   },
   {
     "slug": "case-enriched-101",
