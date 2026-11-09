@@ -776,7 +776,7 @@
         "case-enriched-110"
       ],
       "caseCount": 2,
-      "photoCount": 1,
+      "photoCount": 4,
       "cover": "/custom/library/ee6905e651-thumb.webp",
       "coverWork": "portfolio-oxygen-b9f344d"
     },
@@ -8022,7 +8022,7 @@
       "eventDate": "Дата не указана",
       "category": "Активация",
       "format": "Интерактивная бренд-зона",
-      "client": "Бренд зоны — Ozon",
+      "client": "Ozon",
       "agencySlug": "oxygen",
       "agencySlugs": [
         "oxygen"
@@ -8037,22 +8037,48 @@
       "description": "OXYGEN превратило бренд-зону Ozon в фрагмент азиатского мегаполиса будущего: курьеры доставляют заказы на летающих машинах, а покупка возможна силой мысли. Гости получали жетон и вытягивали случайную капсулу с промокодом из автомата; для победившей команды конкурса предусмотрели отдельное место для отдыха и общения. По данным агентства, второй Фандом Фест собрал 15 000 поклонников — это масштаб всего фестиваля, не самой зоны.",
       "seoDescription": "Киберпанк-зона Ozon на Фандом Фесте: параллельная реальность доставки, промокоды из капсулы, дизайн и сценарий взаимодействия от OXYGEN.",
       "source": "https://www.oxygen-agency.ru/ozon-fandom-fest",
-      "image": "/custom/empty/case-enriched-43.svg",
-      "imageMobile": "/custom/empty/case-enriched-43.svg",
-      "ogImage": "/custom/empty/case-enriched-43.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/oxygen-ozon-fandom-01.png",
+      "imageMobile": "/custom/optimized/oxygen-ozon-fandom-01-960.webp",
+      "ogImage": "/custom/optimized/oxygen-ozon-fandom-01-960.webp",
+      "thumb": "/custom/optimized/oxygen-ozon-fandom-01-640.webp",
+      "hasPhotos": true,
+      "photoCount": 3,
       "caseId": "case-enriched-43",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/oxygen-ozon-fandom-01.png",
+          "ratio": 1.4989293361884368,
+          "alt": "Посетители у автомата с капсулами внутри киберпанк-зоны Ozon. Фото: OXYGEN."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/oxygen-ozon-fandom-02.png",
+          "ratio": 1.3888888888888888,
+          "alt": "Интервью у бренд-зоны Ozon на Фандом Фесте. Фото: OXYGEN."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/oxygen-ozon-fandom-03.png",
+          "ratio": 1.4285714285714286,
+          "alt": "Неоновый проход к бренд-зоне Ozon с масштабным иллюстративным панно. Фото: OXYGEN."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
-      "reelTitle": "Бренд-зона Ozon на…",
+      "reelTitle": "Ozon · киберпанк-зона на Фандом Фесте",
       "featured": false,
       "eventCity": "",
       "guestLabel": "Фандом Фест: 15 000 посетителей (по данным OXYGEN)",
-      "occasions": []
+      "occasions": [],
+      "reelImage": "/custom/optimized/oxygen-ozon-fandom-01-1400.webp",
+      "reelMobile": "/custom/optimized/oxygen-ozon-fandom-01-960.webp",
+      "imageRatio": 1.4989293361884368,
+      "preview": "/custom/optimized/oxygen-ozon-fandom-01-960.webp",
+      "imageWidth": 1400,
+      "imageHeight": 934,
+      "previewSrcSet": "/custom/optimized/oxygen-ozon-fandom-01-640.webp 640w, /custom/optimized/oxygen-ozon-fandom-01-960.webp 960w, /custom/optimized/oxygen-ozon-fandom-01-1400.webp 1400w"
     },
     {
       "slug": "case-enriched-44",
@@ -14219,6 +14245,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 307
+    "photos": 310
   }
 }
