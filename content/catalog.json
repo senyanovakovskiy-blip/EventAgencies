@@ -716,7 +716,7 @@
         "case-enriched-105"
       ],
       "caseCount": 7,
-      "photoCount": 5,
+      "photoCount": 9,
       "cover": "/custom/library/03436435a2-thumb.webp",
       "coverWork": "case-22"
     },
@@ -7992,7 +7992,7 @@
       "eventDate": "2015",
       "category": "Фестиваль",
       "format": "Фестиваль стрит-культуры",
-      "client": "Best Practice",
+      "client": "Reebok",
       "agencySlug": "best-practice",
       "agencySlugs": [
         "best-practice"
@@ -8003,27 +8003,59 @@
         "culture",
         "sport"
       ],
-      "role": "Организация фестиваля в рамках Дня города, по данным агентства",
+      "role": "Организация фестиваля Reebok с соревнованиями, мастер-классами и концертом Method Man — по данным Best Practice.",
       "industry": "Москва, парк Горького",
-      "description": "Фестиваль стрит-культуры. Площадка: Москва, парк Горького. Участники: 45 000 зрителей дневной программы и 50 000 концерта; аудитории не суммируются. Работа команды: Организация фестиваля в рамках Дня города, по данным агентства. Фотографии этого проекта пока не добавлены.",
-      "seoDescription": "Фестиваль стрит-культуры. Площадка: Москва, парк Горького. Участники: 45 000 зрителей дневной программы и 50 000 концерта; аудитории не суммируются. Работа команды: Организация фестиваля в рамках Дня города, по данным агентства. Фотографии этого проекта пока не добавлены.",
+      "description": "StreetFire собрал в Парке Горького соревнования и мастер-классы по граффити, диджеингу, уличным танцам, стритболу и воркауту. В программе были международные гости, а вечер завершил хип-хоп-концерт с Method Man, подготовленный совместно с телеканалом A-one. По данным Best Practice, дневную программу посетили 45 000 зрителей, концерт — 50 000; агентство не уточняет, пересекалась ли аудитория.",
+      "seoDescription": "StreetFire для Reebok в Парке Горького: уличные соревнования и мастер-классы, концерт Method Man. 45 000 зрителей дневной программы и 50 000 на концерте по данным Best Practice.",
       "source": "https://bepractice.ru/projects/festival-streetfire/",
-      "image": "/custom/empty/case-30.svg",
-      "imageMobile": "/custom/empty/case-30.svg",
-      "ogImage": "/custom/empty/case-30.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/best-practice-streetfire-01-stage.webp",
+      "imageMobile": "/custom/library/best-practice-streetfire-04-workout.webp",
+      "ogImage": "/custom/library/best-practice-streetfire-01-stage.webp",
+      "thumb": "/custom/optimized/best-practice-streetfire-01-stage-640.webp",
+      "hasPhotos": true,
+      "photoCount": 4,
       "caseId": "case-30",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/best-practice-streetfire-01-stage.webp",
+          "ratio": 2.559,
+          "alt": "Тренировка перед сценой Reebok на фестивале StreetFire. Фото: Best Practice."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/best-practice-streetfire-02-battle.webp",
+          "ratio": 2.037,
+          "alt": "Участники на площадке StreetFire с фирменным оформлением Reebok. Фото: Best Practice."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/best-practice-streetfire-03-concert-crowd.webp",
+          "ratio": 2.037,
+          "alt": "Зрители перед сценой концерта StreetFire в Парке Горького. Фото: Best Practice."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/best-practice-streetfire-04-workout.webp",
+          "ratio": 2.037,
+          "alt": "Участники выполняют упражнения на площадке фестиваля StreetFire. Фото: Best Practice."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
       "reelTitle": "StreetFire",
       "featured": false,
       "eventCity": "Москва",
       "guestLabel": "45 000 зрителей дневной программы и 50 000 концерта; аудитории не суммируются",
-      "occasions": []
+      "occasions": [],
+      "reelImage": "/custom/library/best-practice-streetfire-01-stage.webp",
+      "reelMobile": "/custom/library/best-practice-streetfire-04-workout.webp",
+      "imageRatio": 2.559,
+      "preview": "/custom/optimized/best-practice-streetfire-01-stage-640.webp",
+      "imageWidth": 1200,
+      "imageHeight": 469,
+      "previewSrcSet": "/custom/optimized/best-practice-streetfire-01-stage-640.webp 640w, /custom/library/best-practice-streetfire-01-stage.webp 1200w"
     },
     {
       "slug": "case-enriched-40",
@@ -14443,6 +14475,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 335
+    "photos": 339
   }
 }
