@@ -997,7 +997,7 @@
         "case-enriched-56"
       ],
       "caseCount": 2,
-      "photoCount": 11,
+      "photoCount": 16,
       "cover": "/custom/library/cf602ef23f-thumb.webp",
       "coverWork": "portfolio-lyudi-dobrye-ba9ea67"
     },
@@ -7629,8 +7629,8 @@
       ],
       "role": "Подготовка телестудии и программы, включения из городов и интерактивы для сотрудников — по описанию агентства",
       "industry": "Студия и телемосты с Новосибирском, Курском и Сургутом",
-      "description": "Корпоративный онлайн-эфир. Площадка: Студия и телемосты с Новосибирском, Курском и Сургутом. Участники: 4 часа эфира; 35 гостей в студии; 3 города на телемостах. Работа команды: Подготовка телестудии и программы, включения из городов и интерактивы для сотрудников — по описанию агентства. Фотографии этого проекта пока не добавлены.",
-      "seoDescription": "Корпоративный онлайн-эфир. Площадка: Студия и телемосты с Новосибирском, Курском и Сургутом. Участники: 4 часа эфира; 35 гостей в студии; 3 города на телемостах. Работа команды: Подготовка телестудии и программы, включения из городов и интерактивы для сотрудников — по описанию агентства. Фотографии этого проекта пока не добавлены.",
+      "description": "День рождения Экспобанка на четыре часа превратился в собственное ТВ-шоу: студия в офисе, юмористические рубрики, праздничный торт, музыкальная группа и телемосты с Новосибирском, Курском и Сургутом. 35 гостей в студии, включения из трёх городов и интерактивы соединили сотрудников в один общий праздник.",
+      "seoDescription": "Юбилейный эфир Экспобанка: четыре часа в телестудии, 35 гостей и телемосты с Новосибирском, Курском и Сургутом. Кейс Be Brand People.",
       "source": "https://bebrand.ru/event/cases/onlayn-efir-dlya-ekspobanka-2024",
       "image": "/custom/library/be-brand-expobank-30th-01-studio-cake.webp",
       "imageMobile": "/custom/library/be-brand-expobank-30th-02-studio-guests.webp",
@@ -8628,18 +8628,49 @@
       ],
       "role": "Оформление Noôdome в стиле ЦИАН, интеграция продуктов в программу, онлайн-трансляция и нетворкинг — по описанию «Людей Добрых».",
       "industry": "Место не указано",
-      "description": "В Noôdome 70 инвесторов, аналитиков и представителей медиасообщества собрались на День инвестора ЦИАН. Топ-менеджмент говорил о росте и технологиях; продукты ЦИАН встроили в программу, очную встречу дополнили онлайн-трансляцией и нетворкингом о совместных планах.",
-      "seoDescription": "День инвестора ЦИАН в Noôdome для 70 инвесторов, аналитиков и представителей медиасообщества: офлайн-встреча, трансляция и нетворкинг.",
+      "description": "В Noôdome День инвестора ЦИАН стал камерной площадкой для разговора о росте и технологиях. 70 инвесторов, аналитиков и представителей медиа увидели продукты ЦИАН в действии, а очную встречу дополнили трансляция и нетворкинг о совместных планах. Визуальный ритм дня задал слоган «Соавторы будущего».",
+      "seoDescription": "День инвестора ЦИАН в Noôdome: 70 участников, разговор о росте и технологиях, офлайн-встреча с трансляцией и нетворкингом. Кейс агентства «Люди Добрые».",
       "source": "https://ludidobrie.com/cian-den-investora",
-      "image": "/custom/empty/case-enriched-56.svg",
-      "imageMobile": "/custom/empty/case-enriched-56.svg",
-      "ogImage": "/custom/empty/case-enriched-56.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/lyudi-dobrye-cian-investor-day-01-main-stage.webp",
+      "imageMobile": "/custom/library/lyudi-dobrye-cian-investor-day-02-stage-portrait.webp",
+      "ogImage": "/custom/library/lyudi-dobrye-cian-investor-day-01-main-stage.webp",
+      "thumb": "/custom/optimized/lyudi-dobrye-cian-investor-day-01-main-stage-640.webp",
+      "hasPhotos": true,
+      "photoCount": 5,
       "caseId": "case-enriched-56",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-cian-investor-day-01-main-stage.webp",
+          "ratio": 1.778,
+          "alt": "Сцена и зал Дня инвестора ЦИАН с экраном «Соавторы будущего». Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-cian-investor-day-02-stage-portrait.webp",
+          "ratio": 0.667,
+          "alt": "Вертикальный ракурс сцены Дня инвестора ЦИАН в Noôdome. Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-cian-investor-day-03-stream-setup.webp",
+          "ratio": 0.667,
+          "alt": "Камера и зал, подготовленные к трансляции Дня инвестора ЦИАН. Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-cian-investor-day-04-camera-monitor.webp",
+          "ratio": 0.667,
+          "alt": "Оператор снимает выступающих на сцене Дня инвестора ЦИАН. Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-cian-investor-day-05-networking-installation.webp",
+          "ratio": 0.668,
+          "alt": "Фирменная зона ЦИАН для общения гостей в Noôdome. Фото: агентство «Люди Добрые»."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
       "reelTitle": "День инвестора ЦИАН",
@@ -8648,7 +8679,14 @@
       "guestLabel": "70 участников",
       "occasions": [
         "conference"
-      ]
+      ],
+      "reelImage": "/custom/library/lyudi-dobrye-cian-investor-day-01-main-stage.webp",
+      "reelMobile": "/custom/library/lyudi-dobrye-cian-investor-day-02-stage-portrait.webp",
+      "imageRatio": 1.778,
+      "preview": "/custom/optimized/lyudi-dobrye-cian-investor-day-01-main-stage-640.webp",
+      "imageWidth": 1200,
+      "imageHeight": 675,
+      "previewSrcSet": "/custom/optimized/lyudi-dobrye-cian-investor-day-01-main-stage-640.webp 640w, /custom/library/lyudi-dobrye-cian-investor-day-01-main-stage.webp 1200w"
     },
     {
       "slug": "case-enriched-57",
@@ -14373,6 +14411,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 326
+    "photos": 331
   }
 }
