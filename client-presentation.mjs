@@ -8,7 +8,7 @@ const workFields='slug title fullTitle year eventDate category format client age
 const copy=(entries,slug)=>{
  const value=entries?.[slug];
  if(!value||['lead','intro','fit'].some(key=>typeof value[key]!=='string'||!value[key].trim()))throw Error('Client presentation missing: '+slug);
- return pick(value,['lead','intro','fit','participation','place']);
+ return pick(value,['lead','intro','fit','participation','place','discussionPrompts']);
 };
 export function presentCatalog(catalog,presentation){
  // Keep superseded slugs in the project map so saved selections and old work links still resolve,
