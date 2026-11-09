@@ -6121,15 +6121,46 @@
     "description": "HR-премия. Работа команды: Работа в портфолио агентства для DODO Brands. Фотографии этого проекта пока не добавлены.",
     "seoDescription": "HR-премия. Работа команды: Работа в портфолио агентства для DODO Brands. Фотографии этого проекта пока не добавлены.",
     "source": "https://ludidobrie.com/",
-    "image": "/custom/empty/case-enriched-55.svg",
-    "imageMobile": "/custom/empty/case-enriched-55.svg",
-    "ogImage": "/custom/empty/case-enriched-55.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+    "imageMobile": "/custom/library/lyudi-dobrye-dodo-prime-02-expedition-guests.webp",
+    "ogImage": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+    "thumb": "/custom/optimized/lyudi-dobrye-dodo-prime-01-main-stage-640.webp",
+    "hasPhotos": true,
+    "photoCount": 5,
     "caseId": "case-enriched-55",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+        "ratio": 1.5,
+        "alt": "Сцена и зал с гостями на премии DODO PRIME и праздновании 15-летия DODO BRANDS. Фото: агентство «Люди Добрые»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/lyudi-dobrye-dodo-prime-02-expedition-guests.webp",
+        "ratio": 0.667,
+        "alt": "Участницы фестиваля в одежде DODO на тематической площадке «DODO Экспедиция». Фото: агентство «Люди Добрые»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/lyudi-dobrye-dodo-prime-03-climbing-wall.webp",
+        "ratio": 0.667,
+        "alt": "Гостья у скалодрома на высокогорном фестивале DODO PRIME. Фото: агентство «Люди Добрые»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/lyudi-dobrye-dodo-prime-04-stage-crowd.webp",
+        "ratio": 0.667,
+        "alt": "Гости перед сценой DODO PRIME во время вечерней программы. Фото: агентство «Люди Добрые»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/lyudi-dobrye-dodo-prime-05-dj.webp",
+        "ratio": 0.667,
+        "alt": "Диджей выступает на сцене во время премии DODO PRIME. Фото: агентство «Люди Добрые»."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "DODO PRIME",
@@ -6138,7 +6169,14 @@
     "guestLabel": "",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "reelImage": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+    "reelMobile": "/custom/library/lyudi-dobrye-dodo-prime-02-expedition-guests.webp",
+    "imageRatio": 1.5,
+    "preview": "/custom/optimized/lyudi-dobrye-dodo-prime-01-main-stage-640.webp",
+    "imageWidth": 1200,
+    "imageHeight": 800,
+    "previewSrcSet": "/custom/optimized/lyudi-dobrye-dodo-prime-01-main-stage-640.webp 640w, /custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp 1200w"
   },
   {
     "slug": "case-enriched-56",

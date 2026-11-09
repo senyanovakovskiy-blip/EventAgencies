@@ -997,7 +997,7 @@
         "case-enriched-56"
       ],
       "caseCount": 2,
-      "photoCount": 6,
+      "photoCount": 11,
       "cover": "/custom/library/cf602ef23f-thumb.webp",
       "coverWork": "portfolio-lyudi-dobrye-ba9ea67"
     },
@@ -8551,16 +8551,47 @@
       "description": "Награждение лучших сотрудников стало частью общего праздника: премия DODO BRANDS и 15-летие компании объединились в высокогорном фестивале «DODO Экспедиция». На странице кейса агентство указывает 900 участников.",
       "seoDescription": "DODO PRIME объединил премию сотрудникам и 15-летие DODO BRANDS в высокогорном фестивале для 900 участников.",
       "source": "https://ludidobrie.com/dodo-brands-premiya-dodo-prime-2026",
-      "image": "/custom/empty/case-enriched-55.svg",
-      "imageMobile": "/custom/empty/case-enriched-55.svg",
-      "ogImage": "/custom/empty/case-enriched-55.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+      "imageMobile": "/custom/library/lyudi-dobrye-dodo-prime-02-expedition-guests.webp",
+      "ogImage": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+      "thumb": "/custom/optimized/lyudi-dobrye-dodo-prime-01-main-stage-640.webp",
+      "hasPhotos": true,
+      "photoCount": 5,
       "caseId": "case-enriched-55",
       "duplicateOf": "portfolio-lyudi-dobrye-ba9ea67",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+          "ratio": 1.5,
+          "alt": "Сцена и зал с гостями на премии DODO PRIME и праздновании 15-летия DODO BRANDS. Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-dodo-prime-02-expedition-guests.webp",
+          "ratio": 0.667,
+          "alt": "Участницы фестиваля в одежде DODO на тематической площадке «DODO Экспедиция». Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-dodo-prime-03-climbing-wall.webp",
+          "ratio": 0.667,
+          "alt": "Гостья у скалодрома на высокогорном фестивале DODO PRIME. Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-dodo-prime-04-stage-crowd.webp",
+          "ratio": 0.667,
+          "alt": "Гости перед сценой DODO PRIME во время вечерней программы. Фото: агентство «Люди Добрые»."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-dobrye-dodo-prime-05-dj.webp",
+          "ratio": 0.667,
+          "alt": "Диджей выступает на сцене во время премии DODO PRIME. Фото: агентство «Люди Добрые»."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
       "reelTitle": "DODO PRIME",
@@ -8569,7 +8600,14 @@
       "guestLabel": "900 участников",
       "occasions": [
         "corporate"
-      ]
+      ],
+      "reelImage": "/custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp",
+      "reelMobile": "/custom/library/lyudi-dobrye-dodo-prime-02-expedition-guests.webp",
+      "imageRatio": 1.5,
+      "preview": "/custom/optimized/lyudi-dobrye-dodo-prime-01-main-stage-640.webp",
+      "imageWidth": 1200,
+      "imageHeight": 800,
+      "previewSrcSet": "/custom/optimized/lyudi-dobrye-dodo-prime-01-main-stage-640.webp 640w, /custom/library/lyudi-dobrye-dodo-prime-01-main-stage.webp 1200w"
     },
     {
       "slug": "case-enriched-56",
@@ -14335,6 +14373,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 321
+    "photos": 326
   }
 }
