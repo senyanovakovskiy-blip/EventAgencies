@@ -91,16 +91,17 @@
         "public",
         "business"
       ],
-      "description": "По данным агентства, BE IN EVENT проводит более 150 событий в год и работает с HR, PR и маркетингом. На первой после ребрендинга гибридной IT-конференции для «Лемана Про» команда соединила сцену с трансляцией и отдельные активности на каждый перерыв — от DIY-фотозон до головоломок в стиле Леонардо да Винчи.",
+      "description": "По данным агентства, BE IN EVENT проводит более 150 событий в год и работает с HR, PR и маркетингом. Среди кейсов — гибридная конференция Tech Days для «Лемана Про» и организационное партнёрство BBT Fest 2025. В репортаже BBT.News среди образов фестиваля запомнилась представительница агентства, буквально усыпанная розами.",
       "website": "https://beinevent.ru/",
       "works": [
         "portfolio-be-in-event-fbe0bbe",
         "case-enriched-57",
         "case-enriched-58",
         "case-enriched-148",
-        "case-enriched-149"
+        "case-enriched-149",
+        "case-enriched-167"
       ],
-      "caseCount": 4,
+      "caseCount": 5,
       "photoCount": 6,
       "cover": "/custom/library/4a4bf89ec6.webp",
       "coverWork": "portfolio-be-in-event-fbe0bbe"
@@ -13723,6 +13724,59 @@
           "url": "https://www.laboratoryabc.com/"
         }
       ]
+    },
+    {
+      "slug": "case-enriched-167",
+      "title": "BBT Fest 2025: деловой туризм в образах искусства",
+      "fullTitle": "Фестиваль бизнес-тревела и MICE с BE IN EVENT в роли организационного партнёра",
+      "year": "2025",
+      "eventDate": "8 сентября 2025",
+      "category": "Фестиваль делового туризма и MICE",
+      "format": "Деловая игра, экспозиция партнёров, практикум и праздничный приём в арт-концепции",
+      "client": "BBT Fest (коммерческий заказчик агентства отдельно не указан)",
+      "agencySlug": "be-in-event",
+      "agencySlugs": [
+        "be-in-event"
+      ],
+      "agencyUrl": "/agency/be-in-event",
+      "types": [
+        "business",
+        "culture"
+      ],
+      "role": "BBT.News указывает BE IN EVENT как организационного партнёра фестиваля. В репортаже после события издание отдельно отметило цветочный образ представительницы агентства — она была буквально усыпана розами. Публикации не распределяют остальные задачи между командами; агентство не представляем единственным организатором и не приписываем ему всю программу фестиваля.",
+      "industry": "Бизнес-тревел, MICE и отраслевые события",
+      "description": "8 сентября 2025 года BBT Fest собрал в Palmira Art Hotel более 300 специалистов бизнес-тревел и MICE — по данным BBT.News. Программа прошла под знаком искусства: деловая игра открыла фестиваль, партнёры представили свои продукты в экспозиции, а практикум объединил отраслевые лекции. BE IN EVENT выступило организационным партнёром; в репортаже после события BBT.News запомнил цветочный образ представительницы агентства, буквально усыпанной розами.",
+      "seoDescription": "BBT Fest 2025 собрал свыше 300 специалистов бизнес-тревел и MICE в Palmira Art Hotel. BE IN EVENT указано организационным партнёром; программа фестиваля была вдохновлена искусством.",
+      "source": "https://buyingbusinesstravel.com.ru/articles/stati/pod-znakom-mnogogrannogo-iskusstva-proshyel-bbt-fest-2025/?sphrase_id=1115843",
+      "image": "/custom/empty/case-enriched-167.svg",
+      "imageMobile": "/custom/empty/case-enriched-167.svg",
+      "ogImage": "/custom/empty/case-enriched-167.svg",
+      "thumb": null,
+      "hasPhotos": false,
+      "photoCount": 0,
+      "caseId": "case-enriched-167",
+      "kind": "case",
+      "gallery": [],
+      "gradient": "linear-gradient(145deg,#291c35,#c45476)",
+      "curated": false,
+      "reelTitle": "BBT Fest · деловой туризм в цветах искусства",
+      "featured": false,
+      "eventCity": "Москва · Palmira Art Hotel",
+      "guestLabel": "Более 300 специалистов бизнес-тревел и MICE (по данным BBT.News)",
+      "occasions": [
+        "business",
+        "culture"
+      ],
+      "sources": [
+        {
+          "label": "BBT.News · итоговый репортаж: программа, аудитория и образ BE IN EVENT",
+          "url": "https://buyingbusinesstravel.com.ru/articles/stati/pod-znakom-mnogogrannogo-iskusstva-proshyel-bbt-fest-2025/?sphrase_id=1115843"
+        },
+        {
+          "label": "BBT.News · анонс и список партнёров фестиваля",
+          "url": "https://buyingbusinesstravel.com.ru/news/trevel-menedzhment/organizatsionnym-partnerom-bbt-fest-snova-stalo-agentstvo-be-in-event/"
+        }
+      ]
     }
   ],
   "types": {
@@ -13737,8 +13791,8 @@
   },
   "stats": {
     "agencies": 113,
-    "cases": 176,
-    "works": 223,
+    "cases": 177,
+    "works": 224,
     "photos": 263
   }
 }
