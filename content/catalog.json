@@ -605,7 +605,7 @@
         "case-enriched-158"
       ],
       "caseCount": 2,
-      "photoCount": 1,
+      "photoCount": 3,
       "cover": "/custom/library/68bedd6061-thumb.webp",
       "coverWork": "portfolio-be-brand-people-25d27b5"
     },
@@ -7632,15 +7632,28 @@
       "description": "Корпоративный онлайн-эфир. Площадка: Студия и телемосты с Новосибирском, Курском и Сургутом. Участники: 4 часа эфира; 35 гостей в студии; 3 города на телемостах. Работа команды: Подготовка телестудии и программы, включения из городов и интерактивы для сотрудников — по описанию агентства. Фотографии этого проекта пока не добавлены.",
       "seoDescription": "Корпоративный онлайн-эфир. Площадка: Студия и телемосты с Новосибирском, Курском и Сургутом. Участники: 4 часа эфира; 35 гостей в студии; 3 города на телемостах. Работа команды: Подготовка телестудии и программы, включения из городов и интерактивы для сотрудников — по описанию агентства. Фотографии этого проекта пока не добавлены.",
       "source": "https://bebrand.ru/event/cases/onlayn-efir-dlya-ekspobanka-2024",
-      "image": "/custom/empty/case-enriched-31.svg",
-      "imageMobile": "/custom/empty/case-enriched-31.svg",
-      "ogImage": "/custom/empty/case-enriched-31.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/be-brand-expobank-30th-01-studio-cake.webp",
+      "imageMobile": "/custom/library/be-brand-expobank-30th-02-studio-guests.webp",
+      "ogImage": "/custom/library/be-brand-expobank-30th-01-studio-cake.webp",
+      "thumb": "/custom/optimized/be-brand-expobank-30th-01-studio-cake-640.webp",
+      "hasPhotos": true,
+      "photoCount": 2,
       "caseId": "case-enriched-31",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/be-brand-expobank-30th-01-studio-cake.webp",
+          "ratio": 1.855,
+          "alt": "Участники готовят праздничный торт в студии онлайн-эфира «30 лет вместе» для Экспобанка. Фото: Be Brand People."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/be-brand-expobank-30th-02-studio-guests.webp",
+          "ratio": 1.855,
+          "alt": "Ведущий и участники в студии юбилейного онлайн-эфира Экспобанка. Фото: Be Brand People."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
       "reelTitle": "Онлайн-эфир к 30-летию…",
@@ -7649,7 +7662,14 @@
       "guestLabel": "4 часа эфира; 35 гостей в студии; 3 города на телемостах",
       "occasions": [
         "corporate"
-      ]
+      ],
+      "reelImage": "/custom/library/be-brand-expobank-30th-01-studio-cake.webp",
+      "reelMobile": "/custom/library/be-brand-expobank-30th-02-studio-guests.webp",
+      "imageRatio": 1.855,
+      "preview": "/custom/optimized/be-brand-expobank-30th-01-studio-cake-640.webp",
+      "imageWidth": 1200,
+      "imageHeight": 647,
+      "previewSrcSet": "/custom/optimized/be-brand-expobank-30th-01-studio-cake-640.webp 640w, /custom/library/be-brand-expobank-30th-01-studio-cake.webp 1200w"
     },
     {
       "slug": "case-enriched-32",
@@ -14315,6 +14335,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 319
+    "photos": 321
   }
 }
