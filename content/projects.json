@@ -8963,15 +8963,34 @@
     "description": "Петербург стал местом сезонного отбора коллекций итальянского производителя очков: EVENTEX связала город с Венецией и собрала пятидневный маршрут. Агентство организовало проживание в отелях «Англетер» и «Астория», деловую часть, бренд-зоны Boss, ETRO, Carrera и David Beckham, две вечеринки и экскурсии. Название заказчика не раскрывается. В источнике расходятся цифры: 300 гостей в заголовке и три пересекающихся потока по 170 в описании, поэтому общее число участников не указываем.",
     "seoDescription": "«Северная Венеция» от EVENTEX: пятидневный показ и сезонный отбор коллекций очков в Санкт-Петербурге, деловая программа, бренд-зоны, вечеринки и экскурсии.",
     "source": "https://eventex.moscow/cases/severnaya-veneciya",
-    "image": "/custom/empty/case-enriched-115.svg",
-    "imageMobile": "/custom/empty/case-enriched-115.svg",
-    "ogImage": "/custom/empty/case-enriched-115.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/eventex-severnaya-veneciya-01-safilo-buying-days.webp",
+    "imageMobile": "/custom/library/eventex-severnaya-veneciya-02-eyewear-fitting.webp",
+    "ogImage": "/custom/library/eventex-severnaya-veneciya-01-safilo-buying-days.webp",
+    "thumb": "/custom/optimized/eventex-severnaya-veneciya-01-safilo-buying-days-640.webp",
+    "hasPhotos": true,
+    "photoCount": 3,
     "caseId": "case-enriched-115",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-severnaya-veneciya-01-safilo-buying-days.webp",
+        "ratio": 1.501,
+        "alt": "Люди у брендированной фотозоны Safilo Buying Days 2024 в Санкт-Петербурге. Фото: EVENTEX."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-severnaya-veneciya-02-eyewear-fitting.webp",
+        "ratio": 0.667,
+        "alt": "Примерка очков Safilo во время деловой программы «Северная Венеция». Фото: EVENTEX."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventex-severnaya-veneciya-03-showroom.webp",
+        "ratio": 1.501,
+        "alt": "Зал мероприятия «Северная Венеция» с подготовленными местами для показа коллекций. Фото: EVENTEX."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#183d45,#c5a56f)",
     "curated": false,
     "reelTitle": "Северная Венеция · EVENTEX",
@@ -8980,7 +8999,14 @@
     "guestLabel": "",
     "occasions": [
       "presentation"
-    ]
+    ],
+    "reelImage": "/custom/library/eventex-severnaya-veneciya-01-safilo-buying-days.webp",
+    "reelMobile": "/custom/library/eventex-severnaya-veneciya-02-eyewear-fitting.webp",
+    "imageRatio": 1.501,
+    "preview": "/custom/optimized/eventex-severnaya-veneciya-01-safilo-buying-days-640.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/eventex-severnaya-veneciya-01-safilo-buying-days-640.webp 640w, /custom/library/eventex-severnaya-veneciya-01-safilo-buying-days.webp 1280w"
   },
   {
     "slug": "case-enriched-116",
