@@ -11371,13 +11371,13 @@
       "occasions": [
         "public"
       ],
-      "reelImage": "/custom/optimized/era-ska-parade-06-aerial-1600.webp",
-      "reelMobile": "/custom/optimized/era-ska-parade-02-young-fan-1600.webp",
+      "reelImage": "/custom/library/era-ska-parade-06-aerial.webp",
+      "reelMobile": "/custom/library/era-ska-parade-02-young-fan.webp",
       "imageRatio": 1.5,
       "preview": "/custom/optimized/era-ska-parade-06-aerial-960.webp",
-      "imageWidth": 4104,
-      "imageHeight": 2736,
-      "previewSrcSet": "/custom/optimized/era-ska-parade-06-aerial-640.webp 640w, /custom/optimized/era-ska-parade-06-aerial-960.webp 960w, /custom/optimized/era-ska-parade-06-aerial-1280.webp 1280w, /custom/optimized/era-ska-parade-06-aerial-1600.webp 1600w"
+      "imageWidth": 1600,
+      "imageHeight": 1067,
+      "previewSrcSet": "/custom/optimized/era-ska-parade-06-aerial-640.webp 640w, /custom/optimized/era-ska-parade-06-aerial-960.webp 960w, /custom/optimized/era-ska-parade-06-aerial-1280.webp 1280w, /custom/library/era-ska-parade-06-aerial.webp 1600w"
     },
     {
       "slug": "case-enriched-118",
