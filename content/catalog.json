@@ -406,7 +406,7 @@
         "case-enriched-164"
       ],
       "caseCount": 7,
-      "photoCount": 14,
+      "photoCount": 17,
       "cover": "/custom/library/48d4ad8b2b.webp",
       "coverWork": "t-dvor"
     },
@@ -9583,15 +9583,34 @@
       "description": "На борту самолёта на высоте 10 000 метров Eventum Premo устроило для Winline матч Counter-Strike 2 со стримерами в формате 5×5. Агентство брендировало рейс, оборудовало игровую зону, обеспечило онлайн-связь и трансляцию. Проект создал инфоповод на стыке киберспорта и авиации. Дата и число зрителей на странице не указаны.",
       "seoDescription": "Eventum Premo провело для Winline матч Counter-Strike 2 на борту самолёта на высоте 10 000 метров: команды 5×5, игровая зона и трансляция.",
       "source": "https://eventum-premo.ru/projects/winairlines",
-      "image": "/custom/empty/case-enriched-91.svg",
-      "imageMobile": "/custom/empty/case-enriched-91.svg",
-      "ogImage": "/custom/empty/case-enriched-91.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/winline-flight-aircraft.webp",
+      "imageMobile": "/custom/library/winline-flight-gaming-setup.webp",
+      "ogImage": "/custom/library/winline-flight-aircraft.webp",
+      "thumb": "/custom/optimized/winline-flight-aircraft-640.webp",
+      "hasPhotos": true,
+      "photoCount": 3,
       "caseId": "case-enriched-91",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/winline-flight-gaming-setup.webp",
+          "ratio": 0.45,
+          "alt": "Игровой ноутбук, камеры и оборудование для трансляции на борту самолёта. Фото: Eventum Premo."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/winline-branded-aircraft-cabin.webp",
+          "ratio": 0.563,
+          "alt": "Игровое оборудование на борту и фирменные подушки Winline. Фото: Eventum Premo."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/winline-flight-aircraft.webp",
+          "ratio": 1.5,
+          "alt": "Самолёт рейса Winline с брендированным бортом на аэродроме. Фото: Eventum Premo."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#222b38,#354f67)",
       "curated": false,
       "reelTitle": "Winline: матч в воздухе",
@@ -9600,7 +9619,14 @@
       "guestLabel": "",
       "occasions": [
         "online"
-      ]
+      ],
+      "reelImage": "/custom/optimized/winline-flight-aircraft-951.webp",
+      "reelMobile": "/custom/optimized/winline-flight-gaming-setup-576.webp",
+      "imageRatio": 1.5,
+      "preview": "/custom/optimized/winline-flight-aircraft-640.webp",
+      "imageWidth": 951,
+      "imageHeight": 634,
+      "previewSrcSet": "/custom/optimized/winline-flight-aircraft-640.webp 640w, /custom/optimized/winline-flight-aircraft-951.webp 951w"
     },
     {
       "slug": "case-enriched-92",
@@ -14245,6 +14271,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 310
+    "photos": 313
   }
 }
