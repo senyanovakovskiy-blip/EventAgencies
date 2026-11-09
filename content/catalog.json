@@ -379,7 +379,7 @@
         "case-enriched-145"
       ],
       "caseCount": 10,
-      "photoCount": 14,
+      "photoCount": 18,
       "cover": "/custom/library/6b37101c77.webp",
       "coverWork": "vk-cloud-conf",
       "geography": "Россия и Казахстан — указано в описании агентства."
@@ -12461,15 +12461,40 @@
       "description": "На один день резиденты Т-Бизнес Клуба оставили деловые роли за порогом и приехали на «дачу» вместе с близкими. На велкоме каждой семье вручали плёночный фотоаппарат, а после проявки — персональный альбом с кадрами самого праздника. Гости создавали семейные гербы, пили чай из самовара, выбирали мастерские и слушали концерт. N:OW построило концепцию вокруг простого личного опыта: унести домой не только мерч, а собственную историю дня. По данным агентства, 27 сентября 2025 года на событии в The Birch побывали 1 200+ гостей, а все 15 партнёрских зон были заполнены; NPS составил 91%, число резидентов клуба выросло на 20%. BEMA отметила проект двумя серебряными наградами в 2026 году.",
       "seoDescription": "Family Day «В кругу семьи» для Т-Бизнес Клуба от N:OW: современная дача в The Birch, плёночный фотоаппарат для каждой семьи и 1 200+ гостей. 91% NPS и две серебряные награды BEMA 2026.",
       "source": "https://now-agency.ru/family-day-%D1%82-%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%BA%D0%BB%D1%83%D0%B1/",
-      "image": "/custom/empty/case-enriched-130.svg",
-      "imageMobile": "/custom/empty/case-enriched-130.svg",
-      "ogImage": "/custom/empty/case-enriched-130.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/now-familyday-01-modern-dacha.webp",
+      "imageMobile": "/custom/optimized/now-familyday-01-modern-dacha-640.webp",
+      "ogImage": "/custom/library/now-familyday-01-modern-dacha.webp",
+      "thumb": "/custom/optimized/now-familyday-01-modern-dacha-640.webp",
+      "hasPhotos": true,
+      "photoCount": 4,
       "caseId": "case-enriched-130",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/now-familyday-01-modern-dacha.webp",
+          "ratio": 1.9306184012066365,
+          "alt": "Шатёр «Т-Бизнес Клуб. В кругу семьи» в окружении деревьев и осеннего оформления. Фото: N:OW."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-familyday-02-tea-garden.webp",
+          "ratio": 1.933534743202417,
+          "alt": "Три детали площадки Family Day: зона «Жар-птица», осенние тыквы и дачная стойка. Фото: N:OW."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-familyday-03-sokolov-lounge.webp",
+          "ratio": 1.9306184012066365,
+          "alt": "Лаунж SOKOLOV PREMIUM рядом со сценой, оформленный коврами и осенними растениями. Фото: N:OW."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-familyday-04-live-show.webp",
+          "ratio": 1.9306184012066365,
+          "alt": "Гость выступает на сцене Family Day, зрители снимают концерт. Фото: N:OW."
+        }
+      ],
       "gradient": "linear-gradient(145deg,#234039,#e1a959)",
       "curated": false,
       "reelTitle": "«В кругу семьи» · современная дача",
@@ -12492,8 +12517,19 @@
         {
           "label": "Sostav · гости и партнёрская концепция",
           "url": "https://ratings.sostav.ru/companies/945/works/3904"
+        },
+        {
+          "label": "N:OW · фотогалерея Family Day «В кругу семьи»",
+          "url": "https://now-agency.ru/family-day-%D1%82-%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81-%D0%BA%D0%BB%D1%83%D0%B1/"
         }
-      ]
+      ],
+      "preview": "/custom/optimized/now-familyday-01-modern-dacha-960.webp",
+      "reelImage": "/custom/library/now-familyday-01-modern-dacha.webp",
+      "reelMobile": "/custom/optimized/now-familyday-01-modern-dacha-640.webp",
+      "imageRatio": 1.9306184012066365,
+      "imageWidth": 1280,
+      "imageHeight": 663,
+      "previewSrcSet": "/custom/optimized/now-familyday-01-modern-dacha-640.webp 640w, /custom/optimized/now-familyday-01-modern-dacha-960.webp 960w, /custom/library/now-familyday-01-modern-dacha.webp 1280w"
     },
     {
       "slug": "case-enriched-131",
@@ -14950,6 +14986,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 385
+    "photos": 389
   }
 }
