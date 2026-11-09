@@ -11546,15 +11546,46 @@
     "description": "В августе 2025 года на ПАРИ ФЕСТ для Яндекс Пэй появились четыре тематические зоны. А-ГРУПП превратила их в пространства, внутрь которых можно войти: арт-инсталляции соединялись с выразительными металлоконструкциями и задавали свой сценарий взаимодействия. Агентство указывает, что отвечало за концепции, проектирование, реализацию инсталляций и координацию производства. Посещаемость и бизнес-результаты зон в источниках не указаны.",
     "seoDescription": "Четыре тематические зоны Яндекс Пэй на ПАРИ ФЕСТ 2025: арт-инсталляции с металлоконструкциями, в которые гость мог войти. Проектирование и производство — по кейсу А-ГРУПП.",
     "source": "https://agroupevent.ru/cases/parifest-dlya-yandekspej/",
-    "image": "/custom/empty/case-enriched-159.svg",
-    "imageMobile": "/custom/empty/case-enriched-159.svg",
-    "ogImage": "/custom/empty/case-enriched-159.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/agroup-pari-fest-yandex-pay-zone-01.webp",
+    "imageMobile": "/custom/library/agroup-pari-fest-yandex-pay-zone-04.webp",
+    "ogImage": "/custom/library/agroup-pari-fest-yandex-pay-zone-01.webp",
+    "thumb": "/custom/optimized/agroup-pari-fest-yandex-pay-zone-01-640.webp",
+    "hasPhotos": true,
+    "photoCount": 5,
     "caseId": "case-enriched-159",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/agroup-pari-fest-yandex-pay-zone-01.webp",
+        "ratio": 0.75,
+        "alt": "Скульптура с логотипом Яндекс Пэй на ПАРИ ФЕСТ. Источник: А-ГРУПП."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/agroup-pari-fest-yandex-pay-zone-02.webp",
+        "ratio": 0.6671875,
+        "alt": "Гости в одной из зон Яндекс Пэй на ПАРИ ФЕСТ. Источник: А-ГРУПП."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/agroup-pari-fest-yandex-pay-zone-03.webp",
+        "ratio": 0.6671875,
+        "alt": "Гость взаимодействует с инсталляцией Яндекс Пэй. Источник: А-ГРУПП."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/agroup-pari-fest-yandex-pay-zone-04.webp",
+        "ratio": 0.6671875,
+        "alt": "Световая арка одной из зон Яндекс Пэй. Источник: А-ГРУПП."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/agroup-pari-fest-yandex-pay-zone-05.webp",
+        "ratio": 0.75,
+        "alt": "Зеркальная инсталляция на бренд-зоне Яндекс Пэй. Источник: А-ГРУПП."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#17243a,#ea8147)",
     "curated": false,
     "reelTitle": "Яндекс Пэй · пространство для участия",
@@ -11566,14 +11597,21 @@
     ],
     "sources": [
       {
-        "label": "А-ГРУПП · четыре зоны и технические/архитектурные задачи",
+        "label": "А-ГРУПП · роль команды, зоны и официальная фотогалерея проекта",
         "url": "https://agroupevent.ru/cases/parifest-dlya-yandekspej/"
       },
       {
         "label": "ПАРИ ФЕСТ 2025 · фестиваль в Нижнем Новгороде и бренд-пространства",
         "url": "https://parifest.ru/2025"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/agroup-pari-fest-yandex-pay-zone-01.webp",
+    "reelMobile": "/custom/library/agroup-pari-fest-yandex-pay-zone-04.webp",
+    "imageRatio": 0.75,
+    "preview": "/custom/optimized/agroup-pari-fest-yandex-pay-zone-01-960.webp",
+    "imageWidth": 960,
+    "imageHeight": 1280,
+    "previewSrcSet": "/custom/optimized/agroup-pari-fest-yandex-pay-zone-01-640.webp 640w, /custom/library/agroup-pari-fest-yandex-pay-zone-01.webp 960w"
   },
   {
     "slug": "case-enriched-160",
