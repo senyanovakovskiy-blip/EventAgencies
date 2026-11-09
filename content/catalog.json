@@ -716,7 +716,7 @@
         "case-enriched-105"
       ],
       "caseCount": 7,
-      "photoCount": 9,
+      "photoCount": 11,
       "cover": "/custom/library/03436435a2-thumb.webp",
       "coverWork": "case-22"
     },
@@ -7981,22 +7981,42 @@
       "description": "13 февраля 2019 года в Мультимедиа Арт Музее Москвы прошёл предпоказ календаря Pirelli. По материалам агентства, на событии было более 300 участников; специальным гостем стал фотограф Альберт Уотсон. Best Practice отвечало за концепцию и атмосферу вечера, декорации, техническое сопровождение, персонал и букинг артистов.",
       "seoDescription": "Предпоказ календаря Pirelli в МАММ, Москва, 13 февраля 2019 года: 300+ участников, фотограф Альберт Уотсон, концепция и продакшен Best Practice.",
       "source": "https://bepractice.ru/presentation/Best_Practice_Cred_2021_ru.pdf",
-      "image": "/custom/empty/case-29.svg",
-      "imageMobile": "/custom/empty/case-29.svg",
-      "ogImage": "/custom/empty/case-29.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/bestpractice-pirelli-preview-01-albert-watson.webp",
+      "imageMobile": "/custom/library/bestpractice-pirelli-preview-02-event-stage.webp",
+      "ogImage": "/custom/library/bestpractice-pirelli-preview-01-albert-watson.webp",
+      "thumb": "/custom/optimized/bestpractice-pirelli-preview-01-albert-watson-640.webp",
+      "hasPhotos": true,
+      "photoCount": 2,
       "caseId": "case-29",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/bestpractice-pirelli-preview-01-albert-watson.webp",
+          "ratio": 1.396,
+          "alt": "Специальный гость Альберт Уотсон у пресс-стены календаря Pirelli 2019. Источник: Best Practice."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/bestpractice-pirelli-preview-02-event-stage.webp",
+          "ratio": 1.394,
+          "alt": "Выступление на предпоказе календаря Pirelli 2019 в Мультимедиа Арт Музее Москвы. Источник: Best Practice."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
       "reelTitle": "Предпоказ календаря…",
       "featured": false,
       "eventCity": "Москва",
       "guestLabel": "Более 300 участников",
-      "occasions": []
+      "occasions": [],
+      "reelImage": "/custom/library/bestpractice-pirelli-preview-01-albert-watson.webp",
+      "reelMobile": "/custom/library/bestpractice-pirelli-preview-02-event-stage.webp",
+      "imageRatio": 1.396,
+      "preview": "/custom/optimized/bestpractice-pirelli-preview-01-albert-watson-640.webp",
+      "imageWidth": 878,
+      "imageHeight": 629,
+      "previewSrcSet": "/custom/optimized/bestpractice-pirelli-preview-01-albert-watson-640.webp 640w, /custom/library/bestpractice-pirelli-preview-01-albert-watson.webp 878w"
     },
     {
       "slug": "case-30",
@@ -14579,6 +14599,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 351
+    "photos": 353
   }
 }
