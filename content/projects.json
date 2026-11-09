@@ -5692,24 +5692,50 @@
     "description": "Федеральная церемония награждения лучших сотрудников «Ростелекома» на «Мосфильме» стала кульминацией серии мероприятий по всей России. Под девизом «Твоя главная роль» гости прошли через кинофотозоны и звёздную аллею с дополненной реальностью и саундтреками; в программе были творческие номера сотрудников, выступление каскадёров и вечеринка «Киноквартирник» с кавер-группой. Агентство указывает 250 человек.",
     "seoDescription": "Федеральная премия «Ростелекома» на «Мосфильме»: девиз «Твоя главная роль», кинофотозоны, AR-аллея, номера сотрудников и вечеринка «Киноквартирник».",
     "source": "https://www.engineers.spb.ru/fedcer",
-    "image": "/custom/empty/case-enriched-40.svg",
-    "imageMobile": "/custom/empty/case-enriched-40.svg",
-    "ogImage": "/custom/empty/case-enriched-40.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/engineers-rostelecom-recognition-01-award.webp",
+    "imageMobile": "/custom/library/engineers-rostelecom-recognition-02-red-stairs.webp",
+    "ogImage": "/custom/library/engineers-rostelecom-recognition-01-award.webp",
+    "thumb": "/custom/optimized/engineers-rostelecom-recognition-01-award-640.webp",
+    "hasPhotos": true,
+    "photoCount": 3,
     "caseId": "case-enriched-40",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/engineers-rostelecom-recognition-01-award.webp",
+        "ratio": 1,
+        "alt": "Вручение награды на федеральной премии «Признание» для сотрудников Ростелекома. Источник: Инженеры Событий."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/engineers-rostelecom-recognition-02-red-stairs.webp",
+        "ratio": 1,
+        "alt": "Гости и артисты на красной лестнице киноцентра «Мосфильм» во время церемонии «Признание». Источник: Инженеры Событий."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/engineers-rostelecom-recognition-03-performance.webp",
+        "ratio": 1,
+        "alt": "Выступление артистов на сцене церемонии «Признание». Источник: Инженеры Событий."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "Ростелеком — Признание",
     "featured": false,
-    "eventCity": "Москва",
+    "eventCity": "Москва · киноцентр «Мосфильм»",
     "guestLabel": "250 человек (по данным «Инженеров события»)",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "reelImage": "/custom/library/engineers-rostelecom-recognition-01-award.webp",
+    "reelMobile": "/custom/library/engineers-rostelecom-recognition-02-red-stairs.webp",
+    "imageRatio": 1,
+    "preview": "/custom/optimized/engineers-rostelecom-recognition-01-award-640.webp",
+    "imageWidth": 1229,
+    "imageHeight": 1229,
+    "previewSrcSet": "/custom/optimized/engineers-rostelecom-recognition-01-award-640.webp 640w, /custom/library/engineers-rostelecom-recognition-01-award.webp 1229w"
   },
   {
     "slug": "case-enriched-43",
@@ -6175,18 +6201,37 @@
     ],
     "role": "Проект представлен в портфолио AVM Media; состав работ не раскрыт.",
     "industry": "Место не указано",
-    "description": "День волонтёра и церемония награждения. Работа команды: Проект представлен в портфолио AVM Media; состав работ не раскрыт.. Фотографии этого проекта пока не добавлены.",
-    "seoDescription": "День волонтёра и церемония награждения. Работа команды: Проект представлен в портфолио AVM Media; состав работ не раскрыт.. Фотографии этого проекта пока не добавлены.",
+    "description": "В День волонтёра МТС отметила лучшие социальные проекты 2023 года. Галерея AVM Media показывает вручение наград, участников церемонии и выступления на сцене. Подробный состав работ агентства в кейсе не раскрыт.",
+    "seoDescription": "День волонтёра и награждение лучших социальных проектов МТС 2023 года: кадры церемонии, вручения наград и выступлений из галереи AVM Media.",
     "source": "https://avmmedia.ru/projects/den-volontera-i-czeremoniya-nagrazhdeniya-luchshih-soczialnyh-proektov-2023/",
-    "image": "/custom/empty/case-round2-87.svg",
-    "imageMobile": "/custom/empty/case-round2-87.svg",
-    "ogImage": "/custom/empty/case-round2-87.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/avm-mts-volunteer-01-award-winners.webp",
+    "imageMobile": "/custom/library/avm-mts-volunteer-02-award-stage.webp",
+    "ogImage": "/custom/library/avm-mts-volunteer-01-award-winners.webp",
+    "thumb": "/custom/optimized/avm-mts-volunteer-01-award-winners-640.webp",
+    "hasPhotos": true,
+    "photoCount": 3,
     "caseId": "case-round2-87",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/avm-mts-volunteer-01-award-winners.webp",
+        "ratio": 1.5,
+        "alt": "Вручение награды проекту «Шаг навстречу поиску» на Дне волонтёра МТС 2023. Источник: AVM Media."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/avm-mts-volunteer-02-award-stage.webp",
+        "ratio": 1.5,
+        "alt": "Награждение участников на сцене церемонии лучших социальных проектов МТС 2023. Источник: AVM Media."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/avm-mts-volunteer-03-audience.webp",
+        "ratio": 1.5,
+        "alt": "Зал слушает выступление в рамках Дня волонтёра МТС 2023. Источник: AVM Media."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "День волонтера и…",
@@ -6195,7 +6240,14 @@
     "guestLabel": "",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "reelImage": "/custom/library/avm-mts-volunteer-01-award-winners.webp",
+    "reelMobile": "/custom/library/avm-mts-volunteer-02-award-stage.webp",
+    "imageRatio": 1.5,
+    "preview": "/custom/optimized/avm-mts-volunteer-01-award-winners-640.webp",
+    "imageWidth": 1080,
+    "imageHeight": 720,
+    "previewSrcSet": "/custom/optimized/avm-mts-volunteer-01-award-winners-640.webp 640w, /custom/library/avm-mts-volunteer-01-award-winners.webp 1080w"
   },
   {
     "slug": "case-enriched-55",
