@@ -6924,30 +6924,68 @@
       "business",
       "corporate"
     ],
-    "role": "Проект в официальном портфолио агентства",
+    "role": "Big Jack объединил двухдневную дилерскую конференцию с юбилейным банкетом и общим музыкальным интерактивом.",
     "industry": "Подмосковье, Holiday Inn Виноградово",
-    "description": "Конференция и юбилей компании. Площадка: Подмосковье, Holiday Inn Виноградово. Участники: В карточке указано 240 гостей, в описании интерактива — 300 сотрудников; число требует уточнения. Работа команды: Проект в официальном портфолио агентства. Фотографии этого проекта пока не добавлены.",
-    "seoDescription": "Конференция и юбилей компании. Площадка: Подмосковье, Holiday Inn Виноградово. Участники: В карточке указано 240 гостей, в описании интерактива — 300 сотрудников; число требует уточнения. Работа команды: Проект в официальном портфолио агентства. Фотографии этого проекта пока не добавлены.",
+    "description": "EUROPLAN ALL HANDS MEETING объединил деловую конференцию и юбилей компании; на встречу приехали руководители из 70 регионов. После выступления нового директора участники под управлением дирижёра сыграли общую композицию на перкуссионных трубках. Вечером прошли шоу с поющими официантами, волынщиками, танцорами и концертом.",
+    "seoDescription": "EUROPLAN ALL HANDS MEETING объединил дилерскую конференцию и юбилейный банкет. В программе были деловые выступления, общий музыкальный интерактив и вечернее шоу.",
     "source": "https://bigjack24.ru/proekty/konferencia-evroplana.html",
-    "image": "/custom/empty/case-enriched-75.svg",
-    "imageMobile": "/custom/empty/case-enriched-75.svg",
-    "ogImage": "/custom/empty/case-enriched-75.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/big-jack-europlan-conference-01.webp",
+    "imageMobile": "/custom/library/big-jack-europlan-conference-02.webp",
+    "ogImage": "/custom/library/big-jack-europlan-conference-01.webp",
+    "thumb": "/custom/optimized/big-jack-europlan-conference-01-640.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-enriched-75",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/big-jack-europlan-conference-01.webp",
+        "ratio": 1.500682128240109,
+        "alt": "Сотрудники участвуют в общем музыкальном интерактиве на конференции EUROPLAN ALL HANDS MEETING. Источник: Big Jack."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/big-jack-europlan-conference-02.webp",
+        "ratio": 1.500682128240109,
+        "alt": "Участницы дилерской конференции Европлана за столом. Источник: Big Jack."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/big-jack-europlan-conference-03.webp",
+        "ratio": 1.500682128240109,
+        "alt": "Участник конференции знакомится с программой за столом. Источник: Big Jack."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/big-jack-europlan-conference-04.webp",
+        "ratio": 1.500682128240109,
+        "alt": "Выступление на деловой конференции EUROPLAN ALL HANDS MEETING. Источник: Big Jack."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "Дилерская конференция…",
     "featured": false,
-    "eventCity": "",
-    "guestLabel": "В карточке указано 240 гостей, в описании интерактива — 300 сотрудников; число требует уточнения",
+    "eventCity": "Подмосковье · Holiday Inn Виноградово",
+    "guestLabel": "",
     "occasions": [
       "conference",
       "corporate"
-    ]
+    ],
+    "sources": [
+      {
+        "label": "Big Jack · описание проекта, роль агентства и фотогалерея",
+        "url": "https://bigjack24.ru/proekty/konferencia-evroplana.html"
+      }
+    ],
+    "reelImage": "/custom/library/big-jack-europlan-conference-01.webp",
+    "reelMobile": "/custom/library/big-jack-europlan-conference-02.webp",
+    "imageRatio": 1.500682128240109,
+    "preview": "/custom/optimized/big-jack-europlan-conference-01-960.webp",
+    "imageWidth": 1100,
+    "imageHeight": 733,
+    "previewSrcSet": "/custom/optimized/big-jack-europlan-conference-01-640.webp 640w, /custom/optimized/big-jack-europlan-conference-01-960.webp 960w, /custom/library/big-jack-europlan-conference-01.webp 1100w"
   },
   {
     "slug": "case-enriched-76",
@@ -11274,15 +11312,46 @@
     "description": "24 декабря 2022 года в новосибирском ТЦ «Сибирский Молл» приготовили 4 154 кг оливье для жителей и благотворительных организаций. Реестр рекордов России подтвердил массу как рекорд. ARS COM описывает свою работу как подготовку проекта под ключ в сжатые сроки и сбор команды поваров за две недели; СберМаркет назван организатором акции. Число гостей не приводим: источники указывают разные значения.",
     "seoDescription": "Акция СберМаркета «Операция “Оливье”» в Новосибирске: рекордная порция 4 154 кг и благотворительная раздача. ARS COM описывает работу над событием под ключ.",
     "source": "https://www.arscom.ru/projects/sbermarket-prazdnik-olive/",
-    "image": "/custom/empty/case-enriched-154.svg",
-    "imageMobile": "/custom/empty/case-enriched-154.svg",
-    "ogImage": "/custom/empty/case-enriched-154.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/arscom-sbermarket-olive-event-01.webp",
+    "imageMobile": "/custom/library/arscom-sbermarket-olive-event-02.webp",
+    "ogImage": "/custom/library/arscom-sbermarket-olive-event-01.webp",
+    "thumb": "/custom/optimized/arscom-sbermarket-olive-event-01-640.webp",
+    "hasPhotos": true,
+    "photoCount": 5,
     "caseId": "case-enriched-154",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-sbermarket-olive-event-01.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Повара готовят огромную порцию оливье на площадке «Праздник. Оливье». Источник: ARS COM."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-sbermarket-olive-event-02.webp",
+        "ratio": 0.6668181818181819,
+        "alt": "Посетители и повара у площадки «СберМаркет. Праздник. Оливье». Источник: ARS COM."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-sbermarket-olive-event-03.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Команда поваров готовит оливье у брендированной площадки СберМаркета. Источник: ARS COM."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-sbermarket-olive-event-04.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Чаша с салатом оливье во время городского мероприятия. Источник: ARS COM."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-sbermarket-olive-event-05.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Гости наблюдают за приготовлением и раздачей оливье. Источник: ARS COM."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#223f4a,#d7a354)",
     "curated": false,
     "reelTitle": "Операция «Оливье» · новогодний рекорд",
@@ -11305,7 +11374,14 @@
         "label": "Retail.ru · СберМаркет как организатор акции и благотворительная раздача",
         "url": "https://www.retail.ru/rbc/pressreleases/sbermarket-prigotovil-samyy-bolshoy-v-mire-salat-olive/"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/arscom-sbermarket-olive-event-01.webp",
+    "reelMobile": "/custom/library/arscom-sbermarket-olive-event-02.webp",
+    "imageRatio": 1.5005861664712778,
+    "preview": "/custom/optimized/arscom-sbermarket-olive-event-01-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/arscom-sbermarket-olive-event-01-640.webp 640w, /custom/optimized/arscom-sbermarket-olive-event-01-960.webp 960w, /custom/library/arscom-sbermarket-olive-event-01.webp 1280w"
   },
   {
     "slug": "case-enriched-155",
