@@ -8849,24 +8849,68 @@
     "description": "Обладатели Кубка Гагарина провезли трофей по Невскому проспекту, а праздник завершился концертом на Дворцовой площади. Так хоккейная победа стала маршрутом через город — от встречи чемпионов до общего финала. ERA разместила кейс в своём портфолио, но не указывает заказчика, год события и конкретный состав работ команды.",
     "seoDescription": "Парад чемпионов СКА на Невском проспекте и концерт на Дворцовой площади. Публикация ERA не указывает дату, заказчика и обязанности команды.",
     "source": "https://www.eraevent.ru/cases/parad-chempionov-na-nevskom-prospekte/",
-    "image": "/custom/empty/case-enriched-117.svg",
-    "imageMobile": "/custom/empty/case-enriched-117.svg",
-    "ogImage": "/custom/empty/case-enriched-117.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/era-ska-parade-06-aerial.webp",
+    "imageMobile": "/custom/library/era-ska-parade-02-young-fan.webp",
+    "ogImage": "/custom/library/era-ska-parade-06-aerial.webp",
+    "thumb": "/custom/optimized/era-ska-parade-06-aerial-960.webp",
+    "hasPhotos": true,
+    "photoCount": 6,
     "caseId": "case-enriched-117",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/era-ska-parade-01-stage.webp",
+        "ratio": 1.5,
+        "alt": "Концерт на Дворцовой площади во время праздника чемпионов СКА. Фото: агентство «ЭРА»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/era-ska-parade-02-young-fan.webp",
+        "ratio": 1.5,
+        "alt": "Юная болельщица СКА с флагом и символикой команды. Фото: агентство «ЭРА»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/era-ska-parade-03-mascots.webp",
+        "ratio": 1.5,
+        "alt": "Маскоты и болельщики СКА на праздничной площадке. Фото: агентство «ЭРА»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/era-ska-parade-04-nevsky-crowd.webp",
+        "ratio": 1.521,
+        "alt": "Толпа болельщиков вдоль парадной колонны на Невском проспекте. Фото: агентство «ЭРА»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/era-ska-parade-05-team-bus.webp",
+        "ratio": 1.5,
+        "alt": "Игроки СКА с Кубком Гагарина на автобусе во время парада. Фото: агентство «ЭРА»."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/era-ska-parade-06-aerial.webp",
+        "ratio": 1.5,
+        "alt": "Парадная колонна проходит через центр Санкт-Петербурга к Дворцовой площади. Фото: агентство «ЭРА»."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#132844,#a73138)",
     "curated": false,
     "reelTitle": "Парад чемпионов СКА · Санкт-Петербург",
     "featured": false,
     "eventCity": "Невский проспект и Дворцовая площадь, Санкт-Петербург",
-    "guestLabel": "",
+    "guestLabel": "150 000 гостей и более 1 млн зрителей (по данным агентства «ЭРА»)",
     "occasions": [
       "public"
-    ]
+    ],
+    "reelImage": "/custom/optimized/era-ska-parade-06-aerial-1600.webp",
+    "reelMobile": "/custom/optimized/era-ska-parade-02-young-fan-1600.webp",
+    "imageRatio": 1.5,
+    "preview": "/custom/optimized/era-ska-parade-06-aerial-960.webp",
+    "imageWidth": 4104,
+    "imageHeight": 2736,
+    "previewSrcSet": "/custom/optimized/era-ska-parade-06-aerial-640.webp 640w, /custom/optimized/era-ska-parade-06-aerial-960.webp 960w, /custom/optimized/era-ska-parade-06-aerial-1280.webp 1280w, /custom/optimized/era-ska-parade-06-aerial-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-118",
