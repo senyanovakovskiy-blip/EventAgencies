@@ -9464,15 +9464,40 @@
     "description": "Ежегодная конвенция dōTERRA стала празднованием 18-летия компании. ARS COM придумало «Благодари» и провело идею через весенний визуальный стиль, фотозоны, навигацию и стенд-таймлайн об истории бренда. Сценическая программа объединила выступления, шоу-номера, запуски продуктов, интерактивы и квизы. 25 апреля 2026 года во Дворце Ирины Винер в Москве, по данным ARS COM, собралось 3 000 участников.",
     "seoDescription": "Конвенция dōTERRA в Москве 25 апреля 2026 года: концепция «Благодари», сценическая программа, застройка и логистика от ARS COM; агентство указывает 3 000 участников.",
     "source": "https://www.arscom.ru/projects/d-terra-konventsiya-evraziya-2026/",
-    "image": "/custom/empty/case-enriched-120.svg",
-    "imageMobile": "/custom/empty/case-enriched-120.svg",
-    "ogImage": "/custom/empty/case-enriched-120.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/arscom-doterra-eurasia-2026-02.webp",
+    "imageMobile": "/custom/library/arscom-doterra-eurasia-2026-03.webp",
+    "ogImage": "/custom/library/arscom-doterra-eurasia-2026-02.webp",
+    "thumb": "/custom/optimized/arscom-doterra-eurasia-2026-02-640.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-enriched-120",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-doterra-eurasia-2026-02.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Участники на сцене и в зале под конфетти во время шоу конвенции dōTERRA. Источник: ARS COM."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-doterra-eurasia-2026-01.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Гости на двух уровнях пространства конвенции dōTERRA. Источник: ARS COM."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-doterra-eurasia-2026-03.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Участники у таймлайна истории dōTERRA на конвенции. Источник: ARS COM."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/arscom-doterra-eurasia-2026-04.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Аудитория смотрит выступление на сцене конвенции «Благодари». Источник: ARS COM."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#315650,#d6a76c)",
     "curated": false,
     "reelTitle": "dōTERRA · Благодари",
@@ -9487,7 +9512,14 @@
         "label": "Уточнение числа участников · ARS COM (English)",
         "url": "https://www.arscom.ru/eng/projects/d-terra-convention-eurasia-2026/"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/arscom-doterra-eurasia-2026-02.webp",
+    "reelMobile": "/custom/library/arscom-doterra-eurasia-2026-03.webp",
+    "imageRatio": 1.5005861664712778,
+    "preview": "/custom/optimized/arscom-doterra-eurasia-2026-02-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/arscom-doterra-eurasia-2026-02-640.webp 640w, /custom/optimized/arscom-doterra-eurasia-2026-02-960.webp 960w, /custom/library/arscom-doterra-eurasia-2026-02.webp 1280w"
   },
   {
     "slug": "case-enriched-121",
