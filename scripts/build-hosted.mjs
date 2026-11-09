@@ -22,6 +22,48 @@ for(const slug of templateGalleries){
  if(path.dirname(gallery)!==path.join(target,'media'))throw Error('Invalid generated gallery path');
  await fs.rm(gallery,{recursive:true,force:true});
 }
+// Keep originals in source, but omit unused event photos from the hosted build.
+// Event images are referenced explicitly by content JSON; this avoids shipping
+// assets that are not referenced by any current page.
+const textExtensions=new Set(['.json','.js','.jsx','.ts','.tsx','.mjs','.cjs','.html','.css']);
+const references=[];
+const collectReferenceFiles=async directory=>{
+ try{
+  for(const entry of await fs.readdir(directory,{withFileTypes:true})){
+   const file=path.join(directory,entry.name);
+   if(entry.isDirectory())await collectReferenceFiles(file);
+   else if(entry.isFile()&&textExtensions.has(path.extname(entry.name).toLowerCase()))references.push(file);
+  }
+ }catch(error){if(error.code!=='ENOENT')throw error;}
+};
+for(const directory of ['content','public','app','admin','cloud','lib','scripts','template-source','worker'])
+ await collectReferenceFiles(path.join(root,directory));
+const referenceText=(await Promise.all(references.map(file=>fs.readFile(file,'utf8')))).join('\n');
+const pruneUnusedEventImages=async eventsRoot=>{
+ const eventFiles=[];
+ const collectEventFiles=async directory=>{
+ try{
+  for(const entry of await fs.readdir(directory,{withFileTypes:true})){
+   const file=path.join(directory,entry.name);
+   if(entry.isDirectory())await collectEventFiles(file);
+   else if(entry.isFile())eventFiles.push(file);
+  }
+ }catch(error){if(error.code!=='ENOENT')throw error;}
+ };
+ await collectEventFiles(eventsRoot);
+ let removed=0;
+ for(const file of eventFiles){
+  const relative=path.relative(eventsRoot,file).split(path.sep).join('/');
+  const url='/custom/events/'+relative;
+  if(!referenceText.includes(url)){
+   const resolved=path.resolve(file);
+   if(!resolved.startsWith(path.resolve(eventsRoot)+path.sep))throw Error('Invalid hosted event asset path');
+   await fs.rm(file);
+   removed++;
+  }
+ }
+ return removed;
+};
 await fs.cp(path.join(root,'admin'),path.join(target,'admin'),{recursive:true});
 const rewrite=async(file,replacements)=>{
  let text=await fs.readFile(path.join(target,file),'utf8');
@@ -44,4 +86,6 @@ const protectedCount=await packProtectedAssets(target,path.join(root,'.sites-bui
 console.log(`Bundled ${protectedCount} protected pages and scripts behind the Worker access gate.`);
 const framework=spawnSync(process.execPath,['scripts/run-framework.mjs','build'],{cwd:root,stdio:'inherit'});
 if(framework.status!==0)process.exit(framework.status??1);
+const prunedEventImages=await pruneUnusedEventImages(path.join(root,'dist','client','custom','events'));
+if(prunedEventImages)console.log(`Excluded ${prunedEventImages} unreferenced event images from the hosted build; source files are preserved.`);
 console.log('Hosted build includes static pages, protected API and D1 migrations.');
