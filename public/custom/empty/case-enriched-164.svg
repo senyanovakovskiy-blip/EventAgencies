@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Хорошее место — иллюстрация к кейсу Яндекс Карт</title>
+<desc id="desc">Абстрактная сиреневая луна над городскими витринами и дорожкой встречи; не фотография события.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1d2340"/><stop offset=".55" stop-color="#41345d"/><stop offset="1" stop-color="#af7aa6"/></linearGradient>
+ <radialGradient id="moon"><stop stop-color="#e4b1ff" stop-opacity=".76"/><stop offset="1" stop-color="#bb8fe9" stop-opacity="0"/></radialGradient>
+ <linearGradient id="road" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dfa8f4"/><stop offset="1" stop-color="#ffd398"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="50"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<circle cx="1182" cy="300" r="255" fill="url(#moon)" filter="url(#blur)"/>
+<circle cx="1182" cy="300" r="122" fill="#dcb1f2" opacity=".72"/>
+<path d="M0 636h1600v264H0z" fill="#202741" opacity=".74"/>
+<g fill="#302b48" stroke="#ebd8ff" stroke-opacity=".35" stroke-width="2">
+ <path d="M818 630V493l82-45 82 45v137z"/><path d="M1010 630V430l102-57 102 57v200z"/>
+ <path d="M1250 630V488l79-44 79 44v142z"/><path d="M1440 630V524l65-36 65 36v106z"/>
+</g>
+<g fill="#ffd88a"><rect x="857" y="526" width="32" height="48" rx="4"/><rect x="1049" y="469" width="38" height="54" rx="4"/><rect x="1144" y="469" width="38" height="54" rx="4"/><rect x="1284" y="528" width="31" height="43" rx="4"/></g>
+<path d="M574 900q154-201 351-226t367 226" fill="none" stroke="url(#road)" stroke-width="7" opacity=".85"/>
+<path d="M709 900q119-130 259-147t257 147" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="2"/>
+<g fill="#fff" opacity=".82"><circle cx="936" cy="422" r="5"/><circle cx="1361" cy="401" r="4"/><circle cx="1490" cy="355" r="3"/><circle cx="904" cy="333" r="4"/></g>
+<text x="110" y="151" fill="#d9cde6" font-family="Arial,sans-serif" font-size="22" letter-spacing="5">EVENTUM PREMO · ЯНДЕКС КАРТЫ · МОСКВА</text>
+<text x="104" y="350" fill="#fff" font-family="Arial,sans-serif" font-size="61" font-weight="700">ХОРОШЕЕ</text>
+<text x="104" y="428" fill="#e3b9fa" font-family="Arial,sans-serif" font-size="68" font-weight="700">МЕСТО</text>
+<text x="110" y="499" fill="#eee7f4" font-family="Arial,sans-serif" font-size="25">когда бизнесу говорят: мы вас видим</text>
+<rect x="108" y="615" width="421" height="65" rx="32" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".3"/>
+<text x="145" y="657" fill="#fff" font-family="Arial,sans-serif" font-size="23">1 июня 2024 · Академия ВТБ</text>
+<text x="110" y="822" fill="#ded9e6" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ИЛЛЮСТРАЦИЯ · НЕ ФОТО СОБЫТИЯ</text>
+</svg>
