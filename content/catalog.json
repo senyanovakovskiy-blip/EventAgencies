@@ -2043,7 +2043,7 @@
         "case-enriched-156"
       ],
       "caseCount": 3,
-      "photoCount": 0,
+      "photoCount": 5,
       "cover": null,
       "coverWork": null
     },
@@ -9849,18 +9849,49 @@
       ],
       "role": "Семейная программа о будущем и технологиях: шоу, командные испытания, мастер-классы, VR-зоны и арт-пространства.",
       "industry": "Семейные и технологические события",
-      "description": "В Upsala Park в Санкт-Петербурге прошёл Festival of the Future для Peterform. Программа о будущем и технологиях объединила интерактивное шоу «Битва за планету», командные испытания, детские мастер-классы, VR-зоны и арт-пространства. На странице 2CAPITALS указано 1 200 участников. Точная дата и год не приведены.",
-      "seoDescription": "Festival of the Future для Peterform от 2CAPITALS: семейная программа в Upsala Park с командными испытаниями, мастер-классами и VR. 1 200 участников — по данным агентства.",
+      "description": "Технологии и фантазия стали семейным приключением в Упсала Парке: интерактивное шоу «Битва за планету», командные испытания, футуристические персонажи, детские мастер-классы, VR-зоны и арт-пространства. Гости могли сфотографироваться у машины из «Назад в будущее». На странице 2CAPITALS указано 1 200 участников; точная дата фестиваля не приведена.",
+      "seoDescription": "Festival of the Future для Peterform в Упсала Парке: семейный фестиваль на 1 200 участников, шоу «Битва за планету», VR-зоны и фотозона с машиной из «Назад в будущее». По данным 2CAPITALS.",
       "source": "https://2capitals.ru/kejsy/festivalofthefuture",
-      "image": "/custom/empty/case-enriched-93.svg",
-      "imageMobile": "/custom/empty/case-enriched-93.svg",
-      "ogImage": "/custom/empty/case-enriched-93.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/2capitals-peterform-festival-01-stage.webp",
+      "imageMobile": "/custom/library/2capitals-peterform-festival-03-group-activity.webp",
+      "ogImage": "/custom/library/2capitals-peterform-festival-01-stage.webp",
+      "thumb": "/custom/optimized/2capitals-peterform-festival-01-stage-640.webp",
+      "hasPhotos": true,
+      "photoCount": 5,
       "caseId": "case-enriched-93",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/2capitals-peterform-festival-01-stage.webp",
+          "ratio": 1.429,
+          "alt": "Сцена Festival of the Future для Peterform в Упсала Парке; на баннере указано «День семьи 2019». Фото: 2CAPITALS."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/2capitals-peterform-festival-02-bubbles.webp",
+          "ratio": 1.429,
+          "alt": "Дети играют с мыльными пузырями на семейном фестивале Peterform. Фото: 2CAPITALS."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/2capitals-peterform-festival-03-group-activity.webp",
+          "ratio": 1.429,
+          "alt": "Гости участвуют в общей активности на площадке семейного фестиваля Peterform. Фото: 2CAPITALS."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/2capitals-peterform-festival-04-futuristic-performer.webp",
+          "ratio": 1.429,
+          "alt": "Артист в футуристическом костюме среди гостей Festival of the Future. Фото: 2CAPITALS."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/2capitals-peterform-festival-05-family-game.webp",
+          "ratio": 1.429,
+          "alt": "Дети участвуют в игре с тематической фигурой на Festival of the Future. Фото: 2CAPITALS."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#263340,#515176)",
       "curated": false,
       "reelTitle": "Festival of the Future",
@@ -9869,7 +9900,14 @@
       "guestLabel": "1 200 участников (по данным 2CAPITALS)",
       "occasions": [
         "public"
-      ]
+      ],
+      "reelImage": "/custom/library/2capitals-peterform-festival-01-stage.webp",
+      "reelMobile": "/custom/library/2capitals-peterform-festival-03-group-activity.webp",
+      "imageRatio": 1.429,
+      "preview": "/custom/optimized/2capitals-peterform-festival-01-stage-640.webp",
+      "imageWidth": 1080,
+      "imageHeight": 756,
+      "previewSrcSet": "/custom/optimized/2capitals-peterform-festival-01-stage-640.webp 640w, /custom/library/2capitals-peterform-festival-01-stage.webp 1080w"
     },
     {
       "slug": "case-enriched-94",
@@ -14475,6 +14513,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 339
+    "photos": 344
   }
 }
