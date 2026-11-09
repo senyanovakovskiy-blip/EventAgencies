@@ -2,6 +2,7 @@ import {draftFor,preparationContext as identity,preparationUnknowns as unknowns}
 import {preparationDraftFields,preparationFollowUpFields,preparationFields,preparationKey,emptyPreparation,normalizePreparation,preparationLength,PREPARATION_LIMIT,PREPARATION_MAX_ITEMS} from './preparation-model.js';
 import {preparationComparisonMarkup,wirePreparationComparison} from './preparation-comparison-ui.js';
 import {discussionPlanMarkup,wireDiscussionPlans} from './discussion-plan-ui.js';
+import {buildEventIdeas,eventIdeaText,eventIdeasMarkup,eventIdeasSignature,renderEventIdeas} from './event-ideas.js';
 const preparationViews=new WeakMap();
 export const capturePreparationView=form=>preparationViews.get(form)?.capture()||null;
 export const restorePreparationView=(form,view)=>preparationViews.get(form)?.restore(view);
@@ -41,6 +42,7 @@ function cardMarkup(entry,catalog,receipt,saved=false){
  const followUpId=statusId+'-follow-up';
  return `<article class="preparation-card" data-preparation-card="${esc(preparationKey(entry))}" data-agency="${esc(entry.agencySlug)}" data-work="${esc(entry.workSlug||'')}" data-saved="${saved}" hidden><h4>${esc(name)} · ${esc(title)}</h4><p class="small muted" data-preparation-origin></p>${workPicker(entry,catalog)}${sitePresentation(entry,catalog,receipt)}${dossier(entry,catalog,receipt)}<div class="preparation-editor">
  <section class="preparation-draft"><h4>От примера — к разговору</h4><p class="small muted">Набросок использует доступное «Если вам близко», цель и ожидания из рабочего брифа и сведения о прошлой работе. Заполнятся только пустые из шести подготовительных полей; ваш текст останется на месте.</p><div class="preparation-actions"><button type="button" class="secondary" data-prepare-draft>Заполнить пустые поля подготовки наброском</button><button type="button" class="text-button" data-replace-preparation>Заменить шесть полей подготовки наброском…</button></div><p class="small muted">Замена перезапишет только шесть подготовительных полей. Ручные записи в блоке «После обсуждения» останутся. Набросок — рабочая гипотеза; проверьте его перед разговором.</p><p id="${esc(statusId)}" class="preparation-generation-status" data-generation-status role="status" aria-atomic="true" tabindex="-1"></p>${preparationFieldMarkup(entry,preparationDraftFields,statusId,statusId)}</section>
+ ${eventIdeasMarkup(statusId+'-ideas')}
  <section class="preparation-follow-up" aria-labelledby="${esc(followUpId+'-title')}"><h4 id="${esc(followUpId+'-title')}">После обсуждения</h4><p id="${esc(followUpId+'-help')}" class="small muted">Запишите реальные слова клиента и итоги разговора; при необходимости укажите дату и собеседника. Эти поля заполняются вручную и сохраняются общей кнопкой заявки. Они не подтверждают автоматически бриф, согласия сторон или состоявшееся знакомство.</p>${preparationFieldMarkup(entry,preparationFollowUpFields,statusId,followUpId+'-help')}</section>
  ${discussionPlanMarkup(statusId+'-plan')}</div></article>`;
 }
@@ -57,7 +59,7 @@ export function readPreparation(form,fallback=[]){
 }
 export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const host=form.querySelector('[data-preparation-cards]'),select=form.querySelector('[data-preparation-context]'),count=form.querySelector('[data-preparation-count]');
- const saved=normalizePreparation(data.workflow?.preparation),visited=new Map();let active='',optionKey='',comparison=null,plans=null;
+ const saved=normalizePreparation(data.workflow?.preparation),visited=new Map(),eventIdeaStates=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
  host.innerHTML=saved.map(item=>cardMarkup(item,catalog,data.receipt,true)).join('');host.dataset.ready='true';
  const cards=()=>[...host.querySelectorAll('[data-preparation-card]')];
  function contexts(){
@@ -77,6 +79,20 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   card.querySelector('[data-preparation-origin]').textContent=entry.origins?.join(' · ')||'Просмотр досье';select.value=active;
   plans?.contextChanged();
  }
+ function ideaInput(card,entries=contexts()){
+  return {entry:{agencySlug:card.dataset.agency,workSlug:card.dataset.work||null},catalog,receipt:data.receipt,workflow:getValues().workflow,references:[...entries.values()]};
+ }
+ function refreshEventIdeas(entries=contexts()){
+  for(const card of cards()){
+   const panel=card.querySelector('[data-event-idea-generator]');if(!panel)continue;
+   const generate=panel.querySelector('[data-generate-event-ideas]'),state=eventIdeaStates.get(panel),status=panel.querySelector('[data-event-ideas-status]');
+   generate.disabled=form.dataset.busy==='true';
+   if(!state)continue;
+   const stale=state.signature!==eventIdeasSignature(ideaInput(card,entries));panel.dataset.stale=String(stale);
+   for(const button of panel.querySelectorAll('[data-append-event-idea]'))button.disabled=form.dataset.busy==='true'||stale;
+   status.textContent=stale?'Бриф или список работ для обсуждения изменился. Пересоберите варианты перед добавлением в сценарий.':state.message;
+  }
+ }
  function sync(){
   const entries=contexts(),key=[...entries].map(([id,item])=>id+':'+item.origins.join(',')).join('|');
   if(key!==optionKey){optionKey=key;select.innerHTML=[...entries.values()].map(item=>{const id=identity(item,catalog,data.receipt);return `<option value="${esc(preparationKey(item))}">${esc(id.name+' · '+id.title+' — '+item.origins.join(', '))}</option>`;}).join('');}
@@ -84,6 +100,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   if(entries.size)show(entries.get(active)||entries.values().next().value);
   const items=readPreparation(form),length=preparationLength(items),tooLarge=length>PREPARATION_LIMIT||items.length>PREPARATION_MAX_ITEMS;
   count.textContent=`Подготовка: ${length.toLocaleString('ru-RU')} / ${PREPARATION_LIMIT.toLocaleString('ru-RU')} символов во всех записях; ${items.length} / ${PREPARATION_MAX_ITEMS} записей.`+(tooLarge?' Сократите текст перед сохранением.':' Сохраняется общей кнопкой заявки.');count.classList.toggle('reply-warning',tooLarge);
+  refreshEventIdeas(entries);
   comparison?.sync();
   plans?.sync();
  }
@@ -98,6 +115,30 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  host.addEventListener('change',event=>{if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});});
  host.addEventListener('input',event=>{if(event.target.matches('[data-preparation-field]'))event.target.closest('[data-preparation-card]').querySelector('[data-generation-status]').textContent='';});
  host.addEventListener('click',event=>{
+  const generateIdeas=event.target.closest('[data-generate-event-ideas]'),appendIdea=event.target.closest('[data-append-event-idea]');
+  if((generateIdeas||appendIdea)&&!form.dataset.busy){
+   const card=event.target.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]');
+   if(!card||!panel||!status)return;
+   const entries=contexts(),input=ideaInput(card,entries);
+   if(generateIdeas){
+    const ideas=buildEventIdeas(input),signature=eventIdeasSignature(input);
+    panel.querySelector('[data-event-ideas-results]').innerHTML=renderEventIdeas(ideas);
+    panel.querySelector('[data-event-ideas-results]').hidden=false;
+    const message=`Собрано ${ideas.options.length} вариантов. Добавьте подходящий в черновой сценарий; заявка сохранится общей кнопкой.`;
+    eventIdeaStates.set(panel,{ideas:ideas.options,commonChecks:ideas.commonChecks,signature,message});panel.dataset.stale='false';refreshEventIdeas(entries);
+    status.focus({preventScroll:true});status.scrollIntoView({block:'center'});return;
+   }
+   const state=eventIdeaStates.get(panel),signature=eventIdeasSignature(input),index=Number(appendIdea.dataset.appendEventIdea),idea=state?.ideas[index];
+   if(!state||state.signature!==signature||!idea){refreshEventIdeas(entries);status.textContent='Эти варианты устарели. Соберите их заново по текущему брифу.';return;}
+   const scenario=card.querySelector('[data-preparation-field="scenario"]');if(!scenario)return;
+   const block=eventIdeaText(idea,state.commonChecks),current=scenario.value.trimEnd();
+   if(current.includes(block)){status.textContent='Этот вариант уже есть в черновом сценарии.';return;}
+   const next=current?(current+'\n\n'+block):block;
+   if(next.length>scenario.maxLength){status.textContent='Вариант не помещается в поле чернового сценария. Сократите текущий текст или возьмите только нужные части вручную.';return;}
+   scenario.value=next;scenario.dispatchEvent(new Event('input',{bubbles:true}));
+   state.message='Вариант добавлен в черновой сценарий на этой странице. Нажмите общую кнопку «Сохранить изменения», чтобы сохранить его.';status.textContent=state.message;
+   scenario.focus({preventScroll:true});scenario.scrollIntoView({block:'center'});return;
+  }
   const button=event.target.closest('[data-prepare-draft],[data-replace-preparation]');if(!button||form.dataset.busy==='true')return;
   // Draft generation and replacement never touch manual follow-up notes.
   const card=button.closest('[data-preparation-card]'),replace=button.hasAttribute('data-replace-preparation'),fields=[...card.querySelectorAll('[data-preparation-field]')].filter(field=>Object.hasOwn(preparationDraftFields,field.dataset.preparationField));
