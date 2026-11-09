@@ -11745,15 +11745,40 @@
     "description": "На S&M Conference 2024 для Mondelez в московском CDP деловую стратегию предложили не только обсудить, но и пройти как игру. Концепция Above&Beyond. Make your move опиралась на механику «Джуманджи»: содержание выступлений стало сценическим перформансом с музыкальными номерами и визуализацией данных, параллельные сессии превратились в игровые маршруты, а ярмарку брендов компании оформили в общей теме. Citymetria указывает 600 участников; точную дату кейс не сообщает.",
     "seoDescription": "S&M Conference 2024 для Mondelez: Citymetria связала деловую программу с механикой «Джуманджи» — перформанс на сцене, маршруты параллельных сессий и тематическая ярмарка брендов.",
     "source": "https://citymetria.com/ru/case/sm-conference-2024/",
-    "image": "/custom/empty/case-enriched-160.svg",
-    "imageMobile": "/custom/empty/case-enriched-160.svg",
-    "ogImage": "/custom/empty/case-enriched-160.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/citymetria-mondelez-sm-conference-2024-191.webp",
+    "imageMobile": "/custom/library/citymetria-mondelez-sm-conference-2024-059.webp",
+    "ogImage": "/custom/library/citymetria-mondelez-sm-conference-2024-191.webp",
+    "thumb": "/custom/optimized/citymetria-mondelez-sm-conference-2024-191-640.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-enriched-160",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/citymetria-mondelez-sm-conference-2024-191.webp",
+        "ratio": 1.5,
+        "alt": "Участник в ярком фиолетовом образе на сцене S&M Conference 2024. Источник: Citymetria."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/citymetria-mondelez-sm-conference-2024-081.webp",
+        "ratio": 1.5,
+        "alt": "Выступление перед участниками конференции; на экране — FAST GAME OF CHANGE. Источник: Citymetria."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/citymetria-mondelez-sm-conference-2024-059.webp",
+        "ratio": 1.5,
+        "alt": "Участники позируют с подушками на площадке конференции. Источник: Citymetria."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/citymetria-mondelez-sm-conference-2024-284.webp",
+        "ratio": 1.5,
+        "alt": "Ведущий в костюме исследователя общается с гостем в надувном костюме динозавра. Источник: Citymetria."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#18364a,#df9348)",
     "curated": false,
     "reelTitle": "Mondelez · сыграй свою стратегию",
@@ -11770,7 +11795,14 @@
         "label": "Citymetria · задача, концепция, программа и число участников",
         "url": "https://citymetria.com/ru/case/sm-conference-2024/"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/citymetria-mondelez-sm-conference-2024-191.webp",
+    "reelMobile": "/custom/library/citymetria-mondelez-sm-conference-2024-059.webp",
+    "imageRatio": 1.5,
+    "preview": "/custom/library/citymetria-mondelez-sm-conference-2024-191.webp",
+    "imageWidth": 960,
+    "imageHeight": 640,
+    "previewSrcSet": "/custom/optimized/citymetria-mondelez-sm-conference-2024-191-640.webp 640w, /custom/library/citymetria-mondelez-sm-conference-2024-191.webp 960w"
   },
   {
     "slug": "case-enriched-161",
