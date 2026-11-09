@@ -833,7 +833,7 @@
         "case-enriched-45"
       ],
       "caseCount": 1,
-      "photoCount": 1,
+      "photoCount": 2,
       "cover": "/custom/library/955a110b10-thumb.webp",
       "coverWork": "portfolio-kreativnoe-agentstvo-mel-e966ab4"
     },
@@ -8095,8 +8095,8 @@
     },
     {
       "slug": "case-enriched-45",
-      "title": "Городские сервисы Яндекса — Родительское не собрание",
-      "fullTitle": "Городские сервисы Яндекса — Родительское не собрание",
+      "title": "Городские сервисы Яндекса — «Родительское НЕ собрание»",
+      "fullTitle": "Городские сервисы Яндекса — «Родительское НЕ собрание»",
       "year": "—",
       "eventDate": "Дата не указана",
       "category": "Для команды",
@@ -8115,15 +8115,22 @@
       "description": "МЕЛ переизобрело семейный день: вместо детей сотрудников Яндекса пригласили родителей и старших родственников, чтобы показать, чем занимаются их близкие в Екоме и Райдтехе. Иммерсивная экскурсия прошла по восьми этажам с тематическими зонами сервисов и подразделений. По данным агентства, зарегистрировались 900+ гостей, пришли 750+, NPS составил 100%, а общий охват проекта достиг 2,3 млн.",
       "seoDescription": "«Родительское НЕ собрание» МЕЛ для городских сервисов Яндекса: экскурсия для родителей по восьми этажам, 750+ участников и 100% NPS.",
       "source": "https://mel-creative.ru/cases/yandex-roditelskoe-ne-sobranie",
-      "image": "/custom/empty/case-enriched-45.svg",
-      "imageMobile": "/custom/empty/case-enriched-45.svg",
-      "ogImage": "/custom/empty/case-enriched-45.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/mel-yandex-parent-ne-01.jpg",
+      "imageMobile": "/custom/optimized/mel-yandex-parent-ne-01-960.webp",
+      "ogImage": "/custom/optimized/mel-yandex-parent-ne-01-960.webp",
+      "thumb": "/custom/optimized/mel-yandex-parent-ne-01-640.webp",
+      "hasPhotos": true,
+      "photoCount": 1,
       "caseId": "case-enriched-45",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/mel-yandex-parent-ne-01.jpg",
+          "ratio": 1.5,
+          "alt": "Гость исследует интерактивную зону события «Родительское НЕ собрание» для сотрудников Яндекса. Фото: МЕЛ."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
       "reelTitle": "Городские сервисы…",
@@ -8132,7 +8139,14 @@
       "guestLabel": "750+ участников",
       "occasions": [
         "corporate"
-      ]
+      ],
+      "reelImage": "/custom/optimized/mel-yandex-parent-ne-01-1600.webp",
+      "reelMobile": "/custom/optimized/mel-yandex-parent-ne-01-960.webp",
+      "imageRatio": 1.5,
+      "preview": "/custom/optimized/mel-yandex-parent-ne-01-960.webp",
+      "imageWidth": 1680,
+      "imageHeight": 1120,
+      "previewSrcSet": "/custom/optimized/mel-yandex-parent-ne-01-640.webp 640w, /custom/optimized/mel-yandex-parent-ne-01-960.webp 960w, /custom/optimized/mel-yandex-parent-ne-01-1600.webp 1600w"
     },
     {
       "slug": "case-round2-85",
@@ -14205,6 +14219,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 306
+    "photos": 307
   }
 }
