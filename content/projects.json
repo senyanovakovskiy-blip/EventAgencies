@@ -6067,7 +6067,7 @@
     "title": "День семьи НАО «Гидромаш»",
     "fullTitle": "День семьи НАО «Гидромаш»",
     "year": "2026",
-    "eventDate": "2026; публикация от 04.08.2026",
+    "eventDate": "2026",
     "category": "Для команды",
     "format": "Семейный корпоративный праздник",
     "client": "Студия Сюрприз",
@@ -6079,29 +6079,55 @@
     "types": [
       "corporate"
     ],
-    "role": "Праздник для сотрудников и их родных: совместная раскраска плана завода, мастер-классы, командные VR-игры и флешмоб.",
+    "role": "Семейный праздник для сотрудников и их близких: мастер-классы, VR-игры, фотозона, флешмоб и награждение конкурса.",
     "industry": "Яхт-клуб «Лето»",
-    "description": "Семейный корпоративный праздник. Площадка: Яхт-клуб «Лето». Работа команды: Праздник для сотрудников и их родных: совместная раскраска плана завода, мастер-классы, командные VR-игры и флешмоб.. Фотографии этого проекта пока не добавлены.",
-    "seoDescription": "Семейный корпоративный праздник. Площадка: Яхт-клуб «Лето». Работа команды: Праздник для сотрудников и их родных: совместная раскраска плана завода, мастер-классы, командные VR-игры и флешмоб.. Фотографии этого проекта пока не добавлены.",
+    "description": "Сотрудники «Гидромаша» пришли на семейный праздник вместе с близкими: в яхт-клубе «Лето» на Гребном канале устроили мастер-классы, VR-игры, фотозону и танцевальный флешмоб. Вечер завершился награждением победителей семейного фотоконкурса и выступлением музыкальной группы.",
+    "seoDescription": "День семьи НАО «Гидромаш» в яхт-клубе «Лето» на Гребном канале: мастер-классы, VR, танцевальный флешмоб, фотозона и семейный фотоконкурс.",
     "source": "https://surpriznn.ru/portfolio/detail?id=397",
-    "image": "/custom/empty/case-enriched-51.svg",
-    "imageMobile": "/custom/empty/case-enriched-51.svg",
-    "ogImage": "/custom/empty/case-enriched-51.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/surpriz-hydromash-family-day-01-branded-gathering.webp",
+    "imageMobile": "/custom/library/surpriz-hydromash-family-day-03-family-contest.webp",
+    "ogImage": "/custom/library/surpriz-hydromash-family-day-01-branded-gathering.webp",
+    "thumb": "/custom/optimized/surpriz-hydromash-family-day-01-branded-gathering-640.webp",
+    "hasPhotos": true,
+    "photoCount": 3,
     "caseId": "case-enriched-51",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/surpriz-hydromash-family-day-01-branded-gathering.webp",
+        "ratio": 1.779,
+        "alt": "Семейный праздник «Гидромаша» у брендированной площадки яхт-клуба «Лето». Источник: Бизнес News."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/surpriz-hydromash-family-day-02-masterclass.webp",
+        "ratio": 1.778,
+        "alt": "Дети и взрослые участвуют в творческом мастер-классе на семейном празднике «Гидромаша». Источник: Бизнес News."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/surpriz-hydromash-family-day-03-family-contest.webp",
+        "ratio": 1.778,
+        "alt": "Семья на заводском празднике «Гидромаша» у брендированной площадки. Источник: Бизнес News."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "День семьи НАО «Гидромаш»",
     "featured": false,
-    "eventCity": "",
+    "eventCity": "Нижний Новгород · яхт-клуб «Лето», Гребной канал",
     "guestLabel": "",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "reelImage": "/custom/library/surpriz-hydromash-family-day-01-branded-gathering.webp",
+    "reelMobile": "/custom/library/surpriz-hydromash-family-day-03-family-contest.webp",
+    "imageRatio": 1.779,
+    "preview": "/custom/optimized/surpriz-hydromash-family-day-01-branded-gathering-640.webp",
+    "imageWidth": 1000,
+    "imageHeight": 562,
+    "previewSrcSet": "/custom/optimized/surpriz-hydromash-family-day-01-branded-gathering-640.webp 640w, /custom/library/surpriz-hydromash-family-day-01-branded-gathering.webp 1000w"
   },
   {
     "slug": "case-enriched-52",
