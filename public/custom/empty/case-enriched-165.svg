@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">1001 ночь — иллюстрация к иммерсивному кейсу</title>
+<desc id="desc">Золотая лампа, луна и силуэт высокого московского небоскрёба на фоне восточной ночи; иллюстрация, не фотография вечера.</desc>
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111d3a"/><stop offset=".54" stop-color="#29244d"/><stop offset="1" stop-color="#895245"/></linearGradient>
+ <radialGradient id="moon"><stop stop-color="#f6d58a" stop-opacity=".76"/><stop offset="1" stop-color="#f6d58a" stop-opacity="0"/></radialGradient>
+ <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe0a0"/><stop offset=".5" stop-color="#d8913e"/><stop offset="1" stop-color="#8b512b"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="48"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#sky)"/>
+<circle cx="1170" cy="255" r="220" fill="url(#moon)" filter="url(#blur)"/>
+<circle cx="1170" cy="255" r="95" fill="#f2d9a3" opacity=".78"/>
+<g fill="#fff" opacity=".78"><circle cx="924" cy="182" r="4"/><circle cx="1343" cy="120" r="3"/><circle cx="1480" cy="284" r="4"/><circle cx="1032" cy="312" r="3"/></g>
+<path d="M1112 900V399h134v501z" fill="#172342" stroke="#d3a36e" stroke-opacity=".45" stroke-width="3"/>
+<path d="M1135 416h87m-87 42h87m-87 42h87m-87 42h87m-87 42h87m-87 42h87m-87 42h87m-87 42h87" stroke="#caa069" stroke-opacity=".45" stroke-width="3"/>
+<path d="M0 765q290-85 574 0t538 0 488 8v127H0z" fill="#101b33"/>
+<path d="M0 789q290-85 574 0t538 0 488 8" fill="none" stroke="#d8a864" stroke-opacity=".5" stroke-width="3"/>
+<g transform="translate(1280 580)">
+ <path d="M0 56q63-62 140 0 8 47-69 50-79-3-71-50z" fill="url(#gold)" stroke="#ffe0a0" stroke-width="3"/>
+ <path d="M135 56q52-32 68 2-20 24-70 16M8 62q-51-36-71-2 16 26 67 17" fill="none" stroke="#e5b466" stroke-width="12" stroke-linecap="round"/>
+ <path d="M50 31q-9-44 25-47 34 9 19 48" fill="none" stroke="#e5b466" stroke-width="10"/>
+ <path d="M41-29h60" stroke="#ffe0a0" stroke-width="12" stroke-linecap="round"/>
+ <path d="M68-49q-21-31 5-47 27 17 6 47M72-97q-8-24 0-40" fill="none" stroke="#ffd87d" stroke-width="4" opacity=".9"/>
+</g>
+<text x="110" y="150" fill="#c7c9dd" font-family="Arial,sans-serif" font-size="22" letter-spacing="5">ИММЕРСИВ-ИВЕНТ · МОСКВА-СИТИ · 2024</text>
+<text x="104" y="348" fill="#fff" font-family="Arial,sans-serif" font-size="68" font-weight="700">1001</text>
+<text x="104" y="426" fill="#f3d28f" font-family="Arial,sans-serif" font-size="62" font-weight="700">НОЧЬ</text>
+<text x="110" y="490" fill="#ece8f1" font-family="Arial,sans-serif" font-size="26">все ждали Султана</text>
+<text x="110" y="532" fill="#ece8f1" font-family="Arial,sans-serif" font-size="26">но им оказался каждый гость</text>
+<rect x="108" y="607" width="422" height="65" rx="32" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".3"/>
+<text x="145" y="649" fill="#fff" font-family="Arial,sans-serif" font-size="22">130 гостей · по данным агентства</text>
+<text x="110" y="822" fill="#dbd8e2" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ИЛЛЮСТРАЦИЯ · НЕ ФОТО СОБЫТИЯ</text>
+</svg>
