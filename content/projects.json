@@ -11618,5 +11618,109 @@
         "url": "https://t.me/zaryadye_official/9174?single"
       }
     ]
+  },
+  {
+    "slug": "qjl-all-star-atletico-2025",
+    "title": "Freedom QJ League: QJL All Star — «Атлетико»",
+    "fullTitle": "Match Day Freedom QJ League: матч QJL All Star против академии «Атлетико Мадрид»",
+    "year": "2025",
+    "eventDate": "23 августа 2025",
+    "category": "Спортивное событие",
+    "format": "Футбольный матч, предматчевые активности и шоу на стадионе",
+    "client": "Freedom QJ League",
+    "agencySlug": "eventalmaty",
+    "agencySlugs": [
+      "eventalmaty"
+    ],
+    "agencyUrl": "/agency/eventalmaty",
+    "types": [
+      "sport",
+      "public",
+      "business"
+    ],
+    "role": "Event Almaty называет себя организатором. В собственном кейсе агентство описывает неоновую концепцию, оформление зон, предматчевые интерактивы, лазерные шоу и перформансы, а также 3 дня и 2 ночи монтажа с участием более 50 специалистов. Лига подтверждает событие и поддержку партнёров, но не раскрывает задачи отдельных подрядчиков.",
+    "industry": "Спорт, молодёжный футбол и зрительские события",
+    "description": "23 августа 2025 года на стадионе «Хан-Тенгри» в Алматы прошёл матч QJL All Star против академии «Атлетико Мадрид». Event Almaty представляет его в своём портфолио как организованный агентством проект: команда описывает неоновую концепцию, оформление площадки, предматчевые активности, лазерные шоу и перформансы. По данным Freedom QJ League, билеты были распроданы, а матч посетили 3 115 зрителей. Лига отдельно не распределяет ответственность между организаторами и партнёрами.",
+    "seoDescription": "Матч Freedom QJ League All Star против академии «Атлетико Мадрид» прошёл в Алматы 23 августа 2025 года. Event Almaty заявляет о своей роли организатора; по данным лиги, на стадионе собрались 3 115 зрителей.",
+    "source": "https://eventalmaty.kz/match-day-2025",
+    "image": "/custom/library/eventalmaty-qjl-2025-01.jpg",
+    "imageMobile": "/custom/library/eventalmaty-qjl-2025-01.jpg",
+    "ogImage": "/custom/library/eventalmaty-qjl-2025-01.jpg",
+    "thumb": "/custom/library/eventalmaty-qjl-2025-01.jpg",
+    "hasPhotos": true,
+    "photoCount": 8,
+    "caseId": "qjl-all-star-atletico-2025",
+    "kind": "case",
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-01.jpg",
+        "ratio": 1.49,
+        "alt": "Игрок наносит удар по мячу на фоне заполненных трибун. Фото из портфолио Event Almaty."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-02.jpg",
+        "ratio": 1.49,
+        "alt": "Футболисты выходят на поле перед заполненными трибунами. Фото из портфолио Event Almaty."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-03.jpg",
+        "ratio": 1.49,
+        "alt": "Игроки QJL All Star и «Атлетико» борются за мяч. Фото из портфолио Event Almaty."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-04.jpg",
+        "ratio": 1.49,
+        "alt": "Вратарь выбивает мяч во время матча. Фото из портфолио Event Almaty."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-05.jpg",
+        "ratio": 1.49,
+        "alt": "Футболист поднимает руки к трибунам. Фото из портфолио Event Almaty."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-06.jpg",
+        "ratio": 1.49,
+        "alt": "Команда собралась вместе на поле перед игрой. Фото из портфолио Event Almaty."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-07.jpg",
+        "ratio": 1.49,
+        "alt": "Участники церемонии открытия выходят на футбольное поле. Фото из портфолио Event Almaty."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/eventalmaty-qjl-2025-08.jpg",
+        "ratio": 1.49,
+        "alt": "Игроки двух команд ведут борьбу за мяч в воздухе. Фото из портфолио Event Almaty."
+      }
+    ],
+    "gradient": "linear-gradient(145deg,#0b1933,#d83d55)",
+    "curated": false,
+    "reelTitle": "QJL All Star · Алматы",
+    "featured": false,
+    "eventCity": "Алматы · стадион «Хан-Тенгри»",
+    "guestLabel": "3 115 зрителей; все билеты проданы (по данным Freedom QJ League)",
+    "occasions": [
+      "sport",
+      "public"
+    ],
+    "imageRatio": 1.49,
+    "sources": [
+      {
+        "label": "Event Almaty · собственный кейс и фотогалерея; авторы отдельно не указаны",
+        "url": "https://eventalmaty.kz/match-day-2025"
+      },
+      {
+        "label": "Freedom QJ League · дата, стадион и 3 115 зрителей",
+        "url": "https://qjl.kz/en/news/a-hard-fought-draw-and-a-tense-finale-the-qjl-all-star-vs-atletico-match-took-place"
+      }
+    ]
   }
 ]
