@@ -11319,7 +11319,7 @@
       "image": "/custom/library/era-ska-parade-06-aerial.webp",
       "imageMobile": "/custom/library/era-ska-parade-02-young-fan.webp",
       "ogImage": "/custom/library/era-ska-parade-06-aerial.webp",
-      "thumb": "/custom/optimized/era-ska-parade-06-aerial-960.webp",
+      "thumb": "/custom/optimized/era-ska-parade-06-aerial-640.webp",
       "hasPhotos": true,
       "photoCount": 6,
       "caseId": "case-enriched-117",
@@ -11374,10 +11374,10 @@
       "reelImage": "/custom/library/era-ska-parade-06-aerial.webp",
       "reelMobile": "/custom/library/era-ska-parade-02-young-fan.webp",
       "imageRatio": 1.5,
-      "preview": "/custom/optimized/era-ska-parade-06-aerial-960.webp",
-      "imageWidth": 1600,
-      "imageHeight": 1067,
-      "previewSrcSet": "/custom/optimized/era-ska-parade-06-aerial-640.webp 640w, /custom/optimized/era-ska-parade-06-aerial-960.webp 960w, /custom/library/era-ska-parade-06-aerial.webp 1600w"
+      "preview": "/custom/optimized/era-ska-parade-06-aerial-640.webp",
+      "imageWidth": 1200,
+      "imageHeight": 800,
+      "previewSrcSet": "/custom/optimized/era-ska-parade-06-aerial-640.webp 640w, /custom/library/era-ska-parade-06-aerial.webp 1200w"
     },
     {
       "slug": "case-enriched-118",
