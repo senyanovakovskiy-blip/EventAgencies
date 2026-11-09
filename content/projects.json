@@ -11051,15 +11051,40 @@
     "description": "26 мая 2026 года московский Data Fest прошёл в офисе Сбера на Кутузовском проспекте. Доклады и постерная сессия соседствовали с демо ИИ-решений, экскурсиями по офису и встречами с командами, которые создают продукты. В зоне Sber AI Community можно было попробовать симулятор, прийти на воркшоп или включиться в LEGO-активности. TVIN сообщает, что организовало московскую конференцию; число гостей не опубликовано.",
     "seoDescription": "Московский Data Fest 2026 в офисе Сбера: доклады, демо ИИ-решений, экскурсии и активности Sber AI Community. Организацию конференции описывает TVIN.",
     "source": "https://tvin-imc.ru/article/data-fest-v-sbere-2026",
-    "image": "/custom/empty/case-enriched-147.svg",
-    "imageMobile": "/custom/empty/case-enriched-147.svg",
-    "ogImage": "/custom/empty/case-enriched-147.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/tvin-datafest-01-atrium.webp",
+    "imageMobile": "/custom/optimized/tvin-datafest-01-atrium-640.webp",
+    "ogImage": "/custom/library/tvin-datafest-01-atrium.webp",
+    "thumb": "/custom/optimized/tvin-datafest-01-atrium-640.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-enriched-147",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/tvin-datafest-01-atrium.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Фирменная стойка Data Fest в светлом атриуме офиса Сбера. Фото: TVIN."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/tvin-datafest-02-robot.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Гости Data Fest рассматривают демонстрационного робота в окружении участников. Фото: TVIN."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/tvin-datafest-03-stage.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Спикер выступает на сцене Data Fest перед аудиторией конференции. Фото: TVIN."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/tvin-datafest-04-question.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Участница Data Fest задаёт вопрос с микрофоном из зала. Фото: TVIN."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#111923,#6d8a63)",
     "curated": false,
     "reelTitle": "Data Fest 2026 · AI в действии",
@@ -11071,14 +11096,21 @@
     ],
     "sources": [
       {
-        "label": "TVIN · организация московской AI-конференции и программа",
+        "label": "TVIN · описание, программа и официальная фотогалерея Data Fest",
         "url": "https://tvin-imc.ru/article/data-fest-v-sbere-2026"
       },
       {
         "label": "Сбер / Open Data Science · дата, программа и две отдельные городские площадки",
         "url": "https://ods.ai/hubs/sber/news/5d408ca2-0785-4019-b344-ed845d568f94"
       }
-    ]
+    ],
+    "preview": "/custom/optimized/tvin-datafest-01-atrium-960.webp",
+    "reelImage": "/custom/library/tvin-datafest-01-atrium.webp",
+    "reelMobile": "/custom/optimized/tvin-datafest-01-atrium-640.webp",
+    "imageRatio": 1.5005861664712778,
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/tvin-datafest-01-atrium-640.webp 640w, /custom/optimized/tvin-datafest-01-atrium-960.webp 960w, /custom/library/tvin-datafest-01-atrium.webp 1280w"
   },
   {
     "slug": "case-enriched-148",
