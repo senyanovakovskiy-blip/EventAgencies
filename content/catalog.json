@@ -916,7 +916,7 @@
         "case-enriched-152"
       ],
       "caseCount": 2,
-      "photoCount": 1,
+      "photoCount": 5,
       "cover": "/custom/library/2a52491ba9-thumb.webp",
       "coverWork": "portfolio-insayt-lyudi-b7da2ad"
     },
@@ -8559,13 +8559,13 @@
     },
     {
       "slug": "case-enriched-52",
-      "title": "Студфест",
-      "fullTitle": "Студфест",
-      "year": "2024–2023",
-      "eventDate": "Год требует уточнения: 2024 на главной, 2023 в разделе проектов",
+      "title": "СтудФест 2023",
+      "fullTitle": "СтудФест 2023",
+      "year": "2023",
+      "eventDate": "2023",
       "category": "Фестиваль",
-      "format": "Студенческий фестиваль",
-      "client": "Инсайт люди",
+      "format": "Молодёжный фестиваль",
+      "client": "Инсайт Люди",
       "agencySlug": "insayt-lyudi",
       "agencySlugs": [
         "insayt-lyudi"
@@ -8575,27 +8575,68 @@
         "public",
         "culture"
       ],
-      "role": "Проект представлен в портфолио продюсерского центра; состав работ не раскрыт",
-      "industry": "Севкабель Порт",
-      "description": "Студенческий фестиваль. Площадка: Севкабель Порт. Работа команды: Проект представлен в портфолио продюсерского центра; состав работ не раскрыт. Фотографии этого проекта пока не добавлены.",
-      "seoDescription": "Студенческий фестиваль. Площадка: Севкабель Порт. Работа команды: Проект представлен в портфолио продюсерского центра; состав работ не раскрыт. Фотографии этого проекта пока не добавлены.",
-      "source": "https://insightpeople.ru/",
-      "image": "/custom/empty/case-enriched-52.svg",
-      "imageMobile": "/custom/empty/case-enriched-52.svg",
-      "ogImage": "/custom/empty/case-enriched-52.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "role": "Организация молодёжного фестиваля: тематические зоны, площадки Yappy и RUTUBE, VR, выставка молодых художников, фудмаркет и концертная программа.",
+      "industry": "Санкт-Петербург · Севкабель Порт",
+      "description": "СтудФест 2023 в Севкабель Порту объединил более 1 000 инфлюенсеров из 70 регионов России. В программе были интерактивные зоны Yappy и RUTUBE, VR-зона, выставка молодых художников и фудмаркет; на главной сцене выступали ведущие, артисты и блогеры. По данным «Инсайт Люди», фестиваль посетили 11 000 человек, а медийный охват составил 750 млн пользователей.",
+      "seoDescription": "СтудФест 2023 в Севкабель Порту: более 1 000 инфлюенсеров из 70 регионов, тематические зоны и концертная программа. По данным «Инсайт Люди», фестиваль посетили 11 000 человек, медийный охват составил 750 млн.",
+      "source": "https://event.insightpeople.ru/studfest_23",
+      "image": "/custom/library/insight-people-studfest-2023-main-stage.webp",
+      "imageMobile": "/custom/library/insight-people-studfest-2023-performance.webp",
+      "ogImage": "/custom/library/insight-people-studfest-2023-main-stage.webp",
+      "thumb": "/custom/optimized/insight-people-studfest-2023-main-stage-640.webp",
+      "hasPhotos": true,
+      "photoCount": 4,
       "caseId": "case-enriched-52",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/insight-people-studfest-2023-main-stage.webp",
+          "ratio": 1.4986619090098128,
+          "alt": "СтудФест 2023: концертная программа на главной сцене. Источник: Инсайт Люди."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/insight-people-studfest-2023-guests.webp",
+          "ratio": 1.5,
+          "alt": "Гости фестиваля в одном из павильонов СтудФеста. Источник: Инсайт Люди."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/insight-people-studfest-2023-yappy-zone.webp",
+          "ratio": 0.6666666666666666,
+          "alt": "Интерактивная зона Yappy на СтудФесте. Источник: Инсайт Люди."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/insight-people-studfest-2023-performance.webp",
+          "ratio": 0.7197943444730077,
+          "alt": "Артист выступает на сцене СтудФеста. Источник: Инсайт Люди."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#19252e,#353127)",
       "curated": false,
-      "reelTitle": "Студфест",
+      "reelTitle": "СтудФест 2023",
       "featured": false,
-      "eventCity": "",
-      "guestLabel": "",
-      "occasions": []
+      "eventCity": "Санкт-Петербург · Севкабель Порт",
+      "guestLabel": "11 000 посетителей · охват 750 млн — по данным «Инсайт Люди»",
+      "occasions": [
+        "public",
+        "culture"
+      ],
+      "sources": [
+        {
+          "label": "Инсайт Люди · официальный кейс «СтудФест 2023», фото проекта и показатели",
+          "url": "https://event.insightpeople.ru/studfest_23"
+        }
+      ],
+      "reelImage": "/custom/library/insight-people-studfest-2023-main-stage.webp",
+      "reelMobile": "/custom/library/insight-people-studfest-2023-performance.webp",
+      "imageRatio": 1.4986619090098128,
+      "preview": "/custom/optimized/insight-people-studfest-2023-main-stage-960.webp",
+      "imageWidth": 1680,
+      "imageHeight": 1121,
+      "previewSrcSet": "/custom/optimized/insight-people-studfest-2023-main-stage-640.webp 640w, /custom/optimized/insight-people-studfest-2023-main-stage-960.webp 960w, /custom/optimized/insight-people-studfest-2023-main-stage-1280.webp 1280w, /custom/library/insight-people-studfest-2023-main-stage.webp 1680w"
     },
     {
       "slug": "case-enriched-54",
@@ -14677,6 +14718,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 362
+    "photos": 366
   }
 }
