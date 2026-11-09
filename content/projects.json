@@ -12042,15 +12042,22 @@
     "description": "26 января 2024 года на 90-м этаже Москва-Сити партнёры организаторов международных выставок пришли ждать Султана. Каждые несколько минут история напоминала, что он задерживается; при входе гости получали личные титулы и становились участниками сказочных эпизодов. Финал переворачивал ожидание: Султанами объявляли самих гостей. Так разговор о выходе на рынок Саудовской Аравии превратился в общее путешествие. Иммерсив-Ивент указывает 130 гостей и 21 артиста; название заказчика в кейсе не раскрыто.",
     "seoDescription": "Иммерсивный вечер «1001 ночь» на 90-м этаже Москва-Сити: персональные титулы, артисты и финал «Вы — Султаны!». 130 гостей и 21 артист — по данным Иммерсив-Ивент.",
     "source": "https://www.immersive-event.ru/1001",
-    "image": "/custom/empty/case-enriched-165.svg",
-    "imageMobile": "/custom/empty/case-enriched-165.svg",
-    "ogImage": "/custom/empty/case-enriched-165.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/immersive-event-1001-genie.webp",
+    "imageMobile": "/custom/optimized/immersive-event-1001-genie-640.webp",
+    "ogImage": "/custom/library/immersive-event-1001-genie.webp",
+    "thumb": "/custom/optimized/immersive-event-1001-genie-640.webp",
+    "hasPhotos": true,
+    "photoCount": 1,
     "caseId": "case-enriched-165",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/immersive-event-1001-genie.webp",
+        "ratio": 0.6659729448491155,
+        "alt": "Актёр в образе Джина из «1001 ночи» на иммерсивном вечере. Фото: Иммерсив-Ивент, CC BY 4.0."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#172347,#d18c45)",
     "curated": false,
     "reelTitle": "1001 ночь · ожидание Султана",
@@ -12070,8 +12077,19 @@
       {
         "label": "Иммерсив-Ивент · специализация и состав команды",
         "url": "https://www.immersive-event.ru/about"
+      },
+      {
+        "label": "Иммерсив-Ивент · фото и кейс, лицензия CC BY 4.0",
+        "url": "https://www.immersive-event.ru/1001"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/immersive-event-1001-genie.webp",
+    "reelMobile": "/custom/optimized/immersive-event-1001-genie-640.webp",
+    "imageRatio": 0.6659729448491155,
+    "preview": "/custom/optimized/immersive-event-1001-genie-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 1922,
+    "previewSrcSet": "/custom/optimized/immersive-event-1001-genie-640.webp 640w, /custom/optimized/immersive-event-1001-genie-960.webp 960w, /custom/library/immersive-event-1001-genie.webp 1280w"
   },
   {
     "slug": "case-enriched-166",
