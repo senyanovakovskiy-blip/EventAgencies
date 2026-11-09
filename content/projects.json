@@ -5472,25 +5472,57 @@
     ],
     "role": "Best Practice разработало концепцию, организовало пресс-день, подготовило сценарий и режиссуру, выполнило застройку и декорирование и обеспечило техническую работу всех площадок. На пяти сценах выступали артисты; агентство сообщает о более чем 400 артистах в оперативном управлении.",
     "industry": "Торгово-развлекательные пространства",
-    "description": "В 2020 году в Москве открыли ТРК «ОСТРОВ МЕЧТЫ» — проект, который Best Practice описывает как открытие крупнейшего в Европе крытого тематического парка. Агентство провело пресс-день с участием первых лиц государства, подготовило концепцию, сценарий и режиссуру, застроило и декорировало площадки и обеспечило их техническое сопровождение. Одновременно работали пять сцен; в оперативном управлении было более 400 артистов. По данным Best Practice, событие посетили более 80 000 гостей.",
-    "seoDescription": "Открытие ТРК «ОСТРОВ МЕЧТЫ» в Москве: пять сцен, 400+ артистов в оперативном управлении и более 80 000 гостей по данным Best Practice.",
+    "description": "Открытие «Острова мечты» стало большим городским событием: Best Practice подготовило пресс-день с участием Президента России и мэра Москвы, разработало концепцию, сценарий и режиссуру, создало декор и обеспечило техническую работу площадок. Одновременно работали пять сцен; агентство сообщает о более чем 400 артистах в оперативном управлении и свыше 80 000 гостей.",
+    "seoDescription": "Открытие ТРК «Остров мечты» в Москве: пресс-день с участием Президента России и мэра Москвы, пять сцен и 400+ артистов; более 80 000 гостей по данным Best Practice.",
     "source": "https://bepractice.ru/projects/otkrytie-ostrov-mechty/",
-    "image": "/custom/empty/case-28.svg",
-    "imageMobile": "/custom/empty/case-28.svg",
-    "ogImage": "/custom/empty/case-28.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/best-practice-dream-island-opening-01-atrium.webp",
+    "imageMobile": "/custom/library/best-practice-dream-island-opening-03-singer.webp",
+    "ogImage": "/custom/library/best-practice-dream-island-opening-01-atrium.webp",
+    "thumb": "/custom/optimized/best-practice-dream-island-opening-01-atrium-640.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-28",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/best-practice-dream-island-opening-01-atrium.webp",
+        "ratio": 1.502,
+        "alt": "Гости рассматривают оформление атриума ТРК «Остров мечты» во время открытия. Фото: Best Practice."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/best-practice-dream-island-opening-02-live-band.webp",
+        "ratio": 1.5,
+        "alt": "Музыкальная группа выступает на одной из сцен открытия ТРК «Остров мечты». Фото: Best Practice."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/best-practice-dream-island-opening-03-singer.webp",
+        "ratio": 1.502,
+        "alt": "Солист выступает перед гостями в атриуме ТРК «Остров мечты». Фото: Best Practice."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/best-practice-dream-island-opening-04-performers.webp",
+        "ratio": 1.502,
+        "alt": "Музыканты и артисты в костюмах встречают гостей в галерее ТРК «Остров мечты». Фото: Best Practice."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "Открытие ТРК «Остров…",
     "featured": false,
     "eventCity": "Москва",
     "guestLabel": "Более 80 000 гостей; способ подсчёта не раскрыт",
-    "occasions": []
+    "occasions": [],
+    "reelImage": "/custom/library/best-practice-dream-island-opening-01-atrium.webp",
+    "reelMobile": "/custom/library/best-practice-dream-island-opening-03-singer.webp",
+    "imageRatio": 1.502,
+    "preview": "/custom/optimized/best-practice-dream-island-opening-01-atrium-640.webp",
+    "imageWidth": 1101,
+    "imageHeight": 733,
+    "previewSrcSet": "/custom/optimized/best-practice-dream-island-opening-01-atrium-640.webp 640w, /custom/library/best-practice-dream-island-opening-01-atrium.webp 1101w"
   },
   {
     "slug": "case-29",
