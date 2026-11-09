@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+<title id="title">Авангардисты Владивостока — иллюстрация к кейсу ABC LAB</title>
+<desc id="desc">Абстрактный контур прибрежного города, соединяющий людей, культурные точки и открытое голосование; это иллюстрация, не фотография проекта.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#112a40"/><stop offset=".55" stop-color="#24546a"/><stop offset="1" stop-color="#d17155"/></linearGradient>
+ <linearGradient id="line" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5cf82"/><stop offset=".52" stop-color="#f58c68"/><stop offset="1" stop-color="#9ae0d0"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#f6bb78" stop-opacity=".55"/><stop offset="1" stop-color="#f6bb78" stop-opacity="0"/></radialGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="45"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#bg)"/>
+<circle cx="1160" cy="393" r="260" fill="url(#glow)" filter="url(#blur)"/>
+<path d="M780 570 921 459 1058 515 1178 352 1311 406 1434 273 1550 327" fill="none" stroke="url(#line)" stroke-width="5"/>
+<path d="M0 658q196-86 385 0t378 0 380 0 457-10v252H0z" fill="#112c41" opacity=".84"/>
+<path d="M0 696q196-86 385 0t378 0 380 0 457-10" fill="none" stroke="#9ddad4" stroke-opacity=".48" stroke-width="3"/>
+<g fill="#1e4052" stroke="#e8d2a6" stroke-opacity=".45" stroke-width="2">
+ <path d="M842 632V495l66-38 66 38v137z"/><path d="M1000 632V434l84-49 84 49v198z"/>
+ <path d="M1200 632V497l62-36 62 36v135z"/><path d="M1360 632V400l93-54 93 54v232z"/>
+</g>
+<g fill="#f4cb81"><circle cx="908" cy="462" r="6"/><circle cx="1084" cy="390" r="6"/><circle cx="1262" cy="461" r="6"/><circle cx="1453" cy="347" r="6"/></g>
+<g fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2">
+ <circle cx="908" cy="462" r="25"/><circle cx="1084" cy="390" r="25"/><circle cx="1262" cy="461" r="25"/><circle cx="1453" cy="347" r="25"/>
+</g>
+<text x="110" y="150" fill="#c2d4d9" font-family="Arial,sans-serif" font-size="22" letter-spacing="5">ABC LAB · ВЛАДИВОСТОК · 10–13 ОКТЯБРЯ 2024</text>
+<text x="104" y="350" fill="#fff" font-family="Arial,sans-serif" font-size="62" font-weight="700">АВАНГАРДИСТЫ</text>
+<text x="104" y="424" fill="#f4cb81" font-family="Arial,sans-serif" font-size="57" font-weight="700">ВЛАДИВОСТОКА</text>
+<text x="110" y="490" fill="#e3edf0" font-family="Arial,sans-serif" font-size="26">город формулирует собственный образ</text>
+<rect x="108" y="604" width="419" height="66" rx="33" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".32"/>
+<text x="145" y="648" fill="#fff" font-family="Arial,sans-serif" font-size="22">5 425 голосов · данные ABC LAB</text>
+<text x="110" y="822" fill="#d7e1e5" font-family="Arial,sans-serif" font-size="17" letter-spacing="3">ИЛЛЮСТРАЦИЯ · НЕ ФОТО СОБЫТИЯ</text>
+</svg>
