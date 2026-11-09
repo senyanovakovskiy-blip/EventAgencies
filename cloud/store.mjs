@@ -71,7 +71,7 @@ export function createCloudStore(binding, ownerId, catalog = catalogData, operat
     async customerHistory({ page = 1, q = '', status = '' } = {}) {
       if (!Number.isSafeInteger(page) || page < 1) throw problem(400, 'invalid_page');
       if (typeof q !== 'string' || q.length > 180 || typeof status !== 'string' || (status && status !== 'done' && !Object.hasOwn(statusLabels, status))) throw problem(400, 'invalid_filter');
-      const clauses = ['owner_id=?'], args = [ownerId];
+      const clauses = ["owner_id=?", "COALESCE(json_extract(snapshot_json,'$.origin'),'')<>'admin-generated'"], args = [ownerId];
       if (status) { clauses.push('status=?'); args.push(status); }
       if (q.trim()) {
         const query = '%' + q.trim().toLocaleLowerCase('ru').replace(/[\\%_]/g, '\\$&') + '%';
@@ -92,7 +92,7 @@ export function createCloudStore(binding, ownerId, catalog = catalogData, operat
     },
     async customerReceipt(id) {
       if (!Number.isSafeInteger(id) || id < 1) throw problem(404, 'not_found');
-      const row = await stmt('SELECT id,created_at,status,updated_at,snapshot_json FROM inquiries WHERE owner_id=? AND id=?', ownerId, id).first();
+      const row = await stmt("SELECT id,created_at,status,updated_at,snapshot_json FROM inquiries WHERE owner_id=? AND id=? AND COALESCE(json_extract(snapshot_json,'$.origin'),'')<>'admin-generated'", ownerId, id).first();
       if (!row) throw problem(404, 'not_found');
       return { recordId: row.id, receipt: receipt(row), status: row.status, statusLabel: statusLabels[row.status] || (row.status === 'done' ? 'Завершена' : 'Статус уточняется'), updatedAt: row.updated_at };
     },

@@ -79,6 +79,7 @@ export async function handleCloudApi(request, env, access = null) {
     }
     if (url.pathname === '/api/admin/catalog' && request.method === 'GET') return reply(200, store.catalog());
     const adminStore = isAdmin ? createCloudAdminStore(env.DB) : null;
+    if (url.pathname === '/api/admin/inquiries/internal' && request.method === 'POST') return reply(200, { ok: true, ...await adminStore.ensureInternalRequest(ownerId) });
     if (url.pathname === '/api/admin/inquiries' && request.method === 'GET') return reply(200, await adminStore.list({ q: url.searchParams.get('q') || '', status: url.searchParams.get('status') || '', page: Number(url.searchParams.get('page') || 1) }));
     const match = /^\/api\/admin\/inquiries\/([1-9]\d*)$/.exec(url.pathname);
     if (match && request.method === 'GET') return reply(200, await adminStore.detail(Number(match[1])));
