@@ -11410,15 +11410,58 @@
     "description": "8 сентября 2025 года BBT Fest собрал в Palmira Art Hotel более 300 специалистов бизнес-тревел и MICE — по данным BBT.News. Программа прошла под знаком искусства: деловая игра открыла фестиваль, партнёры представили свои продукты в экспозиции, а практикум объединил отраслевые лекции. BE IN EVENT выступило организационным партнёром; в репортаже после события BBT.News запомнил цветочный образ представительницы агентства, буквально усыпанной розами.",
     "seoDescription": "BBT Fest 2025 собрал свыше 300 специалистов бизнес-тревел и MICE в Palmira Art Hotel. BE IN EVENT указано организационным партнёром; программа фестиваля была вдохновлена искусством.",
     "source": "https://buyingbusinesstravel.com.ru/articles/stati/pod-znakom-mnogogrannogo-iskusstva-proshyel-bbt-fest-2025/?sphrase_id=1115843",
-    "image": "/custom/empty/case-enriched-167.svg",
-    "imageMobile": "/custom/empty/case-enriched-167.svg",
-    "ogImage": "/custom/empty/case-enriched-167.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/bbt-fest-2025-01.webp",
+    "imageMobile": "/custom/library/bbt-fest-2025-02.webp",
+    "ogImage": "/custom/library/bbt-fest-2025-01.webp",
+    "thumb": "/custom/library/bbt-fest-2025-01.webp",
+    "hasPhotos": true,
+    "photoCount": 7,
     "caseId": "case-enriched-167",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/bbt-fest-2025-01.webp",
+        "ratio": 1.5,
+        "alt": "Стенд BE IN EVENT с арт-работами на BBT Fest 2025. Фото: BE IN EVENT."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bbt-fest-2025-02.webp",
+        "ratio": 0.667,
+        "alt": "Зеркальная инсталляция с отражением логотипа BBT Fest 2025. Фото: BE IN EVENT."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bbt-fest-2025-03.webp",
+        "ratio": 1.5,
+        "alt": "Арт-зона с репродукциями картин и материалами для мастер-класса. Фото: BE IN EVENT."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bbt-fest-2025-04.webp",
+        "ratio": 1.5,
+        "alt": "Интерактивная фотозона с цифровыми портретами на BBT Fest 2025. Фото: BE IN EVENT."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bbt-fest-2025-05.webp",
+        "ratio": 1.16,
+        "alt": "Стойка делового туризма на площадке BBT Fest 2025. Фото: BE IN EVENT."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bbt-fest-2025-06.webp",
+        "ratio": 0.666,
+        "alt": "Фотозона с брендингом BBT Fest 2025 у входа. Фото: BE IN EVENT."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/bbt-fest-2025-07.webp",
+        "ratio": 1.5,
+        "alt": "Участники BBT Fest 2025 у сценической панели фестиваля. Фото: BE IN EVENT."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#291c35,#c45476)",
     "curated": false,
     "reelTitle": "BBT Fest · деловой туризм в цветах искусства",
@@ -11429,6 +11472,9 @@
       "business",
       "culture"
     ],
+    "imageRatio": 1.5,
+    "imageWidth": 1024,
+    "imageHeight": 682,
     "sources": [
       {
         "label": "BBT.News · итоговый репортаж: программа, аудитория и образ BE IN EVENT",
@@ -11437,6 +11483,10 @@
       {
         "label": "BBT.News · анонс и список партнёров фестиваля",
         "url": "https://buyingbusinesstravel.com.ru/news/trevel-menedzhment/organizatsionnym-partnerom-bbt-fest-snova-stalo-agentstvo-be-in-event/"
+      },
+      {
+        "label": "BE IN EVENT · официальная галерея BBT FEST 08/09/2025",
+        "url": "https://beinevent.ru/marketing-events#popup:bbt"
       }
     ]
   },
