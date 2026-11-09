@@ -359,19 +359,19 @@ function setHelpSelection(expanded){
  if(content)content.hidden=!expanded;
  if(button){button.setAttribute('aria-expanded',String(expanded));button.textContent=expanded?'Свернуть подборку':'Посмотреть подборку (необязательно)';}
 }
-let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesSkipped=0,wishesUnavailable=0,wishesOpening=false;
+let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesPrompt='',wishesSkipped=0,wishesUnavailable=0,wishesOpening=false;
 function syncWishesOptions(){
  const changed=wishesDialog.querySelector('#wishes-addition').value!==wishesGenerated,hasNotes=wishesWorks.some(item=>item.note.trim());
- wishesDialog.querySelector('[data-wishes-notes]').disabled=changed||!hasNotes;
+ wishesDialog.querySelector('[data-wishes-notes]').disabled=changed||!hasNotes||Boolean(wishesPrompt);
  wishesDialog.querySelector('[data-reset-wishes-text]').hidden=!changed;
- wishesDialog.querySelector('[data-wishes-options-help]').textContent=changed?'Вы изменили текст. Чтобы переключить заметки, сначала нажмите «Сбросить правки».':hasNotes?(wishesTrigger?.hasAttribute('data-add-wishes-selection')?'Можно включить все личные заметки к выбранным примерам, в том числе записи для разных команд. Текст будет показан перед добавлением.':'Включите заметку, если хотите передать её вместе с примером.'):'У выбранных примеров пока нет личных заметок.';
+ wishesDialog.querySelector('[data-wishes-options-help]').textContent=changed?'Вы изменили текст. Чтобы переключить заметки, сначала нажмите «Сбросить правки».':wishesPrompt?'Вопрос будет добавлен отдельно от личных заметок. Перед сохранением вы сможете изменить формулировку.':hasNotes?(wishesTrigger?.hasAttribute('data-add-wishes-selection')?'Можно включить все личные заметки к выбранным примерам, в том числе записи для разных команд. Текст будет показан перед добавлением.':'Включите заметку, если хотите передать её вместе с примером.'):'У выбранных примеров пока нет личных заметок.';
 }
 function regenerateWishes(){
  const includeNotes=wishesDialog.querySelector('[data-wishes-notes]').checked;
- const fragments=wishesWorks.map(item=>wishesAddition(item.work,includeNotes?item.note:'',location.origin)),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
+ const fragments=wishesWorks.map(item=>{const base=wishesAddition(item.work,wishesPrompt?'':includeNotes?item.note:'',location.origin);return wishesPrompt?base+'\nВопрос к агентству: '+wishesPrompt:base;}),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
  wishesSkipped=fragments.length-fresh.length;wishesGenerated=fresh.join('\n\n');wishesDialog.querySelector('#wishes-addition').value=wishesGenerated;
  const noteCount=wishesWorks.reduce((total,item)=>total+item.noteCount,0);
- wishesDialog.querySelector('[data-wishes-source-count]').textContent='Примеров: '+wishesWorks.length+' · Личных заметок: '+noteCount+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
+ wishesDialog.querySelector('[data-wishes-source-count]').textContent=(wishesPrompt?'Кейсов: '+wishesWorks.length+' · Вопрос для обсуждения: 1':'Примеров: '+wishesWorks.length+' · Личных заметок: '+noteCount)+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
  syncWishesOptions();updateWishesPreview();
 }
 function updateWishesPreview(message=''){
@@ -387,7 +387,7 @@ function updateWishesPreview(message=''){
 async function openWishes(trigger){
  if(wishesOpening||wishesDialog?.open)return;wishesOpening=true;
  try{
-  const data=await getData(),agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');
+  const data=await getData(),agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');wishesPrompt=(trigger.dataset.addWishesPrompt||'').trim();
   const slugs=batch?normalizeReferences(JSON.parse(trigger.dataset.addWishesSelection)):[trigger.dataset.addWishesWork];
   wishesWorks=slugs.flatMap(slug=>{
    const work=data.projects.find(p=>p.slug===slug&&(batch||p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));if(!work)return [];
@@ -416,11 +416,11 @@ async function openWishes(trigger){
     try{draft=writeDraft(localStorage,updateBrief(draft,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
     catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось сохранить пожелания. Разрешите хранение данных сайта и попробуйте снова.';return;}
     wishesUndo?.record(previousDescription,merged.text);await renderProject();wishesDialog.close();
-    const status=document.getElementById('project-wishes-status');if(status){if(!wishesUndo)status.textContent='Пожелания дополнены. Заявка ещё не отправлена.';status.focus({preventScroll:true});}
+    const status=document.getElementById('project-wishes-status');if(status){if(!wishesUndo)status.textContent='Пожелания дополнены. Заявка ещё не отправлена.';status.focus({preventScroll:true});}else if(wishesPrompt)notice('Вопрос добавлен в пожелания','Он сохранён в описании проекта. Заявка ещё не отправлена.');
    });
   }
   wishesTrigger=trigger;
-  wishesDialog.querySelector('[data-wishes-notes]').checked=!batch&&wishesWorks.some(item=>item.note.trim());
+  wishesDialog.querySelector('[data-wishes-notes]').checked=!batch&&!wishesPrompt&&wishesWorks.some(item=>item.note.trim());
   regenerateWishes();wishesDialog.showModal();wishesDialog.querySelector('#wishes-addition').focus();
  }catch{notice('Не удалось подготовить пожелание','Описание и личные заметки не изменены. Попробуйте ещё раз.');}
  finally{wishesOpening=false;}
