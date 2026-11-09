@@ -42,7 +42,7 @@ function cardMarkup(entry,catalog,receipt,saved=false){
  const followUpId=statusId+'-follow-up';
  return `<article class="preparation-card" data-preparation-card="${esc(preparationKey(entry))}" data-agency="${esc(entry.agencySlug)}" data-work="${esc(entry.workSlug||'')}" data-saved="${saved}" hidden><h4>${esc(name)} · ${esc(title)}</h4><p class="small muted" data-preparation-origin></p>${workPicker(entry,catalog)}${sitePresentation(entry,catalog,receipt)}${dossier(entry,catalog,receipt)}<div class="preparation-editor">
  <section class="preparation-draft"><h4>От примера — к разговору</h4><p class="small muted">Набросок использует доступное «Если вам близко», цель и ожидания из рабочего брифа и сведения о прошлой работе. Заполнятся только пустые из шести подготовительных полей; ваш текст останется на месте.</p><div class="preparation-actions"><button type="button" class="secondary" data-prepare-draft>Заполнить пустые поля подготовки наброском</button><button type="button" class="text-button" data-replace-preparation>Заменить шесть полей подготовки наброском…</button></div><p class="small muted">Замена перезапишет только шесть подготовительных полей. Ручные записи в блоке «После обсуждения» останутся. Набросок — рабочая гипотеза; проверьте его перед разговором.</p><p id="${esc(statusId)}" class="preparation-generation-status" data-generation-status role="status" aria-atomic="true" tabindex="-1"></p>${preparationFieldMarkup(entry,preparationDraftFields,statusId,statusId)}</section>
- ${eventIdeasMarkup(statusId+'-ideas')}
+ ${eventIdeasMarkup(statusId+'-ideas',receipt?.brief?.format||'')}
  <section class="preparation-follow-up" aria-labelledby="${esc(followUpId+'-title')}"><h4 id="${esc(followUpId+'-title')}">После обсуждения</h4><p id="${esc(followUpId+'-help')}" class="small muted">Запишите реальные слова клиента и итоги разговора; при необходимости укажите дату и собеседника. Эти поля заполняются вручную и сохраняются общей кнопкой заявки. Они не подтверждают автоматически бриф, согласия сторон или состоявшееся знакомство.</p>${preparationFieldMarkup(entry,preparationFollowUpFields,statusId,followUpId+'-help')}</section>
  ${discussionPlanMarkup(statusId+'-plan')}</div></article>`;
 }
@@ -80,7 +80,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   plans?.contextChanged();
  }
  function ideaInput(card,entries=contexts()){
-  return {entry:{agencySlug:card.dataset.agency,workSlug:card.dataset.work||null},catalog,receipt:data.receipt,workflow:getValues().workflow,references:[...entries.values()]};
+  return {entry:{agencySlug:card.dataset.agency,workSlug:card.dataset.work||null},catalog,receipt:data.receipt,workflow:getValues().workflow,references:[...entries.values()],formatOverride:card.querySelector('[data-event-idea-format]')?.value||''};
  }
  function refreshEventIdeas(entries=contexts()){
   for(const card of cards()){
@@ -112,7 +112,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   else{form.querySelector('#admin-preparation').scrollIntoView({block:'start'});select.focus({preventScroll:true});}
  }
  select.addEventListener('change',()=>{if(form.dataset.busy==='true')return;const entry=contexts().get(select.value);if(entry){active=select.value;show(entry);}});
- host.addEventListener('change',event=>{if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});});
+ host.addEventListener('change',event=>{if(event.target.matches('[data-event-idea-format]')){sync();return;}if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});});
  host.addEventListener('input',event=>{if(event.target.matches('[data-preparation-field]'))event.target.closest('[data-preparation-card]').querySelector('[data-generation-status]').textContent='';});
  host.addEventListener('click',event=>{
   const generateIdeas=event.target.closest('[data-generate-event-ideas]'),appendIdea=event.target.closest('[data-append-event-idea]');

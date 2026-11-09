@@ -73,14 +73,15 @@ function guestPlanning(value){
  return `Предварительный ориентир для аудитории «${text(value)}»: рассмотреть компактный общий формат и небольшие группы; подтвердить вместимость с площадкой.`;
 }
 
-export function eventIdeasSignature({entry,receipt,workflow,references=[]}){
+export function eventIdeasSignature({entry,receipt,workflow,references=[],formatOverride=''}){
  const b=workflow?.brief||{},original=receipt?.brief||{};
- return JSON.stringify({entry:{agencySlug:entry?.agencySlug||'',workSlug:entry?.workSlug||''},original:{format:original.format||'',description:original.description||'',city:original.city||'',date:original.date||'',guests:original.guests||'',budget:original.budget||'',budgetHelp:Boolean(original.budgetHelp),dateUnknown:Boolean(original.dateUnknown)},brief:{goal:b.goal||'',city:b.city||'',date:b.date||'',guests:b.guests||'',services:b.services||'',budget:b.budget||'',expectations:b.expectations||'',confirmed:Boolean(b.confirmed),version:b.version||0},references:(references||[]).map(r=>[r.agencySlug||'',r.workSlug||'']).sort((a,b)=>a.join('/').localeCompare(b.join('/')))});
+ return JSON.stringify({entry:{agencySlug:entry?.agencySlug||'',workSlug:entry?.workSlug||''},original:{format:original.format||'',description:original.description||'',city:original.city||'',date:original.date||'',guests:original.guests||'',budget:original.budget||'',budgetHelp:Boolean(original.budgetHelp),dateUnknown:Boolean(original.dateUnknown)},formatOverride,brief:{goal:b.goal||'',city:b.city||'',date:b.date||'',guests:b.guests||'',services:b.services||'',budget:b.budget||'',expectations:b.expectations||'',confirmed:Boolean(b.confirmed),version:b.version||0},references:(references||[]).map(r=>[r.agencySlug||'',r.workSlug||'']).sort((a,b)=>a.join('/').localeCompare(b.join('/')))});
 }
 
-export function buildEventIdeas({entry,catalog,receipt,workflow,references=[]}){
- const original=receipt?.brief||{},b=workflow?.brief||{},formatKey=text(original.format),formatLabel=occasionLabels[formatKey]||(formatKey?'Формат из заявки':'Формат пока не указан');
- const plan=classicPlans[formatKey]||classicPlans.other;
+export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],formatOverride=''}){
+ const original=receipt?.brief||{},b=workflow?.brief||{},requestFormatKey=text(original.format),requestFormatLabel=occasionLabels[requestFormatKey]||(requestFormatKey?'Формат из заявки':'Формат пока не указан');
+ const classicFormatKey=Object.hasOwn(classicPlans,formatOverride)?formatOverride:Object.hasOwn(classicPlans,requestFormatKey)?requestFormatKey:'other';
+ const classicFormatLabel=occasionLabels[classicFormatKey]||'Другой формат',classicPlan=classicPlans[classicFormatKey]||classicPlans.other,requestPlan=classicPlans[requestFormatKey]||classicPlans.other;
  const goal=text(b.goal)||text(original.description),expectations=text(b.expectations),budgetHelp=Boolean(original.budgetHelp||asksBudgetHelp(b.budget)),budget=hasValue(b.budget)&&!asksBudgetHelp(b.budget)?text(b.budget):hasValue(original.budget)?text(original.budget):'',services=hasValue(b.services)?text(b.services):'';
  const sources=worksFor(entry,catalog,receipt,references),missing=missingBrief(b,original,budget,budgetHelp);
  const budgetNote=budgetHelp&&!budget?'В заявке просили помочь с оценкой бюджета; подготовить варианты разного масштаба.':'';
@@ -96,12 +97,12 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[]}){
  const locationTiming=city!=='город не уточнён'||hasValue(b.date)||hasValue(original.date)?`Город и срок: ${city}; ${date}. Если часть программы будет на улице, предусмотреть резерв.`:'Город и дата пока не уточнены.';
  const planning=[locationTiming,services?`Проверить, что сценарий укладывается в состав услуг: ${quote(services,140)}.`:'Уточнить границы услуг, чтобы не включить незаказанные элементы.',budget?`Собрать базовую комплектацию в рамках бюджета «${excerpt(budget,100)}», а расширения просчитать отдельно.`:budgetHelp?'Для оценки бюджета предложить две комплектации разного масштаба.':'Бюджет не указан; отдельно оценить базовую и расширенную комплектации.'];
  const commonChecks=[openQuestions,notConfirmed,...planning].join(' ');
- const novel=tailoredFreshIdea(formatKey,goal||expectations);
- const classicWhy=formatKey?'Самая понятная отправная точка: каркас соответствует формату «'+formatLabel+'», указанному в заявке. Это совпадение по формату, не прогноз результата.':'Нейтральная отправная точка, пока формат события не уточнён.';
+ const novel=tailoredFreshIdea(requestFormatKey,goal||expectations);
+ const classicWhy=requestFormatKey&&classicFormatKey===requestFormatKey?'Каркас совпадает с форматом «'+requestFormatLabel+'» из заявки. Это совпадение по формату, не прогноз результата.':requestFormatKey?'Для сравнения выбрана классическая основа «'+classicFormatLabel+'»; в заявке указан формат «'+requestFormatLabel+'». Проверьте её соответствие цели.':'Классическая основа «'+classicFormatLabel+'» выбрана для сравнения; формат события в заявке пока не указан.';
  const options=[{
-  kind:'Классическая основа',title:plan.title,idea:plan.idea,journey:plan.journey,
+  kind:'Классическая основа',title:classicPlan.title,idea:classicPlan.idea,journey:classicPlan.journey,
   why:[classicWhy,goalNote,expectationNote,servicesNote].filter(Boolean).join(' '),
-  check:'Согласовать главный момент программы, распределение ролей и резервный план.',question:plan.question,sources:[]
+  check:'Согласовать главный момент программы, распределение ролей и резервный план.',question:classicPlan.question,sources:[]
  }];
  if(sources.length){
   const source=sources[0],sourceReason=source.selected?'Эта работа есть в исходном выборе клиента; сам мотив выбора не записан — его нужно спросить.':'Эта работа добавлена к внутреннему обсуждению; это не означает, что клиент уже выбрал или одобрил её.';
@@ -138,7 +139,7 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[]}){
   options.push({
    kind:'Сочетание',title:'Гибрид: классическая программа плюс участие гостей',
    idea:'Сохранить привычную структуру выбранного формата, но дать гостям один небольшой выбор или вклад, который вернётся в общем финале. Так появляется интерактивный момент без перестройки всей программы.',
-   journey:plan.journey+' Добавить один выбор гостей, который влияет на общий финал. '+guestPlanning(b.guests),
+   journey:requestPlan.journey+' Добавить один выбор гостей, который влияет на общий финал. '+guestPlanning(b.guests),
    why:'Можно начать с понятной основы и ограничить новизну одним проверяемым элементом.',
    check:'Проверить, подходит ли аудитории интерактив и можно ли провести его без очередей и давления на гостей.',
    question:'Насколько комфортно вашей аудитории активно участвовать, а не только наблюдать?',sources:[]
@@ -153,12 +154,14 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[]}){
   const cityContext=hasValue(b.city)?text(b.city):hasValue(original.city)?text(original.city):'';
   const dateContext=hasValue(b.date)?text(b.date):hasValue(original.date)?text(original.date):original.dateUnknown?'Дата пока неизвестна':'';
   const guestsContext=hasValue(b.guests)?text(b.guests):hasValue(original.guests)?text(original.guests):'';
-  return {context:[formatKey?formatLabel:'Формат уточняется',goal&&'Цель: '+excerpt(goal,100),cityContext&&'г. '+cityContext,dateContext,guestsContext&&guestsContext+' гостей',budget&&'Бюджет: '+excerpt(budget,60),budgetHelp&&!budget&&'Бюджет нужно оценить',services&&'Услуги: '+excerpt(services,90)].filter(Boolean).join(' · '),commonChecks,options};
+  return {context:[requestFormatKey?requestFormatLabel:'Формат уточняется',goal&&'Цель: '+excerpt(goal,100),cityContext&&'г. '+cityContext,dateContext,guestsContext&&guestsContext+' гостей',budget&&'Бюджет: '+excerpt(budget,60),budgetHelp&&!budget&&'Бюджет нужно оценить',services&&'Услуги: '+excerpt(services,90)].filter(Boolean).join(' · '),commonChecks,options};
 }
 
-export function eventIdeasMarkup(id){
+export function eventIdeasMarkup(id,format=''){
  const key=esc(id);
- return `<section class="event-idea-generator" data-event-idea-generator aria-labelledby="${key}-title"><h4 id="${key}-title">Варианты события</h4><p class="small muted">Соберите классическую основу, развитие элемента из кейса, сочетание идей и новый ход по текущему брифу. Идеи остаются внутренними; оценка показывает основания для обсуждения, а не вероятность успеха.</p><div class="preparation-actions"><button type="button" class="secondary" data-generate-event-ideas>Собрать варианты по брифу</button></div><p class="small muted" data-event-ideas-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p><div class="event-idea-results" data-event-ideas-results hidden></div></section>`;
+ const selectedFormat=Object.hasOwn(classicPlans,format)?format:'other';
+ const formats=Object.entries(classicPlans).map(([value,item])=>`<option value="${value}"${value===selectedFormat?' selected':''}>${esc(item.title)}</option>`).join('');
+ return `<section class="event-idea-generator" data-event-idea-generator aria-labelledby="${key}-title"><h4 id="${key}-title">Варианты события</h4><p class="small muted">Соберите классическую основу, развитие элемента из кейса, сочетание идей и новый ход по текущему брифу. Идеи остаются внутренними; оценка показывает основания для обсуждения, а не вероятность успеха.</p><label class="event-idea-format">Классический формат для сравнения<select data-event-idea-format>${formats}</select></label><p class="small muted">Смена формата влияет только на классический каркас; остальные идеи учитывают исходный бриф.</p><div class="preparation-actions"><button type="button" class="secondary" data-generate-event-ideas>Собрать варианты по брифу</button></div><p class="small muted" data-event-ideas-status role="status" aria-live="polite" aria-atomic="true" tabindex="-1"></p><div class="event-idea-results" data-event-ideas-results hidden></div></section>`;
 }
 
 export function renderEventIdeas({context,commonChecks,options}){
