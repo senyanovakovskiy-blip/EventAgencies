@@ -431,7 +431,7 @@
         "case-enriched-147"
       ],
       "caseCount": 4,
-      "photoCount": 5,
+      "photoCount": 9,
       "cover": "/custom/library/9f8bab74bd.webp",
       "coverWork": "sber-golf-cup"
     },
@@ -12691,15 +12691,40 @@
       "description": "E-CODE продолжил идею everything as code за пределами сцены: в пространстве конференции появились бар-серверная и фотоспот, который менял оформление после считывания RFID-бейджа. Квесты, баллы и мерч превращали участие в игру. BEMA называет TVIN исполнителем проекта; Sostav отдельно отмечает вклад внутренней команды Ozon в программу и активности. В материалах BEMA указаны 7 треков, 50+ спикеров, 3 000 гостей офлайн и 200 000+ просмотров онлайн. Конференция получила два первых места BEMA 2025 — за деловое событие и командообразующий проект.",
       "seoDescription": "E-CODE Ozon Tech от TVIN: IT-конференция с баром-серверной, фотоспотом с RFID, квестами и 7 треками. Два первых места BEMA 2025; роли агентства и команды Ozon указаны по источникам.",
       "source": "https://tvin-imc.ru/article/e-code-konferenciia-dlia-it-specialistov-ot-ozon-tech",
-      "image": "/custom/empty/case-enriched-134.svg",
-      "imageMobile": "/custom/empty/case-enriched-134.svg",
-      "ogImage": "/custom/empty/case-enriched-134.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/tvin-ecode-03-main-audience.webp",
+      "imageMobile": "/custom/optimized/tvin-ecode-03-main-audience-640.webp",
+      "ogImage": "/custom/library/tvin-ecode-03-main-audience.webp",
+      "thumb": "/custom/optimized/tvin-ecode-03-main-audience-640.webp",
+      "hasPhotos": true,
+      "photoCount": 4,
       "caseId": "case-enriched-134",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/tvin-ecode-01-everything-as-design.webp",
+          "ratio": 1.5005861664712778,
+          "alt": "Гости E-CODE в яркой зоне общения под инсталляцией EVERYTHING AS DESIGN. Фото: TVIN."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/tvin-ecode-02-news-point-talk.webp",
+          "ratio": 1.5005861664712778,
+          "alt": "Дискуссионная сессия E-CODE «Пункт выдачи новостей». Фото: TVIN."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/tvin-ecode-03-main-audience.webp",
+          "ratio": 1.5005861664712778,
+          "alt": "Участники E-CODE в большом зале слушают выступление на сцене. Фото: TVIN."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/tvin-ecode-04-live-performance.webp",
+          "ratio": 1.5005861664712778,
+          "alt": "Музыкальное выступление на сцене E-CODE перед аудиторией. Фото: TVIN."
+        }
+      ],
       "gradient": "linear-gradient(145deg,#131a46,#8c76ff)",
       "curated": false,
       "reelTitle": "E-CODE · everything as code",
@@ -12731,8 +12756,19 @@
         {
           "label": "Рейтинг Sostav · награды BEMA 2025",
           "url": "https://ratings.sostav.ru/works/1042"
+        },
+        {
+          "label": "TVIN · фотогалерея E-CODE",
+          "url": "https://tvin-imc.ru/article/e-code-konferenciia-dlia-it-specialistov-ot-ozon-tech"
         }
-      ]
+      ],
+      "reelImage": "/custom/library/tvin-ecode-03-main-audience.webp",
+      "reelMobile": "/custom/optimized/tvin-ecode-03-main-audience-640.webp",
+      "imageRatio": 1.5005861664712778,
+      "preview": "/custom/optimized/tvin-ecode-03-main-audience-960.webp",
+      "imageWidth": 1280,
+      "imageHeight": 853,
+      "previewSrcSet": "/custom/optimized/tvin-ecode-03-main-audience-640.webp 640w, /custom/optimized/tvin-ecode-03-main-audience-960.webp 960w, /custom/library/tvin-ecode-03-main-audience.webp 1280w"
     },
     {
       "slug": "case-enriched-135",
@@ -14914,6 +14950,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 381
+    "photos": 385
   }
 }
