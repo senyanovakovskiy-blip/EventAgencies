@@ -18,7 +18,7 @@ export function setupProjectQuestionAnswer({getData,canEdit,onSaved,onError}){
  const proposed=()=>{
   if(!active)return '';
   const next=addition();
-  return next?[active.expected.trimEnd(),next].filter(Boolean).join('\n\n'):active.expected;
+  return next?active.expected+(active.expected?'\n\n':'')+next:active.expected;
  };
  function sync(){
   const value=proposed(),answer=field.value.trim(),duplicate=Boolean(answer&&active?.expected.includes(addition())),tooLong=value.length>1000;
