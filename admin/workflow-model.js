@@ -1,11 +1,48 @@
 import {normalizePreparation,validatePreparation} from './preparation-model.js';
+import {ideaSourceMoments} from './event-ideas.js';
 export const briefFields={goal:'Цель мероприятия',city:'Город проведения',date:'Дата или период',guests:'Количество гостей',services:'Нужные услуги',budget:'Уточнённый бюджет',stage:'Стадия выбора',expectations:'Ожидания заказчика'};
 export const responses={pending:'Ответ не получен',interested:'Есть интерес к обсуждению',declined:'Отказ',no_response:'Нет ответа после обращения'};
 export const consents={unknown:'Не получено',yes:'Получено',no:'Отказ'};
 export const evidenceFields={response:'responseBriefVersion',customerConsent:'customerConsentBriefVersion',agencyConsent:'agencyConsentBriefVersion'};
-export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[],preparation:[],ideaDraft:'',ideaFeedback:''});
+export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[],preparation:[],ideaSources:[],ideaDraft:'',ideaFeedback:''});
 export const emptyTeam=agencySlug=>({agencySlug,response:'pending',responseNote:'',refusalReason:'',customerConsent:'unknown',customerConsentNote:'',agencyConsent:'unknown',agencyConsentNote:'',responseBriefVersion:null,customerConsentBriefVersion:null,agencyConsentBriefVersion:null,contactsShared:false,contactNote:'',conversationHeld:false,conversationNote:'',nextStep:'',result:'',updatedAt:null,sharedAt:null,sharedBriefVersion:null,conversationAt:null});
 const version=v=>Number.isSafeInteger(v)&&v>0?v:null;
+export const IDEA_SOURCE_CONTEXT_LIMIT=64;
+export const IDEA_SOURCE_LIMIT=3;
+const ideaSlug=value=>typeof value==='string'&&value.length<=200&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
+export const ideaSourceContextKey=item=>JSON.stringify([item?.agencySlug||'',item?.workSlug||null]);
+const ideaSourceKey=item=>JSON.stringify([item.agencySlug,item.workSlug,item.momentKey]);
+export function normalizeIdeaSources(value){
+ const seenContexts=new Set(),result=[];
+ for(const row of (Array.isArray(value)?value:[]).slice(0,IDEA_SOURCE_CONTEXT_LIMIT)){
+  if(!row||!(row.agencySlug===''&&row.workSlug===null||ideaSlug(row.agencySlug)&&(row.workSlug===null||ideaSlug(row.workSlug)))||!Array.isArray(row.sources))continue;
+  const key=ideaSourceContextKey(row);if(seenContexts.has(key))continue;seenContexts.add(key);
+  const seenSources=new Set(),sources=[];
+  for(const source of row.sources.slice(0,IDEA_SOURCE_LIMIT)){
+   if(!source||!ideaSlug(source.agencySlug)||!ideaSlug(source.workSlug)||typeof source.momentKey!=='string'||!/^[a-z]{1,40}$/.test(source.momentKey))continue;
+   const sourceKey=ideaSourceKey(source);if(seenSources.has(sourceKey))continue;seenSources.add(sourceKey);
+   sources.push({agencySlug:source.agencySlug,workSlug:source.workSlug,momentKey:source.momentKey});
+  }
+  if(sources.length)result.push({agencySlug:row.agencySlug,workSlug:row.workSlug,sources});
+ }
+ return result;
+}
+export function ideaSourceIsAvailable(source,catalog){
+ const work=(catalog?.projects||[]).find(project=>project.slug===source?.workSlug&&(project.agencySlug===source?.agencySlug||project.agencySlugs?.includes(source?.agencySlug)));
+ return Boolean(work&&(catalog?.agencies||[]).some(agency=>agency.slug===source.agencySlug)&&ideaSourceMoments(work).some(moment=>moment.key===source.momentKey));
+}
+function validateIdeaSources(input,previous,catalog){
+ if(input===undefined)return normalizeIdeaSources(previous);
+ if(!Array.isArray(input)||input.length>IDEA_SOURCE_CONTEXT_LIMIT)fail('invalid_workflow');
+ const rows=normalizeIdeaSources(input),oldRows=normalizeIdeaSources(previous),oldContexts=new Set(oldRows.map(ideaSourceContextKey)),oldSources=new Set(oldRows.flatMap(row=>row.sources.map(source=>ideaSourceContextKey(row)+'/'+ideaSourceKey(source))));
+ if(rows.length!==input.length||rows.some((row,index)=>row.sources.length!==input[index].sources?.length||row.agencySlug!==input[index].agencySlug||row.workSlug!==input[index].workSlug))fail('invalid_workflow');
+ for(const row of rows){
+  const context=ideaSourceContextKey(row),agency=(catalog.agencies||[]).some(item=>item.slug===row.agencySlug),work=!row.workSlug||(catalog.projects||[]).some(item=>item.slug===row.workSlug&&(item.agencySlug===row.agencySlug||item.agencySlugs?.includes(row.agencySlug)));
+  if(row.agencySlug&&(!agency||!work)&&!oldContexts.has(context))fail('invalid_workflow');
+  for(const source of row.sources)if(!ideaSourceIsAvailable(source,catalog)&&!oldSources.has(context+'/'+ideaSourceKey(source)))fail('invalid_workflow');
+ }
+ return rows;
+}
 // Read compatibility only: never rewrite the original receipt or old history snapshots.
 export function normalizeWorkflow(value,original={}){
  const base=emptyWorkflow(),raw=value?.brief||{},legacy=!version(raw.version);
@@ -20,7 +57,7 @@ export function normalizeWorkflow(value,original={}){
   for(const key of Object.values(evidenceFields))t[key]=version(rawTeam[key]);
   t.sharedBriefVersion=version(rawTeam.sharedBriefVersion);return t;
  });
- return {brief,teams,preparation:normalizePreparation(value?.preparation),ideaDraft:typeof value?.ideaDraft==='string'?value.ideaDraft:'',ideaFeedback:typeof value?.ideaFeedback==='string'?value.ideaFeedback:''};
+ return {brief,teams,preparation:normalizePreparation(value?.preparation),ideaSources:normalizeIdeaSources(value?.ideaSources),ideaDraft:typeof value?.ideaDraft==='string'?value.ideaDraft:'',ideaFeedback:typeof value?.ideaFeedback==='string'?value.ideaFeedback:''};
 }
 export const briefConfirmed=b=>Boolean(b?.confirmed&&b.confirmedVersion===b.version);
 export const evidenceCurrent=(t,b,key)=>Boolean(version(b?.version)&&t?.[evidenceFields[key]]===b.version);
@@ -67,8 +104,9 @@ export function validateWorkflow(input,previous,catalog,now,selection=[]){
  if(previous.teams.some(t=>!seen.has(t.agencySlug)))fail('keep_team_history');
  // Match read normalization, including key order, so an unchanged save stays a no-op.
  const preparation=validatePreparation(input.preparation,previous.preparation,catalog,selection);
+ const ideaSources=validateIdeaSources(input.ideaSources,previous.ideaSources,catalog);
  const ideaDraft=text(input.ideaDraft===undefined?previous.ideaDraft:input.ideaDraft,4000),ideaFeedback=text(input.ideaFeedback===undefined?previous.ideaFeedback:input.ideaFeedback,2000);
- return normalizeWorkflow({brief,teams,preparation,ideaDraft,ideaFeedback});
+ return normalizeWorkflow({brief,teams,preparation,ideaSources,ideaDraft,ideaFeedback});
 }
 export const stageLabels={brief:'Бриф',confirm:'Подтверждение',selection:'Подбор',preparation:'Разговор и сценарий',introduction:'Знакомство',outcome:'Итог'};
 export function teamAction(t,b){

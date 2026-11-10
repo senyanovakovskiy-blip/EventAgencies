@@ -3,10 +3,12 @@ import {preparationDraftFields,preparationFollowUpFields,preparationFields,prepa
 import {preparationComparisonMarkup,wirePreparationComparison} from './preparation-comparison-ui.js';
 import {discussionPlanMarkup,wireDiscussionPlans} from './discussion-plan-ui.js';
 import {buildEventIdeas,combineEventIdeaOptions,eventIdeaComparisonText,eventIdeaKey,eventIdeaPitchSourceIdentity,eventIdeaPitchText,eventIdeaScopes,eventIdeaSourceFingerprint,eventIdeaText,eventIdeasMarkup,eventIdeasSignature,ideaReactionDetails,ideaResponseLabels,ideaSourceMoments,renderEventIdeaCombination,renderEventIdeaComparison,renderEventIdeas} from './event-ideas.js';
+import {IDEA_SOURCE_CONTEXT_LIMIT,ideaSourceContextKey,ideaSourceIsAvailable,normalizeIdeaSources} from './workflow-model.js';
 const preparationViews=new WeakMap();
 export const capturePreparationView=form=>preparationViews.get(form)?.capture()||null;
 export const restorePreparationView=(form,view)=>preparationViews.get(form)?.restore(view);
 export const syncPreparationViewControls=form=>preparationViews.get(form)?.controls();
+export const readIdeaSources=(form,fallback=[])=>preparationViews.get(form)?.readSources()||normalizeIdeaSources(fallback);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const text=value=>Array.isArray(value)?value.join(', '):typeof value==='string'?value:'';
 const worksFor=(catalog,slug)=>catalog.projects.filter(p=>p.agencySlug===slug||p.agencySlugs?.includes(slug));
@@ -60,7 +62,7 @@ export function readPreparation(form,fallback=[]){
 }
 export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const host=form.querySelector('[data-preparation-cards]'),select=form.querySelector('[data-preparation-context]'),count=form.querySelector('[data-preparation-count]');
- const saved=normalizePreparation(data.workflow?.preparation),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
+ const saved=normalizePreparation(data.workflow?.preparation),savedIdeaSources=normalizeIdeaSources(data.workflow?.ideaSources),savedIdeaSourcesByContext=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row.sources])),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
  host.innerHTML=saved.map(item=>cardMarkup(item,catalog,data.receipt,true)).join('');host.dataset.ready='true';
  const cards=()=>[...host.querySelectorAll('[data-preparation-card]')];
  const ideaCards=()=>[...cards(),form.querySelector('[data-general-idea-lab]')].filter(Boolean);
@@ -71,6 +73,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   values.recommendations.forEach((item,i)=>add(item,'Рекомендация · '+(i+1)));
   values.workflow.teams.forEach(item=>add({...item,workSlug:null},'Команда в работе'));
   readPreparation(form).forEach(item=>add(item,'Внутренняя подготовка'));
+  savedIdeaSources.filter(item=>item.agencySlug).forEach(item=>add(item,'Источники для идеи'));
   visited.forEach(item=>{if(!entries.has(preparationKey(item)))add(item,'Просмотр досье');});
   return entries;
  }
@@ -81,7 +84,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   card.querySelector('[data-preparation-origin]').textContent=entry.origins?.join(' · ')||'Просмотр досье';select.value=active;
   plans?.contextChanged();
  }
- function sourcesFor(card){let selected=ideaSourceSelections.get(card);if(!selected){selected=new Map();ideaSourceSelections.set(card,selected);}return selected;}
+ function sourcesFor(card){let selected=ideaSourceSelections.get(card);if(!selected){selected=new Map();const context=ideaSourceContextKey({agencySlug:card.dataset.agency,workSlug:card.dataset.work||null});for(const source of savedIdeaSourcesByContext.get(context)||[])selected.set(JSON.stringify([source.agencySlug,source.workSlug,source.momentKey]),{...source,operatorSelected:true});ideaSourceSelections.set(card,selected);}return selected;}
  function filterIdeaSourceOptions(card){
   const search=card.querySelector('[data-event-idea-source-search]'),picker=card.querySelector('[data-event-idea-source-picker]'),status=card.querySelector('[data-event-idea-source-search-status]');if(!search||!picker||!status)return;
   const query=search.value.trim().normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е');let total=0,matched=0;
@@ -105,7 +108,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const list=card.querySelector('[data-event-idea-source-list]');if(!list)return;
   filterIdeaSourceOptions(card);
   const selected=sourcesFor(card);
-   list.innerHTML=[...selected].map(([key,item])=>{const work=catalog.projects.find(project=>project.slug===item.workSlug),agency=catalog.agencies.find(value=>value.slug===item.agencySlug),moment=work&&item.momentKey?ideaSourceMoments(work).find(value=>value.key===item.momentKey):null;return `<li><span>${esc(work?.fullTitle||work?.title||item.workSlug)}${moment?' · '+esc(moment.label):''} · ${esc(agency?.name||item.agencySlug)}</span><button type="button" class="text-button" data-remove-event-idea-source="${esc(key)}" aria-label="Убрать источник ${esc(work?.fullTitle||work?.title||item.workSlug)}">Убрать</button></li>`;}).join('');
+   list.innerHTML=[...selected].map(([key,item])=>{const work=catalog.projects.find(project=>project.slug===item.workSlug),agency=catalog.agencies.find(value=>value.slug===item.agencySlug),moment=work&&item.momentKey?ideaSourceMoments(work).find(value=>value.key===item.momentKey):null,available=ideaSourceIsAvailable(item,catalog);return `<li><span>${esc(work?.fullTitle||work?.title||item.workSlug)}${moment?' · '+esc(moment.label):''} · ${esc(agency?.name||item.agencySlug)}${available?'':' · сейчас недоступен в каталоге; сохранён для ручной сверки, в генераторе не используется'}</span><button type="button" class="text-button" data-remove-event-idea-source="${esc(key)}" aria-label="Убрать источник ${esc(work?.fullTitle||work?.title||item.workSlug)}">Убрать</button></li>`;}).join('');
  }
  function installIdeaComparison(panel){
   const results=panel.querySelector('[data-event-ideas-results]'),grid=results?.querySelector('.event-idea-grid'),cards=grid?[...grid.querySelectorAll('.event-idea-card')]:[];
@@ -118,7 +121,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const button=document.createElement('button');button.type='button';button.className='secondary';button.dataset.suggestEventIdeaCombination='';button.textContent='Предложить связку двух отмеченных вариантов';section.append(button);
  }
  function ideaInput(card,entries=contexts()){
-  const ideaSources=[...sourcesFor(card).values()],currentWork={agencySlug:card.dataset.agency,workSlug:card.dataset.work||null};
+  const ideaSources=[...sourcesFor(card).values()].filter(source=>ideaSourceIsAvailable(source,catalog)),currentWork={agencySlug:card.dataset.agency,workSlug:card.dataset.work||null};
   return {entry:{agencySlug:card.dataset.agency,workSlug:ideaSources.length?null:currentWork.workSlug},catalog,receipt:data.receipt,workflow:getValues().workflow,references:[...ideaSources,...(ideaSources.length&&currentWork.workSlug?[currentWork]:[]),...entries.values()],formatOverride:card.querySelector('[data-event-idea-format]')?.value||'',participationMode:card.querySelector('[data-event-idea-participation]')?.value||'brief',creativeAngle:card.querySelector('[data-event-idea-angle]')?.value||'brief',audienceProfile:card.querySelector('[data-event-idea-audience]')?.value||'unspecified',ideaApproach:card.querySelector('[data-event-idea-approach]')?.value||'all',customDirection:card.querySelector('[data-event-idea-direction]')?.value||'',eventDuration:card.querySelector('[data-event-idea-duration]')?.value||'',allowUnmatchedManualCombination:Boolean(card.querySelector('[data-event-idea-manual-combine]')?.checked),clientFeedback:card.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]')?.value||''};
  }
  function refreshEventIdeas(entries=contexts()){
@@ -145,6 +148,14 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    result.push({key:eventIdeaKey(item),sourceIdentity:eventIdeaPitchSourceIdentity(item),value,used:false});
   }
   return result;
+ }
+ function readSources(){
+  const rows=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row]));
+  for(const card of ideaCards()){
+   const context={agencySlug:card.dataset.agency,workSlug:card.dataset.work||null},key=ideaSourceContextKey(context),sources=[...sourcesFor(card).values()].map(({agencySlug,workSlug,momentKey})=>({agencySlug,workSlug,momentKey}));
+   if(sources.length)rows.set(key,{...context,sources});else rows.delete(key);
+  }
+  return normalizeIdeaSources([...rows.values()]);
  }
  function sync(){
   const entries=contexts(),key=[...entries].map(([id,item])=>id+':'+item.origins.join(',')).join('|');
@@ -185,7 +196,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const appendCombinationDraft=event.target.closest('[data-append-event-idea-combination]');
   if(appendCombinationDraft&&!form.dataset.busy){
    const card=appendCombinationDraft.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]'),state=panel&&eventIdeaStates.get(panel),entries=contexts();if(!card||!panel||!status||!state?.combination)return;
-   if(state.signature!==eventIdeaSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Пересоберите варианты перед сохранением связки.';return;}
+   if(state.signature!==eventIdeasSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Пересоберите варианты перед сохранением связки.';return;}
    const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]'),block=eventIdeaText(state.combination,state.commonChecks);if(!scenario){status.textContent='Поле чернового сценария недоступно.';return;}
    if(scenario.value.includes(block)){status.textContent='Эта связка уже есть в черновом сценарии.';return;}
    const current=scenario.value.trimEnd(),next=current?current+'\n\n'+block:block;if(next.length>scenario.maxLength){status.textContent='Связка не помещается в черновой сценарий. Сократите её или возьмите только нужный элемент вручную.';return;}
@@ -194,7 +205,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const suggestCombination=event.target.closest('[data-suggest-event-idea-combination]');
   if(suggestCombination&&!form.dataset.busy){
    const card=suggestCombination.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]'),state=panel&&eventIdeaStates.get(panel),entries=contexts();if(!card||!panel||!status||!state)return;
-   if(state.signature!==eventIdeaSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед поиском связки.';return;}
+   if(state.signature!==eventIdeasSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед поиском связки.';return;}
    const items=[...state.comparison].map(index=>state.ideas[index]).filter(Boolean),result=combineEventIdeaOptions(items);if(!result.option){state.combination=null;status.textContent=result.reason;return;}
    if(state.combination){status.textContent='Черновик связки уже подготовлен. Измените отмеченные варианты, чтобы собрать другой.';return;}
    state.combination=result.option;const host=panel.querySelector('[data-event-idea-comparison]');if(host)host.insertAdjacentHTML('beforeend',renderEventIdeaCombination(result.option));suggestCombination.disabled=true;state.message='Подготовлена гипотеза сочетания двух вариантов. Проверьте общую тему и возможность реализации.';status.textContent=state.message;return;
@@ -202,7 +213,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const appendComparison=event.target.closest('[data-append-event-idea-comparison]');
   if(appendComparison&&!form.dataset.busy){
    const card=appendComparison.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]'),state=panel&&eventIdeaStates.get(panel),entries=contexts();if(!card||!panel||!status||!state)return;
-   if(state.signature!==eventIdeaSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед сохранением сравнения.';return;}
+   if(state.signature!==eventIdeasSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед сохранением сравнения.';return;}
    const items=[...state.comparison].map(index=>state.ideas[index]).filter(Boolean);if(items.length<2){status.textContent='Отметьте минимум два варианта для сравнения.';return;}
    const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]'),block=eventIdeaComparisonText(items,state.commonChecks);if(!scenario){status.textContent='Поле чернового сценария недоступно.';return;}
    if(scenario.value.includes(block)){status.textContent='Это сравнение уже есть в черновом сценарии.';return;}
@@ -212,7 +223,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const compareButton=event.target.closest('[data-toggle-event-idea-compare]');
   if(compareButton&&!form.dataset.busy){
    const card=compareButton.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]');if(!card||!panel||!status)return;
-   const state=eventIdeaStates.get(panel),index=Number(compareButton.dataset.toggleEventIdeaCompare),entries=contexts(),signature=eventIdeaSignature(ideaInput(card,entries));
+   const state=eventIdeaStates.get(panel),index=Number(compareButton.dataset.toggleEventIdeaCompare),entries=contexts(),signature=eventIdeasSignature(ideaInput(card,entries));
    if(!state||state.signature!==signature||!state.ideas[index]){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед сравнением.';return;}
    if(state.comparison.has(index))state.comparison.delete(index);
    else if(state.comparison.size>=3){status.textContent='Можно сравнить не больше трёх вариантов. Уберите один, чтобы добавить другой.';return;}
@@ -226,13 +237,14 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   if((addSource||removeSource)&&!form.dataset.busy){
    const card=event.target.closest('[data-preparation-card]'),picker=card?.querySelector('[data-event-idea-source-picker]'),sourceStatus=card?.querySelector('[data-event-idea-source-status]');if(!card||!picker||!sourceStatus)return;
    const selected=sourcesFor(card);
-   if(removeSource){selected.delete(removeSource.dataset.removeEventIdeaSource);sync();sourceStatus.textContent='Источник убран из этой подборки идей. Состав заявки и выбор клиента не изменились.';return;}
+   if(removeSource){selected.delete(removeSource.dataset.removeEventIdeaSource);sync();form.dispatchEvent(new Event('input',{bubbles:true}));sourceStatus.textContent='Источник убран из этой подборки идей. Состав заявки и выбор клиента не изменились.';return;}
    let value;try{value=JSON.parse(picker.value);}catch{value=null;}
-   const [agencySlug,workSlug,momentKey]=Array.isArray(value)?value:[],work=catalog.projects.find(project=>project.slug===workSlug&&(project.agencySlug===agencySlug||project.agencySlugs?.includes(agencySlug))),moment=work&&ideaSourceMoments(work).find(item=>item.key===momentKey),key=JSON.stringify([agencySlug,workSlug,momentKey]);
-   if(!work||!moment){sourceStatus.textContent='Выберите доступный фрагмент работы из каталога.';return;}
+   const [agencySlug,workSlug,momentKey]=Array.isArray(value)?value:[],key=JSON.stringify([agencySlug,workSlug,momentKey]);
+   if(!ideaSourceIsAvailable({agencySlug,workSlug,momentKey},catalog)){sourceStatus.textContent='Выберите доступный фрагмент работы из каталога.';return;}
    if([...selected.values()].some(item=>item.agencySlug===agencySlug&&item.workSlug===workSlug&&item.momentKey===momentKey)){sourceStatus.textContent='Этот фрагмент уже добавлен в подборку.';return;}
    if(selected.size>=3){sourceStatus.textContent='В одну подборку можно добавить до трёх фрагментов. Уберите один, если хотите заменить его.';return;}
-   selected.set(key,{agencySlug,workSlug,momentKey,operatorSelected:true});picker.value='';sync();sourceStatus.textContent='Фрагмент работы добавлен только как источник идеи. Пересоберите варианты, чтобы развить или сочетать его с другими элементами.';return;
+   if(!selected.size&&readSources().length>=IDEA_SOURCE_CONTEXT_LIMIT){sourceStatus.textContent='Достигнут предел подборок с источниками для одной заявки. Уберите больше не нужную подборку перед добавлением новой.';return;}
+   selected.set(key,{agencySlug,workSlug,momentKey,operatorSelected:true});picker.value='';sync();form.dispatchEvent(new Event('input',{bubbles:true}));sourceStatus.textContent='Фрагмент работы добавлен только как источник идеи. Сохраните изменения; затем пересоберите варианты, чтобы развить или сочетать их.';return;
   }
   const generateIdeas=event.target.closest('[data-generate-event-ideas]'),appendIdea=event.target.closest('[data-append-event-idea]'),copyIdea=event.target.closest('[data-copy-event-idea]'),copyQuickIdea=event.target.closest('[data-copy-event-idea-quick]'),appendPitch=event.target.closest('[data-append-event-idea-pitch]'),appendReply=event.target.closest('[data-append-event-idea-reply]'),appendScale=event.target.closest('[data-append-event-idea-scale]');
   if((generateIdeas||appendIdea||copyIdea||copyQuickIdea||appendPitch||appendReply||appendScale)&&!form.dataset.busy){
@@ -302,7 +314,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  form.addEventListener('click',shortcut);form.ownerDocument.querySelector('.source-request')?.addEventListener('click',shortcut);
  comparison=wirePreparationComparison(form,{catalog,receipt:data.receipt,getContexts:contexts,getPreparation:()=>readPreparation(form),onEdit:open,onViewChange:()=>plans?.sync()});
  plans=wireDiscussionPlans(form,{catalog,receipt:data.receipt,getPreparation:()=>readPreparation(form),getWorkflow:()=>getValues().workflow,getActiveKey:()=>active,getComparison:()=>({selectedKeys:comparison.capture().selectedKeys,contexts:contexts()}),siteOrigin:location.origin});
- const controller={sync,controls:()=>{comparison.controls();plans.controls();},capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
+ const controller={sync,readSources,controls:()=>{comparison.controls();plans.controls();},capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
   if(form.dataset.busy==='true'||!view||view.recordId!==data.recordId)return;
   // Empty visited contexts are view state too: readPreparation omits them.
   for(const item of normalizePreparation(view.visited))visited.set(preparationKey(item),{agencySlug:item.agencySlug,workSlug:item.workSlug});
