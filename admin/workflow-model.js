@@ -4,14 +4,36 @@ export const briefFields={goal:'Цель мероприятия',city:'Горо�
 export const responses={pending:'Ответ не получен',interested:'Есть интерес к обсуждению',declined:'Отказ',no_response:'Нет ответа после обращения'};
 export const consents={unknown:'Не получено',yes:'Получено',no:'Отказ'};
 export const evidenceFields={response:'responseBriefVersion',customerConsent:'customerConsentBriefVersion',agencyConsent:'agencyConsentBriefVersion'};
-export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[],preparation:[],ideaSources:[],ideaDraft:'',ideaFeedback:''});
+export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[],preparation:[],ideaSources:[],ideaPitches:[],ideaDraft:'',ideaFeedback:''});
 export const emptyTeam=agencySlug=>({agencySlug,response:'pending',responseNote:'',refusalReason:'',customerConsent:'unknown',customerConsentNote:'',agencyConsent:'unknown',agencyConsentNote:'',responseBriefVersion:null,customerConsentBriefVersion:null,agencyConsentBriefVersion:null,contactsShared:false,contactNote:'',conversationHeld:false,conversationNote:'',nextStep:'',result:'',updatedAt:null,sharedAt:null,sharedBriefVersion:null,conversationAt:null});
 const version=v=>Number.isSafeInteger(v)&&v>0?v:null;
 export const IDEA_SOURCE_CONTEXT_LIMIT=64;
 export const IDEA_SOURCE_LIMIT=3;
+export const IDEA_PITCH_LIMIT=30;
+export const IDEA_PITCH_TEXT_LIMIT=2400;
+export const IDEA_PITCH_TOTAL_LIMIT=24000;
 const ideaSlug=value=>typeof value==='string'&&value.length<=200&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 export const ideaSourceContextKey=item=>JSON.stringify([item?.agencySlug||'',item?.workSlug||null]);
 const ideaSourceKey=item=>JSON.stringify([item.agencySlug,item.workSlug,item.momentKey]);
+const validIdeaContext=row=>row?.agencySlug===''&&row.workSlug===null||ideaSlug(row?.agencySlug)&&(row.workSlug===null||ideaSlug(row.workSlug));
+export const ideaPitchKey=row=>JSON.stringify([ideaSourceContextKey(row),row?.key||'']);
+export function normalizeIdeaPitches(value){
+ const seen=new Set(),result=[];
+ for(const row of (Array.isArray(value)?value:[]).slice(0,IDEA_PITCH_LIMIT)){
+  if(!validIdeaContext(row)||typeof row.key!=='string'||!row.key||row.key.length>2200||typeof row.sourceIdentity!=='string'||row.sourceIdentity.length>1600||typeof row.title!=='string'||!row.title.trim()||row.title.length>180||typeof row.text!=='string'||!row.text.trim()||row.text.length>IDEA_PITCH_TEXT_LIMIT)continue;
+  const key=ideaPitchKey(row);if(seen.has(key))continue;seen.add(key);
+  result.push({agencySlug:row.agencySlug,workSlug:row.workSlug,key:row.key,sourceIdentity:row.sourceIdentity,title:row.title.trim(),text:row.text.trim()});
+ }
+ return result;
+}
+function validateIdeaPitches(input,previous){
+ if(input===undefined)return normalizeIdeaPitches(previous);
+ if(!Array.isArray(input)||input.length>IDEA_PITCH_LIMIT)fail('invalid_workflow');
+ const rows=normalizeIdeaPitches(input);
+ if(rows.length!==input.length||rows.some((row,index)=>row.agencySlug!==input[index].agencySlug||row.workSlug!==input[index].workSlug||row.key!==input[index].key||row.sourceIdentity!==input[index].sourceIdentity||row.title!==input[index].title.trim()||row.text!==input[index].text.trim()))fail('invalid_workflow');
+ if(rows.reduce((sum,row)=>sum+row.text.length,0)>IDEA_PITCH_TOTAL_LIMIT)fail('invalid_workflow');
+ return rows;
+}
 export function normalizeIdeaSources(value){
  const seenContexts=new Set(),result=[];
  for(const row of (Array.isArray(value)?value:[]).slice(0,IDEA_SOURCE_CONTEXT_LIMIT)){
@@ -57,7 +79,7 @@ export function normalizeWorkflow(value,original={}){
   for(const key of Object.values(evidenceFields))t[key]=version(rawTeam[key]);
   t.sharedBriefVersion=version(rawTeam.sharedBriefVersion);return t;
  });
- return {brief,teams,preparation:normalizePreparation(value?.preparation),ideaSources:normalizeIdeaSources(value?.ideaSources),ideaDraft:typeof value?.ideaDraft==='string'?value.ideaDraft:'',ideaFeedback:typeof value?.ideaFeedback==='string'?value.ideaFeedback:''};
+ return {brief,teams,preparation:normalizePreparation(value?.preparation),ideaSources:normalizeIdeaSources(value?.ideaSources),ideaPitches:normalizeIdeaPitches(value?.ideaPitches),ideaDraft:typeof value?.ideaDraft==='string'?value.ideaDraft:'',ideaFeedback:typeof value?.ideaFeedback==='string'?value.ideaFeedback:''};
 }
 export const briefConfirmed=b=>Boolean(b?.confirmed&&b.confirmedVersion===b.version);
 export const evidenceCurrent=(t,b,key)=>Boolean(version(b?.version)&&t?.[evidenceFields[key]]===b.version);
@@ -105,8 +127,9 @@ export function validateWorkflow(input,previous,catalog,now,selection=[]){
  // Match read normalization, including key order, so an unchanged save stays a no-op.
  const preparation=validatePreparation(input.preparation,previous.preparation,catalog,selection);
  const ideaSources=validateIdeaSources(input.ideaSources,previous.ideaSources,catalog);
+ const ideaPitches=validateIdeaPitches(input.ideaPitches,previous.ideaPitches);
  const ideaDraft=text(input.ideaDraft===undefined?previous.ideaDraft:input.ideaDraft,4000),ideaFeedback=text(input.ideaFeedback===undefined?previous.ideaFeedback:input.ideaFeedback,2000);
- return normalizeWorkflow({brief,teams,preparation,ideaSources,ideaDraft,ideaFeedback});
+ return normalizeWorkflow({brief,teams,preparation,ideaSources,ideaPitches,ideaDraft,ideaFeedback});
 }
 export const stageLabels={brief:'Бриф',confirm:'Подтверждение',selection:'Подбор',preparation:'Разговор и сценарий',introduction:'Знакомство',outcome:'Итог'};
 export function teamAction(t,b){

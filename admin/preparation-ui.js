@@ -3,12 +3,13 @@ import {preparationDraftFields,preparationFollowUpFields,preparationFields,prepa
 import {preparationComparisonMarkup,wirePreparationComparison} from './preparation-comparison-ui.js';
 import {discussionPlanMarkup,wireDiscussionPlans} from './discussion-plan-ui.js';
 import {buildEventIdeas,combineEventIdeaOptions,eventIdeaComparisonText,eventIdeaKey,eventIdeaPitchSourceIdentity,eventIdeaPitchText,eventIdeaScopes,eventIdeaSourceFingerprint,eventIdeaText,eventIdeasMarkup,eventIdeasSignature,ideaReactionDetails,ideaResponseLabels,ideaSourceMoments,renderEventIdeaCombination,renderEventIdeaComparison,renderEventIdeas} from './event-ideas.js';
-import {IDEA_SOURCE_CONTEXT_LIMIT,ideaSourceContextKey,ideaSourceIsAvailable,normalizeIdeaSources} from './workflow-model.js';
+import {IDEA_SOURCE_CONTEXT_LIMIT,IDEA_PITCH_LIMIT,IDEA_PITCH_TEXT_LIMIT,IDEA_PITCH_TOTAL_LIMIT,ideaSourceContextKey,ideaSourceIsAvailable,ideaPitchKey,normalizeIdeaSources,normalizeIdeaPitches} from './workflow-model.js';
 const preparationViews=new WeakMap();
 export const capturePreparationView=form=>preparationViews.get(form)?.capture()||null;
 export const restorePreparationView=(form,view)=>preparationViews.get(form)?.restore(view);
 export const syncPreparationViewControls=form=>preparationViews.get(form)?.controls();
 export const readIdeaSources=(form,fallback=[])=>preparationViews.get(form)?.readSources()||normalizeIdeaSources(fallback);
+export const readIdeaPitches=(form,fallback=[])=>preparationViews.get(form)?.readPitches()||normalizeIdeaPitches(fallback);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const text=value=>Array.isArray(value)?value.join(', '):typeof value==='string'?value:'';
 const worksFor=(catalog,slug)=>catalog.projects.filter(p=>p.agencySlug===slug||p.agencySlugs?.includes(slug));
@@ -62,7 +63,7 @@ export function readPreparation(form,fallback=[]){
 }
 export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const host=form.querySelector('[data-preparation-cards]'),select=form.querySelector('[data-preparation-context]'),count=form.querySelector('[data-preparation-count]');
- const saved=normalizePreparation(data.workflow?.preparation),savedIdeaSources=normalizeIdeaSources(data.workflow?.ideaSources),savedIdeaSourcesByContext=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row.sources])),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
+ const saved=normalizePreparation(data.workflow?.preparation),savedIdeaSources=normalizeIdeaSources(data.workflow?.ideaSources),savedIdeaSourcesByContext=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row.sources])),savedIdeaPitches=normalizeIdeaPitches(data.workflow?.ideaPitches),pitchRows=new Map(savedIdeaPitches.map(row=>[ideaPitchKey(row),row])),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
  host.innerHTML=saved.map(item=>cardMarkup(item,catalog,data.receipt,true)).join('');host.dataset.ready='true';
  const cards=()=>[...host.querySelectorAll('[data-preparation-card]')];
  const ideaCards=()=>[...cards(),form.querySelector('[data-general-idea-lab]')].filter(Boolean);
@@ -74,6 +75,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   values.workflow.teams.forEach(item=>add({...item,workSlug:null},'Команда в работе'));
   readPreparation(form).forEach(item=>add(item,'Внутренняя подготовка'));
   savedIdeaSources.filter(item=>item.agencySlug).forEach(item=>add(item,'Источники для идеи'));
+  savedIdeaPitches.filter(item=>item.agencySlug).forEach(item=>add(item,'Сохранённая подача'));
   visited.forEach(item=>{if(!entries.has(preparationKey(item)))add(item,'Просмотр досье');});
   return entries;
  }
@@ -137,17 +139,33 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
       status.textContent=stale?'Бриф, аудитория, путь, длительность, тема идеи или реакция заказчика изменились. Пересоберите подборку перед добавлением в сценарий.':state.message;
   }
  }
- function unsavedIdeaPitches(card,panel,state){
-  const result=[];if(!state)return result;
-  const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]'),reply=form.elements.replyText;
-  for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){
-   const item=state.ideas[Number(field.dataset.eventIdeaPitch)];if(!item)continue;
-   const value=field.value.trim(),baseline=(item.pitchText??eventIdeaPitchText(item)).trim();
-   if(!value||item.pitchText===undefined&&value===baseline)continue;
-   if(scenario?.value.includes('ПОДАЧА ЗАКАЗЧИКУ:\n'+value)||reply?.value.includes('Вариант события для обсуждения:\n'+value))continue;
-   result.push({key:eventIdeaKey(item),sourceIdentity:eventIdeaPitchSourceIdentity(item),value,used:false});
+ const pitchContext=card=>({agencySlug:card.dataset.agency,workSlug:card.dataset.work||null});
+ function readPitches(){
+  for(const card of ideaCards()){
+   const panel=card.querySelector('[data-event-idea-generator]'),state=panel&&eventIdeaStates.get(panel);if(!state)continue;
+   const context=pitchContext(card);
+   for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){
+    const idea=state.ideas[Number(field.dataset.eventIdeaPitch)];if(!idea)continue;
+    const row={...context,key:eventIdeaKey(idea),sourceIdentity:eventIdeaPitchSourceIdentity(idea),title:idea.title.slice(0,180).trim(),text:field.value.trim()},key=ideaPitchKey(row),baseline=eventIdeaPitchText(idea).trim(),restoredKey=idea.pitchRestoredFromKey;
+    if(!row.text||row.text===baseline){pitchRows.delete(key);if(restoredKey)pitchRows.delete(restoredKey);}
+    else if(restoredKey&&restoredKey!==key&&row.text===idea.pitchText?.trim()){pitchRows.delete(key);continue;}
+    else {if(restoredKey&&restoredKey!==key){pitchRows.delete(restoredKey);delete idea.pitchRestoredFromKey;}pitchRows.set(key,row);}
+   }
   }
-  return result;
+  return [...pitchRows.values()];
+ }
+ function syncPitchArchive(card,pitches=readPitches()){
+  const panel=card.querySelector('[data-event-idea-generator]');if(!panel)return;
+  let archive=panel.querySelector('[data-saved-idea-pitches]');
+  if(!archive){archive=document.createElement('details');archive.dataset.savedIdeaPitches='';panel.querySelector('[data-event-ideas-results]')?.before(archive);}
+  if(card.hasAttribute('data-general-idea-lab')){
+   let capacity=panel.querySelector('[data-idea-pitch-capacity]');if(!capacity){capacity=document.createElement('p');capacity.className='small muted';capacity.dataset.ideaPitchCapacity='';archive.before(capacity);}
+   const total=pitches.reduce((sum,row)=>sum+row.text.length,0),invalid=pitches.length>IDEA_PITCH_LIMIT||total>IDEA_PITCH_TOTAL_LIMIT||pitches.some(row=>row.text.length>IDEA_PITCH_TEXT_LIMIT);
+   capacity.hidden=!pitches.length;capacity.classList.toggle('reply-warning',invalid);capacity.textContent=`Отдельные подачи в заявке: ${pitches.length} / ${IDEA_PITCH_LIMIT}; текст: ${total.toLocaleString('ru-RU')} / ${IDEA_PITCH_TOTAL_LIMIT.toLocaleString('ru-RU')} символов.`+(invalid?' Сократите или уберите лишние подачи перед сохранением.':' Сохраняются общей кнопкой заявки.');
+  }
+  const context=ideaSourceContextKey(pitchContext(card)),rows=pitches.filter(row=>ideaSourceContextKey(row)===context);
+  archive.hidden=!rows.length;
+  archive.innerHTML=rows.length?`<summary>Отдельные черновики подач · ${rows.length}</summary><p class="small muted">Они сохраняются с заявкой после нажатия «Сохранить изменения» отдельно от сценария и ответа. При повторной сборке подходящая подача появится в варианте; прежние тексты останутся здесь для копирования и ручной сверки.</p><ul>${rows.map(row=>`<li><strong>${esc(row.title)}</strong><textarea readonly rows="3" aria-label="Черновик подачи: ${esc(row.title)}">${esc(row.text)}</textarea><button type="button" class="text-button" data-remove-saved-idea-pitch="${esc(ideaPitchKey(row))}">Убрать подачу</button></li>`).join('')}</ul>`:'';
  }
  function readSources(){
   const rows=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row]));
@@ -162,7 +180,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   if(key!==optionKey){optionKey=key;select.innerHTML=[...entries.values()].map(item=>{const id=identity(item,catalog,data.receipt);return `<option value="${esc(preparationKey(item))}">${esc(id.name+' · '+id.title+' — '+item.origins.join(', '))}</option>`;}).join('');}
   form.querySelector('[data-preparation-empty]').hidden=entries.size>0;select.hidden=!entries.size;
   if(entries.size)show(entries.get(active)||entries.values().next().value);
-  for(const card of ideaCards())syncIdeaSourceList(card);
+  const pitches=readPitches();for(const card of ideaCards()){syncIdeaSourceList(card);syncPitchArchive(card,pitches);}
   const items=readPreparation(form),length=preparationLength(items),tooLarge=length>PREPARATION_LIMIT||items.length>PREPARATION_MAX_ITEMS;
   count.textContent=`Подготовка: ${length.toLocaleString('ru-RU')} / ${PREPARATION_LIMIT.toLocaleString('ru-RU')} символов во всех записях; ${items.length} / ${PREPARATION_MAX_ITEMS} записей.`+(tooLarge?' Сократите текст перед сохранением.':' Сохраняется общей кнопкой заявки.');count.classList.toggle('reply-warning',tooLarge);
   refreshEventIdeas(entries);
@@ -178,8 +196,18 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  }
  select.addEventListener('change',()=>{if(form.dataset.busy==='true')return;const entry=contexts().get(select.value);if(entry){active=select.value;show(entry);}});
   form.addEventListener('change',event=>{if(event.target.matches('[data-event-idea-source-picker]')){syncIdeaSourcePreview(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-approach],[data-event-idea-format],[data-event-idea-participation],[data-event-idea-angle],[data-event-idea-audience],[data-event-idea-duration],[data-event-idea-manual-combine]')){sync();return;}if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});});
-  form.addEventListener('input',event=>{if(event.target.matches('[data-event-idea-source-search]')){filterIdeaSourceOptions(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-direction]')){sync();return;}if(event.target.matches('[data-preparation-field]')){event.target.closest('[data-preparation-card]').querySelector('[data-generation-status]').textContent='';if(event.target.dataset.preparationField==='clientFeedback')sync();}});
+  form.addEventListener('input',event=>{if(event.target.matches('[data-event-idea-pitch]')){syncPitchArchive(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-source-search]')){filterIdeaSourceOptions(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-direction]')){sync();return;}if(event.target.matches('[data-preparation-field]')){event.target.closest('[data-preparation-card]').querySelector('[data-generation-status]').textContent='';if(event.target.dataset.preparationField==='clientFeedback')sync();}});
  form.addEventListener('click',async event=>{
+  const removePitch=event.target.closest('[data-remove-saved-idea-pitch]');
+  if(removePitch&&!form.dataset.busy){
+   const key=removePitch.dataset.removeSavedIdeaPitch,row=pitchRows.get(key);if(!row)return;
+   if(!confirm('Убрать подачу «'+row.title+'»? После сохранения изменений этот текст больше не будет храниться в заявке.'))return;
+   for(const card of ideaCards()){
+    const panel=card.querySelector('[data-event-idea-generator]'),state=panel&&eventIdeaStates.get(panel);if(!state)continue;
+    for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){const idea=state.ideas[Number(field.dataset.eventIdeaPitch)];if(!idea)continue;const currentKey=ideaPitchKey({...pitchContext(card),key:eventIdeaKey(idea)});if(currentKey===key||idea.pitchRestoredFromKey===key&&!pitchRows.has(currentKey)){field.value=eventIdeaPitchText(idea);delete idea.pitchRestoredFromKey;}}
+   }
+   pitchRows.delete(key);syncPitchArchive(removePitch.closest('[data-preparation-card]'));form.dispatchEvent(new Event('input',{bubbles:true}));return;
+  }
   const responseButton=event.target.closest('[data-record-event-idea-response]');
   if(responseButton&&!form.dataset.busy){
    const card=responseButton.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]');if(!card||!panel||!status)return;
@@ -252,14 +280,14 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    if(!card||!panel||!status)return;
    const entries=contexts(),input=ideaInput(card,entries);
    if(generateIdeas){
-    const previousState=eventIdeaStates.get(panel),drafts=unsavedIdeaPitches(card,panel,previousState),ideas=buildEventIdeas(input),signature=eventIdeasSignature(input);
-    for(const idea of ideas.options){const draft=drafts.find(item=>!item.used&&item.key===eventIdeaKey(idea));if(draft){idea.pitchText=draft.value;idea.pitchRestored=true;draft.used=true;}}
-    for(const idea of ideas.options){if(idea.pitchRestored)continue;const identity=eventIdeaPitchSourceIdentity(idea),draft=identity&&drafts.find(item=>!item.used&&item.sourceIdentity===identity);if(draft){idea.pitchText=draft.value;idea.pitchRestored=true;draft.used=true;}}
-    if(drafts.some(item=>!item.used)&&!confirm('Часть отредактированных подач не относится к новым вариантам. Перед пересборкой добавьте их в сценарий или скопируйте. Продолжить и убрать их из текущей подборки?'))return;
+    const context=ideaSourceContextKey(pitchContext(card)),drafts=readPitches().filter(row=>ideaSourceContextKey(row)===context),ideas=buildEventIdeas(input),signature=eventIdeasSignature(input);
+    for(const idea of ideas.options){const draft=drafts.find(row=>row.key===eventIdeaKey(idea));if(draft){idea.pitchText=draft.text;idea.pitchRestored=true;}}
+    for(const idea of ideas.options){if(idea.pitchRestored)continue;const identity=eventIdeaPitchSourceIdentity(idea),draft=identity&&drafts.slice().reverse().find(row=>row.sourceIdentity===identity);if(draft){idea.pitchText=draft.text;idea.pitchRestored=true;idea.pitchRestoredFromKey=ideaPitchKey(draft);}}
     panel.querySelector('[data-event-ideas-results]').innerHTML=renderEventIdeas(ideas);installIdeaComparison(panel);
+    for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){field.maxLength=IDEA_PITCH_TEXT_LIMIT;const hint=document.createElement('p');hint.className='small muted';hint.textContent=`До ${IDEA_PITCH_TEXT_LIMIT.toLocaleString('ru-RU')} символов. Ручная подача сохранится отдельно от сценария и ответа общей кнопкой заявки.`;field.after(hint);}
     panel.querySelector('[data-event-ideas-results]').hidden=false;
     const amount=ideas.options.length,noun=amount%10===1&&amount%100!==11?'вариант':amount%10>=2&&amount%10<=4&&(amount%100<12||amount%100>14)?'варианта':'вариантов',message=`${amount===1?'Подготовлен':'Подготовлено'} ${amount} ${noun} по выбранному пути. Добавьте подходящее в черновой сценарий; заявка сохранится общей кнопкой.`;
-    eventIdeaStates.set(panel,{ideas:ideas.options,commonChecks:ideas.commonChecks,signature,message,comparison:new Set(),combination:null});panel.dataset.stale='false';refreshEventIdeas(entries);
+    eventIdeaStates.set(panel,{ideas:ideas.options,commonChecks:ideas.commonChecks,signature,message,comparison:new Set(),combination:null});panel.dataset.stale='false';syncPitchArchive(card);refreshEventIdeas(entries);
     status.focus({preventScroll:true});status.scrollIntoView({block:'center'});return;
    }
    const state=eventIdeaStates.get(panel),signature=eventIdeasSignature(input),action=appendIdea||copyQuickIdea||copyIdea||appendPitch||appendReply||appendScale,index=Number(action.dataset[appendIdea?'appendEventIdea':copyQuickIdea?'copyEventIdeaQuick':copyIdea?'copyEventIdea':appendPitch?'appendEventIdeaPitch':appendReply?'appendEventIdeaReply':'appendEventIdeaScale']),idea=state?.ideas[index];
@@ -314,7 +342,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  form.addEventListener('click',shortcut);form.ownerDocument.querySelector('.source-request')?.addEventListener('click',shortcut);
  comparison=wirePreparationComparison(form,{catalog,receipt:data.receipt,getContexts:contexts,getPreparation:()=>readPreparation(form),onEdit:open,onViewChange:()=>plans?.sync()});
  plans=wireDiscussionPlans(form,{catalog,receipt:data.receipt,getPreparation:()=>readPreparation(form),getWorkflow:()=>getValues().workflow,getActiveKey:()=>active,getComparison:()=>({selectedKeys:comparison.capture().selectedKeys,contexts:contexts()}),siteOrigin:location.origin});
- const controller={sync,readSources,controls:()=>{comparison.controls();plans.controls();},capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
+ const controller={sync,readSources,readPitches,controls:()=>{comparison.controls();plans.controls();},capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
   if(form.dataset.busy==='true'||!view||view.recordId!==data.recordId)return;
   // Empty visited contexts are view state too: readPreparation omits them.
   for(const item of normalizePreparation(view.visited))visited.set(preparationKey(item),{agencySlug:item.agencySlug,workSlug:item.workSlug});
