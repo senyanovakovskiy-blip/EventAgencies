@@ -60,3 +60,17 @@ export const projectCopyTombstones = sqliteTable('project_copy_tombstones', {
 }, table => [
   uniqueIndex('project_copy_tombstones_owner_key').on(table.ownerId, table.keyHash),
 ]);
+
+// Only one active invitation exists for the owner's admin workspace. The
+// original bearer token is never stored; its hash is checked on every request.
+export const adminInvitations = sqliteTable('admin_invitations', {
+  id: integer('id').primaryKey(),
+  ownerId: text('owner_id').notNull(),
+  tokenHash: text('token_hash').notNull(),
+  createdAt: integer('created_at').notNull(),
+  expiresAt: integer('expires_at').notNull(),
+  revokedAt: integer('revoked_at'),
+}, table => [
+  uniqueIndex('admin_invitations_token_hash').on(table.tokenHash),
+  index('admin_invitations_owner_expiry').on(table.ownerId, table.expiresAt),
+]);

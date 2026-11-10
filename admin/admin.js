@@ -9,7 +9,7 @@ const emptyDetail=$('#request-detail').innerHTML;
 const format=v=>occasions[v]||(v==='other'?'Другой формат':'Формат нужно уточнить');
 const date=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
 try{if(localStorage.getItem('zizi-theme')==='dark')document.documentElement.dataset.theme='dark';}catch{}
-let csrf='',accessKind='',current=null,catalog=null,catalogPromise=null,page=1,listVersion=0,detailVersion=0,saving=false,loggingOut=false;
+let csrf='',accessKind='',invitationActive=false,current=null,catalog=null,catalogPromise=null,page=1,listVersion=0,detailVersion=0,saving=false,loggingOut=false;
 const getCatalog=()=>catalogPromise||(catalogPromise=api('/api/admin/catalog').then(data=>(catalog=data)).catch(error=>{catalogPromise=null;throw error;}));
 const dirty=()=>editorChanged($('#operator-form'),current);
 const allowLeave=()=>!dirty()||confirm('Есть несохранённые изменения. Уйти без сохранения?');
@@ -26,8 +26,40 @@ async function api(url,options={}){
  }
  return data;
 }
-function showLogin(){ $('#login-view').hidden=false;$('#workspace').hidden=true;$('#logout').hidden=true;$('#initial-status').hidden=true; }
-async function showWorkspace(session){csrf=session.csrf;accessKind=session.accessKind||'';$('#login-view').hidden=true;$('#workspace').hidden=false;$('#logout').hidden=false;$('#reauth').hidden=true;$('#initial-status').hidden=true;let internalError='';if(document.body.dataset.hosted==='true'){try{await api('/api/admin/inquiries/internal',{method:'POST'});}catch(error){internalError='Внутреннее обращение не удалось сохранить: '+error.message;}}await loadList();if(internalError)$('#workspace-status').textContent=internalError;if(!current){const match=/^#request-(\d+)$/.exec(location.hash);if(match)await openDetail(Number(match[1]));}}
+function showLogin(){ $('#login-view').hidden=false;$('#workspace').hidden=true;$('#logout').hidden=true;$('#initial-status').hidden=true;$('#invitation-panel').hidden=true;$('#access-note').hidden=true; }
+const invitationDate=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'long',timeStyle:'short'}).format(new Date(value));
+async function refreshInvitation(){
+ const data=await api('/api/admin/invitation');invitationActive=Boolean(data.active);
+ $('#invitation-status').textContent=data.active?'Ссылка действует до '+invitationDate(data.expiresAt)+(data.source==='existing'?' · сохраните ранее полученную ссылку; повторно показать её нельзя.':''):'Активной ссылки сейчас нет.';
+ $('#revoke-invitation').hidden=!data.active;
+}
+async function showWorkspace(session){
+ csrf=session.csrf;accessKind=session.accessKind||'';$('#login-view').hidden=true;$('#workspace').hidden=false;$('#logout').hidden=false;$('#reauth').hidden=true;$('#initial-status').hidden=true;
+ const invited=accessKind==='invitation';$('#invitation-panel').hidden=invited||document.body.dataset.hosted!=='true';$('#access-note').hidden=!invited;
+ if(invited)$('#access-note').textContent='Вы вошли по секретной ссылке как администратор. Доступ действует до '+invitationDate(session.expiresAt)+'.';
+ if(!invited&&document.body.dataset.hosted==='true'){try{await refreshInvitation();}catch(error){$('#invitation-status').textContent=error.message;}}
+ let internalError='';if(document.body.dataset.hosted==='true'){try{await api('/api/admin/inquiries/internal',{method:'POST'});}catch(error){internalError='Внутреннее обращение не удалось сохранить: '+error.message;}}
+ await loadList();if(internalError)$('#workspace-status').textContent=internalError;if(!current){const match=/^#request-(\d+)$/.exec(location.hash);if(match)await openDetail(Number(match[1]));}
+}
+$('#issue-invitation').addEventListener('click',async()=>{
+ if(invitationActive&&!confirm('Создать новую ссылку? Предыдущая перестанет работать.'))return;
+ const button=$('#issue-invitation');button.disabled=true;$('#invitation-status').textContent='Создаём ссылку…';$('#invitation-link-box').hidden=true;$('#invitation-copy-status').textContent='';
+ try{const result=await api('/api/admin/invitation',{method:'POST',body:'{}'});invitationActive=true;$('#invitation-link').value=result.url;$('#invitation-link-box').hidden=false;$('#invitation-status').textContent='Ссылка действует до '+invitationDate(result.expiresAt)+'. Скопируйте её и передайте лично.';$('#revoke-invitation').hidden=false;$('#invitation-link').focus();$('#invitation-link').select();}
+ catch(error){$('#invitation-status').textContent=error.message;}
+ finally{button.disabled=false;}
+});
+$('#revoke-invitation').addEventListener('click',async()=>{
+ if(!invitationActive||!confirm('Отозвать ссылку сейчас? Вход по ней сразу прекратится.'))return;
+ const button=$('#revoke-invitation');button.disabled=true;$('#invitation-status').textContent='Отзываем ссылку…';
+ try{await api('/api/admin/invitation',{method:'DELETE'});invitationActive=false;$('#invitation-link-box').hidden=true;$('#invitation-link').value='';$('#invitation-status').textContent='Ссылка отозвана. Приглашённый доступ закрыт.';button.hidden=true;}
+ catch(error){$('#invitation-status').textContent=error.message;}
+ finally{button.disabled=false;}
+});
+$('#copy-invitation-link').addEventListener('click',async()=>{
+ const field=$('#invitation-link'),status=$('#invitation-copy-status');
+ try{await navigator.clipboard.writeText(field.value);status.textContent='Ссылка скопирована.';}
+ catch{field.focus();field.select();const copied=document.execCommand('copy');status.textContent=copied?'Ссылка скопирована.':'Ссылка выделена — скопируйте её вручную.';}
+});
 $('#login-form').addEventListener('submit',async event=>{event.preventDefault();const form=event.currentTarget,button=form.querySelector('button');button.disabled=true;$('#login-status').textContent='Проверяем вход…';try{const session=await api('/api/admin/login',{method:'POST',body:JSON.stringify({username:form.elements.username.value,password:form.elements.password.value})});form.elements.password.value='';$('#login-status').textContent='';await showWorkspace(session);}catch(error){$('#login-status').textContent=error.message;}finally{button.disabled=false;}});
 $('#logout').addEventListener('click',async()=>{
  if(loggingOut||saving||!allowLeave())return;

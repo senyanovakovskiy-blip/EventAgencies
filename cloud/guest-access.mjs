@@ -1,9 +1,9 @@
 // A bounded invitation capability, independent of the owner's Sites sign-in.
 // Only its SHA-256 hash and expiry are stored in the hosted environment.
 import { isAdministrator } from './admin-access.mjs';
+import { activeAdminInvitation, invitationTokenMatches } from './admin-invitations.mjs';
 
 export const invitationCookie = '__Host-ea-invitation';
-const tokenPattern = /^[a-f0-9]{64}$/;
 const secureHeaders = {
   'Cache-Control': 'private, no-store',
   'X-Robots-Tag': 'noindex, nofollow, noarchive',
@@ -11,24 +11,6 @@ const secureHeaders = {
   'X-Content-Type-Options': 'nosniff',
   'X-Frame-Options': 'DENY',
 };
-
-export async function invitationDigest(token) {
-  return [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(token)))].map(value => value.toString(16).padStart(2, '0')).join('');
-}
-
-function configuration(env, now) {
-  const hash = env?.EA_INVITATION_HASH;
-  const expires = Date.parse(env?.EA_INVITATION_EXPIRES || '');
-  return tokenPattern.test(hash || '') && Number.isFinite(expires) && expires > now ? { hash, expires } : null;
-}
-
-async function accepts(token, config) {
-  if (!config || typeof token !== 'string' || !tokenPattern.test(token)) return false;
-  const actual = await invitationDigest(token);
-  let difference = 0;
-  for (let i = 0; i < actual.length; i++) difference |= actual.charCodeAt(i) ^ config.hash.charCodeAt(i);
-  return difference === 0;
-}
 
 function cookieToken(request) {
   const matches = (request.headers.get('cookie') || '').split(';').map(part => part.trim()).filter(part => part.startsWith(invitationCookie + '='));
@@ -92,20 +74,26 @@ function entrancePage(request, invitation = false) {
 // anonymous browsers. No query parameter or client-supplied role grants access.
 export async function authorizeSite(request, env, now = Date.now()) {
   const url = new URL(request.url);
-  const config = configuration(env, now);
   if (url.pathname === '/api/access/redeem') {
     if (request.method !== 'POST') return { response: json(405, { error: 'method_not_allowed' }) };
     if (request.headers.get('origin') !== url.origin || request.headers.get('sec-fetch-site') === 'cross-site') return { response: json(403, { error: 'forbidden_origin' }) };
+    // The owner already has account access. Opening their own invitation must
+    // not consume or interfere with the guest capability.
+    if (isAdministrator(request, env)) return { response: json(200, { ok: true, owner: true }) };
     const token = await readToken(request);
-    if (!await accepts(token, config)) return { response: json(403, { error: 'invitation_invalid' }) };
-    const maxAge = Math.max(0, Math.floor((config.expires - now) / 1000));
+    const invitation = await activeAdminInvitation(env.DB, env, now);
+    if (!invitation || !await invitationTokenMatches(token, invitation.hash)) return { response: json(403, { error: 'invitation_invalid' }) };
+    const maxAge = Math.max(0, Math.floor((invitation.expires - now) / 1000));
     return { response: json(200, { ok: true }, { 'Set-Cookie': `${invitationCookie}=${token}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}` }) };
   }
   if (url.pathname === '/invite' && ['GET', 'HEAD'].includes(request.method)) return { response: entrancePage(request, true) };
   // Existing owner identity always wins, including when they inspect an invite.
   if (isAdministrator(request, env)) return { access: null };
-  if (await accepts(cookieToken(request), config)) return { access: {
-    kind: 'invitation', admin: true, ownerId: 'invitation:' + config.hash, expiresAt: new Date(config.expires).toISOString(),
+  const invitation = await activeAdminInvitation(env.DB, env, now);
+  const token = cookieToken(request);
+  if (invitation && await invitationTokenMatches(token, invitation.hash)) return { access: {
+    kind: 'invitation', admin: true, ownerId: invitation.ownerId, personalOwnerId: 'invitation:' + invitation.hash,
+    expiresAt: new Date(invitation.expires).toISOString(),
   } };
   if (url.pathname.startsWith('/api/')) return { response: json(401, { error: 'authentication_required' }) };
   return { response: entrancePage(request) };

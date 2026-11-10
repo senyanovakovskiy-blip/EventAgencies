@@ -3,6 +3,7 @@ import { createProjectCopyStore } from './project-copies.mjs';
 import { isAdministrator } from './admin-access.mjs';
 import { createCloudAdminStore } from './admin-store.mjs';
 import { clearInvitationCookie } from './guest-access.mjs';
+import { adminInvitationStatus, issueAdminInvitation, revokeAdminInvitation } from './admin-invitations.mjs';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer', 'X-Frame-Options': 'DENY' };
 const reply = (status, data) => new Response(JSON.stringify(data), { status, headers });
@@ -32,6 +33,7 @@ export async function handleCloudApi(request, env, access = null) {
   if (!url.pathname.startsWith('/api/')) return null;
   // Access is a server-verified capability, never a browser header or JSON role.
   const ownerId = access?.ownerId || request.headers.get('oai-authenticated-user-id');
+  const personalOwnerId = access?.personalOwnerId || ownerId;
   if (!ownerId?.trim()) return reply(401, { error: 'authentication_required' });
   try {
     const mutation = !['GET', 'HEAD'].includes(request.method);
@@ -47,9 +49,16 @@ export async function handleCloudApi(request, env, access = null) {
       response.headers.set('Set-Cookie', clearInvitationCookie());
       return response;
     }
+    if (url.pathname === '/api/admin/invitation') {
+      if (access?.kind === 'invitation') throw problem(403, 'owner_required');
+      if (request.method === 'GET') return reply(200, await adminInvitationStatus(env.DB, ownerId, env));
+      if (request.method === 'POST') return reply(201, await issueAdminInvitation(env.DB, ownerId, url.origin));
+      if (request.method === 'DELETE') return reply(200, await revokeAdminInvitation(env.DB, ownerId, env));
+      return reply(405, { error: 'method_not_allowed' });
+    }
     if (url.pathname === '/api/admin/login') return reply(405, { error: 'sign_in_with_chatgpt_required' });
     if (url.pathname === '/api/project-copies') {
-      const copies = createProjectCopyStore(env.DB, ownerId);
+      const copies = createProjectCopyStore(env.DB, personalOwnerId);
       if (request.method === 'GET') return reply(200, await copies.list({ page: Number(url.searchParams.get('page') || 1), q: url.searchParams.get('q') || '', sort: url.searchParams.get('sort') || 'newest' }));
       if (request.method === 'POST') {
         const result = await copies.save(await readBody(request, 1048576));
@@ -59,13 +68,13 @@ export async function handleCloudApi(request, env, access = null) {
     }
     const copyMatch = /^\/api\/project-copies\/([1-9]\d*)$/.exec(url.pathname);
     if (copyMatch) {
-      const copies = createProjectCopyStore(env.DB, ownerId), id = Number(copyMatch[1]);
+      const copies = createProjectCopyStore(env.DB, personalOwnerId), id = Number(copyMatch[1]);
       if (request.method === 'GET') return reply(200, await copies.detail(id));
       if (request.method === 'PATCH') return reply(200, await copies.rename(id, await readBody(request, 2048)));
       if (request.method === 'DELETE') return reply(200, await copies.remove(id));
       return reply(405, { error: 'method_not_allowed' });
     }
-    const store = createCloudStore(env.DB, ownerId);
+    const store = createCloudStore(env.DB, personalOwnerId);
     if (url.pathname === '/api/inquiries') {
       if (request.method === 'GET') return reply(200, await store.customerHistory({ page: Number(url.searchParams.get('page') || 1), q: url.searchParams.get('q') || '', status: url.searchParams.get('status') || '' }));
       if (request.method !== 'POST') return reply(405, { error: 'method_not_allowed' });

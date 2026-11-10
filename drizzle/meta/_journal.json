@@ -29,6 +29,13 @@
       "when": 1794270186996,
       "tag": "0003_project_copy_tombstones",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1794271792502,
+      "tag": "0004_admin_invitations",
+      "breakpoints": true
     }
   ]
 }
