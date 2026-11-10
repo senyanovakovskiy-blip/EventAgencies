@@ -194,6 +194,13 @@ function submittedWorkAnswers(fragments,work,agencySlug){
  }
  return found.slice(0,3);
 }
+/** Client answers from submitted wishes, only for a work linked to this exact team. */
+export function customerWorkAnswersFromBrief(description,catalog,agencySlug,workSlug){
+ if(typeof agencySlug!=='string'||typeof workSlug!=='string'||!Array.isArray(catalog?.projects)||!Array.isArray(catalog?.agencies))return [];
+ const work=catalog.projects.find(item=>item.slug===workSlug&&(item.agencySlug===agencySlug||item.agencySlugs?.includes(agencySlug)));
+ if(!work)return [];
+ return submittedWorkAnswers(submittedWorkFragments(description,catalog),work,agencySlug);
+}
 function mentionedWorkReferences(description,catalog,fragments=submittedWorkFragments(description,catalog)){
  const found=new Map();
  for(const item of fragments){
