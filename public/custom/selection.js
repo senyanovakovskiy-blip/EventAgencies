@@ -590,7 +590,7 @@ function renderComparison(data,entries){
  {id:'role',label:'Роль в выбранной работе',render:pick=>esc(pick.p?role(pick.p):pick.workStatus)},
  {id:'budget',label:'Опубликованные условия по бюджету',render:({a})=>esc(a?(a.budgetConditions||'Нужно уточнить'):'Профиль команды недоступен')},
  {id:'event-terms',label:'Дата и стоимость вашего события',render:({a})=>a?'Нужно обсудить с командой':'Профиль команды недоступен'},
- {id:'sources',label:'Источники',render:({a,p})=>a?`${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer" aria-label="Источник выбранной работы · ${esc(a.name)} (новая вкладка)">Источник кейса ↗</a><br>`:''}<a href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison" aria-label="Открыть профиль агентства ${esc(a.name)}">Профиль агентства ↗</a>`:'Профиль команды недоступен'}
+ {id:'sources',label:'Источники',render:({a,p})=>a?`${p?.source?`<a href="${esc(p.source)}" target="_blank" rel="noopener noreferrer" aria-label="Источник выбранной работы · ${esc(a.name)} (новая вкладка)">${p.kind==='case'?'Источник кейса':'Материалы проекта'} ↗</a><br>`:''}<a href="/agency/${a.slug}?from=%2Fmy-project%23project-comparison" aria-label="Открыть профиль агентства ${esc(a.name)}">Профиль агентства ↗</a>`:'Профиль команды недоступен'}
  ];
  for(const row of rows)row.equal=()=>comparisonValuesMatch(row.id,picks,{types:data.types,notes:draft.workNotes});
  const criteria=setupComparisonCriteria(host,rows);
