@@ -23,10 +23,11 @@ export function operatorCatalog(catalog,details={},presentation={}){
   })),
   projects:catalog.projects.map(p=>{
    const detail=details&&Object.hasOwn(details,p.slug)?details[p.slug]||{}:{};
+   const workPresentation=presentation?.works&&Object.hasOwn(presentation.works,p.slug)?presentation.works[p.slug]:null;
    return {
     slug:p.slug,agencySlug:p.agencySlug,agencySlugs:p.agencySlugs||[],fullTitle:p.fullTitle,
     kind:p.kind,category:p.category,eventCity:text(p.eventCity),source:text(p.source),
-    rawDescription:text(p.description),format:text(p.format),venue:text(p.industry),eventDate:text(p.eventDate),
+    rawDescription:text(p.description),format:text(p.format),venue:text(workPresentation?.place).trim()||text(p.industry),eventDate:text(p.eventDate),
     presentation:publicCopy(presentation?.works,p.slug),
     year:text(p.year),guestLabel:text(p.guestLabel),role:text(p.role),
     details:Object.fromEntries(['task','idea','role','result','source','reviewedAt'].map(key=>[key,text(detail[key])]))
