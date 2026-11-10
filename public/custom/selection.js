@@ -46,6 +46,7 @@ const getData=()=>dataPromise||(dataPromise=(async()=>{
  const response=await fetch('/custom/catalog-data.json');if(!response.ok)throw Error('data');return response.json();
 })().catch(error=>{dataPromise=null;throw error;}));
 function persist(next,{quiet=false}={}){
+ if(editingBlocked())return false;
  orderStatus.textContent='';
  lastReceipt=null;sendError='';
  try{draft=writeDraft(localStorage,next);available=true;refresh();return true;}
@@ -69,12 +70,18 @@ function notice(title,copy,{undoReplacement=false,selectedPair=null}={}){
  if(context)noticeNote={...context,button:pop.querySelector('[data-edit-comparison-note]'),status:pop.querySelector('[data-note-saved-status]')};
  pop.hidden=false;replacementUndo?.sync();
 }
+function editingBlocked(){
+ if(!sending)return false;
+ notice('Заявка отправляется','Дождитесь результата отправки, затем измените проект.');
+ return true;
+}
 function withReferenceNote(state,agencySlug,workSlug,note){return workSlug&&note?.trim()&&!Object.hasOwn(state.workNotes,workNoteKey(agencySlug,workSlug))?updateWorkNote(state,agencySlug,workSlug,note):state;}
 const replacement=document.createElement('dialog');replacement.id='replacement-dialog';replacement.setAttribute('aria-labelledby','replacement-title');document.body.append(replacement);
 replacement.addEventListener('close',()=>{pendingReplacement=null;});
 async function offerReplacement(agencySlug,workSlug,note=''){
  try{
-  const data=await getData(),candidate=data.agencies.find(a=>a.slug===agencySlug);if(!candidate)return;
+  const data=await getData();if(editingBlocked())return;
+  const candidate=data.agencies.find(a=>a.slug===agencySlug);if(!candidate)return;
   pendingReplacement={agencySlug,workSlug,note,name:candidate.name};
   replacement.innerHTML=`<button class="brief-close" data-cancel-replacement aria-label="Закрыть замену агентства">×</button><span class="eyebrow">До трёх команд в одном проекте</span><h2 id="replacement-title">Кого заменить на ${esc(candidate.name)}?</h2><p>Описание мероприятия сохранится. Вместо выбранной ниже команды появится ${esc(candidate.name)}${workSlug?' с выбранной работой':''}. Последнюю замену можно будет отменить.</p><div class="replacement-options">${draft.selection.map(s=>{const {label}=selectionView(data,s);return `<button class="secondary-action" data-replace-agency="${esc(s.agencySlug)}" data-replace-name="${esc(label)}">Заменить ${esc(label)}</button>`;}).join('')}</div><button class="replacement-cancel" data-cancel-replacement>Оставить подборку</button>`;
   pop.hidden=true;replacement.showModal();
@@ -104,6 +111,7 @@ document.addEventListener('click',async event=>{
    else{const value=group.querySelector('[data-request-id-value]');if(value){value.focus({preventScroll:true});const range=document.createRange();range.selectNodeContents(value);const selection=window.getSelection();selection?.removeAllRanges();selection?.addRange(range);}status.textContent='Не удалось скопировать. Номер выделен — скопируйте его вручную.';}
    return;
   }
+ if(sending&&event.target.closest('[data-move-agency],[data-save-agency],[data-replace-agency],[data-remove-agency],[data-undo-removal],[data-occasion],[data-save-draft],[data-add-wishes-work],[data-add-wishes-selection],[data-add-wishes-agency-prompt],[data-edit-brief],[data-review-work]')){event.preventDefault();editingBlocked();return;}
  if(event.target.closest('[data-toggle-help-selection]')){setHelpSelection(!helpSelectionExpanded);return;}
   const goToContact=event.target.closest('[data-go-to-contact]');if(goToContact){event.preventDefault();focusContact(goToContact.dataset.goToContact);return;}
  const wishes=event.target.closest('[data-add-wishes-work],[data-add-wishes-selection],[data-add-wishes-agency-prompt]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
@@ -181,7 +189,7 @@ document.addEventListener('click',async event=>{
   if(savingDraft||(available&&draft.request))return;
   savingDraft=true;const button=document.querySelector('[data-save-draft]');button.disabled=true;
   try{const result=submitLocal(draft,'EA-LOCAL-'+Date.now().toString(36).toUpperCase(),new Date().toISOString());focusRequest=true;if(!persist(result.state))focusRequest=false;}
-  finally{savingDraft=false;button.disabled=Boolean(available&&draft.request);}
+  finally{savingDraft=false;button.disabled=sending||Boolean(available&&draft.request);}
  }
 
 });
@@ -364,6 +372,7 @@ async function sendInquiry({recover=false}={}){
  finally{sending=false;sendingRecovery=false;contactEditor?.reconcile();renderHandoff();await renderProject();if(sendError){if(contactNeedsSaving())contactEditor.focusRecovery();else document.getElementById('project-send-error').focus();}}
 }
 function openBrief(field){
+ if(editingBlocked())return;
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
  briefEditor?.open(field);
 }
@@ -410,9 +419,10 @@ function updateWishesPreview(message=''){
  return merged;
 }
 async function openWishes(trigger){
- if(wishesOpening||wishesDialog?.open)return;wishesOpening=true;
+ if(editingBlocked()||wishesOpening||wishesDialog?.open)return;wishesOpening=true;
  try{
-  const data=await getData(),agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');wishesPrompt=(trigger.dataset.addWishesPrompt||'').trim();
+  const data=await getData();if(editingBlocked())return;
+  const agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');wishesPrompt=(trigger.dataset.addWishesPrompt||'').trim();
   wishesAgencyOnly=trigger.hasAttribute('data-add-wishes-agency-prompt');
   wishesAgencyName=wishesAgencyOnly?data.agencies.find(agency=>agency.slug===agencySlug)?.name||'':'';
   if(wishesAgencyOnly&&!wishesAgencyName){notice('Команда не найдена','Обновите каталог и попробуйте снова.');return;}
@@ -442,6 +452,7 @@ async function openWishes(trigger){
     (wishesTrigger?.isConnected?wishesTrigger:replacement)?.focus({preventScroll:true});
    });
    wishesDialog.querySelector('[data-confirm-wishes]').addEventListener('click',async()=>{
+    if(sending){wishesDialog.querySelector('[data-wishes-status]').textContent='Заявка отправляется. Дождитесь результата, затем добавьте пожелание.';return;}
     if(wishesBase!==draft.brief.description){if(wishesDialog.querySelector('#wishes-addition').value===wishesGenerated)regenerateWishes();updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
     const merged=updateWishesPreview();if(merged.result!=='added')return;const previousDescription=draft.brief.description;
     try{draft=writeDraft(localStorage,updateBrief(draft,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
@@ -467,7 +478,7 @@ const briefForm=document.getElementById('event-brief-form');
 if(briefForm){
  const dialog=document.getElementById('brief-dialog');
  briefUndo=setupBriefSessionUndo({form:briefForm,dialog,canUndo:current=>!sending&&!inquiries.hasPending(current)&&!inquiries.accepted(current),onRestored:(next,context)=>{draft=next;available=true;briefEditor?.restored(next,context);syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);refresh();}});
- briefEditor=setupBriefEditor({form:briefForm,dialog,undo:briefUndo,
+ briefEditor=setupBriefEditor({form:briefForm,dialog,undo:briefUndo,canEdit:()=>!sending,
   getFallbackBrief:()=>draft.brief,
   updateForm:()=>{syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);},
   onRead:next=>{draft=next;available=true;},
@@ -508,6 +519,7 @@ document.addEventListener('ea:reference-note-edit',event=>{
  change.result={ok:false,code:'invalid'};
  const agencySlug=field.dataset.workNote,workSlug=field.dataset.noteWork,slug=/^[a-z0-9]+(?:-[a-z0-9]+)*$/;
  if(!slug.test(agencySlug||'')||!slug.test(workSlug||'')||typeof change.expected!=='string'||typeof change.value!=='string'||change.value.length>1000)return;
+ if(sending){change.result={ok:false,code:'sending'};field.closest('.work-note-block')?.querySelector('[role="status"]')?.replaceChildren('Заявка отправляется. Дождитесь результата, затем измените заметку.');editingBlocked();return;}
  if(!available){change.result={ok:false,code:'unsaved'};return;}
  const status=field.closest('.work-note-block').querySelector('[role="status"]'),key=workNoteKey(agencySlug,workSlug);
  const syncFields=value=>document.querySelectorAll('[data-work-note]').forEach(other=>{if(other.dataset.workNote===agencySlug&&other.dataset.noteWork===workSlug&&other.value!==value)other.value=value;});
@@ -530,8 +542,9 @@ document.addEventListener('ea:reference-note-edit',event=>{
 });
 document.addEventListener('input',event=>{
  const field=event.target.closest('[data-work-note]');if(!field)return;
- const next=updateWorkNote(draft,field.dataset.workNote,field.dataset.noteWork,field.value);
  const status=field.closest('.work-note-block').querySelector('[role="status"]');
+ if(sending){field.value=draft.workNotes[workNoteKey(field.dataset.workNote,field.dataset.noteWork)]||'';status.textContent='Заявка отправляется. Дождитесь результата, затем измените заметку.';syncComparisonNote(field);return;}
+ const next=updateWorkNote(draft,field.dataset.workNote,field.dataset.noteWork,field.value);
  try{draft=writeDraft(localStorage,next);available=true;status.textContent='Сохранено · '+field.value.length+' / 1000';}
  catch{draft=next;available=false;status.textContent='Не удалось сохранить. Не закрывайте страницу: разрешите хранение данных и повторите ввод.';}
  document.getElementById('project-storage-note').hidden=available;
@@ -665,7 +678,10 @@ setupProjectSections();
 document.addEventListener('change',async event=>{
  const field=event.target.closest('[data-selected-work]');if(!field)return;
  const agencySlug=field.dataset.selectedWork,workSlug=field.value||null;
+ const restore=()=>{field.value=draft.selection.find(item=>item.agencySlug===agencySlug)?.workSlug||'';};
+ if(editingBlocked()){restore();return;}
  const data=await getData();
+ if(editingBlocked()){restore();return;}
  if(workSlug&&!data.projects.some(p=>p.slug===workSlug&&(p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug))))return;
  persist({...draft,selection:draft.selection.map(s=>s.agencySlug===agencySlug?{...s,workSlug}:s),request:null});
  await renderProject();document.getElementById('work-choice-'+agencySlug)?.focus({preventScroll:true});

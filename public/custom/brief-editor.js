@@ -31,7 +31,7 @@ const experiencePrompts=[
 ];
 
 // The form is a local input buffer. Only explicitly edited groups may be written.
-export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onClose,onSubmit,getFallbackBrief}){
+export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onClose,onSubmit,getFallbackBrief,canEdit=()=>true}){
  if(!form||!dialog)return null;
  const doc=form.ownerDocument,status=form.querySelector('#brief-save-status');
  const promptBox=form.querySelector('[data-brief-prompt-suggestions]'),promptList=form.querySelector('[data-brief-prompt-list]'),promptStatus=form.querySelector('[data-brief-prompt-status]'),description=form.elements.namedItem('description');
@@ -114,6 +114,7 @@ export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onC
  }
  function save(groups){
   if(!session)return false;
+  if(!canEdit()){session.error='Заявка отправляется. Ввод остаётся в окне; дождитесь результата и сохраните описание.';paint();return false;}
   updateForm();
   const state=reconcile();if(!state)return false;
   const requested=groups||pending(),input=displayed();
@@ -153,6 +154,7 @@ export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onC
   (field.disabled?form.elements.namedItem(key==='date'?'dateUnknown':'budgetHelp'):field).focus({preventScroll:true});
  }
  function open(fieldName){
+  if(!canEdit())return;
   if(!dialog.open){
    trigger=doc.activeElement;
    try{const state=snapshot();start(state);undo?.begin(state.current.brief);}
