@@ -11,6 +11,7 @@ import {findReferenceNoteMatch} from './reference-note-search.js';
 import {setupReferenceReturn} from './reference-return.js';
 import {normalizeSearchText,searchTerms,publicPresentationText} from './catalog-search.js';
 import {referencePresentationMarkup,syncReferencePresentationMatch} from './reference-presentation.js';
+import {workDiscussionPrompts} from './project-presentation.js';
 export {REFERENCE_KEY,normalizeReferences};
 const noteCopyController=setupReferenceNoteCopy();
 const noteClearController=setupReferenceNoteClear();
@@ -50,11 +51,17 @@ let referenceView={query:'',agency:'',mode:'photos',sort:'recent',onlyNotes:fals
 try{const view=JSON.parse(sessionStorage.getItem(VIEW_KEY)||'null');if(view)referenceView={query:typeof view.query==='string'?view.query.slice(0,200):'',agency:typeof view.agency==='string'?view.agency:'',mode:view.mode==='notes'?'notes':'photos',sort:['earliest','title','agency'].includes(view.sort)?view.sort:'recent',onlyNotes:view.onlyNotes===true};}catch{}
 const workAgencies=work=>[...new Set([work.agencySlug,...(Array.isArray(work.agencySlugs)?work.agencySlugs:[])].filter(Boolean))];
 function rememberView(){try{sessionStorage.setItem(VIEW_KEY,JSON.stringify(referenceView));}catch{}}
-function noteEntryMarkup(entry){
+function noteEntryMarkup(entry,work){
  const id='reference-note-'+entry.workSlug+(entry.isPrimary?'':'--'+entry.agencySlug);
  const label=entry.isPrimary?'Моя заметка к примеру':'Моя заметка · '+entry.agencyName;
  const context=entry.isPrimary?'Личная заметка · сохраняется в этом браузере.':'Личная запись для команды «'+entry.agencyName+'». Сохраняется в этом браузере.';
- return `<section class="work-note-block reference-note-entry" data-reference-note-entry="${esc(entry.key)}" data-reference-note-agency-name="${esc(entry.agencyName)}"><label for="${esc(id)}">${esc(label)}</label><textarea id="${esc(id)}" data-work-note="${esc(entry.agencySlug)}" data-note-work="${esc(entry.workSlug)}" rows="3" maxlength="1000" aria-describedby="${esc(id)}-help ${esc(id)}-status" placeholder="Что нравится в этой работе?">${esc(entry.note)}</textarea><p class="reference-note-context" id="${esc(id)}-help">${esc(context)}</p><div class="reference-note-actions">${entry.canUseForWishes?`<button class="secondary-action" type="button" data-add-wishes-work="${esc(entry.workSlug)}" data-add-wishes-agency="${esc(entry.agencySlug)}">Добавить в пожелания…</button>`:''}<button class="secondary-action" type="button" data-copy-reference-note aria-describedby="${esc(id)}-copy-status"${entry.note.trim()?'':' disabled'}>Скопировать заметку</button><button class="secondary-action" type="button" data-clear-reference-note aria-describedby="${esc(id)}-clear-status"${entry.note.length?'':' disabled'}>Очистить заметку</button><button class="secondary-action" type="button" data-undo-reference-note-clear aria-describedby="${esc(id)}-clear-status" hidden>Вернуть текст</button></div><p id="${esc(id)}-status" role="status"></p><p id="${esc(id)}-copy-status" data-reference-note-copy-status role="status"></p><p id="${esc(id)}-clear-status" data-reference-note-clear-status role="status"></p></section>`;
+ const questionButtons=entry.canUseForWishes?workDiscussionPrompts(work).map((prompt,index)=>`<button class="secondary-action" type="button" data-answer-work-question="${index}" data-answer-work="${esc(entry.workSlug)}" data-answer-agency="${esc(entry.agencySlug)}" aria-label="Ответить на вопрос ${index+1}: ${esc(prompt)}">Ответить на вопрос ${index+1}</button>`).join(''):'';
+ return `<section class="work-note-block reference-note-entry" data-reference-note-entry="${esc(entry.key)}" data-reference-note-agency-name="${esc(entry.agencyName)}"><label for="${esc(id)}">${esc(label)}</label><textarea id="${esc(id)}" data-work-note="${esc(entry.agencySlug)}" data-note-work="${esc(entry.workSlug)}" rows="3" maxlength="1000" aria-describedby="${esc(id)}-help ${esc(id)}-status" placeholder="Что нравится в этой работе?">${esc(entry.note)}</textarea><p class="reference-note-context" id="${esc(id)}-help">${esc(context)}</p>${questionButtons?`<details class="reference-presentation-details"><summary>Ответить на вопрос о работе</summary><div class="reference-note-actions">${questionButtons}</div></details>`:''}<div class="reference-note-actions">${entry.canUseForWishes?`<button class="secondary-action" type="button" data-add-wishes-work="${esc(entry.workSlug)}" data-add-wishes-agency="${esc(entry.agencySlug)}">Добавить в пожелания…</button>`:''}<button class="secondary-action" type="button" data-copy-reference-note aria-describedby="${esc(id)}-copy-status"${entry.note.trim()?'':' disabled'}>Скопировать заметку</button><button class="secondary-action" type="button" data-clear-reference-note aria-describedby="${esc(id)}-clear-status"${entry.note.length?'':' disabled'}>Очистить заметку</button><button class="secondary-action" type="button" data-undo-reference-note-clear aria-describedby="${esc(id)}-clear-status" hidden>Вернуть текст</button></div><p id="${esc(id)}-status" role="status"></p><p id="${esc(id)}-copy-status" data-reference-note-copy-status role="status"></p><p id="${esc(id)}-clear-status" data-reference-note-clear-status role="status"></p></section>`;
+}
+function referenceQuestionsMarkup(work){
+ const prompts=workDiscussionPrompts(work);
+ if(!prompts.length)return '';
+ return `<section class="reference-presentation"><h4>Идеи для обсуждения</h4><details class="reference-presentation-details"><summary>Вопросы к этой работе · ${prompts.length}</summary><dl>${prompts.map((prompt,index)=>`<div><dt>Вопрос ${index+1}</dt><dd>${esc(prompt)}</dd></div>`).join('')}</dl></details><p class="reference-presentation-empty">Ответ можно записать ниже в заметке нужной команды.</p></section>`;
 }
 function noteFields(card){return [...card.querySelectorAll('.reference-notes [data-work-note]')];}
 function syncReferenceNoteMark(card){
@@ -67,7 +74,7 @@ function referenceNoteSearchItems(card){
 function referenceSearchText(card,work){
  const agencies=data.agencies.filter(agency=>workAgencies(work).includes(agency.slug)).map(agency=>agency.name);
  const noteAgencies=[...card.querySelectorAll('[data-reference-note-agency-name]')].map(entry=>entry.dataset.referenceNoteAgencyName);
- return normalizeSearchText([work.fullTitle,work.client,work.category,work.eventCity,...agencies,...noteAgencies,...noteFields(card).map(field=>field.value)].join(' '));
+ return normalizeSearchText([work.fullTitle,work.client,work.category,work.eventCity,...agencies,...workDiscussionPrompts(work),...noteAgencies,...noteFields(card).map(field=>field.value)].join(' '));
 }
 function syncReferenceNoteMatch(card){
  const host=card.querySelector('.reference-note-match');if(!host)return;
@@ -115,7 +122,8 @@ function currentNoteValues(workSlug,source=null){
 function insertReferenceNote(card,entry){
  const container=card.querySelector('.reference-notes'),chooser=container?.querySelector('[data-reference-note-add]');if(!container)return null;
  const existing=noteFields(card).find(field=>field.dataset.workNote===entry.agencySlug&&field.dataset.noteWork===entry.workSlug);if(existing)return existing;
- if(chooser)chooser.insertAdjacentHTML('beforebegin',noteEntryMarkup(entry));else container.insertAdjacentHTML('beforeend',noteEntryMarkup(entry));
+ const work=data?.projects.find(project=>project.slug===entry.workSlug);
+ if(chooser)chooser.insertAdjacentHTML('beforebegin',noteEntryMarkup(entry,work));else container.insertAdjacentHTML('beforeend',noteEntryMarkup(entry,work));
  return noteFields(card).find(field=>field.dataset.workNote===entry.agencySlug&&field.dataset.noteWork===entry.workSlug)||null;
 }
 function sortReferences(host,works){
@@ -176,7 +184,7 @@ async function renderReferences({reloadCatalog=false}={}){
  let notes={},selection=[];try{const draft=readDraft(localStorage);notes=draft.workNotes;selection=draft.selection;}catch{}
  const pendingNoteKeys=Object.keys(noteClearController.getPendingNotes()),noteDescriptions={...notes};
  for(const key of pendingNoteKeys)if(!Object.hasOwn(noteDescriptions,key))noteDescriptions[key]='';
- const noteMarkup=p=>`<div class="reference-notes" id="reference-note-block-${esc(p.slug)}">${referenceNotesForWork(p,noteDescriptions,data.agencies,{includeEmptyKeys:pendingNoteKeys}).map(noteEntryMarkup).join('')}${noteChooserMarkup(p)}</div>`;
+ const noteMarkup=p=>`<div class="reference-notes" id="reference-note-block-${esc(p.slug)}">${referenceNotesForWork(p,noteDescriptions,data.agencies,{includeEmptyKeys:pendingNoteKeys}).map(entry=>noteEntryMarkup(entry,p)).join('')}${noteChooserMarkup(p)}</div>`;
  const works=saved.map(slug=>data.projects.find(p=>p.slug===slug)).filter(Boolean);
  const agencySlugs=new Set(works.flatMap(workAgencies));
  const agencies=data.agencies.filter(agency=>agencySlugs.has(agency.slug)).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
@@ -194,9 +202,9 @@ async function renderReferences({reloadCatalog=false}={}){
    <label>Агентство<select id="reference-agency" aria-controls="saved-reference-grid"><option value="">Все агентства</option>${agencies.map(agency=>`<option value="${esc(agency.slug)}"${agency.slug===referenceView.agency?' selected':''}>${esc(agency.name)}</option>`).join('')}</select></label>
    <button type="button" class="text-button" data-clear-references>Сбросить</button>
   </div>
-  <p class="reference-search-help" id="reference-search-help">Ищем по названию, агентству, описанию работы и вашим заметкам. Все слова запроса должны встретиться в одном примере.</p>
+  <p class="reference-search-help" id="reference-search-help">Ищем по названию, агентству, описанию, вопросам к работе и вашим заметкам. Все слова запроса должны встретиться в одном примере.</p>
   <div class="reference-view-bar"><div class="reference-view-switch" role="group" aria-label="Вид сохранённых примеров"><button type="button" data-reference-view="photos" aria-controls="saved-reference-grid">Фотосетка</button><button type="button" data-reference-view="notes" aria-controls="saved-reference-grid">С заметками</button></div><label class="reference-sort">Порядок<select id="reference-sort" aria-controls="saved-reference-grid">${[['recent','Сначала новые'],['earliest','Сначала добавленные'],['title','По названию'],['agency','По агентству']].map(([value,label])=>`<option value="${value}"${referenceView.sort===value?' selected':''}>${label}</option>`).join('')}</select></label><label class="reference-notes-filter"><input id="reference-only-notes" type="checkbox"${referenceView.onlyNotes?' checked':''} aria-controls="saved-reference-grid">Только с моими заметками</label><p class="reference-count" data-reference-count role="status" aria-live="polite" aria-atomic="true"></p></div>
-  <div class="reference-grid" id="saved-reference-grid">${works.map(p=>`<article data-saved-reference="${esc(p.slug)}"><a class="reference-cover${p.hasPhotos?'':' reference-cover-empty'}" href="${workLink(p)}">${p.hasPhotos?`<img src="${esc(p.preview||p.thumb||p.image)}" alt="${esc(p.fullTitle)}" loading="lazy">`:'<span aria-hidden="true">↗</span><span>Работа без фотографий</span>'}</a><h3><a href="${workLink(p)}">${esc(p.fullTitle)}</a></h3><p class="reference-team">${esc(p.client)}</p>${referencePresentationMarkup(p)}${teamAction(p)}<button type="button" class="reference-note-toggle" data-toggle-reference-note aria-controls="reference-note-block-${esc(p.slug)}" aria-expanded="false">Мои заметки <span data-reference-note-mark>+</span></button><div class="reference-note-match" hidden></div>${noteMarkup(p)}<button class="reference-remove" data-remove-reference="${esc(p.slug)}">Убрать пример</button></article>`).join('')}</div>
+  <div class="reference-grid" id="saved-reference-grid">${works.map(p=>`<article data-saved-reference="${esc(p.slug)}"><a class="reference-cover${p.hasPhotos?'':' reference-cover-empty'}" href="${workLink(p)}">${p.hasPhotos?`<img src="${esc(p.preview||p.thumb||p.image)}" alt="${esc(p.fullTitle)}" loading="lazy">`:'<span aria-hidden="true">↗</span><span>Работа без фотографий</span>'}</a><h3><a href="${workLink(p)}">${esc(p.fullTitle)}</a></h3><p class="reference-team">${esc(p.client)}</p>${referencePresentationMarkup(p)}${referenceQuestionsMarkup(p)}${teamAction(p)}<button type="button" class="reference-note-toggle" data-toggle-reference-note aria-controls="reference-note-block-${esc(p.slug)}" aria-expanded="false">Мои заметки <span data-reference-note-mark>+</span></button><div class="reference-note-match" hidden></div>${noteMarkup(p)}<button class="reference-remove" data-remove-reference="${esc(p.slug)}">Убрать пример</button></article>`).join('')}</div>
   <div class="reference-empty" data-reference-empty hidden><h3>Таких примеров пока нет</h3><p>Попробуйте другое слово, выберите все агентства или снимите фильтр заметок.</p><button class="secondary-action" type="button" data-reset-references>Показать все сохранённые</button></div>`:
   '<div class="reference-empty"><h3>Начните с того, что нравится</h3><p>Откройте любую работу в каталоге и нажмите «Сохранить как пример». Она появится здесь вместе с вашей личной заметкой.</p><a class="secondary-action" href="/catalog?view=projects">Выбрать первый пример ↗</a></div>');
  setupReferenceBatch(host,removeReferenceBatch);

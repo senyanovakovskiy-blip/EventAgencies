@@ -1,4 +1,8 @@
 const publicText=value=>typeof value==='string'?value:'';
+export function workDiscussionPrompts(work){
+ const prompts=work?.presentation?.discussionPrompts;
+ return Array.isArray(prompts)?prompts.filter(prompt=>typeof prompt==='string'&&prompt.trim()).slice(0,3).map(prompt=>prompt.trim()):[];
+}
 
 /**
  * Public editorial context from a current selectionView(data, selection) result.
@@ -7,7 +11,7 @@ const publicText=value=>typeof value==='string'?value:'';
  * This view does not infer client wishes or write any text into the project.
  */
 export function projectPresentation({s,a,p}){
- if(!a||a.slug!==s.agencySlug)return {scope:'unavailable',title:'',lead:'',fit:'',participation:''};
+ if(!a||a.slug!==s.agencySlug)return {scope:'unavailable',title:'',lead:'',fit:'',participation:'',discussionPrompts:[]};
  const work=p&&p.slug===s.workSlug&&(p.agencySlug===a.slug||p.agencySlugs?.includes(a.slug))?p:null;
  const entry=work||a;
  return {
@@ -15,6 +19,7 @@ export function projectPresentation({s,a,p}){
   title:publicText(work?work.fullTitle:a.name),
   lead:publicText(entry.presentation?.lead),
   fit:publicText(entry.presentation?.fit),
-  participation:work?publicText(work.presentation?.participation):''
+  participation:work?publicText(work.presentation?.participation):'',
+  discussionPrompts:work?workDiscussionPrompts(work):[]
  };
 }

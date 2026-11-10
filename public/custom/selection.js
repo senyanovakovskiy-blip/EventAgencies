@@ -15,6 +15,7 @@ import {setupWishesUndo} from './wishes-undo.js';
 import {setupReplacementUndo} from './replacement-undo.js';
 import {setupProjectWorkPicker} from './project-work-picker.js';
 import {setupProjectNoteEditor} from './project-note-editor.js';
+import {setupProjectQuestionAnswer} from './project-question-answer.js';
 import {referenceProjectMarker} from './reference-batch-session.js';
 import {setupComparisonCriteria,syncComparisonCriteria} from './project-comparison-criteria.js';
 import {comparisonValuesMatch} from './project-comparison-equality.js';
@@ -222,10 +223,11 @@ function preservedNoteMarkup(pick){
  return `<div class="project-preserved-note"><p>Заметка к сохранённому выбору работы</p><div class="comparison-note-text" data-comparison-note-text="${pick.s.agencySlug}" data-note-work="${pick.s.workSlug}">${esc(pick.note||'Сохранённой заметки к этой работе нет.')}</div><p class="project-saved-id">Работа: <code>${esc(pick.s.workSlug)}</code> · команда: <code>${esc(pick.s.agencySlug)}</code></p><small>Только для чтения, пока выбор недоступен. При выборе другой работы её заметка будет отдельной; прежний текст останется сохранён.</small></div>`;
 }
 function projectPresentationMarkup(pick,{showWorkTitle=true}={}){
- const {scope,title,lead,fit,participation}=projectPresentation(pick);
+ const {scope,title,lead,fit,participation,discussionPrompts=[]}=projectPresentation(pick);
  if(scope==='unavailable')return '<p class="project-presentation-empty">Публичное описание недоступно.</p>';
  const label=scope==='work'?'Описание работы':'Описание агентства',hasLead=Boolean(lead.trim()),hasFit=Boolean(fit.trim()),hasParticipation=Boolean(participation.trim());
- return `<div class="project-presentation"><p class="project-presentation-context"><strong>${label}</strong>${title&&(showWorkTitle||scope==='agency')?`<span class="project-presentation-title">${esc(title)}</span>`:''}</p>${hasLead?`<p class="project-presentation-copy">${esc(lead)}</p>`:''}${!hasLead&&!hasFit?'<p class="project-presentation-empty">Публичное описание не указано.</p>':''}${hasFit||hasParticipation?`<dl class="project-presentation-details">${hasFit?`<div><dt>Если вам близко</dt><dd>${esc(fit)}</dd></div>`:''}${hasParticipation?`<div><dt>Участие в работе</dt><dd>${esc(participation)}</dd></div>`:''}</dl>`:''}</div>`;
+ const questions=scope==='work'&&discussionPrompts.length?`<details class="project-discussion-questions"><summary>Вопросы для вашего события · ${discussionPrompts.length}</summary><ol>${discussionPrompts.map((question,index)=>`<li><p>${esc(question)}</p><button type="button" data-answer-work-question="${index}" data-answer-work="${esc(pick.s.workSlug)}" data-answer-agency="${esc(pick.s.agencySlug)}">Ответить в заметке…</button></li>`).join('')}</ol><p>Ваш ответ останется в личной заметке. Добавить её в пожелания можно отдельно.</p></details>`:'';
+ return `<div class="project-presentation"><p class="project-presentation-context"><strong>${label}</strong>${title&&(showWorkTitle||scope==='agency')?`<span class="project-presentation-title">${esc(title)}</span>`:''}</p>${hasLead?`<p class="project-presentation-copy">${esc(lead)}</p>`:''}${!hasLead&&!hasFit?'<p class="project-presentation-empty">Публичное описание не указано.</p>':''}${hasFit||hasParticipation?`<dl class="project-presentation-details">${hasFit?`<div><dt>Если вам близко</dt><dd>${esc(fit)}</dd></div>`:''}${hasParticipation?`<div><dt>Участие в работе</dt><dd>${esc(participation)}</dd></div>`:''}</dl>`:''}${questions}</div>`;
 }
 function briefRows(b){return [['Формат',formatName(b.format)],['Город',b.city||'Нужно уточнить'],['Дата или период',b.dateUnknown?'Дата пока неизвестна':b.date||'Нужно уточнить'],['Количество гостей',b.guests||'Нужно уточнить'],['Ориентировочный бюджет',b.budgetHelp?'Нужна помощь с оценкой бюджета':b.budget?b.budget+' ₽':'Нужно уточнить'],['Пожелания',b.description||'Пока не указаны']];}
 function agencyPriority(slug,label,index,total){
@@ -619,6 +621,17 @@ setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=
  if(!current||current.marker!==marker||current.value!==value)return;
  savedNotice.button.textContent=noteActionLabel(value);
  savedNotice.status.textContent=message;
+}});
+setupProjectQuestionAnswer({getData,canEdit:()=>available&&!sending,onError:message=>notice('Ответ на вопрос',message),onSaved:async(next,{agencySlug,workSlug,value})=>{
+ draft=next;available=true;
+ document.getElementById('project-storage-note')?.setAttribute('hidden','');
+ const fields=[...document.querySelectorAll('textarea[data-work-note]')].filter(field=>field.dataset.workNote===agencySlug&&field.dataset.noteWork===workSlug);
+ for(const field of fields){
+  field.value=value;
+  const status=field.closest('.work-note-block')?.querySelector('[role="status"]');if(status)status.textContent='Сохранено · '+value.length+' / 1000';
+ }
+ fields[0]?.dispatchEvent(new CustomEvent('ea:work-note-updated',{bubbles:true,detail:{agencySlug,workSlug,reapplyReferenceFilters:true}}));
+ orderStatus.textContent='Ответ сохранён в личной заметке. Пожелания и заявка не изменены.';
 }});
 setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onError:message=>notice('Выбор работы',message),onChoose:async({agencySlug,workSlug,expectedWorkSlug})=>{
  if(!available||sending)return 'failed';
