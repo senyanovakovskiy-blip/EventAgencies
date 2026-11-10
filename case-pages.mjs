@@ -10,8 +10,10 @@ export function caseBody(p,agencies,photoSizes={}){
  const teams=(p.agencySlugs||[p.agencySlug]).map(slug=>agencies.find(a=>a.slug===slug)).filter(Boolean);
  const text=p.presentation;
  const attendance=typeof p.guestLabel==='string'&&/\d/u.test(p.guestLabel)?p.guestLabel:'';
- const facts=[['Формат',p.format||p.category],['Город события',p.eventCity],['Дата',p.eventDate||p.year],['Место',text.place||p.industry],['Масштаб проекта',attendance]].filter(([,v])=>v&&v!=='—'&&v!=='Место не указано');
-  const missingFacts=[!p.format&&!p.category?'формате события':'',!p.eventCity?'городе события':'',!p.eventDate?'точной дате':'',!attendance?'числе гостей':''].filter(Boolean),factsNote=missingFacts.length?`<p class="case-facts-note">В опубликованном описании отсутствуют сведения о ${missingFacts.join(', ')}. При необходимости их можно уточнить у команды.</p>`:'';
+ const eventDate=String(p.eventDate||'').trim(),hasEventDate=Boolean(eventDate&&!/^(?:—|дата не указана)$/iu.test(eventDate)),yearOnly=hasEventDate&&/^\d{4}$/u.test(eventDate);
+ const dateFact=hasEventDate?[yearOnly?'Год события':'Дата',eventDate]:['Дата',''];
+ const facts=[['Формат',p.format||p.category],['Город события',p.eventCity],dateFact,['Место',text.place||p.industry],['Масштаб проекта',attendance]].filter(([,v])=>v&&v!=='—'&&v!=='Место не указано');
+  const missingFacts=[!p.format&&!p.category?'формате события':'',!p.eventCity?'городе события':'',!hasEventDate||yearOnly?'точной дате':'',!attendance?'числе гостей':''].filter(Boolean),factsNote=missingFacts.length?`<p class="case-facts-note">В опубликованном описании отсутствуют сведения о ${missingFacts.join(', ')}. При необходимости их можно уточнить у команды.</p>`:'';
  const participation=text.participation||p.role||'Состав задач команды в каталоге пока не указан.';
  const sourceLinks=[...(p.source?[{url:p.source,label:p.kind==='case'?'Источник кейса':'Источник материалов'}]:[]),...(Array.isArray(p.sources)?p.sources:[])].filter(s=>typeof s.url==='string'&&/^https?:\/\//i.test(s.url)&&typeof s.label==='string'&&s.label.trim());
  const contribution=`<aside class="case-source case-contribution" aria-label="Участие команды и источники"><div><span class="eyebrow">Участие команды</span><p>${e(participation)}</p></div>${sourceLinks.length?`<div class="case-source-links">${sourceLinks.map(s=>`<a href="${e(s.url)}" target="_blank" rel="noopener noreferrer">${e(s.label)} ↗</a>`).join('')}</div>`:''}</aside>`;
