@@ -15,9 +15,10 @@ const dirty=()=>editorChanged($('#operator-form'),current);
 const allowLeave=()=>!dirty()||confirm('Есть несохранённые изменения. Уйти без сохранения?');
 addEventListener('beforeunload',event=>{if(dirty()){event.preventDefault();event.returnValue='';}});
 async function api(url,options={}){
- let response;
- try{response=await fetch(url,{credentials:'same-origin',cache:'no-store',...options,headers:{...(options.body?{'Content-Type':'application/json'}:{}),...(csrf?{'X-CSRF-Token':csrf}:{}),...options.headers}});}
- catch{throw Error('Нет связи с сервером. Попробуйте ещё раз.');}
+ let response;const {timeoutMs,...requestOptions}=options;let controller,timer;
+ try{if(timeoutMs){controller=new AbortController();timer=setTimeout(()=>controller.abort(),timeoutMs);}response=await fetch(url,{credentials:'same-origin',cache:'no-store',...requestOptions,...(controller?{signal:controller.signal}:{}),headers:{...(requestOptions.body?{'Content-Type':'application/json'}:{}),...(csrf?{'X-CSRF-Token':csrf}:{}),...requestOptions.headers}});}
+ catch(error){if(error?.name==='AbortError')throw Error(`Сервер не ответил за ${Math.round(timeoutMs/1000)} секунд. Нажмите «Повторить подключение».`);throw Error('Нет связи с сервером. Попробуйте ещё раз.');}
+ finally{if(timer)clearTimeout(timer);}
  let data;try{data=await response.json();}catch{throw Error('Не удалось получить ответ сервера. Попробуйте ещё раз.');}
  if(!response.ok){
   if(response.status===401&&url!=='/api/admin/login')$('#reauth').hidden=false;
@@ -131,4 +132,10 @@ $('#status-counts').addEventListener('click',event=>{const button=event.target.c
 $('#filters').addEventListener('submit',event=>{event.preventDefault();page=1;loadList();});$('#filters').elements.status.addEventListener('change',()=>{page=1;loadList();});$('#reset-filters').addEventListener('click',()=>{$('#filters').reset();page=1;loadList();});$('#refresh').addEventListener('click',loadList);
 $('#prev-page').addEventListener('click',()=>{page--;loadList();});$('#next-page').addEventListener('click',()=>{page++;loadList();});
 $('#request-detail').addEventListener('click',event=>{if(event.target.closest('[data-back-list]')){$('.inbox-layout').classList.remove('has-detail');$('.request-list-panel').scrollIntoView({block:'start'});}});
-try{const session=await api('/api/admin/session');if(session.authenticated)await showWorkspace(session);else showLogin();}catch(error){$('#initial-status').textContent=error.message;}
+async function initializeAdmin(){
+ const status=$('#initial-status'),retry=$('#initial-retry');retry.hidden=true;status.hidden=false;status.textContent='Открываем рабочее пространство…';
+ try{const session=await api('/api/admin/session',{timeoutMs:12000});if(session.authenticated)await showWorkspace(session);else showLogin();}
+ catch(error){status.textContent=error.message;retry.hidden=false;}
+}
+$('#initial-retry').addEventListener('click',initializeAdmin);
+initializeAdmin();
