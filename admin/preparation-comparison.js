@@ -15,6 +15,8 @@ function pair(value){
 function currentPresentation(entity){
  const value=entity?.presentation;
  const copy=Object.fromEntries(['lead','intro','fit','participation'].map(key=>[key,typeof value?.[key]==='string'?value[key]:'']));
+ const discussionPrompts=Array.isArray(value?.discussionPrompts)?value.discussionPrompts.filter(prompt=>typeof prompt==='string'&&prompt.trim()).slice(0,3):[];
+ if(discussionPrompts.length)copy.discussionPrompts=discussionPrompts.join('\n');
  return Object.values(copy).some(nonblank)?copy:null;
 }
 function optionFor(entry,catalog,receipt){

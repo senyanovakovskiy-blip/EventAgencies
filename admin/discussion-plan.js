@@ -8,7 +8,7 @@ const agendaTitle='Повестка разговора';
 const comparisonAgendaTitle='Повестка обсуждения вариантов';
 const planNotice='Собрано из текущих данных страницы, включая возможные несохранённые правки. Это внутренний рабочий план, не подтверждённый сценарий и не сообщение клиенту.';
 const agendaNotice='Повестка собрана из текущих записей страницы, включая несохранённые правки. Выбранные поля приведены целиком; полный бриф, описания и остальные записи доступны в полном плане. Это внутренний материал для обсуждения. Статусы согласования остаются в соответствующих разделах заявки.';
-const presentationFields={lead:'Краткое описание',intro:'Описание',fit:'Если вам близко',participation:'Участие команды и его границы'};
+const presentationFields={lead:'Краткое описание',intro:'Описание',fit:'Если вам близко',participation:'Участие команды и его границы',discussionPrompts:'Вопросы к работе из карточки сайта'};
 const valueBlock=(label,value,empty='Не заполнено.')=>label+'\n'+(typeof value==='string'&&value.length?value:empty);
 
 function safeOrigin(value){
@@ -22,7 +22,7 @@ function safeOrigin(value){
  }catch{return null;}
 }
 function pageSection(heading,copy){
- return [heading,...Object.entries(presentationFields).map(([key,label])=>valueBlock(label,copy?.[key],'В текущей подаче не передано.'))].join('\n\n');
+ return [heading,...Object.entries(presentationFields).filter(([key])=>key!=='discussionPrompts'||copy?.[key]).map(([key,label])=>valueBlock(label,copy?.[key],'В текущей подаче не передано.'))].join('\n\n');
 }
 function requireCurrentInputs(preparation,workflow){
  if(!Array.isArray(preparation))throw new TypeError('Pass current readPreparation(form) values as preparation');

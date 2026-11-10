@@ -34,15 +34,18 @@ export function preparationUnknowns(agency,work,linked){
 function pageFor(entity,kind){
  if(!entity)return null;
  const copy=Object.fromEntries(Object.keys(publicFields).map(key=>[key,text(entity.presentation?.[key])]));
- return {copy,path:'/'+kind+'/'+entity.slug,label:kind==='work'?'страницы работы':'страницы агентства'};
+ const discussionPrompts=Array.isArray(entity.presentation?.discussionPrompts)?entity.presentation.discussionPrompts.filter(value=>typeof value==='string'&&value.trim()).slice(0,3):[];
+ return {copy,discussionPrompts,path:'/'+kind+'/'+entity.slug,label:kind==='work'?'страницы работы':'страницы агентства'};
 }
 function pageQuote(page,key,max=250){
  return page?.copy[key]?`Редакционный текст ${page.label} ${page.path} при подготовке наброска, ${publicFields[key]} (фрагмент): ${quote(page.copy[key],max)}.`:'';
 }
 function pageSummary(page){
  if(!page)return '';
- if(!Object.values(page.copy).some(Boolean))return `Текущее клиентское описание ${page.path} в досье отсутствует; не подменять его исходной справкой.`;
- return `Редакционная подача ${page.label} ${page.path} при подготовке наброска:\n`+Object.entries({lead:130,intro:170,fit:200,participation:230}).filter(([key])=>page.copy[key]).map(([key,max])=>`${publicFields[key]} (фрагмент): ${quote(page.copy[key],max)}`).join('\n');
+ const copy=Object.entries({lead:130,intro:170,fit:200,participation:230}).filter(([key])=>page.copy[key]).map(([key,max])=>`${publicFields[key]} (фрагмент): ${quote(page.copy[key],max)}`).join('\n');
+ const prompts=page.discussionPrompts.length?'Вопросы к работе из карточки сайта (редакционные ориентиры, не ответы клиента):\n'+page.discussionPrompts.map(prompt=>'• '+prompt).join('\n'):'';
+ if(!copy&&!prompts)return `Текущее клиентское описание ${page.path} в досье отсутствует; не подменять его исходной справкой.`;
+ return `Редакционная подача ${page.label} ${page.path} при подготовке наброска:\n`+[copy,prompts].filter(Boolean).join('\n');
 }
 function orientation(pages){
  // Prefer the concrete work's fit, then the agency's fit; use other editorial
@@ -65,6 +68,8 @@ export function draftFor(entry,catalog,receipt,workflow){
   expectations?'Ожидание в рабочем брифе: '+quote(expectations,max)+'.':'Ожидание в рабочем брифе пока не записано.'
  ].join('\n');
  const participation=pages.filter(page=>page.copy.participation).map(page=>pageQuote(page,'participation',210));
+ const casePrompts=pages.flatMap(page=>page.discussionPrompts.map(prompt=>({path:page.path,prompt})));
+ const casePromptText=casePrompts.length?'Вопросы из карточки работы — редакционные ориентиры для уточнения, не пожелания клиента:\n'+casePrompts.map(({prompt})=>'• '+prompt).join('\n'):'';
  const roleText=role?`${text(d.role)?'В подробном разборе':'В исходной справке каталога'} роль описана так (фрагмент): ${quote(role,220)}.`:'Подтверждённая для этого контекста роль в справке не раскрыта; её нужно уточнить.';
  const historicalSource=text(d.source)||text(work?.source);
  const historical=idea?`Исторический приём из подробного разбора работы (фрагмент): ${quote(idea,330)}.\n${historicalSource?'Источник для сверки: '+excerpt(historicalSource,220):'Первоисточник приёма в справке не указан; сначала проверить описание.'}`:
@@ -75,6 +80,7 @@ export function draftFor(entry,catalog,receipt,workflow){
   unknowns:[...participation,...preparationUnknowns(agency,work,linked),!hook?'Клиентского ориентира нет в переданных данных; выяснить, что увидел и выбрал клиент.':'Нынешняя формулировка страницы не объясняет мотив прежнего выбора клиента.'].join('\n'),
   questions:[
    hook?pageQuote(hook.page,hook.key,260)+'\nЧто из этого вам близко, что не подходит и что вы хотите иначе? Видели ли вы эту формулировку или выбирали по другой детали?':'На какую работу, фотографию или деталь вы опирались? Что близко и что хотите иначе?',
+   ...(casePromptText?[casePromptText]:[]),
    briefText(170)+'\nКак соотносится этот ориентир с записанной целью и ожиданием? Что важнее сохранить, а чем можно поступиться?',
    idea?'В историческом разборе описан приём '+quote(idea,240)+'. Что имеет смысл для вашей аудитории, а что нужно изменить?':'Конкретный приём в подробной справке не описан. Какую часть опыта стоит разобрать с командой, прежде чем придумывать сценарий?',
    text(d.task)?'Историческая задача в разборе: '+quote(d.task,150)+'. Чем новая задача отличается?':'Какую задачу решала работа и чем наша ситуация отличается?',
@@ -84,6 +90,7 @@ export function draftFor(entry,catalog,receipt,workflow){
   scenario:[
    'РАБОЧАЯ ГИПОТЕЗА — для разговора, не согласованное предложение.',anchor,
    currentNote,...[agencyPage,workPage].map(pageSummary).filter(Boolean),
+   casePrompts.length?'Сначала уточнить, какой из вопросов в карточке действительно близок клиенту. Его ответ, а не сам вопрос, может стать отправной точкой сценария.':'',
    !linked&&work?'Связь этой работы с выбранным агентством сейчас не подтверждена. Не переносить её приёмы и авторство на агентство.':'',
    briefText(190),historical,
    '1. Показать текущий ориентир страницы и выяснить, что клиент действительно хочет сохранить, изменить или исключить. Записать его ответ отдельно от редакционного текста.',

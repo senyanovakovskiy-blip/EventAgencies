@@ -9,7 +9,8 @@ export function operatorCatalog(catalog,details={},presentation={}){
  const publicCopy=(entries,slug)=>{
   const entry=entries&&Object.hasOwn(entries,slug)?entries[slug]:null;
   const copy=Object.fromEntries(['lead','intro','fit','participation'].map(key=>[key,text(entry?.[key])]));
-  return Object.values(copy).some(value=>value.trim())?copy:null;
+  const discussionPrompts=Array.isArray(entry?.discussionPrompts)?entry.discussionPrompts.filter(value=>typeof value==='string'&&value.trim()).slice(0,3):[];
+  return Object.values(copy).some(value=>value.trim())||discussionPrompts.length?{...copy,...(discussionPrompts.length?{discussionPrompts}:{})}:null;
  };
  return {
   types:catalog.types,
