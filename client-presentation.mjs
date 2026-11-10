@@ -18,12 +18,15 @@ export function presentCatalog(catalog,presentation){
   const text=copy(presentation.works,p.slug);
   return {...pick(p,workFields),presentation:text,summary:text.lead};
  });
+ const projectBySlug=new Map(projects.map(p=>[p.slug,p]));
  return {
   types:catalog.types,
   stats:{...pick(catalog.stats,['cases','photos']),works:projects.filter(p=>!p.duplicateOf).length},
   agencies:catalog.agencies.map(a=>{
    const text=copy(presentation.agencies,a.slug);
-   return {...pick(a,agencyFields),works:a.works.filter(slug=>!duplicateSlugs.has(slug)),presentation:text,description:text.lead+' '+text.intro};
+   const works=a.works.filter(slug=>!duplicateSlugs.has(slug)&&projectBySlug.has(slug));
+   const photoCount=works.reduce((total,slug)=>{const count=Number(projectBySlug.get(slug)?.photoCount);return total+(Number.isFinite(count)&&count>0?count:0);},0);
+   return {...pick(a,agencyFields),works,photoCount,presentation:text,description:text.lead+' '+text.intro};
   }),
   projects
  };
