@@ -55,3 +55,5 @@ html:root .home.is-landing :is(.site-header-nav a,.site-header-email,.ea-project
  html:root .home.is-landing .ea-work-caption-copy h2{font-size:28px}
  html:root .home.is-landing .ea-clock-face{height:260px;min-height:260px;max-height:260px}
 }
+
+html:root .home.is-landing .ea-work-caption-copy::after{content:"Прокрутка или ↑ ↓ · на телефоне — свайп";display:block;margin-top:5px;color:var(--muted);font:10px/1.4 MotionMono,monospace}

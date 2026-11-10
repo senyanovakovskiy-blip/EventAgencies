@@ -29,7 +29,7 @@ export function customerTeamStatus(t,b){
 }
 export function buildCustomerReply(receipt,recommendations,refined,teams=[]){
  const sentence=value=>/[.!?…]$/.test(value.trim())?value.trim():value.trim()+'.';
- const b=receipt.brief,formats={corporate:'Корпоратив',conference:'Конференция',presentation:'Презентация',teambuilding:'Тимбилдинг',private:'Частное событие',other:'Другой формат'};
+ const b=receipt.brief,formats={corporate:'Корпоратив',conference:'Конференция',presentation:'Презентация',teambuilding:'Тимбилдинг',private:'Частное событие',wedding:'Свадьба',birthday:'День рождения или юбилей',product_launch:'Запуск продукта или бренда',opening:'Открытие площадки',new_year:'Новогодний вечер',exhibition:'Выставка или экспозиция',sports_day:'Спортивный день или турнир',other:'Другой формат'};
  const lines=[`Здравствуйте, ${receipt.contact.name}!`,'',`По вашей заявке ${receipt.id}:`,
   `Формат: ${formats[b.format]||'нужно уточнить'}.`,
   `Город: ${refined?.city?.trim()||b.city||'нужно уточнить'}.`,

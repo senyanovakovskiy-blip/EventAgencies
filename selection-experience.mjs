@@ -1,7 +1,12 @@
+export function homeOccasionPicker(){
+ const primary=[['corporate','Корпоратив'],['conference','Конференция'],['presentation','Презентация'],['teambuilding','Тимбилдинг'],['private','Частное событие']],more=[['wedding','Свадьба'],['birthday','День рождения или юбилей'],['product_launch','Запуск продукта или бренда'],['opening','Открытие площадки'],['new_year','Новогодний вечер'],['exhibition','Выставка или экспозиция'],['sports_day','Спортивный день или турнир'],['other','Другой формат']];
+ return `function EaOccasionPicker(){const related={wedding:"private",birthday:"private",product_launch:"presentation",opening:"public",new_year:"corporate",exhibition:"business",sports_day:"sport"},link=([id,label])=>t.jsx("a",{href:id==="other"?"/my-project":"/catalog?view=projects&occasion="+(related[id]||id)+(related[id]?"&inspiration="+id:""),"data-occasion":id,children:label},id);return t.jsxs("div",{className:"ea-occasion-picker",children:[t.jsx("h2",{children:"Какое событие планируете?"}),t.jsx("div",{className:"ea-occasion-options",children:${JSON.stringify(primary)}.map(link)}),t.jsxs("details",{className:"ea-occasion-more",children:[t.jsx("summary",{children:"Ещё форматы"}),t.jsx("div",{className:"ea-occasion-options",children:${JSON.stringify(more)}.map(link)})]})]})}function EaProjectNav(){return t.jsxs("a",{className:"ea-project-nav",href:"/my-project","data-my-project-link":"",children:["Мой проект",t.jsx("span",{"data-project-count":""})]})}`;
+}
+
 export function selectionExperience(code,file,{site}){
  if(file!=='Home-LrP0Tb4r.js')return code;
  const replace=(from,to)=>{if(!code.includes(from))throw Error('Selection anchor missing: '+from.slice(0,100));code=code.replaceAll(from,to);};
- const picker=`function EaOccasionPicker(){return t.jsxs("div",{className:"ea-occasion-picker",children:[t.jsx("h2",{children:"Какое событие планируете?"}),t.jsx("div",{className:"ea-occasion-options",children:${JSON.stringify([['corporate','Корпоратив'],['conference','Конференция'],['presentation','Презентация'],['teambuilding','Тимбилдинг'],['private','Частное событие']])}.map(([id,label])=>t.jsx("a",{href:"/catalog?view=projects&occasion="+id,"data-occasion":id,children:label},id))})]})}function EaProjectNav(){return t.jsxs("a",{className:"ea-project-nav",href:"/my-project","data-my-project-link":"",children:["Мой проект",t.jsx("span",{"data-project-count":""})]})}`;
+ const picker=homeOccasionPicker();
  replace('function P7(e){',picker+'function P7(e){');
  replace('className:"ea-home-cta",href:"/catalog"','className:"ea-home-cta",href:"/catalog?view=projects"');
  replace('t.jsx("a",{className:"ea-home-guide",href:"/about",children:"Как сравнивать агентства ↗"})','t.jsx(EaOccasionPicker,{})');

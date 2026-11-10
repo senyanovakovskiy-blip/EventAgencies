@@ -26,7 +26,9 @@ export async function saveAccountCopy(name,snapshot){
   let retry=null;try{retry=JSON.parse(localStorage.getItem(RETRY_KEY)||'null');}catch{}
   if(retry?.hash!==hash||typeof retry?.key!=='string'||!/^[a-f0-9-]{36}$/i.test(retry.key))retry={key:crypto.randomUUID(),hash};
   try{localStorage.setItem(RETRY_KEY,JSON.stringify(retry));}catch{throw Object.assign(new Error('browser_storage_unavailable'),{code:'browser_storage_unavailable'});}
-  const result=await copyRequest('/api/project-copies',{method:'POST',body:JSON.stringify({requestId:retry.key,name,snapshot})});
+  let result;
+  try{result=await copyRequest('/api/project-copies',{method:'POST',body:JSON.stringify({requestId:retry.key,name,snapshot})});}
+  catch(error){if(error?.code==='copy_deleted'){try{if(JSON.parse(localStorage.getItem(RETRY_KEY)||'null')?.key===retry.key)localStorage.removeItem(RETRY_KEY);}catch{}}throw error;}
   if(result.ok!==true||!Number.isSafeInteger(result.item?.id)||result.item.id<1)throw Error('unconfirmed_save');
   try{if(JSON.parse(localStorage.getItem(RETRY_KEY)||'null')?.key===retry.key)localStorage.removeItem(RETRY_KEY);}catch{}
   return result.item;

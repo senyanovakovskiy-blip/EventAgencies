@@ -1,5 +1,5 @@
 export const KEY='eventagencies-project-v1';
-export const occasions={corporate:'Корпоратив',conference:'Конференция',presentation:'Презентация',teambuilding:'Тимбилдинг',private:'Частное событие'};
+export const occasions={corporate:'Корпоратив',conference:'Конференция',presentation:'Презентация',teambuilding:'Тимбилдинг',private:'Частное событие',wedding:'Свадьба',birthday:'День рождения или юбилей',product_launch:'Запуск продукта или бренда',opening:'Открытие площадки',new_year:'Новогодний вечер',exhibition:'Выставка или экспозиция',sports_day:'Спортивный день или турнир'};
 export const contactMethods={email:'Электронная почта',phone:'Телефон',telegram:'Telegram'};
 const slug=v=>typeof v==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v);
 export const emptyDraft=()=>({version:1,selection:[],workNotes:{},brief:{format:'',city:'',date:'',dateUnknown:false,guests:'',budget:'',budgetHelp:false,description:''},contact:{name:'',method:'email',value:''},request:null});

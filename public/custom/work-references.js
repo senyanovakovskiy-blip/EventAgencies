@@ -19,16 +19,31 @@ let saved=[],savedKnown=false;
 function readSavedReferences(){try{saved=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]'));savedKnown=true;}catch{}}
 readSavedReferences();
 const status=document.createElement('div');status.className='reference-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');document.body.append(status);
-let timer,removedReferences=null;
+let timer,removedReferences=null,addedReferences=null;
 function announce(text,undo=false){
+ if(undo!=='added')addedReferences=null;
  clearTimeout(timer);status.replaceChildren();
  const copy=document.createElement('span');copy.textContent=text;status.append(copy);
- if(undo){
+ if(undo==='added'){
+  const cancel=document.createElement('button');cancel.type='button';cancel.dataset.undoAddedReferences='';cancel.textContent='Отменить добавление';status.append(cancel);
+  const close=document.createElement('button');close.type='button';close.dataset.dismissReference='';close.setAttribute('aria-label','Закрыть уведомление');close.textContent='×';status.append(close);
+ }else if(undo){
   const restore=document.createElement('button');restore.type='button';restore.dataset.undoReference='';restore.textContent=removedReferences?.length===1?'Вернуть пример':'Вернуть примеры';status.append(restore);
   const close=document.createElement('button');close.type='button';close.dataset.dismissReference='';close.setAttribute('aria-label','Закрыть уведомление');close.textContent='×';status.append(close);
  }else timer=setTimeout(()=>status.replaceChildren(),4500);
 }
-function sync(){readSavedReferences();if(savedKnown)reconcileReferenceBatch(saved);document.querySelectorAll('[data-workspace-reference-count]').forEach(node=>node.textContent=String(saved.length));document.querySelectorAll('[data-reference-work]').forEach(b=>{const active=saved.includes(b.dataset.referenceWork);const label=active?'Пример сохранён ✓':'Сохранить как пример';if(b.textContent!==label)b.textContent=label;b.setAttribute('aria-pressed',String(active));});}
+export async function saveWorkReferences(slugs){
+ const requested=normalizeReferences(slugs);addedReferences=null;
+ try{
+  const current=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]')),pending=requested.filter(slug=>!current.includes(slug));
+  if(!pending.length){saved=current;sync();const message='Все показанные работы уже сохранены как примеры.';announce(message);return {added:0,skipped:0,message};}
+  const accepted=pending.slice(0,Math.max(0,200-current.length));
+  if(!accepted.length){const message='Сохранено 200 примеров. Уберите один, чтобы добавить новые.';announce(message);return {added:0,skipped:pending.length,message};}
+  const next=normalizeReferences([...current,...accepted]);localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReferences=null;addedReferences={slugs:accepted,after:next};sync();await renderReferences();
+  const skipped=pending.length-accepted.length,message=skipped?`Добавлено примеров: ${accepted.length}. Остальные не поместились в лимит 200.`:`Добавлено примеров: ${accepted.length}. Агентства не добавлены.`;announce(message,'added');return {added:accepted.length,skipped,message};
+ }catch{const message='Не удалось сохранить примеры. Проверьте доступ к хранилищу браузера.';announce(message);return {added:0,skipped:requested.length,message};}
+}
+function sync(){readSavedReferences();if(savedKnown)reconcileReferenceBatch(saved);document.querySelectorAll('[data-workspace-reference-count]').forEach(node=>{const compact=node.hasAttribute('data-reference-count-compact');node.textContent=compact?(saved.length?saved.length+' прим.':''):String(saved.length);node.hidden=compact&&!saved.length;});document.querySelectorAll('[data-handoff-reference-reminder]').forEach(node=>node.hidden=!saved.length);document.querySelectorAll('[data-reference-work]').forEach(b=>{const active=saved.includes(b.dataset.referenceWork);const label=active?'Пример сохранён ✓':'Сохранить как пример';if(b.textContent!==label)b.textContent=label;b.setAttribute('aria-pressed',String(active));});}
 let data,renderVersion=0;
 const VIEW_KEY='eventagencies-reference-view-v1';
 let referenceView={query:'',agency:'',mode:'photos',sort:'recent',onlyNotes:false};
@@ -245,6 +260,17 @@ document.addEventListener('change',event=>{
 });
 
 document.addEventListener('click',async event=>{
+ const undoAdded=event.target.closest('[data-undo-added-references]');
+ if(undoAdded&&addedReferences){
+  try{
+   const current=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]')),undo=addedReferences;
+   if(JSON.stringify(current)!==JSON.stringify(undo.after)){addedReferences=null;sync();announce('Список примеров изменился после массового сохранения; оставил его без изменений.');return;}
+   const batch=new Set(undo.slugs),removed=current.filter(slug=>batch.has(slug));
+   if(!removed.length){saved=current;sync();announce('Добавленные работы уже изменились в списке.');return;}
+   const next=current.filter(slug=>!batch.has(slug));localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;addedReferences=null;removedReferences=null;sync();await renderReferences();announce(`Добавление отменено. Убрано новых примеров: ${removed.length}; прежние примеры сохранены.`);
+  }catch{announce('Не удалось отменить сохранение. Проверьте доступ к хранилищу браузера.');}
+  return;
+ }
  const openMatch=event.target.closest('[data-open-reference-note-match]');
  if(openMatch){
   event.preventDefault();const card=openMatch.closest('[data-saved-reference]'),host=card?.closest('#work-references');if(!card||!host||card.hidden)return;
@@ -263,7 +289,7 @@ document.addEventListener('click',async event=>{
   if(!entry){syncReferenceNoteChooser(card,work);return;}
   const field=insertReferenceNote(card,entry);syncReferenceNoteMark(card);noteCopyController.sync(card);noteClearController.sync(card);syncReferenceNoteChooser(card,work);syncReferenceNoteMatch(card);field?.scrollIntoView({block:'nearest'});field?.focus({preventScroll:true});return;
  }
- if(event.target.closest('[data-dismiss-reference]')){clearTimeout(timer);status.replaceChildren();removedReferences=null;return;}
+ if(event.target.closest('[data-dismiss-reference]')){clearTimeout(timer);status.replaceChildren();removedReferences=null;addedReferences=null;return;}
  if(event.target.closest('[data-undo-reference]')&&removedReferences){
   try{
    const current=normalizeReferences(JSON.parse(localStorage.getItem(REFERENCE_KEY)||'[]')),removed=removedReferences.filter(item=>!current.includes(item.slug));
@@ -279,12 +305,13 @@ document.addEventListener('click',async event=>{
  const b=event.target.closest('[data-reference-work],[data-remove-reference]');if(!b)return;
  event.preventDefault();const slug=b.dataset.referenceWork||b.dataset.removeReference,index=saved.indexOf(slug);const remove=index>=0;const next=remove?saved.filter(s=>s!==slug):normalizeReferences([...saved,slug]);
  if(!remove&&!next.includes(slug)){announce('Сохранено 200 примеров. Уберите один, чтобы добавить новый.');return;}
- try{localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReferences=remove?[{slug,index}]:null;sync();await renderReferences();announce(remove?'Пример убран.':'Работа сохранена в «Моём проекте». Агентство не добавлено.',remove);if(b.dataset.removeReference)status.querySelector('[data-undo-reference]')?.focus({preventScroll:true});}catch{announce('Не удалось сохранить пример. Проверьте доступ к хранилищу браузера.');}
+ try{localStorage.setItem(REFERENCE_KEY,JSON.stringify(next));saved=next;removedReferences=remove?[{slug,index}]:null;addedReferences=null;sync();await renderReferences();announce(remove?'Пример убран.':'Работа сохранена в «Моём проекте». Агентство не добавлено.',remove);if(b.dataset.removeReference)status.querySelector('[data-undo-reference]')?.focus({preventScroll:true});}catch{announce('Не удалось сохранить пример. Проверьте доступ к хранилищу браузера.');}
 });
 addEventListener('storage',event=>{
  let local=false,tab=false;try{local=event.storageArea===localStorage;tab=event.storageArea===sessionStorage;}catch{return;}
  if(tab&&(event.key===REFERENCE_BATCH_KEY||event.key===null)){resumeReferenceBatch(document.getElementById('work-references'));syncReferenceBatch(document.getElementById('work-references'));return;}
  if(!local)return;
+ if(event.key===REFERENCE_KEY)addedReferences=null;
  // The backup record marks project replacement in another tab, even when the
  // new project retains exactly the same saved references.
  if(event.key===PREVIOUS_PROJECT_KEY||event.key===null)resetReferenceBatch(document.getElementById('work-references'));

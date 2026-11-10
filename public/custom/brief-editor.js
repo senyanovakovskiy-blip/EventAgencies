@@ -6,19 +6,54 @@ import {referenceProjectMarker} from './reference-batch-session.js';
 const same=(a,b,keys)=>keys.every(key=>a[key]===b[key]);
 const pick=(brief,keys)=>Object.fromEntries(keys.map(key=>[key,brief[key]]));
 const fields=BRIEF_UNDO_GROUPS.flatMap(group=>group.keys);
+const wishPrompts={
+ corporate:[['Общее чувство','После события гости должны почувствовать: '],['Командный момент','В программе особенно важно отметить: '],['Участие','Команде будет комфортно: '],['Финал','В финале хочется: ']],
+ conference:[['Главная польза','Участники должны унести с собой: '],['Темы','Важно включить темы: '],['Знакомства','Для общения нужны: '],['Финал','В конце важно: ']],
+ presentation:[['Главное сообщение','Гости должны понять: '],['Демонстрация','Показать или дать попробовать: '],['Вопросы','Оставить время на вопросы о: '],['Финал','После события гости должны: ']],
+ teambuilding:[['Командная задача','Команде важно попробовать: '],['Активность','По уровню активности нам подходит: '],['Комфорт','Важно, чтобы никто не был обязан: '],['Финал','Вместе хочется прийти к результату: ']],
+ private:[['Личный момент','Для нас особенно важно: '],['Настроение','Хочется, чтобы встреча ощущалась: '],['Гости','Для гостей важно предусмотреть: '],['Финал','В финале хочется: ']],
+ wedding:[['История пары','Для пары особенно важно: '],['Церемония','В главном моменте хочется сохранить: '],['Комфорт гостей','Гостям важно предусмотреть: '],['Финал','Этот день хочется завершить: ']],
+ birthday:[['Именинник','Для именинника важно: '],['Настроение','Встреча должна ощущаться: '],['Гости','Для гостей важно предусмотреть: '],['Памятный момент','Хочется запомнить: ']],
+ product_launch:[['Главная задача','Гости должны понять: '],['Показ','Важно показать или дать попробовать: '],['Аудитория','Для этих гостей важно: '],['Следующий шаг','После события гости смогут: ']],
+ opening:[['Идея пространства','Гости должны понять, что это место: '],['Маршрут','Особенно важно показать: '],['Комфорт','Нужно предусмотреть: '],['Открытие','Общий момент открытия должен: ']],
+ new_year:[['Итог года','Особенно хочется отметить: '],['Настроение','Вечер должен ощущаться: '],['Программа','Гостям будет комфортно: '],['Праздник','Вместе хочется: ']],
+ exhibition:[['Тема экспозиции','Гости должны увидеть: '],['Маршрут','Особенно важно показать: '],['Демонстрации','Нужно предусмотреть: '],['Встречи','Посетителям важно пообщаться с: ']],
+ sports_day:[['Уровень активности','Гостям подойдут: '],['Участие','Важно, чтобы каждый мог: '],['Комфорт и безопасность','Нужно предусмотреть: '],['Общий итог','Вместе хочется: ']],
+ other:[['Ощущение','Гости должны почувствовать: '],['Обязательно','Важно включить: '],['Избежать','Лучше избежать: '],['Финал','В финале хочется: ']]
+};
+const experiencePrompts=[
+ ['Спокойное общение','Гостям важно спокойно пообщаться друг с другом без плотной обязательной программы.'],
+ ['Свободный выбор','Хочется, чтобы гости могли сами выбирать активности и свой темп.'],
+ ['Яркий общий момент','В программе нужен один яркий общий момент, который объединит гостей и запомнится.'],
+ ['Новые знакомства','Важно помочь гостям познакомиться и найти темы для общения без обязательных выступлений.'],
+ ['Попробовать новое','Гостям будет интересно попробовать что-то новое, если участие останется по желанию.'],
+ ['Без конкурсов','Предпочитаем обойтись без обязательных конкурсов и публичных заданий.']
+];
 
 // The form is a local input buffer. Only explicitly edited groups may be written.
 export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onClose,onSubmit,getFallbackBrief}){
  if(!form||!dialog)return null;
  const doc=form.ownerDocument,status=form.querySelector('#brief-save-status');
+ const promptBox=form.querySelector('[data-brief-prompt-suggestions]'),promptList=form.querySelector('[data-brief-prompt-list]'),promptStatus=form.querySelector('[data-brief-prompt-status]'),description=form.elements.namedItem('description');
  const recovery=doc.createElement('div');recovery.className='brief-editor-recovery';recovery.hidden=true;
  recovery.setAttribute('aria-label','Обновление описания');
  form.querySelector('.brief-editor-content').prepend(recovery);
  let session=null,trigger=null,recoveryKey='';
+ function renderWishPrompts(){
+  if(!promptBox||!promptList)return;
+  const format=form.elements.namedItem('format')?.value||'other',items=wishPrompts[format]||wishPrompts.other;
+  promptList.replaceChildren();
+  const appendGroup=(heading,rows)=>{
+   const groupLabel=doc.createElement('span');groupLabel.className='brief-prompt-group-label';groupLabel.textContent=heading;promptList.append(groupLabel);
+   for(const [label,text] of rows){const button=doc.createElement('button');button.type='button';button.className='brief-prompt-chip';button.textContent=label;button.dataset.briefPrompt=text;promptList.append(button);}
+  };
+  appendGroup('Подсказки по формату',items);appendGroup('По желаемому впечатлению гостей',experiencePrompts);
+  promptBox.hidden=false;
+ }
  function displayed(){return Object.fromEntries(fields.map(key=>{const field=form.elements.namedItem(key);return [key,field.type==='checkbox'?field.checked:field.value];}));}
  function fill(brief,keys=fields){
   for(const key of keys){const field=form.elements.namedItem(key);if(field.type==='checkbox')field.checked=brief[key];else field.value=brief[key];}
-  updateForm();
+  renderWishPrompts();updateForm();
  }
  function snapshot(){
   const marker=referenceProjectMarker();if(marker===null)throw Error('storage');
@@ -137,6 +172,18 @@ export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onC
   session.touched.add(group.id);save([group]);
  });
  form.addEventListener('submit',event=>{event.preventDefault();close(true);});
+ form.addEventListener('change',event=>{if(event.target.name==='format')renderWishPrompts();});
+ promptList?.addEventListener('click',event=>{
+  const button=event.target.closest('[data-brief-prompt]');if(!button||!description)return;
+  const prompt=button.dataset.briefPrompt,existing=description.value,trimmed=existing.trimEnd();
+  if(trimmed.includes(prompt.trim())){promptStatus.textContent='Эта подсказка уже есть в пожеланиях.';return;}
+  const separator=trimmed?(existing.endsWith('\n')?'\n':'\n\n'):'';
+  const next=existing+separator+prompt;
+  if(next.length>description.maxLength){promptStatus.textContent='Подсказка не помещается в оставшийся лимит. Сократите пожелания или выберите более короткий текст.';return;}
+  description.value=next;description.setSelectionRange(next.length,next.length);description.focus();
+  description.dispatchEvent(new Event('input',{bubbles:true}));
+  promptStatus.textContent='Подсказка добавлена в конец пожеланий. Продолжите фразу своими словами.';
+ });
  dialog.querySelector('[data-close-brief]')?.addEventListener('click',()=>close());
  dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
  dialog.addEventListener('close',()=>{

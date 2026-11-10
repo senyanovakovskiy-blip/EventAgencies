@@ -38,21 +38,28 @@ export function createProjectCopyStore(binding,ownerId){
    if(!input||typeof input.requestId!=='string'||!/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(input.requestId)||typeof input.name!=='string'||!input.name.trim()||input.name.length>120)throw problem(400,'invalid_copy');
    const snapshot=normalizeProjectCopy(input.snapshot);if(!snapshot)throw problem(400,'invalid_copy');
    const name=input.name.trim(),encoded=JSON.stringify(snapshot),keyHash=await digest(input.requestId.toLowerCase()),payloadHash=await digest(JSON.stringify({name,snapshot}));
+   const deleted=await stmt('SELECT key_hash FROM project_copy_tombstones WHERE owner_id=? AND key_hash=?',ownerId,keyHash).first();
+   if(deleted)throw problem(410,'copy_deleted');
    const existing=await stmt('SELECT * FROM project_copies WHERE owner_id=? AND key_hash=?',ownerId,keyHash).first();
    if(existing){if(existing.payload_hash!==payloadHash)throw problem(409,'request_changed');return {item:item(existing),duplicate:true};}
    const createdAt=new Date().toISOString();
    const result=await db.batch([
-    stmt('INSERT INTO project_copies(owner_id,key_hash,payload_hash,name,created_at,snapshot_json) SELECT ?,?,?,?,?,? WHERE (SELECT COUNT(*) FROM project_copies WHERE owner_id=?)<100 ON CONFLICT(owner_id,key_hash) DO NOTHING RETURNING id',ownerId,keyHash,payloadHash,name,createdAt,encoded,ownerId),
+    stmt('INSERT INTO project_copies(owner_id,key_hash,payload_hash,name,created_at,snapshot_json) SELECT ?,?,?,?,?,? WHERE (SELECT COUNT(*) FROM project_copies WHERE owner_id=?)<100 AND NOT EXISTS(SELECT 1 FROM project_copy_tombstones WHERE owner_id=? AND key_hash=?) ON CONFLICT(owner_id,key_hash) DO NOTHING RETURNING id',ownerId,keyHash,payloadHash,name,createdAt,encoded,ownerId,ownerId,keyHash),
     stmt('SELECT * FROM project_copies WHERE owner_id=? AND key_hash=?',ownerId,keyHash),
    ]);
-   const saved=result[1].results?.[0];if(!saved)throw problem(409,'copy_limit');
+   const saved=result[1].results?.[0];if(!saved){const deleted=await stmt('SELECT key_hash FROM project_copy_tombstones WHERE owner_id=? AND key_hash=?',ownerId,keyHash).first();if(deleted)throw problem(410,'copy_deleted');throw problem(409,'copy_limit');}
    if(saved.payload_hash!==payloadHash)throw problem(409,'request_changed');
    return {item:item(saved),duplicate:!result[0].results?.length};
   },
   async remove(id){
    if(!validId(id))throw problem(404,'not_found');
-   const row=await stmt('DELETE FROM project_copies WHERE owner_id=? AND id=? RETURNING id',ownerId,id).first();
-   if(!row)throw problem(404,'not_found');return {ok:true};
+   const existing=await stmt('SELECT key_hash FROM project_copies WHERE owner_id=? AND id=?',ownerId,id).first();
+   if(!existing)throw problem(404,'not_found');
+   const deletedAt=new Date().toISOString(),result=await db.batch([
+    stmt('INSERT INTO project_copy_tombstones(owner_id,key_hash,deleted_at) SELECT owner_id,key_hash,? FROM project_copies WHERE owner_id=? AND id=? ON CONFLICT(owner_id,key_hash) DO NOTHING RETURNING key_hash',deletedAt,ownerId,id),
+    stmt('DELETE FROM project_copies WHERE owner_id=? AND id=? RETURNING id',ownerId,id),
+   ]);
+   if(!result[1].results?.length)throw problem(404,'not_found');return {ok:true};
   },
   async rename(id,input){
    if(!validId(id))throw problem(404,'not_found');

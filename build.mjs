@@ -91,7 +91,7 @@ const absolute = value => new URL(value, origin).href;
 const projectList = featuredProjects.map(p=>`<article><h2><a href="/work/${p.slug}">${esc(p.title)}</a></h2><p>${esc(p.category)} · ${esc(p.year)}</p><p>${esc(p.description)}</p></article>`).join('');
 const pages = [
   {route:'/',title:site.title,description:site.description,body:projectList},
-  {route:'/about',title:tokens.ABOUT_PAGE_TITLE,description:about.intro.join(' '),body:about.intro.map(x=>`<p>${esc(x)}</p>`).join('')},
+  {route:'/about',title:tokens.ABOUT_PAGE_TITLE,description:about.intro.join(' '),body:about.intro.map(x=>`<p>${esc(x)}</p>`).join('')+`<ol>${about.experiences.map(([number,title])=>`<li><span>${esc(number)}</span> ${esc(title)}</li>`).join('')}</ol>`},
   {route:'/playground',title:tokens.PLAYGROUND_TITLE,description:site.playgroundDescription,body:''},
   ...projects.map(p=>({route:'/work/'+p.slug,title:p.title+' — '+site.name,description:p.seoDescription||p.description,ogImage:p.ogImage,body:`<p>${esc(p.description)}</p><img src="${esc(p.image)}" alt="${esc(p.title)}">`}))
 ];
@@ -155,5 +155,10 @@ for(const route of previous) {
 }
 await fs.writeFile(manifestPath,JSON.stringify(pages.map(p=>p.route),null,2));
 const catalogRoutes=await buildCatalog(root,dist,site);
-await fs.writeFile(path.join(dist,'.site-pages.json'),JSON.stringify([...pages.map(p=>p.route),...catalogRoutes],null,2));
-console.log(`Built ${pages.length+catalogRoutes.length} pages in ${dist}`);
+const allRoutes=[...new Set([...pages.map(p=>p.route),...catalogRoutes])];
+await fs.writeFile(path.join(dist,'.site-pages.json'),JSON.stringify(allRoutes,null,2));
+const xmlEscape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[char]));
+const sitemap=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',...allRoutes.map(route=>`  <url><loc>${xmlEscape(origin+route)}</loc></url>`),'</urlset>',''].join('\n');
+await fs.writeFile(path.join(dist,'sitemap.xml'),sitemap);
+await fs.writeFile(path.join(dist,'robots.txt'),`User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /my-project\nSitemap: ${origin}/sitemap.xml\n`);
+console.log(`Built ${allRoutes.length} pages in ${dist}`);

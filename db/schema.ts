@@ -52,3 +52,11 @@ export const projectCopies = sqliteTable('project_copies', {
   uniqueIndex('project_copies_owner_key').on(table.ownerId, table.keyHash),
   index('project_copies_owner_id').on(table.ownerId, table.id),
 ]);
+
+export const projectCopyTombstones = sqliteTable('project_copy_tombstones', {
+  ownerId: text('owner_id').notNull(),
+  keyHash: text('key_hash').notNull(),
+  deletedAt: text('deleted_at').notNull(),
+}, table => [
+  uniqueIndex('project_copy_tombstones_owner_key').on(table.ownerId, table.keyHash),
+]);

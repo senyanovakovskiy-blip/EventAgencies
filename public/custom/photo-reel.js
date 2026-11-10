@@ -20,8 +20,23 @@ export function createPhotoReel(frame, {projects, initialSlug, onFocus, onOpenSt
   let heights = [], centers = [], circumference = 1, gutter = 0, peek = 0;
   let pointer = null, suppressClickUntil = 0, wheelSum = 0, wheelUsed = false, wheelTimer;
   let hovered = false, layoutFrame = 0, observedWidth = 0;
-  const controls = () => frame.parentElement?.querySelector('.ea-reel-controls');
-  const caption = () => controls()?.querySelector('.ea-work-caption');
+  const controls = () => {
+    const node = frame.parentElement?.querySelector('.ea-reel-controls');
+    if (node && !node.hasAttribute('aria-label')) {
+      node.setAttribute('role', 'group');
+      node.setAttribute('aria-label', 'Управление фотолентой: прокрутка или стрелки вверх и вниз; на телефоне — свайп.');
+    }
+    return node;
+  };
+  const caption = () => {
+    const node = controls()?.querySelector('.ea-work-caption');
+    const title = node?.querySelector('.ea-work-caption-copy h2');
+    if (title && !title.hasAttribute('aria-live')) {
+      title.setAttribute('aria-live', 'polite');
+      title.setAttribute('aria-atomic', 'true');
+    }
+    return node;
+  };
 
   frame.classList.add('ea-photo-reel');
   frame.dataset.cursor = 'see';

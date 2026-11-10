@@ -1,6 +1,6 @@
 import {searchTerms} from './catalog-search.js';
 
-const workFits=(work,filters)=>(!filters.format||work.types?.includes(filters.format))&&(!filters.occasion||work.occasions?.includes(filters.occasion))&&(!filters.photos||work.hasPhotos);
+const workFits=(work,filters)=>(!filters.format||work.types?.includes(filters.format))&&(!filters.kind||work.kind===filters.kind)&&(!filters.occasion||work.occasions?.includes(filters.occasion))&&(!filters.participation||typeof work.presentation?.participation==='string'&&Boolean(work.presentation.participation.trim()))&&(!filters.photos||work.hasPhotos);
 
 // Agency location means the team's city; project location means the event's city.
 // Format, occasion, photographs and query must be supported by the SAME work.
@@ -15,7 +15,7 @@ export function buildCatalogMatches(data,search){
  }
  return {
   agency(agency,filters){
-   const terms=searchTerms(filters.query),hasWorkFilters=Boolean(filters.format||filters.occasion||filters.photos);
+   const terms=searchTerms(filters.query),hasWorkFilters=Boolean(filters.format||filters.kind||filters.occasion||filters.participation||filters.photos);
    const owned=worksByAgency.get(agency.slug)||[];
    // Agency introductions often name several cases. If a query term occurs in
    // the work itself, it must stay attached to that work even when the agency's

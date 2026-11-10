@@ -95,9 +95,17 @@ function refresh(){
  if(document.getElementById('project-board'))renderProject();
 }
 document.addEventListener('click',async event=>{
+  const copyRequestId=event.target.closest('[data-copy-request-id]');if(copyRequestId){
+   event.preventDefault();const id=copyRequestId.dataset.copyRequestId||'',group=copyRequestId.parentElement,status=group?.querySelector('[data-request-copy-status]');if(!id||!status)return;
+   let copied=false;try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(id);copied=true;}}catch{}
+   if(!copied){const temporary=document.createElement('textarea');temporary.value=id;temporary.setAttribute('readonly','');temporary.style.position='fixed';temporary.style.opacity='0';document.body.append(temporary);temporary.select();try{copied=document.execCommand('copy');}catch{}temporary.remove();}
+   if(copied)status.textContent='Номер скопирован.';
+   else{const value=group.querySelector('[data-request-id-value]');if(value){value.focus({preventScroll:true});const range=document.createRange();range.selectNodeContents(value);const selection=window.getSelection();selection?.removeAllRanges();selection?.addRange(range);}status.textContent='Не удалось скопировать. Номер выделен — скопируйте его вручную.';}
+   return;
+  }
  if(event.target.closest('[data-toggle-help-selection]')){setHelpSelection(!helpSelectionExpanded);return;}
- if(event.target.closest('[data-go-to-contact]')){event.preventDefault();focusContact();return;}
- const wishes=event.target.closest('[data-add-wishes-work],[data-add-wishes-selection]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
+  const goToContact=event.target.closest('[data-go-to-contact]');if(goToContact){event.preventDefault();focusContact(goToContact.dataset.goToContact);return;}
+ const wishes=event.target.closest('[data-add-wishes-work],[data-add-wishes-selection],[data-add-wishes-agency-prompt]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
  const view=event.target.closest('[data-comparison-view]');if(view){comparisonView=view.dataset.comparisonView;rememberProjectView();renderProject();return;}
  const move=event.target.closest('[data-move-agency]');if(move){
   const agencySlug=move.dataset.moveAgency,direction=Number(move.dataset.moveDirection),next=moveAgency(draft,agencySlug,direction);
@@ -149,7 +157,7 @@ document.addEventListener('click',async event=>{
   if(restored.result==='restored'&&persist(restored.state)){removedAgency=null;document.getElementById('project-undo').hidden=true;document.getElementById('project-comparison').focus();}
   return;
  }
- const occasion=event.target.closest('[data-occasion]');if(occasion&&!draft.brief.format&&Object.hasOwn(occasions,occasion.dataset.occasion))persist(updateBrief(draft,{format:occasion.dataset.occasion}),{quiet:true});
+ const occasion=event.target.closest('[data-occasion]');if(occasion&&!draft.brief.format&&(Object.hasOwn(occasions,occasion.dataset.occasion)||occasion.dataset.occasion==='other'))persist(updateBrief(draft,{format:occasion.dataset.occasion}),{quiet:true});
  const editBrief=event.target.closest('[data-edit-brief]');if(editBrief)openBrief(editBrief.dataset.briefField);
  const editWork=event.target.closest('[data-review-work]');if(editWork){
   event.preventDefault();setHelpSelection(true);comparisonView='cards';rememberProjectView();await renderProject();
@@ -189,6 +197,16 @@ addEventListener('storage',e=>{
 new MutationObserver(changes=>{if(changes.some(c=>c.type==='attributes'||[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-save-agency],[data-project-count]')||n.querySelector?.('[data-save-agency],[data-project-count]')))))refresh();}).observe(document.getElementById('root')||document.getElementById('content'),{childList:true,subtree:true,attributes:true,attributeFilter:['data-save-agency','data-save-work']});
 for(const type of ['wheel','pointerdown','touchstart'])document.addEventListener(type,event=>{if(matchMedia('(max-width:900px)').matches&&event.target.closest('.home.is-landing .ws:not(.ea-photo-reel)'))event.stopPropagation();},{capture:true,passive:true});
 function formatName(value){return occasions[value]||(value==='other'?'Другой формат':'Нужно уточнить');}
+const catalogOccasionByBriefFormat={corporate:'corporate',conference:'conference',presentation:'presentation',teambuilding:'teambuilding',private:'private',wedding:'private',birthday:'private',product_launch:'presentation',opening:'public',new_year:'corporate',exhibition:'business',sports_day:'sport'};
+function syncCatalogFormatLink(brief){
+ const link=document.querySelector('[data-project-format-catalog-link]');if(!link)return;
+ const query=new URLSearchParams({view:'projects'}),occasion=catalogOccasionByBriefFormat[brief?.format];
+ if(occasion)query.set('occasion',occasion);
+ if(['wedding','birthday','product_launch','opening','new_year','exhibition','sports_day'].includes(brief?.format))query.set('inspiration',brief.format);
+ link.textContent=occasion?'Похожие работы для вдохновения ↗':'Работы агентств для вдохновения ↗';
+ link.setAttribute('aria-label',occasion?'Показать работы близкого направления; это не подтверждение идентичного кейса':'Открыть каталог работ агентств для вдохновения');
+ link.href='/catalog?'+query.toString();
+}
 function facts(p){return [p.category,p.eventCity,p.guestLabel].filter(Boolean).join(' · ');}
 function role(p){
  const text=p?.role?.trim();
@@ -228,6 +246,7 @@ async function renderProject(){
   const data=await getData();if(version!==renderVersion)return;
   briefUndo?.sync();
   const entries=draft.selection,b=draft.brief;
+  syncCatalogFormatLink(b);
   host.dataset.count=String(entries.length);
   renderBriefSummary(b);
   document.getElementById('selection-total').textContent=entries.length+' / 3';
@@ -346,10 +365,10 @@ function openBrief(field){
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
  briefEditor?.open(field);
 }
-function focusContact(){
+function focusContact(preferred=''){
  const form=document.getElementById('project-contact-form');if(!form)return;
- const fields=['name','value'].map(name=>form.elements.namedItem(name));
- const field=fields.find(node=>!node.value.trim())||fields[0];
+ const fields=['name','method','value'].map(name=>form.elements.namedItem(name)).filter(node=>node&&!node.disabled);
+ const field=(preferred&&form.elements.namedItem(preferred)&&!form.elements.namedItem(preferred).disabled?form.elements.namedItem(preferred):null)||fields.find(node=>!node.value?.trim())||fields[0];
  document.getElementById('project-contact')?.scrollIntoView({block:'start'});field?.focus({preventScroll:true});
 }
 function setHelpSelection(expanded){
@@ -359,7 +378,7 @@ function setHelpSelection(expanded){
  if(content)content.hidden=!expanded;
  if(button){button.setAttribute('aria-expanded',String(expanded));button.textContent=expanded?'Свернуть подборку':'Посмотреть подборку (необязательно)';}
 }
-let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesPrompt='',wishesSkipped=0,wishesUnavailable=0,wishesOpening=false;
+let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesPrompt='',wishesSkipped=0,wishesUnavailable=0,wishesAgencyOnly=false,wishesAgencyName='',wishesOpening=false;
 function syncWishesOptions(){
  const changed=wishesDialog.querySelector('#wishes-addition').value!==wishesGenerated,hasNotes=wishesWorks.some(item=>item.note.trim());
  wishesDialog.querySelector('[data-wishes-notes]').disabled=changed||!hasNotes||Boolean(wishesPrompt);
@@ -368,10 +387,10 @@ function syncWishesOptions(){
 }
 function regenerateWishes(){
  const includeNotes=wishesDialog.querySelector('[data-wishes-notes]').checked;
- const fragments=wishesWorks.map(item=>{const base=wishesAddition(item.work,wishesPrompt?'':includeNotes?item.note:'',location.origin);return wishesPrompt?base+'\nВопрос к агентству: '+wishesPrompt:base;}),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
+ const fragments=wishesAgencyOnly?[`Вопрос к агентству «${wishesAgencyName}»: ${wishesPrompt}`]:wishesWorks.map(item=>{const base=wishesAddition(item.work,wishesPrompt?'':includeNotes?item.note:'',location.origin);return wishesPrompt?base+'\nВопрос к агентству: '+wishesPrompt:base;}),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
  wishesSkipped=fragments.length-fresh.length;wishesGenerated=fresh.join('\n\n');wishesDialog.querySelector('#wishes-addition').value=wishesGenerated;
  const noteCount=wishesWorks.reduce((total,item)=>total+item.noteCount,0);
- wishesDialog.querySelector('[data-wishes-source-count]').textContent=(wishesPrompt?'Кейсов: '+wishesWorks.length+' · Вопрос для обсуждения: 1':'Примеров: '+wishesWorks.length+' · Личных заметок: '+noteCount)+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
+ wishesDialog.querySelector('[data-wishes-source-count]').textContent=(wishesAgencyOnly?'Команда: '+wishesAgencyName+' · Вопрос для обсуждения: 1':wishesPrompt?'Кейсов: '+wishesWorks.length+' · Вопрос для обсуждения: 1':'Примеров: '+wishesWorks.length+' · Личных заметок: '+noteCount)+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
  syncWishesOptions();updateWishesPreview();
 }
 function updateWishesPreview(message=''){
@@ -380,7 +399,7 @@ function updateWishesPreview(message=''){
  const merged=mergeWishes(wishesBase,addition);
  wishesDialog.querySelector('#wishes-preview').value=merged.text;
  wishesDialog.querySelector('[data-confirm-wishes]').disabled=merged.result!=='added';
- const messages={empty:wishesSkipped===wishesWorks.length?'Выбранный текст примеров уже есть в пожеланиях.':'Добавьте текст примера или заметки.',duplicate:'Этот текст уже есть в пожеланиях.', 'too-long':'В пожеланиях получится '+merged.text.length+' символов. Максимум — 3000; сократите добавляемый текст или выберите меньше примеров.'};
+ const messages={empty:wishesAgencyOnly&&wishesSkipped?'Этот вопрос уже есть в пожеланиях.':wishesSkipped===wishesWorks.length?'Выбранный текст примеров уже есть в пожеланиях.':'Добавьте текст примера или заметки.',duplicate:'Этот текст уже есть в пожеланиях.', 'too-long':'В пожеланиях получится '+merged.text.length+' символов. Максимум — 3000; сократите добавляемый текст или выберите меньше примеров.'};
  wishesDialog.querySelector('[data-wishes-status]').textContent=messages[merged.result]||message||'В пожеланиях будет '+merged.text.length+' из 3000 символов. Проверьте текст перед добавлением.';
  return merged;
 }
@@ -388,7 +407,10 @@ async function openWishes(trigger){
  if(wishesOpening||wishesDialog?.open)return;wishesOpening=true;
  try{
   const data=await getData(),agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');wishesPrompt=(trigger.dataset.addWishesPrompt||'').trim();
-  const slugs=batch?normalizeReferences(JSON.parse(trigger.dataset.addWishesSelection)):[trigger.dataset.addWishesWork];
+  wishesAgencyOnly=trigger.hasAttribute('data-add-wishes-agency-prompt');
+  wishesAgencyName=wishesAgencyOnly?data.agencies.find(agency=>agency.slug===agencySlug)?.name||'':'';
+  if(wishesAgencyOnly&&!wishesAgencyName){notice('Команда не найдена','Обновите каталог и попробуйте снова.');return;}
+  const slugs=batch?normalizeReferences(JSON.parse(trigger.dataset.addWishesSelection)):wishesAgencyOnly?[]:[trigger.dataset.addWishesWork];
   wishesWorks=slugs.flatMap(slug=>{
    const work=data.projects.find(p=>p.slug===slug&&(batch||p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));if(!work)return [];
    if(!batch){const note=draft.workNotes[workNoteKey(agencySlug,work.slug)]||'';return [{work,note,noteCount:note.trim()?1:0}];}
@@ -397,7 +419,7 @@ async function openWishes(trigger){
    return [{work,note,noteCount:entries.length}];
   });
   wishesUnavailable=slugs.length-wishesWorks.length;
-  if(!wishesWorks.length){notice('Примеры сейчас недоступны','Откройте сохранённые примеры и выберите работы заново.');return;}
+  if(!wishesWorks.length&&!wishesAgencyOnly){notice('Примеры сейчас недоступны','Откройте сохранённые примеры и выберите работы заново.');return;}
   if(!wishesDialog){
    wishesDialog=document.createElement('dialog');wishesDialog.id='wishes-dialog';wishesDialog.setAttribute('aria-labelledby','wishes-title');
    wishesDialog.innerHTML=`<button class="brief-close" type="button" data-cancel-wishes aria-label="Закрыть добавление в пожелания">×</button><h2 id="wishes-title">Добавить в пожелания?</h2><p>Этот текст войдёт в описание заявки после вашего подтверждения. Личные заметки и сохранённые примеры останутся на месте. Сейчас ничего не отправляется.</p><p class="wishes-source-count" data-wishes-source-count></p><label class="wishes-notes-choice"><input type="checkbox" data-wishes-notes> Включить личные заметки</label><p class="wishes-options-help" data-wishes-options-help></p><button class="wishes-reset-text" type="button" data-reset-wishes-text hidden>Сбросить правки</button><label for="wishes-addition">Текст, который добавится</label><textarea id="wishes-addition" rows="5" aria-describedby="wishes-status"></textarea><label for="wishes-preview">Пожелания после добавления</label><textarea id="wishes-preview" rows="7" readonly></textarea><p id="wishes-status" data-wishes-status role="status"></p><div class="draft-result-actions"><button type="button" class="primary-action" data-confirm-wishes>Добавить в пожелания</button><button type="button" class="secondary-action" data-cancel-wishes>Отмена</button></div>`;
