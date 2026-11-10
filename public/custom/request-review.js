@@ -2,9 +2,10 @@
 import {contactMethods} from './project-store.js';
 import {selectionView,selectionProblems} from './project-selection-view.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export function wishesAddition(work,note='',origin=''){
+export function wishesAddition(work,note='',origin='',agencyName=''){
  const source=typeof work?.source==='string'&&/^https?:\/\//i.test(work.source)?work.source:origin+'/work/'+work.slug;
- return ['Пример для обсуждения: '+(work.fullTitle||work.title),source,...(note.trim()?['Что нравится: '+note.trim()]:[])].join('\n');
+ const team=typeof agencyName==='string'?agencyName.replace(/\s+/g,' ').trim():'';
+ return ['Пример для обсуждения: '+(work.fullTitle||work.title),source,...(team?['Команда для обсуждения: '+team]:[]),...(note.trim()?['Что нравится: '+note.trim()]:[])].join('\n');
 }
 export function mergeWishes(existing,addition){
  const original=String(existing||''),fragment=String(addition||'').trim();

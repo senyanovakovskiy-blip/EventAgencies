@@ -137,50 +137,56 @@ const freshIdeas={
  other:{title:'Свободный маршрут с общей точкой',idea:'Дать гостям выбрать один из нескольких коротких способов участия, а затем свести все маршруты к одному общему открытию или финалу.',journey:'Общий старт → выбор маршрута → короткие активности → встреча всех гостей в одной общей точке.',question:'Что гостям важнее: выбрать собственный путь или вместе пройти одну общую программу?'}
 };
 
-function submittedWorkNote(description,title){
- const normalizeTitle=value=>String(value??'').normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е').replace(/\s+/g,' ').trim(),wanted=normalizeTitle(title);
- if(!wanted)return '';
- let currentTitle='',collecting=false,lines=[],result='';
- const finish=()=>{if(!result&&normalizeTitle(currentTitle)===wanted)result=lines.join(' ').replace(/\s+/g,' ').trim();};
- for(const line of String(description??'').split(/\r?\n/)){
-  const heading=line.match(/^Пример для обсуждения:\s*(.*)$/i);
-  if(heading){finish();currentTitle=heading[1];collecting=false;lines=[];continue;}
-  if(!currentTitle)continue;
-  if(/^Вопрос к агентству:/i.test(line)){collecting=false;continue;}
-  if(/^Что нравится:/i.test(line)){collecting=true;lines.push(line.replace(/^Что нравится:\s*/i,''));continue;}
-  if(collecting)lines.push(line);
- }
- finish();return excerpt(result,240);
-}
-function submittedWorkAnswers(description,work,agencySlug,catalog){
- // A wishes fragment contains the work title and either its source URL or its
- // site URL. It does not contain the chosen team, so multi-team works cannot be
- // attributed to a particular agency from this text alone.
- const linked=[...new Set([work?.agencySlug,...(Array.isArray(work?.agencySlugs)?work.agencySlugs:[])].filter(Boolean))];
- if(!work||linked.length!==1||linked[0]!==agencySlug)return [];
- const normalize=value=>String(value??'').normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е').replace(/\s+/g,' ').trim();
- const title=normalize(work.fullTitle||work.title),lines=String(description??'').slice(0,3000).split(/\r?\n/),starts=[];
- if(!title)return [];
+const normalizeWishIdentity=value=>String(value??'').normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е').replace(/\s+/g,' ').trim();
+function submittedWorkFragments(description,catalog){
+ const lines=String(description??'').slice(0,3000).split(/\r?\n/),starts=[],result=[];
  for(let index=0;index<lines.length;index++)if(/^Пример для обсуждения:\s*(.+)$/i.test(lines[index]))starts.push(index);
- const sourceMatches=(candidate,url)=>{
-  if(safeUrl(candidate.source)&&safeUrl(candidate.source)===url)return true;
-  try{return new URL(url).pathname.replace(/\/$/,'')==='/work/'+candidate.slug;}catch{return false;}
+ const sourceMatches=(work,url)=>{
+  if(safeUrl(work.source)&&safeUrl(work.source)===url)return true;
+  try{return new URL(url).pathname.replace(/\/$/,'')==='/work/'+work.slug;}catch{return false;}
  };
- const found=[],seen=new Set();
  for(let block=0;block<starts.length;block++){
   const begin=starts[block],end=starts[block+1]??lines.length,heading=lines[begin].match(/^Пример для обсуждения:\s*(.+)$/i),url=safeUrl(lines[begin+1]||'');
-  if(!heading||normalize(heading[1])!==title||!url)continue;
-  const matches=(catalog.projects||[]).filter(candidate=>normalize(candidate.fullTitle||candidate.title)===title&&sourceMatches(candidate,url));
-  if(matches.length!==1||matches[0].slug!==work.slug)continue;
-  let inNote=false;
-  for(let index=begin+2;index<end;index++){
-   if(/^Что нравится:/i.test(lines[index])){inNote=true;continue;}
-   if(/^Вопрос к агентству:/i.test(lines[index])){inNote=false;continue;}
-   if(!inNote)continue;
+  if(!heading||/^Команда для обсуждения:/i.test(lines[begin+1]||''))continue;
+  const title=normalizeWishIdentity(heading[1]);
+  const titleMatches=(catalog.projects||[]).filter(work=>normalizeWishIdentity(work.fullTitle||work.title)===title),teamLine=lines[begin+2]?.match(/^Команда для обсуждения:\s*(.+)$/i);
+  let matches=url?titleMatches.filter(work=>sourceMatches(work,url)):[];
+  // Older generated wishes may lack a usable source after catalog changes.
+  // Title-only recovery is limited to a unique work with one linked team.
+  if(matches.length!==1&&!teamLine&&titleMatches.length===1){
+   const candidate=titleMatches[0],links=[...new Set([candidate.agencySlug,...(Array.isArray(candidate.agencySlugs)?candidate.agencySlugs:[])].filter(Boolean))];
+   if(links.length===1)matches=titleMatches;
+  }
+  if(matches.length!==1)continue;
+  const work=matches[0],linked=[...new Set([work.agencySlug,...(Array.isArray(work.agencySlugs)?work.agencySlugs:[])].filter(Boolean))];
+  const linkedAgencies=(catalog.agencies||[]).filter(agency=>linked.includes(agency.slug));
+  if(!teamLine&&/^Что нравится:\s*Моя заметка для «/i.test(lines[begin+(url?2:1)]||''))continue;
+  const chosen=teamLine?linkedAgencies.filter(agency=>normalizeWishIdentity(agency.name)===normalizeWishIdentity(teamLine[1])):linked.length===1?linkedAgencies:[];
+  if(chosen.length!==1)continue;
+  const agencySlug=chosen[0].slug,body=lines.slice(begin+(teamLine?3:url?2:1),end),noteStart=body.findIndex(line=>/^Что нравится:/i.test(line)),question=body.find(line=>/^Вопрос к агентству:\s*(.+)$/i.test(line))?.replace(/^Вопрос к агентству:\s*/i,'').trim()||'';
+  let note='';
+  if(noteStart>=0){
+   const noteLines=[body[noteStart].replace(/^Что нравится:\s*/i,'')];
+   for(let index=noteStart+1;index<body.length&&!/^Вопрос к агентству:/i.test(body[index]);index++)noteLines.push(body[index]);
+   note=noteLines.join('\n').trim();
+  }
+  result.push({agencySlug,workSlug:work.slug,wished:true,wishedQuestion:question,wishedNote:note});
+ }
+ return result;
+}
+function submittedWorkNote(fragments,work,agencySlug){
+ const note=fragments.find(item=>item.workSlug===work.slug&&item.agencySlug===agencySlug&&item.wishedNote)?.wishedNote||'';
+ return excerpt(note.replace(/\s+/g,' ').trim(),240);
+}
+function submittedWorkAnswers(fragments,work,agencySlug){
+ const found=[],seen=new Set();
+ for(const fragment of fragments.filter(item=>item.workSlug===work.slug&&item.agencySlug===agencySlug&&item.wishedNote)){
+  const lines=fragment.wishedNote.split(/\r?\n/);
+  for(let index=0;index<lines.length;index++){
    const prompt=lines[index].match(/^Вопрос по работе:\s*(.+)$/i),reply=lines[index+1]?.match(/^Мой ответ:\s*(.*)$/i);
    if(!prompt||!reply)continue;
    const answerLines=[reply[1]];let after=index+2;
-   while(after<end&&!/^(?:Вопрос по работе:|Вопрос к агентству:|Что особенно понравилось:|Пример для обсуждения:)/i.test(lines[after]))answerLines.push(lines[after++]);
+   while(after<lines.length&&!/^(?:Вопрос по работе:|Что особенно понравилось:)/i.test(lines[after]))answerLines.push(lines[after++]);
    const question=prompt[1].trim(),answer=answerLines.join('\n').trim(),key=JSON.stringify([question,answer]);
    if(question&&answer&&answer.length<=1000&&!seen.has(key)){seen.add(key);found.push({question,answer});}
    index=after-1;
@@ -188,24 +194,14 @@ function submittedWorkAnswers(description,work,agencySlug,catalog){
  }
  return found.slice(0,3);
 }
-function mentionedWorkReferences(description,catalog){
- const normalize=value=>String(value??'').normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е').replace(/\s+/g,' ').trim(),blocks=String(description??'').split(/\n\s*\n/),seen=new Set(),result=[];
- for(const block of blocks){
-  const lines=block.split(/\r?\n/),match=lines[0]?.match(/^Пример для обсуждения:\s*(.+)$/i);if(!match)continue;
-  let candidates=(catalog.projects||[]).filter(work=>normalize(work.fullTitle||work.title)===normalize(match[1]));
-  const sourceLine=safeUrl(lines[1]||'');
-  if(candidates.length>1&&sourceLine){
-   let pathSlug='';try{pathSlug=/\/work\/([^/]+)\/?$/.exec(new URL(sourceLine).pathname)?.[1]||'';}catch{}
-   candidates=candidates.filter(work=>work.slug===pathSlug||safeUrl(work.source)===sourceLine);
-  }
-  if(candidates.length!==1)continue;
-  const work=candidates[0],agencySlug=text(work.agencySlug)||text(work.agencySlugs?.[0]);if(!agencySlug)continue;
-  const key=JSON.stringify([agencySlug,work.slug]);if(seen.has(key))continue;seen.add(key);
-  const question=block.match(/^Вопрос к агентству:\s*(.+)$/im)?.[1]?.trim()||'';
-  const note=block.match(/^Что нравится:\s*(.+)$/im)?.[1]?.trim()||'';
-  result.push({agencySlug,workSlug:work.slug,wished:true,wishedQuestion:question,wishedNote:note});
+function mentionedWorkReferences(description,catalog,fragments=submittedWorkFragments(description,catalog)){
+ const found=new Map();
+ for(const item of fragments){
+  const key=JSON.stringify([item.agencySlug,item.workSlug]),existing=found.get(key);
+  if(!existing)found.set(key,{...item});
+  else if(!existing.wishedNote&&item.wishedNote||!existing.wishedQuestion&&item.wishedQuestion)found.set(key,{...existing,wishedNote:existing.wishedNote||item.wishedNote,wishedQuestion:existing.wishedQuestion||item.wishedQuestion});
  }
- return result;
+ return [...found.values()];
 }
 export function customerWorkReferencesFromBrief(description,catalog){
  return mentionedWorkReferences(description,catalog).map(({agencySlug,workSlug,wishedQuestion,wishedNote})=>({agencySlug,workSlug,question:wishedQuestion,note:wishedNote}));
@@ -239,7 +235,7 @@ export function ideaSourceMoments(work){
 }
 
 function worksFor(entry,catalog,receipt,references){
- const refs=Array.isArray(references)?references:[],operatorRefs=refs.filter(item=>item?.operatorSelected),wishedRefs=mentionedWorkReferences(receipt?.brief?.description,catalog),wishedByKey=new Map(wishedRefs.map(item=>[JSON.stringify([item.agencySlug,item.workSlug]),item])),operatorWorkKeys=new Set(operatorRefs.map(item=>JSON.stringify([text(item?.agencySlug),text(item?.workSlug)]))),candidates=[...operatorRefs,entry,...refs.filter(item=>!item?.operatorSelected),...wishedRefs],seen=new Set(),result=[];
+ const fragments=submittedWorkFragments(receipt?.brief?.description,catalog),refs=Array.isArray(references)?references:[],operatorRefs=refs.filter(item=>item?.operatorSelected),wishedRefs=mentionedWorkReferences(receipt?.brief?.description,catalog,fragments),wishedByKey=new Map(wishedRefs.map(item=>[JSON.stringify([item.agencySlug,item.workSlug]),item])),operatorWorkKeys=new Set(operatorRefs.map(item=>JSON.stringify([text(item?.agencySlug),text(item?.workSlug)]))),candidates=[...operatorRefs,entry,...refs.filter(item=>!item?.operatorSelected),...wishedRefs],seen=new Set(),result=[];
  for(const item of candidates){
    const agencySlug=text(item?.agencySlug),workSlug=text(item?.workSlug),momentKey=text(item?.momentKey);if(!agencySlug||!workSlug)continue;
    const workKey=JSON.stringify([agencySlug,workSlug]);if(!item?.operatorSelected&&operatorWorkKeys.has(workKey))continue;
@@ -250,9 +246,9 @@ function worksFor(entry,catalog,receipt,references){
    const workTitle=work.fullTitle||work.title||work.slug,detailIdea=text(work.details?.idea),moment=momentKey?ideaSourceMoments(work).find(candidate=>candidate.key===momentKey):null,summary=moment?.text||detailIdea||text(work.presentation?.intro)||text(work.rawDescription)||text(work.role);
   if(!summary)continue;
   const selected=(receipt?.selection||[]).some(s=>s.agencySlug===agencySlug&&(s.workSlug===workSlug||s.work?.slug===workSlug));
-  const sharedNote=submittedWorkNote(receipt?.brief?.description,workTitle);
+  const sharedNote=submittedWorkNote(fragments,work,agencySlug);
    const wishedReference=wishedByKey.get(workKey);
-   result.push({agencySlug,agencyName:agency?.name||workTitle||'Команда из каталога',title:moment?workTitle+' · '+moment.label:workTitle,workTitle,summary:excerpt(summary,260),kind:moment?.label|| (detailIdea?'замысел или приём из подробной справки':'фрагмент описания проекта'),momentKey:moment?.key||'',momentLabel:moment?.label||'',image:safeAssetImage(work.preview)||safeAssetImage(work.thumb)||safeAssetImage(work.image)||safeAssetImage(work.reelImage)||safeAssetImage(work.gallery?.find(photo=>photo.type==='image')?.src)||'',url:safeUrl(work.details?.source)||safeUrl(work.source),selected,operatorSelected:Boolean(item?.operatorSelected),wished:Boolean(wishedReference),wishedQuestion:wishedReference?.wishedQuestion||'',sharedNote,sharedMotives:submittedWorkMotives(sharedNote),customerAnswers:submittedWorkAnswers(receipt?.brief?.description,work,agencySlug,catalog),types:Array.isArray(work.types)?work.types.filter(value=>typeof value==='string'):[],occasions:Array.isArray(work.occasions)?work.occasions.filter(value=>typeof value==='string'):[]});
+   result.push({agencySlug,agencyName:agency?.name||workTitle||'Команда из каталога',title:moment?workTitle+' · '+moment.label:workTitle,workTitle,summary:excerpt(summary,260),kind:moment?.label|| (detailIdea?'замысел или приём из подробной справки':'фрагмент описания проекта'),momentKey:moment?.key||'',momentLabel:moment?.label||'',image:safeAssetImage(work.preview)||safeAssetImage(work.thumb)||safeAssetImage(work.image)||safeAssetImage(work.reelImage)||safeAssetImage(work.gallery?.find(photo=>photo.type==='image')?.src)||'',url:safeUrl(work.details?.source)||safeUrl(work.source),selected,operatorSelected:Boolean(item?.operatorSelected),wished:Boolean(wishedReference),wishedQuestion:wishedReference?.wishedQuestion||'',sharedNote,sharedMotives:submittedWorkMotives(sharedNote),customerAnswers:submittedWorkAnswers(fragments,work,agencySlug),types:Array.isArray(work.types)?work.types.filter(value=>typeof value==='string'):[],occasions:Array.isArray(work.occasions)?work.occasions.filter(value=>typeof value==='string'):[]});
   if(result.length===3)break;
  }
  return result;

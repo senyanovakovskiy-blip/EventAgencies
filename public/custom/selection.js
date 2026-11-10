@@ -382,14 +382,18 @@ function setHelpSelection(expanded){
 }
 let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesPrompt='',wishesSkipped=0,wishesUnavailable=0,wishesAgencyOnly=false,wishesAgencyName='',wishesOpening=false;
 function syncWishesOptions(){
- const changed=wishesDialog.querySelector('#wishes-addition').value!==wishesGenerated,hasNotes=wishesWorks.some(item=>item.note.trim());
+ const changed=wishesDialog.querySelector('#wishes-addition').value!==wishesGenerated,hasNotes=wishesWorks.some(item=>item.notes?.length);
  wishesDialog.querySelector('[data-wishes-notes]').disabled=changed||!hasNotes||Boolean(wishesPrompt);
  wishesDialog.querySelector('[data-reset-wishes-text]').hidden=!changed;
  wishesDialog.querySelector('[data-wishes-options-help]').textContent=changed?'Вы изменили текст. Чтобы переключить заметки, сначала нажмите «Сбросить правки».':wishesPrompt?'Вопрос будет добавлен отдельно от личных заметок. Перед сохранением вы сможете изменить формулировку.':hasNotes?(wishesTrigger?.hasAttribute('data-add-wishes-selection')?'Можно включить все личные заметки к выбранным примерам, в том числе записи для разных команд. Текст будет показан перед добавлением.':'Включите заметку, если хотите передать её вместе с примером.'):'У выбранных примеров пока нет личных заметок.';
 }
 function regenerateWishes(){
  const includeNotes=wishesDialog.querySelector('[data-wishes-notes]').checked;
- const fragments=wishesAgencyOnly?[`Вопрос к агентству «${wishesAgencyName}»: ${wishesPrompt}`]:wishesWorks.map(item=>{const base=wishesAddition(item.work,wishesPrompt?'':includeNotes?item.note:'',location.origin);return wishesPrompt?base+'\nВопрос к агентству: '+wishesPrompt:base;}),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
+ const fragments=wishesAgencyOnly?[`Вопрос к агентству «${wishesAgencyName}»: ${wishesPrompt}`]:wishesWorks.flatMap(item=>{
+  if(wishesPrompt)return [wishesAddition(item.work,'',location.origin,item.agencyName||'')+'\nВопрос к агентству: '+wishesPrompt];
+  if(includeNotes&&item.notes?.length)return item.notes.map(entry=>wishesAddition(item.work,entry.canUseForWishes?entry.note:'Моя заметка для «'+entry.agencyName+'»: '+entry.note,location.origin,entry.canUseForWishes?entry.agencyName:''));
+  return [wishesAddition(item.work,'',location.origin,item.agencyName||'')];
+ }),fresh=fragments.filter(fragment=>!draft.brief.description.includes(fragment));
  wishesSkipped=fragments.length-fresh.length;wishesGenerated=fresh.join('\n\n');wishesDialog.querySelector('#wishes-addition').value=wishesGenerated;
  const noteCount=wishesWorks.reduce((total,item)=>total+item.noteCount,0);
  wishesDialog.querySelector('[data-wishes-source-count]').textContent=(wishesAgencyOnly?'Команда: '+wishesAgencyName+' · Вопрос для обсуждения: 1':wishesPrompt?'Кейсов: '+wishesWorks.length+' · Вопрос для обсуждения: 1':'Примеров: '+wishesWorks.length+' · Личных заметок: '+noteCount)+(wishesSkipped?' · Уже есть в пожеланиях: '+wishesSkipped:'')+(wishesUnavailable?' · Недоступно в каталоге: '+wishesUnavailable:'');
@@ -401,7 +405,7 @@ function updateWishesPreview(message=''){
  const merged=mergeWishes(wishesBase,addition);
  wishesDialog.querySelector('#wishes-preview').value=merged.text;
  wishesDialog.querySelector('[data-confirm-wishes]').disabled=merged.result!=='added';
- const messages={empty:wishesAgencyOnly&&wishesSkipped?'Этот вопрос уже есть в пожеланиях.':wishesSkipped===wishesWorks.length?'Выбранный текст примеров уже есть в пожеланиях.':'Добавьте текст примера или заметки.',duplicate:'Этот текст уже есть в пожеланиях.', 'too-long':'В пожеланиях получится '+merged.text.length+' символов. Максимум — 3000; сократите добавляемый текст или выберите меньше примеров.'};
+ const messages={empty:wishesAgencyOnly&&wishesSkipped?'Этот вопрос уже есть в пожеланиях.':wishesSkipped?'Выбранный текст примеров уже есть в пожеланиях.':'Добавьте текст примера или заметки.',duplicate:'Этот текст уже есть в пожеланиях.', 'too-long':'В пожеланиях получится '+merged.text.length+' символов. Максимум — 3000; сократите добавляемый текст или выберите меньше примеров.'};
  wishesDialog.querySelector('[data-wishes-status]').textContent=messages[merged.result]||message||'В пожеланиях будет '+merged.text.length+' из 3000 символов. Проверьте текст перед добавлением.';
  return merged;
 }
@@ -415,10 +419,13 @@ async function openWishes(trigger){
   const slugs=batch?normalizeReferences(JSON.parse(trigger.dataset.addWishesSelection)):wishesAgencyOnly?[]:[trigger.dataset.addWishesWork];
   wishesWorks=slugs.flatMap(slug=>{
    const work=data.projects.find(p=>p.slug===slug&&(batch||p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));if(!work)return [];
-   if(!batch){const note=draft.workNotes[workNoteKey(agencySlug,work.slug)]||'';return [{work,note,noteCount:note.trim()?1:0}];}
-   const entries=referenceNotesForWork(work,draft.workNotes,data.agencies).filter(entry=>entry.note.trim());
-   const note=entries.length===1&&entries[0].isPrimary?entries[0].note:entries.map(entry=>'Моя заметка для «'+entry.agencyName+'»: '+entry.note).join('\n\n');
-   return [{work,note,noteCount:entries.length}];
+   if(!batch){
+    const agency=data.agencies.find(item=>item.slug===agencySlug);if(!agency)return [];
+    const note=draft.workNotes[workNoteKey(agencySlug,work.slug)]||'';
+    return [{work,agencyName:agency.name,notes:note.trim()?[{note,agencyName:agency.name,canUseForWishes:true}]:[],noteCount:note.trim()?1:0}];
+   }
+   const notes=referenceNotesForWork(work,draft.workNotes,data.agencies).filter(entry=>entry.note.trim());
+   return [{work,notes,noteCount:notes.length}];
   });
   wishesUnavailable=slugs.length-wishesWorks.length;
   if(!wishesWorks.length&&!wishesAgencyOnly){notice('Примеры сейчас недоступны','Откройте сохранённые примеры и выберите работы заново.');return;}
@@ -444,7 +451,7 @@ async function openWishes(trigger){
    });
   }
   wishesTrigger=trigger;
-  wishesDialog.querySelector('[data-wishes-notes]').checked=!batch&&!wishesPrompt&&wishesWorks.some(item=>item.note.trim());
+  wishesDialog.querySelector('[data-wishes-notes]').checked=!batch&&!wishesPrompt&&wishesWorks.some(item=>item.notes?.length);
   regenerateWishes();wishesDialog.showModal();wishesDialog.querySelector('#wishes-addition').focus();
  }catch{notice('Не удалось подготовить пожелание','Описание и личные заметки не изменены. Попробуйте ещё раз.');}
  finally{wishesOpening=false;}
