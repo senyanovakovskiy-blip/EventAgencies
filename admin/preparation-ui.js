@@ -46,8 +46,9 @@ function cardMarkup(entry,catalog,receipt,saved=false){
  <section class="preparation-follow-up" aria-labelledby="${esc(followUpId+'-title')}"><h4 id="${esc(followUpId+'-title')}">После обсуждения</h4><p id="${esc(followUpId+'-help')}" class="small muted">Запишите реальные слова клиента и итоги разговора; при необходимости укажите дату и собеседника. Эти поля заполняются вручную и сохраняются общей кнопкой заявки. Они не подтверждают автоматически бриф, согласия сторон или состоявшееся знакомство.</p>${preparationFieldMarkup(entry,preparationFollowUpFields,statusId,followUpId+'-help')}</section>
  ${discussionPlanMarkup(statusId+'-plan')}</div></article>`;
 }
-export function preparationMarkup(){
- return `<section class="operator-subsection" id="admin-preparation" data-stage-panel="preparation"><h3>Разговор и сценарий</h3><p id="preparation-privacy" class="small muted">Только для оператора. Подготовка сохраняется с заявкой; автоматически не попадает в бриф, рекомендации или ответ клиенту. Переключение команды и работы сохраняет введённые поля на странице.</p>${preparationComparisonMarkup()}<label>Чей опыт обсуждаем<select data-preparation-context aria-label="Агентство и работа для подготовки"></select></label><p class="small muted" data-preparation-empty hidden>В заявке пока нет выбранных команд. Добавьте рекомендацию или команду для обсуждения.</p><div data-preparation-cards></div><p class="small muted" data-preparation-count role="status"></p></section>`;
+export function preparationMarkup(data={},catalog={agencies:[],projects:[]}){
+ const format=data.receipt?.brief?.format||'';
+ return `<section class="operator-subsection" id="admin-preparation" data-stage-panel="preparation"><h3>Разговор и сценарий</h3><p id="preparation-privacy" class="small muted">Только для оператора. Подготовка сохраняется с заявкой; автоматически не попадает в бриф, рекомендации или ответ клиенту. Переключение команды и работы сохраняет введённые поля на странице.</p><article class="preparation-card general-event-idea-lab" data-preparation-card data-general-idea-lab data-agency="" data-work=""><h4>С чего начать идею события</h4><p class="small muted">Можно собрать классическую основу и авторские направления ещё до выбора агентства. Для развития или сочетания реальных работ добавьте фрагменты из каталога. Черновик и реакция заказчика сохраняются внутри заявки; они не отправляются автоматически.</p>${eventIdeasMarkup('general-event-ideas',format,'brief','brief','unspecified','all','','',catalog)}<label>Общий черновик идеи<textarea data-general-event-draft maxlength="4000" rows="8" aria-describedby="preparation-privacy general-event-idea-note">${esc(data.workflow?.ideaDraft||'')}</textarea><span id="general-event-idea-note" class="small muted">До 4&nbsp;000 символов. Сохраните кнопкой «Сохранить изменения».</span></label><label>Что сказал заказчик после обсуждения<textarea data-general-event-feedback maxlength="2000" rows="3" aria-describedby="preparation-privacy">${esc(data.workflow?.ideaFeedback||'')}</textarea><span class="small muted">Записывайте только фактический отклик; используйте его для следующего варианта.</span></label></article>${preparationComparisonMarkup()}<label>Чей опыт обсуждаем<select data-preparation-context aria-label="Агентство и работа для подготовки"></select></label><p class="small muted" data-preparation-empty hidden>Команды пока не выбраны. Общий генератор выше уже работает; добавьте агентство, чтобы развить конкретные работы каталога.</p><div data-preparation-cards></div><p class="small muted" data-preparation-count role="status"></p></section>`;
 }
 export function readPreparation(form,fallback=[]){
  const host=form.querySelector('[data-preparation-cards]');if(host?.dataset.ready!=='true')return normalizePreparation(fallback);
@@ -62,6 +63,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const saved=normalizePreparation(data.workflow?.preparation),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
  host.innerHTML=saved.map(item=>cardMarkup(item,catalog,data.receipt,true)).join('');host.dataset.ready='true';
  const cards=()=>[...host.querySelectorAll('[data-preparation-card]')];
+ const ideaCards=()=>[...cards(),form.querySelector('[data-general-idea-lab]')].filter(Boolean);
  function contexts(){
   const entries=new Map(),values=getValues();
   function add(item,origin){const key=preparationKey(item),entry=entries.get(key)||{agencySlug:item.agencySlug,workSlug:item.workSlug||null,origins:[]};if(!entry.origins.includes(origin))entry.origins.push(origin);entries.set(key,entry);}
@@ -117,10 +119,10 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  }
  function ideaInput(card,entries=contexts()){
   const ideaSources=[...sourcesFor(card).values()],currentWork={agencySlug:card.dataset.agency,workSlug:card.dataset.work||null};
-  return {entry:{agencySlug:card.dataset.agency,workSlug:ideaSources.length?null:currentWork.workSlug},catalog,receipt:data.receipt,workflow:getValues().workflow,references:[...ideaSources,...(ideaSources.length&&currentWork.workSlug?[currentWork]:[]),...entries.values()],formatOverride:card.querySelector('[data-event-idea-format]')?.value||'',participationMode:card.querySelector('[data-event-idea-participation]')?.value||'brief',creativeAngle:card.querySelector('[data-event-idea-angle]')?.value||'brief',audienceProfile:card.querySelector('[data-event-idea-audience]')?.value||'unspecified',ideaApproach:card.querySelector('[data-event-idea-approach]')?.value||'all',customDirection:card.querySelector('[data-event-idea-direction]')?.value||'',eventDuration:card.querySelector('[data-event-idea-duration]')?.value||'',allowUnmatchedManualCombination:Boolean(card.querySelector('[data-event-idea-manual-combine]')?.checked),clientFeedback:card.querySelector('[data-preparation-field="clientFeedback"]')?.value||''};
+  return {entry:{agencySlug:card.dataset.agency,workSlug:ideaSources.length?null:currentWork.workSlug},catalog,receipt:data.receipt,workflow:getValues().workflow,references:[...ideaSources,...(ideaSources.length&&currentWork.workSlug?[currentWork]:[]),...entries.values()],formatOverride:card.querySelector('[data-event-idea-format]')?.value||'',participationMode:card.querySelector('[data-event-idea-participation]')?.value||'brief',creativeAngle:card.querySelector('[data-event-idea-angle]')?.value||'brief',audienceProfile:card.querySelector('[data-event-idea-audience]')?.value||'unspecified',ideaApproach:card.querySelector('[data-event-idea-approach]')?.value||'all',customDirection:card.querySelector('[data-event-idea-direction]')?.value||'',eventDuration:card.querySelector('[data-event-idea-duration]')?.value||'',allowUnmatchedManualCombination:Boolean(card.querySelector('[data-event-idea-manual-combine]')?.checked),clientFeedback:card.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]')?.value||''};
  }
  function refreshEventIdeas(entries=contexts()){
-  for(const card of cards()){
+  for(const card of ideaCards()){
    const panel=card.querySelector('[data-event-idea-generator]');if(!panel)continue;
    const generate=panel.querySelector('[data-generate-event-ideas]'),state=eventIdeaStates.get(panel),status=panel.querySelector('[data-event-ideas-status]');
    generate.disabled=form.dataset.busy==='true';
@@ -134,7 +136,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  }
  function unsavedIdeaPitches(card,panel,state){
   const result=new Map();if(!state)return result;
-  const scenario=card.querySelector('[data-preparation-field="scenario"]'),reply=form.elements.replyText;
+  const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]'),reply=form.elements.replyText;
   for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){
    const item=state.ideas[Number(field.dataset.eventIdeaPitch)];if(!item)continue;
    const value=field.value.trim(),baseline=(item.pitchText??eventIdeaPitchText(item)).trim();
@@ -149,7 +151,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   if(key!==optionKey){optionKey=key;select.innerHTML=[...entries.values()].map(item=>{const id=identity(item,catalog,data.receipt);return `<option value="${esc(preparationKey(item))}">${esc(id.name+' · '+id.title+' — '+item.origins.join(', '))}</option>`;}).join('');}
   form.querySelector('[data-preparation-empty]').hidden=entries.size>0;select.hidden=!entries.size;
   if(entries.size)show(entries.get(active)||entries.values().next().value);
-  for(const card of cards())syncIdeaSourceList(card);
+  for(const card of ideaCards())syncIdeaSourceList(card);
   const items=readPreparation(form),length=preparationLength(items),tooLarge=length>PREPARATION_LIMIT||items.length>PREPARATION_MAX_ITEMS;
   count.textContent=`Подготовка: ${length.toLocaleString('ru-RU')} / ${PREPARATION_LIMIT.toLocaleString('ru-RU')} символов во всех записях; ${items.length} / ${PREPARATION_MAX_ITEMS} записей.`+(tooLarge?' Сократите текст перед сохранением.':' Сохраняется общей кнопкой заявки.');count.classList.toggle('reply-warning',tooLarge);
   refreshEventIdeas(entries);
@@ -164,13 +166,13 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   else{form.querySelector('#admin-preparation').scrollIntoView({block:'start'});select.focus({preventScroll:true});}
  }
  select.addEventListener('change',()=>{if(form.dataset.busy==='true')return;const entry=contexts().get(select.value);if(entry){active=select.value;show(entry);}});
-  host.addEventListener('change',event=>{if(event.target.matches('[data-event-idea-source-picker]')){syncIdeaSourcePreview(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-approach],[data-event-idea-format],[data-event-idea-participation],[data-event-idea-angle],[data-event-idea-audience],[data-event-idea-duration],[data-event-idea-manual-combine]')){sync();return;}if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});});
-  host.addEventListener('input',event=>{if(event.target.matches('[data-event-idea-source-search]')){filterIdeaSourceOptions(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-direction]')){sync();return;}if(event.target.matches('[data-preparation-field]')){event.target.closest('[data-preparation-card]').querySelector('[data-generation-status]').textContent='';if(event.target.dataset.preparationField==='clientFeedback')sync();}});
- host.addEventListener('click',async event=>{
+  form.addEventListener('change',event=>{if(event.target.matches('[data-event-idea-source-picker]')){syncIdeaSourcePreview(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-approach],[data-event-idea-format],[data-event-idea-participation],[data-event-idea-angle],[data-event-idea-audience],[data-event-idea-duration],[data-event-idea-manual-combine]')){sync();return;}if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});});
+  form.addEventListener('input',event=>{if(event.target.matches('[data-event-idea-source-search]')){filterIdeaSourceOptions(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-direction]')){sync();return;}if(event.target.matches('[data-preparation-field]')){event.target.closest('[data-preparation-card]').querySelector('[data-generation-status]').textContent='';if(event.target.dataset.preparationField==='clientFeedback')sync();}});
+ form.addEventListener('click',async event=>{
   const responseButton=event.target.closest('[data-record-event-idea-response]');
   if(responseButton&&!form.dataset.busy){
    const card=responseButton.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]');if(!card||!panel||!status)return;
-    const state=eventIdeaStates.get(panel),index=Number(responseButton.dataset.recordEventIdeaResponse),idea=state?.ideas[index],entries=contexts(),signature=eventIdeaSignature(ideaInput(card,entries)),label=ideaResponseLabels[responseButton.dataset.eventIdeaResponse],detail=ideaReactionDetails[panel.querySelector('[data-event-idea-reaction-detail]')?.value||'']||'',noteField=panel.querySelector('[data-event-idea-reaction-note]'),note=(noteField?.value||'').replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim(),feedback=card.querySelector('[data-preparation-field="clientFeedback"]');
+    const state=eventIdeaStates.get(panel),index=Number(responseButton.dataset.recordEventIdeaResponse),idea=state?.ideas[index],entries=contexts(),signature=eventIdeaSignature(ideaInput(card,entries)),label=ideaResponseLabels[responseButton.dataset.eventIdeaResponse],detail=ideaReactionDetails[panel.querySelector('[data-event-idea-reaction-detail]')?.value||'']||'',noteField=panel.querySelector('[data-event-idea-reaction-note]'),note=(noteField?.value||'').replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim(),feedback=card.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]');
    if(!state||state.signature!==signature||!idea){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново, затем запишите реакцию на нужный вариант.';return;}
    if(!label||!feedback){status.textContent='Не удалось открыть поле для записи итога разговора.';return;}
     const block=`${new Date().toLocaleString('ru-RU',{dateStyle:'short',timeStyle:'short'})} · ${label}: «${idea.title}».${detail?' [Клиент отметил: '+detail+']':''}${note?' [Комментарий клиента: '+note+']':''}`;
@@ -184,7 +186,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   if(appendCombinationDraft&&!form.dataset.busy){
    const card=appendCombinationDraft.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]'),state=panel&&eventIdeaStates.get(panel),entries=contexts();if(!card||!panel||!status||!state?.combination)return;
    if(state.signature!==eventIdeaSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Пересоберите варианты перед сохранением связки.';return;}
-   const scenario=card.querySelector('[data-preparation-field="scenario"]'),block=eventIdeaText(state.combination,state.commonChecks);if(!scenario){status.textContent='Поле чернового сценария недоступно.';return;}
+   const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]'),block=eventIdeaText(state.combination,state.commonChecks);if(!scenario){status.textContent='Поле чернового сценария недоступно.';return;}
    if(scenario.value.includes(block)){status.textContent='Эта связка уже есть в черновом сценарии.';return;}
    const current=scenario.value.trimEnd(),next=current?current+'\n\n'+block:block;if(next.length>scenario.maxLength){status.textContent='Связка не помещается в черновой сценарий. Сократите её или возьмите только нужный элемент вручную.';return;}
    scenario.value=next;scenario.dispatchEvent(new Event('input',{bubbles:true}));state.message='Связка добавлена в черновой сценарий на этой странице. Нажмите общую кнопку «Сохранить изменения».';sync();status.textContent=state.message;scenario.focus({preventScroll:true});scenario.scrollIntoView({block:'center'});return;
@@ -202,7 +204,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    const card=appendComparison.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]'),state=panel&&eventIdeaStates.get(panel),entries=contexts();if(!card||!panel||!status||!state)return;
    if(state.signature!==eventIdeaSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед сохранением сравнения.';return;}
    const items=[...state.comparison].map(index=>state.ideas[index]).filter(Boolean);if(items.length<2){status.textContent='Отметьте минимум два варианта для сравнения.';return;}
-   const scenario=card.querySelector('[data-preparation-field="scenario"]'),block=eventIdeaComparisonText(items,state.commonChecks);if(!scenario){status.textContent='Поле чернового сценария недоступно.';return;}
+   const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]'),block=eventIdeaComparisonText(items,state.commonChecks);if(!scenario){status.textContent='Поле чернового сценария недоступно.';return;}
    if(scenario.value.includes(block)){status.textContent='Это сравнение уже есть в черновом сценарии.';return;}
    const current=scenario.value.trimEnd(),next=current?current+'\n\n'+block:block;if(next.length>scenario.maxLength){status.textContent='Сравнение не помещается в черновой сценарий. Уберите один вариант или добавьте их по отдельности.';return;}
    scenario.value=next;scenario.dispatchEvent(new Event('input',{bubbles:true}));state.message='Сравнение добавлено в черновой сценарий на этой странице. Нажмите общую кнопку «Сохранить изменения».';sync();status.textContent=state.message;scenario.focus({preventScroll:true});scenario.scrollIntoView({block:'center'});return;
@@ -271,7 +273,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
     state.message=message;status.textContent=message;form.querySelector('#copy-status').textContent='Черновик ответа дополнен. Сообщение не отправлено.';
     reply.focus({preventScroll:true});reply.scrollIntoView({block:'center'});return;
    }
-   const scenario=card.querySelector('[data-preparation-field="scenario"]');if(!scenario)return;
+   const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]');if(!scenario)return;
    const scale=appendScale?eventIdeaScopes(idea)[appendScale.dataset.eventIdeaScale]:null;
    const scaleLabel=appendScale?(appendScale.dataset.eventIdeaScale==='compact'?'Сдержанный':'Расширенный'):'';
    const block=appendPitch?'ПОДАЧА ЗАКАЗЧИКУ:\n'+pitch.value.trim():appendScale?'ВАРИАНТ МАСШТАБА · '+scaleLabel+' · '+idea.title+'\n'+scale:eventIdeaText(idea,state.commonChecks),current=scenario.value.trimEnd();
