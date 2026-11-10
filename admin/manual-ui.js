@@ -74,7 +74,13 @@ export function wireEditor({data,catalog,onSave,onReload}){
   if(current.replyText!==originalReply||replyKey(current.recommendations,current.workflow.brief,current.workflow.teams)!==originalInputs){form.querySelector('#copy-status').textContent='Текст ответа или данные заявки изменились во время подготовки. Текущий текст не заменён. Нажмите кнопку подготовки ещё раз, чтобы создать новый вариант.';return;}
   form.elements.replyText.value=buildCustomerReply(data.receipt,recommendations,values.workflow.brief,values.workflow.teams);form.dataset.replyBasis=basis;form.querySelector('#generate-reply').textContent='Подготовить текст заново';form.querySelector('#copy-status').textContent='Текст подготовлен. Проверьте его перед копированием.';changed();form.elements.replyText.focus();
  });
- form.querySelector('#review-reply').addEventListener('click',async()=>{form.dataset.replyBasis=await recommendationFingerprint(readEditor(form).recommendations,readEditor(form).workflow.brief,readEditor(form).workflow.teams);changed();});
+ form.querySelector('#review-reply').addEventListener('click',async()=>{
+  const values=readEditor(form),originalInputs=replyKey(values.recommendations,values.workflow.brief,values.workflow.teams);
+  const basis=await recommendationFingerprint(values.recommendations,values.workflow.brief,values.workflow.teams);if(!form.isConnected)return;
+  const current=readEditor(form);
+  if(current.replyText!==values.replyText||replyKey(current.recommendations,current.workflow.brief,current.workflow.teams)!==originalInputs){form.querySelector('#copy-status').textContent='Текст ответа или данные заявки изменились во время проверки. Отметка не поставлена. Проверьте текущий текст и нажмите «Ответ проверен» ещё раз.';return;}
+  form.dataset.replyBasis=basis;changed();
+ });
  form.querySelector('#copy-reply').addEventListener('click',async()=>{const text=form.elements.replyText.value;if(!text.trim())return;try{await navigator.clipboard.writeText(text);form.querySelector('#copy-status').textContent='Ответ скопирован. Сообщение ещё не отправлено.';}catch{form.elements.replyText.focus();form.elements.replyText.select();form.querySelector('#copy-status').textContent='Автоматическое копирование недоступно. Текст выделен — скопируйте его вручную.';}});
  form.querySelector('#reload-detail').addEventListener('click',onReload);
  document.querySelectorAll('[data-jump-target]').forEach(button=>button.addEventListener('click',()=>document.getElementById(button.dataset.jumpTarget)?.scrollIntoView({block:'start'})));
