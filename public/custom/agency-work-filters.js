@@ -1,7 +1,7 @@
 import {saveWorkReferences} from './work-references.js';
  const content=document.querySelector('.agency-content'),grid=content?.querySelector('.catalog-grid');
 if(content&&grid){
- const cards=[...content.querySelectorAll('.catalog-grid > .work-card')];
+ const cards=[...grid.querySelectorAll('.work-card')];
  if(cards.length>=4){
   const kindLabels={case:'Кейсы',collection:'Фотоподборки',portfolio:'Работы в портфолио'};
   const rows=cards.map((card,index)=>{
