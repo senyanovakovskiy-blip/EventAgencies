@@ -3,13 +3,14 @@ import {preparationDraftFields,preparationFollowUpFields,preparationFields,prepa
 import {preparationComparisonMarkup,wirePreparationComparison} from './preparation-comparison-ui.js';
 import {discussionPlanMarkup,wireDiscussionPlans} from './discussion-plan-ui.js';
 import {buildEventIdeas,combineEventIdeaOptions,eventIdeaComparisonText,eventIdeaKey,eventIdeaPitchSourceIdentity,eventIdeaPitchText,eventIdeaScopes,eventIdeaSourceFingerprint,eventIdeaText,eventIdeasMarkup,eventIdeasSignature,ideaReactionDetails,ideaResponseLabels,ideaSourceMoments,renderEventIdeaCombination,renderEventIdeaComparison,renderEventIdeas} from './event-ideas.js';
-import {IDEA_SOURCE_CONTEXT_LIMIT,IDEA_PITCH_LIMIT,IDEA_PITCH_TEXT_LIMIT,IDEA_PITCH_TOTAL_LIMIT,ideaSourceContextKey,ideaSourceIsAvailable,ideaPitchKey,normalizeIdeaSources,normalizeIdeaPitches} from './workflow-model.js';
+import {IDEA_SOURCE_CONTEXT_LIMIT,IDEA_PITCH_LIMIT,IDEA_PITCH_TEXT_LIMIT,IDEA_PITCH_TOTAL_LIMIT,ideaSourceContextKey,ideaSourceIsAvailable,ideaPitchKey,normalizeIdeaSources,normalizeIdeaPitches,normalizeIdeaSettings} from './workflow-model.js';
 const preparationViews=new WeakMap();
 export const capturePreparationView=form=>preparationViews.get(form)?.capture()||null;
 export const restorePreparationView=(form,view)=>preparationViews.get(form)?.restore(view);
 export const syncPreparationViewControls=form=>preparationViews.get(form)?.controls();
 export const readIdeaSources=(form,fallback=[])=>preparationViews.get(form)?.readSources()||normalizeIdeaSources(fallback);
 export const readIdeaPitches=(form,fallback=[])=>preparationViews.get(form)?.readPitches()||normalizeIdeaPitches(fallback);
+export const readIdeaSettings=(form,fallback=[])=>preparationViews.get(form)?.readSettings()||normalizeIdeaSettings(fallback);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const text=value=>Array.isArray(value)?value.join(', '):typeof value==='string'?value:'';
 const worksFor=(catalog,slug)=>catalog.projects.filter(p=>p.agencySlug===slug||p.agencySlugs?.includes(slug));
@@ -63,10 +64,32 @@ export function readPreparation(form,fallback=[]){
 }
 export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const host=form.querySelector('[data-preparation-cards]'),select=form.querySelector('[data-preparation-context]'),count=form.querySelector('[data-preparation-count]');
- const saved=normalizePreparation(data.workflow?.preparation),savedIdeaSources=normalizeIdeaSources(data.workflow?.ideaSources),savedIdeaSourcesByContext=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row.sources])),savedIdeaPitches=normalizeIdeaPitches(data.workflow?.ideaPitches),pitchRows=new Map(savedIdeaPitches.map(row=>[ideaPitchKey(row),row])),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
+ const saved=normalizePreparation(data.workflow?.preparation),savedIdeaSources=normalizeIdeaSources(data.workflow?.ideaSources),savedIdeaSourcesByContext=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row.sources])),savedIdeaPitches=normalizeIdeaPitches(data.workflow?.ideaPitches),pitchRows=new Map(savedIdeaPitches.map(row=>[ideaPitchKey(row),row])),savedIdeaSettings=normalizeIdeaSettings(data.workflow?.ideaSettings),savedIdeaSettingsByContext=new Map(savedIdeaSettings.map(row=>[ideaSourceContextKey(row),row])),settingsDefaults=new WeakMap(),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
  host.innerHTML=saved.map(item=>cardMarkup(item,catalog,data.receipt,true)).join('');host.dataset.ready='true';
  const cards=()=>[...host.querySelectorAll('[data-preparation-card]')];
  const ideaCards=()=>[...cards(),form.querySelector('[data-general-idea-lab]')].filter(Boolean);
+ const settingSelectors={formatOverride:'[data-event-idea-format]',participationMode:'[data-event-idea-participation]',creativeAngle:'[data-event-idea-angle]',audienceProfile:'[data-event-idea-audience]',ideaApproach:'[data-event-idea-approach]',eventDuration:'[data-event-idea-duration]'};
+ const settingDefaults={formatOverride:'other',participationMode:'brief',creativeAngle:'brief',audienceProfile:'unspecified',ideaApproach:'all',eventDuration:''};
+ function settingsFromCard(card){
+  return {agencySlug:card.dataset.agency,workSlug:card.dataset.work||null,...Object.fromEntries(Object.entries(settingSelectors).map(([key,selector])=>[key,card.querySelector(selector)?.value??settingDefaults[key]])),customDirection:card.querySelector('[data-event-idea-direction]')?.value.trim()||'',allowUnmatchedManualCombination:Boolean(card.querySelector('[data-event-idea-manual-combine]')?.checked)};
+ }
+ function hydrateSettings(card){
+  if(settingsDefaults.has(card))return;
+  const defaults=settingsFromCard(card),saved=savedIdeaSettingsByContext.get(ideaSourceContextKey(defaults));settingsDefaults.set(card,defaults);
+  if(!saved)return;
+  for(const [key,selector]of Object.entries(settingSelectors)){const field=card.querySelector(selector);if(field&&[...field.options].some(option=>option.value===saved[key]))field.value=saved[key];}
+  const direction=card.querySelector('[data-event-idea-direction]'),manual=card.querySelector('[data-event-idea-manual-combine]');if(direction)direction.value=saved.customDirection;if(manual)manual.checked=saved.allowUnmatchedManualCombination;
+ }
+ function readSettings(){
+  const rows=new Map(savedIdeaSettings.map(row=>[ideaSourceContextKey(row),row]));
+  for(const card of ideaCards()){
+   hydrateSettings(card);
+   const current=settingsFromCard(card),defaults=settingsDefaults.get(card),key=ideaSourceContextKey(current);
+   if(Object.keys(settingSelectors).every(field=>current[field]===defaults[field])&&current.customDirection===defaults.customDirection&&current.allowUnmatchedManualCombination===defaults.allowUnmatchedManualCombination)rows.delete(key);
+   else rows.set(key,current);
+  }
+  return [...rows.values()];
+ }
  function contexts(){
   const entries=new Map(),values=getValues();
   function add(item,origin){const source={agencySlug:item.agencySlug,workSlug:item.workSlug||item.work?.slug||null},key=preparationKey(source),entry=entries.get(key)||{...source,origins:[]};if(!entry.origins.includes(origin))entry.origins.push(origin);entries.set(key,entry);}
@@ -76,12 +99,13 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   readPreparation(form).forEach(item=>add(item,'Внутренняя подготовка'));
   savedIdeaSources.filter(item=>item.agencySlug).forEach(item=>add(item,'Источники для идеи'));
   savedIdeaPitches.filter(item=>item.agencySlug).forEach(item=>add(item,'Сохранённая подача'));
+  savedIdeaSettings.filter(item=>item.agencySlug).forEach(item=>add(item,'Настройки вариантов'));
   visited.forEach(item=>{if(!entries.has(preparationKey(item)))add(item,'Просмотр досье');});
   return entries;
  }
  function show(entry){
   active=preparationKey(entry);let card=cards().find(node=>node.dataset.preparationCard===active);
-  if(!card){host.insertAdjacentHTML('beforeend',cardMarkup(emptyPreparation(entry.agencySlug,entry.workSlug),catalog,data.receipt));card=cards().find(node=>node.dataset.preparationCard===active);}
+  if(!card){host.insertAdjacentHTML('beforeend',cardMarkup(emptyPreparation(entry.agencySlug,entry.workSlug),catalog,data.receipt));card=cards().find(node=>node.dataset.preparationCard===active);hydrateSettings(card);}
   for(const node of cards())node.hidden=node!==card;
   card.querySelector('[data-preparation-origin]').textContent=entry.origins?.join(' · ')||'Просмотр досье';select.value=active;
   plans?.contextChanged();
@@ -342,12 +366,13 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  form.addEventListener('click',shortcut);form.ownerDocument.querySelector('.source-request')?.addEventListener('click',shortcut);
  comparison=wirePreparationComparison(form,{catalog,receipt:data.receipt,getContexts:contexts,getPreparation:()=>readPreparation(form),onEdit:open,onViewChange:()=>plans?.sync()});
  plans=wireDiscussionPlans(form,{catalog,receipt:data.receipt,getPreparation:()=>readPreparation(form),getWorkflow:()=>getValues().workflow,getActiveKey:()=>active,getComparison:()=>({selectedKeys:comparison.capture().selectedKeys,contexts:contexts()}),siteOrigin:location.origin});
- const controller={sync,readSources,readPitches,controls:()=>{comparison.controls();plans.controls();},capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
+ const controller={sync,readSources,readPitches,readSettings,controls:()=>{comparison.controls();plans.controls();},capture:()=>({recordId:data.recordId,active,visited:[...visited.values()].map(({agencySlug,workSlug})=>({agencySlug,workSlug})),comparison:comparison.capture()}),restore:view=>{
   if(form.dataset.busy==='true'||!view||view.recordId!==data.recordId)return;
   // Empty visited contexts are view state too: readPreparation omits them.
   for(const item of normalizePreparation(view.visited))visited.set(preparationKey(item),{agencySlug:item.agencySlug,workSlug:item.workSlug});
   active=typeof view.active==='string'?view.active:'';sync();comparison.restore(view.comparison);
  }};
+ for(const card of ideaCards())hydrateSettings(card);
  preparationViews.set(form,controller);sync();return controller;
 }
 export function preparationHistory(items,catalog){

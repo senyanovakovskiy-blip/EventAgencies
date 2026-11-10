@@ -602,6 +602,9 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],fo
    return {context:[requestFormatKey?requestFormatLabel:'Формат уточняется',goal&&'Цель: '+excerpt(goal,100),cityContext&&'г. '+cityContext,dateContext,guestsContext&&guestsContext+' гостей',budget&&'Бюджет: '+excerpt(budget,60),budgetHelp&&!budget&&'Бюджет нужно оценить',services&&'Услуги: '+excerpt(services,90),clientWorkContext&&'Клиент выбрал работы: '+clientWorkContext,operatorSourceContext&&'Оператор добавил фрагменты для идей: '+operatorSourceContext,'Подход: '+approachLabel,eventDurations[String(eventDuration)]&&'Длительность для чернового тайминга: '+eventDurations[String(eventDuration)],participationContext,selectedAngle!=='brief'&&'Авторское направление: '+creativeAngles[selectedAngle],hasValue(customDirection)&&'Своя тема: '+excerpt(customDirection,90),selectedAudience!=='unspecified'&&'Аудитория-гипотеза: '+audience.label].filter(Boolean).join(' · '),commonChecks:historyNote?commonChecks+' '+historyNote:commonChecks,customerQuestion,firstDiscussion,fitMode:approach==='fit',options:shownOptions};
 }
 
+export const ideaSettingChoices={
+ formatOverride:Object.keys(classicPlans),participationMode:Object.keys(participationModes),creativeAngle:Object.keys(creativeAngles),audienceProfile:Object.keys(audienceProfiles),ideaApproach:Object.keys(ideaApproaches),eventDuration:['',...Object.keys(eventDurations)]
+};
 export function eventIdeasMarkup(id,format='',participationMode='brief',creativeAngle='brief',audienceProfile='unspecified',ideaApproach='all',customDirection='',eventDuration='',catalog={agencies:[],projects:[]}){
  const key=esc(id);
  const selectedFormat=Object.hasOwn(classicPlans,format)?format:'other';

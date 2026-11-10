@@ -1,10 +1,10 @@
 import {normalizePreparation,validatePreparation} from './preparation-model.js';
-import {ideaSourceMoments} from './event-ideas.js';
+import {ideaSourceMoments,ideaSettingChoices} from './event-ideas.js';
 export const briefFields={goal:'Цель мероприятия',city:'Город проведения',date:'Дата или период',guests:'Количество гостей',services:'Нужные услуги',budget:'Уточнённый бюджет',stage:'Стадия выбора',expectations:'Ожидания заказчика'};
 export const responses={pending:'Ответ не получен',interested:'Есть интерес к обсуждению',declined:'Отказ',no_response:'Нет ответа после обращения'};
 export const consents={unknown:'Не получено',yes:'Получено',no:'Отказ'};
 export const evidenceFields={response:'responseBriefVersion',customerConsent:'customerConsentBriefVersion',agencyConsent:'agencyConsentBriefVersion'};
-export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[],preparation:[],ideaSources:[],ideaPitches:[],ideaDraft:'',ideaFeedback:''});
+export const emptyWorkflow=()=>({brief:{...Object.fromEntries(Object.keys(briefFields).map(k=>[k,''])),version:1,confirmed:false,confirmedVersion:null,confirmationNote:'',confirmedAt:null},teams:[],preparation:[],ideaSources:[],ideaPitches:[],ideaSettings:[],ideaDraft:'',ideaFeedback:''});
 export const emptyTeam=agencySlug=>({agencySlug,response:'pending',responseNote:'',refusalReason:'',customerConsent:'unknown',customerConsentNote:'',agencyConsent:'unknown',agencyConsentNote:'',responseBriefVersion:null,customerConsentBriefVersion:null,agencyConsentBriefVersion:null,contactsShared:false,contactNote:'',conversationHeld:false,conversationNote:'',nextStep:'',result:'',updatedAt:null,sharedAt:null,sharedBriefVersion:null,conversationAt:null});
 const version=v=>Number.isSafeInteger(v)&&v>0?v:null;
 export const IDEA_SOURCE_CONTEXT_LIMIT=64;
@@ -12,10 +12,34 @@ export const IDEA_SOURCE_LIMIT=3;
 export const IDEA_PITCH_LIMIT=30;
 export const IDEA_PITCH_TEXT_LIMIT=2400;
 export const IDEA_PITCH_TOTAL_LIMIT=24000;
+export const IDEA_SETTING_CONTEXT_LIMIT=64;
+export const IDEA_SETTING_DIRECTION_LIMIT=240;
 const ideaSlug=value=>typeof value==='string'&&value.length<=200&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 export const ideaSourceContextKey=item=>JSON.stringify([item?.agencySlug||'',item?.workSlug||null]);
 const ideaSourceKey=item=>JSON.stringify([item.agencySlug,item.workSlug,item.momentKey]);
 const validIdeaContext=row=>row?.agencySlug===''&&row.workSlug===null||ideaSlug(row?.agencySlug)&&(row.workSlug===null||ideaSlug(row.workSlug));
+const settingFields=['formatOverride','participationMode','creativeAngle','audienceProfile','ideaApproach','eventDuration'];
+export function normalizeIdeaSettings(value){
+ const seen=new Set(),result=[];
+ for(const row of (Array.isArray(value)?value:[]).slice(0,IDEA_SETTING_CONTEXT_LIMIT)){
+  if(!validIdeaContext(row)||typeof row.customDirection!=='string'||row.customDirection.length>IDEA_SETTING_DIRECTION_LIMIT||typeof row.allowUnmatchedManualCombination!=='boolean'||settingFields.some(key=>!ideaSettingChoices[key].includes(row[key])))continue;
+  const key=ideaSourceContextKey(row);if(seen.has(key))continue;seen.add(key);
+  result.push({agencySlug:row.agencySlug,workSlug:row.workSlug,...Object.fromEntries(settingFields.map(field=>[field,row[field]])),customDirection:row.customDirection.trim(),allowUnmatchedManualCombination:row.allowUnmatchedManualCombination});
+ }
+ return result;
+}
+function validateIdeaSettings(input,previous,catalog){
+ if(input===undefined)return normalizeIdeaSettings(previous);
+ if(!Array.isArray(input)||input.length>IDEA_SETTING_CONTEXT_LIMIT)fail('invalid_workflow');
+ const rows=normalizeIdeaSettings(input),oldContexts=new Set(normalizeIdeaSettings(previous).map(ideaSourceContextKey));
+ if(rows.length!==input.length||rows.some((row,index)=>row.agencySlug!==input[index].agencySlug||row.workSlug!==input[index].workSlug||settingFields.some(field=>row[field]!==input[index][field])||row.customDirection!==input[index].customDirection.trim()||row.allowUnmatchedManualCombination!==input[index].allowUnmatchedManualCombination))fail('invalid_workflow');
+ for(const row of rows){
+  if(!row.agencySlug)continue;
+  const agency=(catalog.agencies||[]).some(item=>item.slug===row.agencySlug),work=!row.workSlug||(catalog.projects||[]).some(item=>item.slug===row.workSlug&&(item.agencySlug===row.agencySlug||item.agencySlugs?.includes(row.agencySlug)));
+  if((!agency||!work)&&!oldContexts.has(ideaSourceContextKey(row)))fail('invalid_workflow');
+ }
+ return rows;
+}
 export const ideaPitchKey=row=>JSON.stringify([ideaSourceContextKey(row),row?.key||'']);
 export function normalizeIdeaPitches(value){
  const seen=new Set(),result=[];
@@ -79,7 +103,7 @@ export function normalizeWorkflow(value,original={}){
   for(const key of Object.values(evidenceFields))t[key]=version(rawTeam[key]);
   t.sharedBriefVersion=version(rawTeam.sharedBriefVersion);return t;
  });
- return {brief,teams,preparation:normalizePreparation(value?.preparation),ideaSources:normalizeIdeaSources(value?.ideaSources),ideaPitches:normalizeIdeaPitches(value?.ideaPitches),ideaDraft:typeof value?.ideaDraft==='string'?value.ideaDraft:'',ideaFeedback:typeof value?.ideaFeedback==='string'?value.ideaFeedback:''};
+ return {brief,teams,preparation:normalizePreparation(value?.preparation),ideaSources:normalizeIdeaSources(value?.ideaSources),ideaPitches:normalizeIdeaPitches(value?.ideaPitches),ideaSettings:normalizeIdeaSettings(value?.ideaSettings),ideaDraft:typeof value?.ideaDraft==='string'?value.ideaDraft:'',ideaFeedback:typeof value?.ideaFeedback==='string'?value.ideaFeedback:''};
 }
 export const briefConfirmed=b=>Boolean(b?.confirmed&&b.confirmedVersion===b.version);
 export const evidenceCurrent=(t,b,key)=>Boolean(version(b?.version)&&t?.[evidenceFields[key]]===b.version);
@@ -128,8 +152,9 @@ export function validateWorkflow(input,previous,catalog,now,selection=[]){
  const preparation=validatePreparation(input.preparation,previous.preparation,catalog,selection);
  const ideaSources=validateIdeaSources(input.ideaSources,previous.ideaSources,catalog);
  const ideaPitches=validateIdeaPitches(input.ideaPitches,previous.ideaPitches);
+ const ideaSettings=validateIdeaSettings(input.ideaSettings,previous.ideaSettings,catalog);
  const ideaDraft=text(input.ideaDraft===undefined?previous.ideaDraft:input.ideaDraft,4000),ideaFeedback=text(input.ideaFeedback===undefined?previous.ideaFeedback:input.ideaFeedback,2000);
- return normalizeWorkflow({brief,teams,preparation,ideaSources,ideaPitches,ideaDraft,ideaFeedback});
+ return normalizeWorkflow({brief,teams,preparation,ideaSources,ideaPitches,ideaSettings,ideaDraft,ideaFeedback});
 }
 export const stageLabels={brief:'Бриф',confirm:'Подтверждение',selection:'Подбор',preparation:'Разговор и сценарий',introduction:'Знакомство',outcome:'Итог'};
 export function teamAction(t,b){
