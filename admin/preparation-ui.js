@@ -2,7 +2,7 @@ import {draftFor,preparationContext as identity,preparationUnknowns as unknowns}
 import {preparationDraftFields,preparationFollowUpFields,preparationFields,preparationKey,emptyPreparation,normalizePreparation,preparationLength,PREPARATION_LIMIT,PREPARATION_MAX_ITEMS} from './preparation-model.js';
 import {preparationComparisonMarkup,wirePreparationComparison} from './preparation-comparison-ui.js';
 import {discussionPlanMarkup,wireDiscussionPlans} from './discussion-plan-ui.js';
-import {buildEventIdeas,combineEventIdeaOptions,eventIdeaComparisonText,eventIdeaKey,eventIdeaPitchText,eventIdeaScopes,eventIdeaText,eventIdeasMarkup,eventIdeasSignature,ideaReactionDetails,ideaResponseLabels,ideaSourceMoments,renderEventIdeaCombination,renderEventIdeaComparison,renderEventIdeas} from './event-ideas.js';
+import {buildEventIdeas,combineEventIdeaOptions,eventIdeaComparisonText,eventIdeaKey,eventIdeaPitchSourceIdentity,eventIdeaPitchText,eventIdeaScopes,eventIdeaSourceFingerprint,eventIdeaText,eventIdeasMarkup,eventIdeasSignature,ideaReactionDetails,ideaResponseLabels,ideaSourceMoments,renderEventIdeaCombination,renderEventIdeaComparison,renderEventIdeas} from './event-ideas.js';
 const preparationViews=new WeakMap();
 export const capturePreparationView=form=>preparationViews.get(form)?.capture()||null;
 export const restorePreparationView=(form,view)=>preparationViews.get(form)?.restore(view);
@@ -66,7 +66,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const ideaCards=()=>[...cards(),form.querySelector('[data-general-idea-lab]')].filter(Boolean);
  function contexts(){
   const entries=new Map(),values=getValues();
-  function add(item,origin){const key=preparationKey(item),entry=entries.get(key)||{agencySlug:item.agencySlug,workSlug:item.workSlug||null,origins:[]};if(!entry.origins.includes(origin))entry.origins.push(origin);entries.set(key,entry);}
+  function add(item,origin){const source={agencySlug:item.agencySlug,workSlug:item.workSlug||item.work?.slug||null},key=preparationKey(source),entry=entries.get(key)||{...source,origins:[]};if(!entry.origins.includes(origin))entry.origins.push(origin);entries.set(key,entry);}
   data.receipt.selection.forEach((item,i)=>add(item,'Выбор клиента · '+(i+1)));
   values.recommendations.forEach((item,i)=>add(item,'Рекомендация · '+(i+1)));
   values.workflow.teams.forEach(item=>add({...item,workSlug:null},'Команда в работе'));
@@ -135,14 +135,14 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   }
  }
  function unsavedIdeaPitches(card,panel,state){
-  const result=new Map();if(!state)return result;
+  const result=[];if(!state)return result;
   const scenario=card.querySelector('[data-preparation-field="scenario"],[data-general-event-draft]'),reply=form.elements.replyText;
   for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){
    const item=state.ideas[Number(field.dataset.eventIdeaPitch)];if(!item)continue;
    const value=field.value.trim(),baseline=(item.pitchText??eventIdeaPitchText(item)).trim();
    if(!value||item.pitchText===undefined&&value===baseline)continue;
    if(scenario?.value.includes('ПОДАЧА ЗАКАЗЧИКУ:\n'+value)||reply?.value.includes('Вариант события для обсуждения:\n'+value))continue;
-   result.set(eventIdeaKey(item),value);
+   result.push({key:eventIdeaKey(item),sourceIdentity:eventIdeaPitchSourceIdentity(item),value,used:false});
   }
   return result;
  }
@@ -172,10 +172,10 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   const responseButton=event.target.closest('[data-record-event-idea-response]');
   if(responseButton&&!form.dataset.busy){
    const card=responseButton.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]');if(!card||!panel||!status)return;
-    const state=eventIdeaStates.get(panel),index=Number(responseButton.dataset.recordEventIdeaResponse),idea=state?.ideas[index],entries=contexts(),signature=eventIdeaSignature(ideaInput(card,entries)),label=ideaResponseLabels[responseButton.dataset.eventIdeaResponse],detail=ideaReactionDetails[panel.querySelector('[data-event-idea-reaction-detail]')?.value||'']||'',noteField=panel.querySelector('[data-event-idea-reaction-note]'),note=(noteField?.value||'').replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim(),feedback=card.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]');
+    const state=eventIdeaStates.get(panel),index=Number(responseButton.dataset.recordEventIdeaResponse),idea=state?.ideas[index],entries=contexts(),signature=eventIdeasSignature(ideaInput(card,entries)),label=ideaResponseLabels[responseButton.dataset.eventIdeaResponse],detail=ideaReactionDetails[panel.querySelector('[data-event-idea-reaction-detail]')?.value||'']||'',noteField=panel.querySelector('[data-event-idea-reaction-note]'),note=(noteField?.value||'').replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim(),feedback=card.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]');
    if(!state||state.signature!==signature||!idea){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново, затем запишите реакцию на нужный вариант.';return;}
    if(!label||!feedback){status.textContent='Не удалось открыть поле для записи итога разговора.';return;}
-    const block=`${new Date().toLocaleString('ru-RU',{dateStyle:'short',timeStyle:'short'})} · ${label}: «${idea.title}».${detail?' [Клиент отметил: '+detail+']':''}${note?' [Комментарий клиента: '+note+']':''}`;
+    const sourceId=eventIdeaSourceFingerprint(idea),block=`${new Date().toLocaleString('ru-RU',{dateStyle:'short',timeStyle:'short'})} · ${label}: «${idea.title}».${sourceId?' [Источник варианта: '+sourceId+']':''}${detail?' [Клиент отметил: '+detail+']':''}${note?' [Комментарий клиента: '+note+']':''}`;
    if(feedback.value.includes(block)){status.textContent='Эта отметка уже есть в итогах разговора.';return;}
    const current=feedback.value.trimEnd(),next=current?current+'\n'+block:block;
    if(next.length>feedback.maxLength){status.textContent='Отметка не помещается в поле итогов разговора. Сократите запись или добавьте её вручную.';return;}
@@ -241,8 +241,9 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    const entries=contexts(),input=ideaInput(card,entries);
    if(generateIdeas){
     const previousState=eventIdeaStates.get(panel),drafts=unsavedIdeaPitches(card,panel,previousState),ideas=buildEventIdeas(input),signature=eventIdeasSignature(input);
-    for(const idea of ideas.options){const key=eventIdeaKey(idea);if(drafts.has(key)){idea.pitchText=drafts.get(key);idea.pitchRestored=true;drafts.delete(key);}}
-    if(drafts.size&&!confirm('Часть отредактированных подач не относится к новым вариантам. Перед пересборкой добавьте их в сценарий или скопируйте. Продолжить и убрать их из текущей подборки?'))return;
+    for(const idea of ideas.options){const draft=drafts.find(item=>!item.used&&item.key===eventIdeaKey(idea));if(draft){idea.pitchText=draft.value;idea.pitchRestored=true;draft.used=true;}}
+    for(const idea of ideas.options){if(idea.pitchRestored)continue;const identity=eventIdeaPitchSourceIdentity(idea),draft=identity&&drafts.find(item=>!item.used&&item.sourceIdentity===identity);if(draft){idea.pitchText=draft.value;idea.pitchRestored=true;draft.used=true;}}
+    if(drafts.some(item=>!item.used)&&!confirm('Часть отредактированных подач не относится к новым вариантам. Перед пересборкой добавьте их в сценарий или скопируйте. Продолжить и убрать их из текущей подборки?'))return;
     panel.querySelector('[data-event-ideas-results]').innerHTML=renderEventIdeas(ideas);installIdeaComparison(panel);
     panel.querySelector('[data-event-ideas-results]').hidden=false;
     const amount=ideas.options.length,noun=amount%10===1&&amount%100!==11?'вариант':amount%10>=2&&amount%10<=4&&(amount%100<12||amount%100>14)?'варианта':'вариантов',message=`${amount===1?'Подготовлен':'Подготовлено'} ${amount} ${noun} по выбранному пути. Добавьте подходящее в черновой сценарий; заявка сохранится общей кнопкой.`;

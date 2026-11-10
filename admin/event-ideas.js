@@ -242,10 +242,11 @@ export function ideaSourceMoments(work){
 }
 
 function worksFor(entry,catalog,receipt,references){
- const fragments=submittedWorkFragments(receipt?.brief?.description,catalog),refs=Array.isArray(references)?references:[],operatorRefs=refs.filter(item=>item?.operatorSelected),wishedRefs=mentionedWorkReferences(receipt?.brief?.description,catalog,fragments),wishedByKey=new Map(wishedRefs.map(item=>[JSON.stringify([item.agencySlug,item.workSlug]),item])),operatorWorkKeys=new Set(operatorRefs.map(item=>JSON.stringify([text(item?.agencySlug),text(item?.workSlug)]))),candidates=[...operatorRefs,entry,...refs.filter(item=>!item?.operatorSelected),...wishedRefs],seen=new Set(),result=[];
+ const fragments=submittedWorkFragments(receipt?.brief?.description,catalog),refs=Array.isArray(references)?references:[],operatorRefs=refs.filter(item=>item?.operatorSelected).slice(0,3),clientRefs=(receipt?.selection||[]).slice(0,3).map(item=>({agencySlug:item?.agencySlug,workSlug:item?.workSlug||item?.work?.slug})),wishedRefs=mentionedWorkReferences(receipt?.brief?.description,catalog,fragments),wishedByKey=new Map(wishedRefs.map(item=>[JSON.stringify([item.agencySlug,item.workSlug]),item])),candidates=[...operatorRefs,entry,...clientRefs,...wishedRefs,...refs.filter(item=>!item?.operatorSelected)],seen=new Set(),result=[];
+ let operatorCount=0,clientCount=0,otherCount=0;
  for(const item of candidates){
    const agencySlug=text(item?.agencySlug),workSlug=text(item?.workSlug),momentKey=text(item?.momentKey);if(!agencySlug||!workSlug)continue;
-   const workKey=JSON.stringify([agencySlug,workSlug]);if(!item?.operatorSelected&&operatorWorkKeys.has(workKey))continue;
+   const workKey=JSON.stringify([agencySlug,workSlug]);
    const key=JSON.stringify([agencySlug,workSlug,momentKey||'default']);if(seen.has(key))continue;seen.add(key);
   const work=(catalog.projects||[]).find(p=>p.slug===workSlug&&(p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug)));
   if(!work)continue;
@@ -253,10 +254,12 @@ function worksFor(entry,catalog,receipt,references){
    const workTitle=work.fullTitle||work.title||work.slug,detailIdea=text(work.details?.idea),moment=momentKey?ideaSourceMoments(work).find(candidate=>candidate.key===momentKey):null,summary=moment?.text||detailIdea||text(work.presentation?.intro)||text(work.rawDescription)||text(work.role);
   if(!summary)continue;
   const selected=(receipt?.selection||[]).some(s=>s.agencySlug===agencySlug&&(s.workSlug===workSlug||s.work?.slug===workSlug));
+  const role=item?.operatorSelected?'operator':selected?'client':'other';
+  if(role==='operator'&&operatorCount>=3||role==='client'&&clientCount>=3||role==='other'&&otherCount>=3)continue;
   const sharedNote=submittedWorkNote(fragments,work,agencySlug);
    const wishedReference=wishedByKey.get(workKey);
-   result.push({agencySlug,agencyName:agency?.name||workTitle||'Команда из каталога',title:moment?workTitle+' · '+moment.label:workTitle,workTitle,summary:excerpt(summary,260),kind:moment?.label|| (detailIdea?'замысел или приём из подробной справки':'фрагмент описания проекта'),momentKey:moment?.key||'',momentLabel:moment?.label||'',image:safeAssetImage(work.preview)||safeAssetImage(work.thumb)||safeAssetImage(work.image)||safeAssetImage(work.reelImage)||safeAssetImage(work.gallery?.find(photo=>photo.type==='image')?.src)||'',url:safeUrl(work.details?.source)||safeUrl(work.source),selected,operatorSelected:Boolean(item?.operatorSelected),wished:Boolean(wishedReference),wishedQuestion:wishedReference?.wishedQuestion||'',sharedNote,sharedMotives:submittedWorkMotives(sharedNote),customerAnswers:submittedWorkAnswers(fragments,work,agencySlug),types:Array.isArray(work.types)?work.types.filter(value=>typeof value==='string'):[],occasions:Array.isArray(work.occasions)?work.occasions.filter(value=>typeof value==='string'):[]});
-  if(result.length===3)break;
+   result.push({agencySlug,workSlug,agencyName:agency?.name||workTitle||'Команда из каталога',title:moment?workTitle+' · '+moment.label:workTitle,workTitle,summary:excerpt(summary,260),kind:moment?.label|| (detailIdea?'замысел или приём из подробной справки':'фрагмент описания проекта'),momentKey:moment?.key||'',momentLabel:moment?.label||'',image:safeAssetImage(work.preview)||safeAssetImage(work.thumb)||safeAssetImage(work.image)||safeAssetImage(work.reelImage)||safeAssetImage(work.gallery?.find(photo=>photo.type==='image')?.src)||'',url:safeUrl(work.details?.source)||safeUrl(work.source),selected,operatorSelected:Boolean(item?.operatorSelected),wished:Boolean(wishedReference),wishedQuestion:wishedReference?.wishedQuestion||'',sharedNote,sharedMotives:submittedWorkMotives(sharedNote),customerAnswers:submittedWorkAnswers(fragments,work,agencySlug),types:Array.isArray(work.types)?work.types.filter(value=>typeof value==='string'):[],occasions:Array.isArray(work.occasions)?work.occasions.filter(value=>typeof value==='string'):[]});
+  if(role==='operator')operatorCount++;else if(role==='client')clientCount++;else otherCount++;
  }
  return result;
 }
@@ -272,16 +275,33 @@ function ideaSourceOptions(catalog){
  }
   return [...groups].map(([slug,rows])=>({agency:agencies.get(slug),rows:rows.sort((a,b)=>Number(b.recordKind==='кейс')-Number(a.recordKind==='кейс')||a.title.localeCompare(b.title,'ru'))})).sort((a,b)=>a.agency.name.localeCompare(b.agency.name,'ru'));
 }
+export function eventIdeaSourceIdentity(item){
+ const sources=item?.sources;
+ return Array.isArray(sources)&&sources.length?JSON.stringify([item.kind,sources.map(source=>[source.agencySlug||'',source.workSlug||'',source.momentKey||'',Boolean(source.operatorSelected)])]):'';
+}
+export function eventIdeaPitchSourceIdentity(item){
+ return item?.kind==='Развить элемент кейса'&&item.sources?.length===1&&item.sources[0].selected?eventIdeaSourceIdentity(item):'';
+}
+export function eventIdeaSourceFingerprint(item){
+ const identity=eventIdeaSourceIdentity(item);if(!identity)return '';
+ let hash=0xcbf29ce484222325n;
+ for(let i=0;i<identity.length;i++)hash=BigInt.asUintN(64,(hash^BigInt(identity.charCodeAt(i)))*0x100000001b3n);
+ return hash.toString(36);
+}
 function recordedIdeaReaction(item,clientFeedback=''){
  const value=text(clientFeedback);if(!value||!item?.title)return null;
- const titles=[item.title,...(item.legacyTitle&&item.legacyTitle!==item.title?[item.legacyTitle]:[])];
- let latest=null;
- for(const [key,label] of Object.entries(ideaResponseLabels))for(const title of titles){
-  const index=value.lastIndexOf('· '+label+': «'+title+'».');
-  if(index>=0&&(!latest||index>latest.index)){
-    const line=value.slice(index).split(/\r?\n/,1)[0],detail=line.match(/\[Клиент отметил: ([^\]]+)\]/),note=line.match(/\[Комментарий клиента: ([^\]]+)\]/),detailText=[detail?.[1],note?.[1]].filter(Boolean).join(' — ');
-    latest={key,label,index,detail:detailText,detailLabel:detail?.[1]||'',note:note?.[1]||''};
+ const titles=[item.title,...(item.legacyTitle&&item.legacyTitle!==item.title?[item.legacyTitle]:[])],sourceId=eventIdeaSourceFingerprint(item);
+ let latest=null,index=0;
+ for(const line of value.split(/\r?\n/)){
+  const recordedSource=line.match(/\[Источник варианта: ([a-z0-9]+)\]/)?.[1]||'';
+  for(const [key,label] of Object.entries(ideaResponseLabels)){
+   const marker='· '+label+': «';
+   if(!line.includes(marker))continue;
+   if(sourceId?recordedSource!==sourceId:recordedSource||!titles.some(title=>line.includes(marker+title+'».')))continue;
+   const detail=line.match(/\[Клиент отметил: ([^\]]+)\]/),note=line.match(/\[Комментарий клиента: ([^\]]+)\]/),detailText=[detail?.[1],note?.[1]].filter(Boolean).join(' — ');
+   latest={key,label,index,detail:detailText,detailLabel:detail?.[1]||'',note:note?.[1]||''};
   }
+  index+=line.length+1;
  }
  return latest;
 }
@@ -367,7 +387,7 @@ function compatiblePair(sources){
  let best=null;
  for(let i=0;i<sources.length;i++)for(let j=i+1;j<sources.length;j++){
   const first=sources[i],second=sources[j];
-  if(first.workSlug&&first.workSlug===second.workSlug&&(first.momentKey||'')===(second.momentKey||''))continue;
+  if(first.workSlug&&first.workSlug===second.workSlug&&(!first.momentKey||!second.momentKey||first.momentKey===second.momentKey))continue;
   const sharedOccasions=first.occasions.filter(value=>second.occasions.includes(value));
   const sharedTypes=first.types.filter(value=>second.types.includes(value));
    const sameWork=Boolean(first.workSlug&&first.workSlug===second.workSlug),score=sameWork?Math.max(2,sharedOccasions.length*2+sharedTypes.length):sharedOccasions.length*2+sharedTypes.length;
@@ -410,7 +430,7 @@ function guestPlanning(value){
 
 export function eventIdeasSignature({entry,receipt,workflow,references=[],formatOverride='',participationMode='brief',creativeAngle='brief',audienceProfile='unspecified',ideaApproach='all',customDirection='',eventDuration='',allowUnmatchedManualCombination=false,clientFeedback=''}){
  const b=workflow?.brief||{},original=receipt?.brief||{};
- return JSON.stringify({entry:{agencySlug:entry?.agencySlug||'',workSlug:entry?.workSlug||''},original:{format:original.format||'',description:original.description||'',city:original.city||'',date:original.date||'',guests:original.guests||'',budget:original.budget||'',budgetHelp:Boolean(original.budgetHelp),dateUnknown:Boolean(original.dateUnknown)},formatOverride,participationMode,creativeAngle,audienceProfile,ideaApproach,customDirection:text(customDirection),eventDuration,allowUnmatchedManualCombination:Boolean(allowUnmatchedManualCombination),clientFeedback:text(clientFeedback),brief:{goal:b.goal||'',city:b.city||'',date:b.date||'',guests:b.guests||'',services:b.services||'',budget:b.budget||'',expectations:b.expectations||'',confirmed:Boolean(b.confirmed),version:b.version||0},references:(references||[]).map(r=>[r.agencySlug||'',r.workSlug||'',r.momentKey||'']).sort((a,b)=>a.join('/').localeCompare(b.join('/')))});
+ return JSON.stringify({entry:{agencySlug:entry?.agencySlug||'',workSlug:entry?.workSlug||''},original:{format:original.format||'',description:original.description||'',city:original.city||'',date:original.date||'',guests:original.guests||'',budget:original.budget||'',budgetHelp:Boolean(original.budgetHelp),dateUnknown:Boolean(original.dateUnknown)},clientSelection:(receipt?.selection||[]).map(item=>[item?.agencySlug||'',item?.workSlug||item?.work?.slug||'']),formatOverride,participationMode,creativeAngle,audienceProfile,ideaApproach,customDirection:text(customDirection),eventDuration,allowUnmatchedManualCombination:Boolean(allowUnmatchedManualCombination),clientFeedback:text(clientFeedback),brief:{goal:b.goal||'',city:b.city||'',date:b.date||'',guests:b.guests||'',services:b.services||'',budget:b.budget||'',expectations:b.expectations||'',confirmed:Boolean(b.confirmed),version:b.version||0},references:(references||[]).map(r=>[r.agencySlug||'',r.workSlug||'',r.momentKey||'',Boolean(r.operatorSelected)]).sort((a,b)=>a.join('/').localeCompare(b.join('/')))});
 }
 
 export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],formatOverride='',participationMode='brief',creativeAngle='brief',audienceProfile='unspecified',ideaApproach='all',customDirection='',eventDuration='',allowUnmatchedManualCombination=false,clientFeedback=''}){
@@ -445,15 +465,29 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],fo
    options.push({kind:'Классическая альтернатива',classicFormatKey:alternativeKey,title:alternative.title,idea:alternative.idea,journey:alternative.journey,why:['Дополнительный классический каркас для сравнения с выбранной основой «'+classicFormatLabel+'». Это направление для обсуждения, не прогноз успеха.',goalNote,expectationNote].filter(Boolean).join(' '),check:alternative.check||'Согласовать главный момент программы, роли и резервный план.',question:alternative.question,sources:[]});
   }
  if(sources.length){
-   const source=sources.find(item=>item.operatorSelected)||sources.find(item=>item.selected)||sources[0],clientAnswer=firstCustomerAnswer(source),sourceReason=clientAnswer?(source.selected?'Эта работа есть в исходном выборе клиента. ':'Работа добавлена в исходные пожелания как пример для обсуждения. ')+customerAnswerContext(clientAnswer):source.sharedNote?'Эта работа '+(source.wished?'добавлена клиентом в исходные пожелания для обсуждения. ':source.selected?'есть в исходном выборе клиента. ':'добавлена к внутреннему обсуждению. ')+sharedNoteContext(source)+' Уточните, какую деталь стоит перенести; заметка не означает согласие повторить весь проект.':source.wished?'Клиент добавил эту работу в исходные пожелания как пример для обсуждения. Это не согласие повторить или адаптировать проект целиком.':source.selected?'Эта работа есть в исходном выборе клиента; сам мотив выбора не записан — его нужно спросить.':'Эта работа добавлена к внутреннему обсуждению; это не означает, что клиент уже выбрал или одобрил её.';
-  options.push({
-   kind:'Развить элемент кейса',title:clientAnswer?'Проверить один приём из работы':'Взять один приём и адаптировать его',...(clientAnswer?{legacyTitle:'Взять один приём и адаптировать его'}:{}),
+   const source=sources.find(item=>item.operatorSelected)||sources.find(item=>item.selected)||sources[0];
+   function developmentOption(source,fromClientSelection=false,clientPosition=0){
+    const clientAnswer=firstCustomerAnswer(source),sourceReason=clientAnswer?(source.selected?'Эта работа есть в исходном выборе клиента. ':'Работа добавлена в исходные пожелания как пример для обсуждения. ')+customerAnswerContext(clientAnswer):source.sharedNote?'Эта работа '+(source.wished?'добавлена клиентом в исходные пожелания для обсуждения. ':source.selected?'есть в исходном выборе клиента. ':'добавлена к внутреннему обсуждению. ')+sharedNoteContext(source)+' Уточните, какую деталь стоит перенести; заметка не означает согласие повторить весь проект.':source.wished?'Клиент добавил эту работу в исходные пожелания как пример для обсуждения. Это не согласие повторить или адаптировать проект целиком.':source.selected?'Эта работа есть в исходном выборе клиента; сам мотив выбора не записан — его нужно спросить.':'Эта работа добавлена к внутреннему обсуждению; это не означает, что клиент уже выбрал или одобрил её.';
+    return {
+   kind:'Развить элемент кейса',title:fromClientSelection?'Выбор клиента '+clientPosition+': '+excerpt(source.workTitle,58)+' · '+excerpt(source.agencyName,36):clientAnswer?'Проверить один приём из работы':'Взять один приём и адаптировать его',...(!fromClientSelection&&clientAnswer?{legacyTitle:'Взять один приём и адаптировать его'}:{}),
    idea:clientAnswer?'Проверить, уместен ли для нового события один элемент опубликованной работы — '+source.kind+': '+quote(source.summary,250)+'. После сверки ответа клиента решить, стоит ли его сохранить, изменить или исключить.':'Не переносить весь проект целиком. Взять как отправную точку '+source.kind+': '+quote(source.summary,250)+'. Переработать этот элемент под цель и ожидания нового события.',
    journey:(clientAnswer?'Сверить уже записанный ответ → определить, что сохранить, изменить или исключить → если элемент подходит, встроить его в опыт гостей → согласовать финал. ':'Понять, что именно привлекло в примере → выбрать один элемент для адаптации → встроить его в основной опыт гостей → завершить общей точкой. ')+guestPlanning(b.guests),
    why:[sourceReason,goalNote,expectationNote,servicesNote].filter(Boolean).join(' '),
    check:'Проверить авторство и границы участия команды, возможность адаптации и отличие новой аудитории от аудитории кейса. Не переносить показатели прошлого события на новое.',
     question:clientAnswer?'В отправленных пожеланиях вы ответили: '+quote(clientAnswer.answer,160)+'. Правильно ли мы поняли ваш ответ? Что для нового события сохранить, изменить или исключить?':source.sharedNote?'В заметке к этой работе отмечено «'+source.sharedNote+'». Что из этого особенно важно сохранить для нового события?':'Что именно в этом примере хотелось бы сохранить: сам приём, атмосферу, выбор для гостей или общий финал?',sources:[source]
-  });
+    };
+   }
+   options.push(developmentOption(source));
+   const clientByWork=new Map();
+   const clientPositions=new Map((receipt?.selection||[]).map((item,index)=>[JSON.stringify([item?.agencySlug,item?.workSlug||item?.work?.slug]),index+1]));
+   for(const item of sources.filter(item=>item.selected)){
+    const key=JSON.stringify([item.agencySlug,item.workSlug]);
+    if(!clientByWork.has(key)||clientByWork.get(key).operatorSelected&&!item.operatorSelected)clientByWork.set(key,item);
+   }
+   for(const clientSource of [...clientByWork.values()].sort((a,b)=>(clientPositions.get(JSON.stringify([a.agencySlug,a.workSlug]))||99)-(clientPositions.get(JSON.stringify([b.agencySlug,b.workSlug]))||99)).slice(0,3)){
+    if(clientSource===source)continue;
+    options.push(developmentOption(clientSource,true,clientPositions.get(JSON.stringify([clientSource.agencySlug,clientSource.workSlug]))||1));
+   }
  }
  const first=sources[0],pair=compatiblePair(sources),operatorSources=sources.filter(source=>source.operatorSelected).slice(0,2),manualPair=!pair&&allowUnmatchedManualCombination&&operatorSources.length===2?operatorSources:null;
  if(pair||manualPair){
@@ -558,7 +592,14 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],fo
      const fitIndex=approach==='fit'?shownOptions.findIndex(option=>(option.briefSupport?.score||0)>0):-1,fitFallbackIndex=approach==='fit'?shownOptions.findIndex(option=>!['declined','uncertain'].includes(option.clientReaction?.key)):-1;
      const firstDiscussion=fitIndex>=0?{index:fitIndex,label:'Ближе всего к фактам заявки',reason:shownOptions[fitIndex].briefSupport.signals.join('; ')+'. Это основания для очередности разговора, а не вероятность успеха.'}:approach==='fit'&&fitFallbackIndex>=0?{index:fitFallbackIndex,label:'Пока только гипотеза',reason:'В заявке пока нет прямого отклика или явного совпадения с форматом для этих идей. Начните с короткого обсуждения и уточните предпочтения заказчика.'}:approach==='fit'?null:reactionDevelopmentIndex>=0?{index:reactionDevelopmentIndex,reason:'Заказчик отметил конкретный элемент, который стоит сохранить. Развивайте именно его, а остальной сценарий согласуйте заново; это не прогноз реакции гостей.'}:reactionRevisionIndex>=0?{index:reactionRevisionIndex,reason:'Этот вариант пересобран с учётом замечания заказчика. Покажите, что изменили, и согласуйте новую версию отдельно.'}:positiveReaction?{index:positiveReaction.index,reason:positiveReaction.reaction.key==='selected'?'В итогах разговора заказчик выбрал этот вариант для проработки — это наиболее сильная доступная опора для следующего шага. Уточните границы сценария и условия; это не прогноз реакции гостей.':'После разговора заказчик заинтересовался этим вариантом. Начните с уточнения, какой элемент стоит развить; интерес к обсуждению ещё не означает согласование сценария.'}:needsRevision?{index:needsRevision.index,reason:needsRevision.reaction.key==='declined'?'Этот вариант уже отмечен как неподходящий. Начните с вопроса, что именно не сработало, и не предлагайте его без изменений.':'По этому варианту остались вопросы. Сначала уточните сомнения и измените его до дальнейшей проработки.'}:selectedIdeaIndex>=0?{index:selectedIdeaIndex,reason:selectedAnswer?'К выбранной работе уже есть ответ клиента в исходных пожеланиях: '+quote(selectedAnswer.answer,150)+'. Сверьте, что сохранить, изменить или исключить; ответ не означает согласие на весь сценарий.':selectedNote?'В заметке к выбранной работе отмечено: '+quote(selectedNote,150)+'. Уточните, что именно важно сохранить и как применить это в новом сценарии. Это ориентир для разговора, не согласие повторить кейс.':'Заказчик уже добавил эту работу в выбор. Уточните, что именно в ней понравилось; это сигнал интереса к примеру, не согласие на сценарий.'}:shownOptions[0]?.kind==='Классическая основа'&&requestFormatKey&&classicFormatKey===requestFormatKey?{index:0,reason:'Основа совпадает с форматом из заявки — это понятная отправная точка для разговора.'}:shownOptions[0]?.kind==='Классическая основа'?{index:0,reason:'Формат пока не даёт точной опоры. Начните с простой структуры и уточните цель события.'}:shownOptions.length?{index:0,reason:approach==='original'&&customDirection?'Идея строится вокруг направления, заданного для этой подборки. Сверьте его с целью и реакцией заказчика.':'Выбран этот путь подготовки. Проверьте, что он соответствует цели события и ожиданиям заказчика.'}:null;
    const approachLabel=ideaApproaches[approach];
-   return {context:[requestFormatKey?requestFormatLabel:'Формат уточняется',goal&&'Цель: '+excerpt(goal,100),cityContext&&'г. '+cityContext,dateContext,guestsContext&&guestsContext+' гостей',budget&&'Бюджет: '+excerpt(budget,60),budgetHelp&&!budget&&'Бюджет нужно оценить',services&&'Услуги: '+excerpt(services,90),'Подход: '+approachLabel,eventDurations[String(eventDuration)]&&'Длительность для чернового тайминга: '+eventDurations[String(eventDuration)],participationContext,selectedAngle!=='brief'&&'Авторское направление: '+creativeAngles[selectedAngle],hasValue(customDirection)&&'Своя тема: '+excerpt(customDirection,90),selectedAudience!=='unspecified'&&'Аудитория-гипотеза: '+audience.label].filter(Boolean).join(' · '),commonChecks,customerQuestion,firstDiscussion,fitMode:approach==='fit',options:shownOptions};
+   const clientWorkContext=(receipt?.selection||[]).slice(0,3).map(item=>{
+    const agencySlug=text(item?.agencySlug),workSlug=text(item?.workSlug||item?.work?.slug),work=(catalog.projects||[]).find(project=>project.slug===workSlug&&(project.agencySlug===agencySlug||project.agencySlugs?.includes(agencySlug))),agency=(catalog.agencies||[]).find(value=>value.slug===agencySlug);
+    return workSlug?excerpt((work?.fullTitle||work?.title||workSlug)+' — '+(agency?.name||agencySlug||'команда не указана')+(work?'':' (работа сейчас недоступна в каталоге)'),95):'';
+   }).filter(Boolean).join('; ');
+   const operatorSourceContext=sources.filter(item=>item.operatorSelected).map(item=>excerpt(item.title+' — '+item.agencyName,95)).join('; ');
+   const hasLegacyFeedback=String(clientFeedback||'').split(/\r?\n/).some(line=>!line.includes('[Источник варианта: ')&&Object.values(ideaResponseLabels).some(label=>line.includes('· '+label+': «')));
+   const historyNote=hasLegacyFeedback&&sources.length?'В истории есть прежние отметки без привязки к конкретной работе. Если отметка касалась примера из каталога, сверьте его вручную: без такой привязки отклик не учитывается при оценке варианта с работой.':'';
+   return {context:[requestFormatKey?requestFormatLabel:'Формат уточняется',goal&&'Цель: '+excerpt(goal,100),cityContext&&'г. '+cityContext,dateContext,guestsContext&&guestsContext+' гостей',budget&&'Бюджет: '+excerpt(budget,60),budgetHelp&&!budget&&'Бюджет нужно оценить',services&&'Услуги: '+excerpt(services,90),clientWorkContext&&'Клиент выбрал работы: '+clientWorkContext,operatorSourceContext&&'Оператор добавил фрагменты для идей: '+operatorSourceContext,'Подход: '+approachLabel,eventDurations[String(eventDuration)]&&'Длительность для чернового тайминга: '+eventDurations[String(eventDuration)],participationContext,selectedAngle!=='brief'&&'Авторское направление: '+creativeAngles[selectedAngle],hasValue(customDirection)&&'Своя тема: '+excerpt(customDirection,90),selectedAudience!=='unspecified'&&'Аудитория-гипотеза: '+audience.label].filter(Boolean).join(' · '),commonChecks:historyNote?commonChecks+' '+historyNote:commonChecks,customerQuestion,firstDiscussion,fitMode:approach==='fit',options:shownOptions};
 }
 
 export function eventIdeasMarkup(id,format='',participationMode='brief',creativeAngle='brief',audienceProfile='unspecified',ideaApproach='all',customDirection='',eventDuration='',catalog={agencies:[],projects:[]}){
@@ -625,7 +666,7 @@ export function renderEventIdeaCombination(item){
  return `<section class="event-idea-combination" aria-label="Черновик сочетания вариантов"><h5>Черновик связки</h5><article class="event-idea-card"><span class="eyebrow">${esc(item.kind)}</span><h5>${esc(item.title)}</h5><p><strong>Идея.</strong> ${esc(item.idea)}</p><p><strong>Путь гостей.</strong> ${esc(item.journey)}</p><p><strong>Почему это гипотеза.</strong> ${esc(item.why)}</p><p><strong>Что проверить.</strong> ${esc(item.check)}</p><p><strong>Спросить заказчика.</strong> ${esc(item.question)}</p>${eventIdeaSourceImagesMarkup(item.sources)}${item.sources?.length?`<div class="event-idea-sources"><strong>Источники исходных вариантов</strong>${item.sources.map(source=>source.url?`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} · ${esc(source.agencyName)} ↗</a>`:`<span>${esc(source.title)} · ${esc(source.agencyName)}</span>`).join('')}</div>`:''}</article><button type="button" class="secondary" data-append-event-idea-combination>Добавить связку в черновой сценарий</button></section>`;
 }
 
-export function eventIdeaKey(item){return JSON.stringify([item.kind,item.legacyTitle||item.title,item.customDirection||'',item.participationMode||'varied',item.creativeAngle||'brief',item.audienceProfile||'unspecified',(item.sources||[]).map(source=>[source.agencySlug,source.title,source.momentKey||'']),item.derivedFromReaction?.keyTitle||item.derivedFromReaction?.title||'',item.derivedFromReaction?.detail||'',item.revisedFromFeedback?.keyTitle||item.revisedFromFeedback?.title||'',item.revisedFromFeedback?.detail||'']);}
+export function eventIdeaKey(item){return JSON.stringify([item.kind,item.legacyTitle||item.title,item.customDirection||'',item.participationMode||'varied',item.creativeAngle||'brief',item.audienceProfile||'unspecified',(item.sources||[]).map(source=>[source.agencySlug,source.workSlug||'',source.title,source.momentKey||'',Boolean(source.operatorSelected)]),item.derivedFromReaction?.keyTitle||item.derivedFromReaction?.title||'',item.derivedFromReaction?.detail||'',item.revisedFromFeedback?.keyTitle||item.revisedFromFeedback?.title||'',item.revisedFromFeedback?.detail||'']);}
 
 export function eventIdeaScopes(item){
  if(item.kind==='Развить элемент кейса'&&firstCustomerAnswer(item.sources?.[0]))return {compact:'Если после сверки ответа приём подходит, обсудить один небольшой элемент в знакомой структуре события.',extended:'Если клиент подтвердит уместность приёма, рассмотреть несколько точек программы и проверить их связь с целью.'};
