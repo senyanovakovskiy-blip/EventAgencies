@@ -1,7 +1,7 @@
 import {nextAction,stageLabels} from './workflow-model.js';
 import {workflowMarkup,readWorkflow,wireWorkflow,syncWorkflow,workflowKey,workflowHistory} from './workflow-ui.js';
 import {preparationMarkup,wirePreparation,preparationHistory,syncPreparationViewControls} from './preparation-ui.js';
-import {statusLabels,historyStatusLabel,recommendationInputs,recommendationKey,recommendationFingerprint,buildCustomerReply} from './manual-model.js';
+import {statusLabels,historyStatusLabel,recommendationInputs,recommendationKey,replyKey,recommendationFingerprint,buildCustomerReply} from './manual-model.js';
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const date=value=>new Intl.DateTimeFormat('ru-RU',{dateStyle:'medium',timeStyle:'short'}).format(new Date(value));
 const worksFor=(catalog,slug)=>catalog.projects.filter(p=>p.agencySlug===slug||p.agencySlugs?.includes(slug)).sort((a,b)=>Number(b.kind==='case')-Number(a.kind==='case'));
@@ -67,8 +67,11 @@ export function wireEditor({data,catalog,onSave,onReload}){
  form.querySelector('#recommendation-cards').addEventListener('click',event=>{const button=event.target.closest('[data-remove-recommendation]');if(!button)return;const items=readEditor(form).recommendations;items.splice(Number(button.dataset.removeRecommendation),1);form.querySelector('#recommendation-cards').innerHTML=recommendationMarkup(items,catalog);picker();changed();});
  form.querySelector('#generate-reply').addEventListener('click',async()=>{
   const values=readEditor(form);if(values.replyText.trim()&&!confirm('Заменить текст ответа на новый? Текущие ручные правки будут заменены.'))return;
+  const originalReply=values.replyText,originalInputs=replyKey(values.recommendations,values.workflow.brief,values.workflow.teams);
   const recommendations=values.recommendations.map(r=>{const a=catalog.agencies.find(a=>a.slug===r.agencySlug),p=worksFor(catalog,r.agencySlug).find(p=>p.slug===r.workSlug);return {...r,name:a.name,work:p?{title:p.fullTitle,source:p.source||''}:null};});
   const basis=await recommendationFingerprint(values.recommendations,values.workflow.brief,values.workflow.teams);if(!form.isConnected)return;
+  const current=readEditor(form);
+  if(current.replyText!==originalReply||replyKey(current.recommendations,current.workflow.brief,current.workflow.teams)!==originalInputs){form.querySelector('#copy-status').textContent='Текст ответа или данные заявки изменились во время подготовки. Текущий текст не заменён. Нажмите кнопку подготовки ещё раз, чтобы создать новый вариант.';return;}
   form.elements.replyText.value=buildCustomerReply(data.receipt,recommendations,values.workflow.brief,values.workflow.teams);form.dataset.replyBasis=basis;form.querySelector('#generate-reply').textContent='Подготовить текст заново';form.querySelector('#copy-status').textContent='Текст подготовлен. Проверьте его перед копированием.';changed();form.elements.replyText.focus();
  });
  form.querySelector('#review-reply').addEventListener('click',async()=>{form.dataset.replyBasis=await recommendationFingerprint(readEditor(form).recommendations,readEditor(form).workflow.brief,readEditor(form).workflow.teams);changed();});
