@@ -3147,22 +3147,39 @@
       "slug": "portfolio-larnilane-2c8968d",
       "title": "JETOUR T1. Безгранично близко",
       "fullTitle": "JETOUR T1. Безгранично близко",
-      "year": "—",
-      "eventDate": "Дата не указана",
-      "category": "Портфолио",
-      "format": "Работа из портфолио",
-      "client": "LARNILANE",
+      "year": "2025",
+      "eventDate": "2025",
+      "category": "Запуск продукта",
+      "format": "Бренд-кампания: закрытая премьера и музыкальные интеграции",
+      "client": "JETOUR",
       "agencySlug": "larnilane",
       "agencySlugs": [
         "larnilane"
       ],
       "agencyUrl": "/agency/larnilane",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио LARNILANE. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио LARNILANE. Роль команды — в первоисточнике.",
-      "source": "https://larnilane.com/projects",
+      "types": [
+        "btl",
+        "pr"
+      ],
+      "role": "Публичный кейс указывает LARNILANE среди участников кампании и сообщает об участии агентства в создании клипа. Его роль в проведении закрытого показа и концертных интеграциях отдельно не раскрыта.",
+      "industry": "Автомобильный бренд · запуск новой модели",
+      "description": "Кампания запуска JETOUR T1 связала клип Мари Краймбрери, закрытый показ с появлением автомобиля из кинетического куба и продолжение в концертах. LARNILANE участвовало в кампании; точный состав задач агентства публично не распределён.",
+      "seoDescription": "Кампания запуска JETOUR T1: музыкальный клип, закрытый показ для более чем 240 гостей и концертные интеграции. В кейсе отмечено участие LARNILANE в создании клипа.",
+      "source": "https://ratings.sostav.ru/companies/955/works/3841",
+      "sources": [
+        {
+          "url": "https://larnilane.com/projects",
+          "label": "Портфолио LARNILANE"
+        },
+        {
+          "url": "https://jetour-ru.com/news/pevica-mari-krajmbreri-stala-drugom-brenda-jetour-v-rossii",
+          "label": "JETOUR: клип и сотрудничество с Мари Краймбрери"
+        },
+        {
+          "url": "https://jetour-ru.com/news/novyj-jetour-t1-stal-uchastnikom-shou-mari-krajmbreri",
+          "label": "JETOUR: T1 в концертах"
+        }
+      ],
       "image": "/custom/library/188f2d25bc.webp",
       "imageMobile": "/custom/library/188f2d25bc.webp",
       "ogImage": "/custom/library/188f2d25bc.webp",
@@ -3211,7 +3228,7 @@
       "reelMobile": "/custom/optimized/70f6afdeaa8fe5-960.webp",
       "imageRatio": 1.5370539798719123,
       "eventCity": "",
-      "guestLabel": "",
+      "guestLabel": "Более 240 гостей на закрытом показе",
       "occasions": [],
       "preview": "/custom/optimized/70f6afdeaa8fe5-960.webp",
       "imageWidth": 1680,
