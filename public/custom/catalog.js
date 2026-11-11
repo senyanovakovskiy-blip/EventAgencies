@@ -15,14 +15,6 @@ if(returnLink){try{
  }
 }catch{}}
 document.querySelectorAll('[data-project-link]').forEach(a=>{a.href=new URL(a.getAttribute('href'),location.origin).pathname+'?from='+encodeURIComponent(location.pathname+location.search);});
-const agencyProjects=document.querySelector('.agency-content>.catalog-grid');
-if(agencyProjects){
- const cards=[...agencyProjects.querySelectorAll(':scope>.work-card')],withoutPhotos=cards.filter(card=>card.querySelector('.work-cover.is-empty'));
- if(withoutPhotos.length&&withoutPhotos.length<cards.length){
-  const group=document.createElement('details'),summary=document.createElement('summary'),note=document.createElement('p'),grid=document.createElement('div'),count=withoutPhotos.length;
-  group.className='catalog-no-photo-group';summary.textContent=`Показать ещё ${count} ${plural(count,['работу без фотографий','работы без фотографий','работ без фотографий'])}`;note.textContent='Описание и материалы доступны; фотографий в каталоге пока нет.';grid.className='catalog-grid';withoutPhotos.forEach(card=>grid.append(card));group.append(summary,note,grid);agencyProjects.append(group);
- }
-}
 const results=document.getElementById('catalog-results');
 if(results&&matchMedia('(max-width:900px)').matches)document.querySelector('.filter-options').open=false;
 if(results)startCatalog().catch(()=>{results.innerHTML='<div class="empty-state"><h2>Не удалось загрузить каталог.</h2><p>Обновите страницу, чтобы попробовать снова.</p><button class="retry">Обновить страницу</button></div>';results.querySelector('.retry').onclick=()=>location.reload();results.setAttribute('aria-busy','false');document.getElementById('catalog-count').textContent='Каталог недоступен';document.dispatchEvent(new Event('ea:catalog-error'));});
