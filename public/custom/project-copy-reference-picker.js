@@ -1,3 +1,4 @@
+import {workAgencyLabel} from './work-presentation.js';
 const PAGE_SIZE=12;
 const text=value=>String(value??'').trim();
 const normalize=value=>text(value).toLocaleLowerCase('ru').replace(/ё/g,'е');
@@ -13,7 +14,7 @@ export function setupCopyReferencePicker({host,data,referenceSlugs=[],selectedSl
  const items=slugs.map(slug=>{
   const work=works.get(slug),teamSlugs=unique([...(work.agencySlugs||[]),work.agencySlug]);
   const teams=teamSlugs.map(teamSlug=>agencies.get(teamSlug)).filter(Boolean);
-  const team=unique(teams.map(agency=>text(agency.name))).join(', ')||text(work.client)||'Команда не указана';
+  const team=workAgencyLabel(work,agencies);
   const title=text(work.fullTitle)||text(work.title)||'Название работы не указано';
   const formats=unique((work.types||[]).map(type=>text(data?.types?.[type]||type)));
   const facts=unique([text(work.category)||formats.join(', '),text(work.eventCity),text(work.guestLabel),text(work.year)]).join(' · ');

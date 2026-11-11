@@ -54,20 +54,22 @@ function match(index,query){
 export function buildCatalogSearch(data){
  const projects=Array.isArray(data?.projects)?data.projects:[];
  const agencies=Array.isArray(data?.agencies)?data.agencies:[];
+ const agencyBySlug=new Map(agencies.filter(agency=>hasSlug(agency?.slug)).map(agency=>[agency.slug,agency]));
  const workIndexes=new Map(),agencyIndexes=new Map(),ownIndexes=new Map(),linkedFields=new Map(),ownedWorkFields=new Map();
 
  for(const work of projects){
   if(!hasSlug(work?.slug))continue;
   const copy=publicFields(work);
+  const slugs=new Set([work.agencySlug,...(Array.isArray(work.agencySlugs)?work.agencySlugs:[])].filter(hasSlug));
   workIndexes.set(work.slug,makeIndex([
    ...copy,
    field('Название работы',work.fullTitle),
-   field('В портфолио',work.client)
+   ...[...slugs].map(slug=>field('Агентство',agencyBySlug.get(slug)?.name)),
+   field('Упоминание в работе',work.client)
   ]));
 
   // Explicit work ownership is authoritative; an agency's stale works list
   // cannot attach an unrelated project. Do not index another team's client name.
-  const slugs=new Set([work.agencySlug,...(Array.isArray(work.agencySlugs)?work.agencySlugs:[])].filter(hasSlug));
   const fields=[...copy,field('Название работы',work.fullTitle)].filter(Boolean)
    .map(item=>({...item,workTitle:publicText(work.fullTitle)}));
   for(const slug of slugs){

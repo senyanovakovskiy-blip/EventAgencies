@@ -356,7 +356,7 @@ export function createPhotoReel(frame, {projects, initialSlug, onFocus, onOpenSt
       for (const project of projects) {
         clone.querySelector('h2').textContent = project.reelTitle || project.title;
         clone.querySelector('.ea-work-caption-copy>p').textContent = project.category;
-        clone.querySelector('.ea-work-caption-copy>a').textContent = 'Команда — ' + project.client + ' ↗';
+        clone.querySelector('.ea-work-caption-copy>a').textContent = 'Команда — ' + project.agencyName + ' ↗';
         height = Math.max(height, clone.getBoundingClientRect().height);
       }
       clone.remove();

@@ -1,3 +1,20 @@
 export const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function workSummary(p){if(p.presentation?.lead)return p.presentation.lead;return (p.summary||p.description||p.format||p.category||'').replace(/Фотографии этого проекта пока не добавлены\.?/g,'').trim().split(/(?<=[.!?])\s+/)[0];}
 export function referenceAction(p){return `<button class="reference-button" data-reference-work="${escapeHtml(p.slug)}" aria-pressed="false">Сохранить как пример</button>`;}
+export function workAgencies(work,agencyMap){
+ const slugs=[...new Set([work.agencySlug,...(Array.isArray(work.agencySlugs)?work.agencySlugs:[])].filter(Boolean))];
+ return slugs.map(slug=>agencyMap.get(slug)).filter(Boolean);
+}
+export const workAgencyLabel=(work,agencyMap)=>workAgencies(work,agencyMap).map(agency=>agency.name).join(', ')||'Команда не указана';
+export function workClientMention(work,agencyMap){
+ const value=typeof work.client==='string'?work.client.trim():'';
+ if(!value||/^(?:(?:клиент|заказчик) не указан|не указан в источнике)$/iu.test(value))return '';
+ const normalize=name=>name.trim().toLocaleLowerCase('ru-RU').replaceAll('ё','е');
+ return workAgencies(work,agencyMap).some(agency=>normalize(agency.name)===normalize(value))?'':value;
+}
+export const workCardVisibleSearchText=(work,agencies)=>[work.fullTitle,workSummary(work),...agencies.map(agency=>agency.name),work.presentation?.participation].filter(Boolean).join(' ');
+export function workPortfolioCredits(work,agencyMap,from){
+ const agencies=workAgencies(work,agencyMap);
+ const links=agencies.map(agency=>`<a class="company-credit" href="/agency/${encodeURIComponent(agency.slug)}?from=${encodeURIComponent(from)}">${escapeHtml(agency.name)} ↗</a>`).join(' · ');
+ return {agencies,links};
+}

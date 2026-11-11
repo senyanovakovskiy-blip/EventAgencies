@@ -1,5 +1,5 @@
 import {readDraft,workNoteKey} from './project-store.js';
-import {escapeHtml as esc} from './work-presentation.js';
+import {escapeHtml as esc,workAgencyLabel,workClientMention} from './work-presentation.js';
 import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
 import {setupReferenceBatch,syncReferenceBatch,resetReferenceBatch,reconcileReferenceBatch,resumeReferenceBatch,suspendReferenceBatch} from './reference-batch.js';
 import {REFERENCE_BATCH_KEY} from './reference-batch-session.js';
@@ -128,9 +128,10 @@ function insertReferenceNote(card,entry){
 }
 function sortReferences(host,works){
  const sorted=[...works];
+ const agencyMap=new Map((data?.agencies||[]).map(agency=>[agency.slug,agency]));
  if(referenceView.sort==='recent')sorted.reverse();
  if(referenceView.sort==='title')sorted.sort((a,b)=>a.fullTitle.localeCompare(b.fullTitle,'ru'));
- if(referenceView.sort==='agency')sorted.sort((a,b)=>String(a.client||'').localeCompare(String(b.client||''),'ru')||a.fullTitle.localeCompare(b.fullTitle,'ru'));
+ if(referenceView.sort==='agency')sorted.sort((a,b)=>workAgencyLabel(a,agencyMap).localeCompare(workAgencyLabel(b,agencyMap),'ru')||a.fullTitle.localeCompare(b.fullTitle,'ru'));
  const grid=host.querySelector('#saved-reference-grid'),cards=new Map([...grid.querySelectorAll('[data-saved-reference]')].map(card=>[card.dataset.savedReference,card]));
  const fragment=document.createDocumentFragment();sorted.forEach(work=>fragment.append(cards.get(work.slug)));grid.append(fragment);
  syncReferenceBatch(host);
@@ -186,6 +187,7 @@ async function renderReferences({reloadCatalog=false}={}){
  for(const key of pendingNoteKeys)if(!Object.hasOwn(noteDescriptions,key))noteDescriptions[key]='';
  const noteMarkup=p=>`<div class="reference-notes" id="reference-note-block-${esc(p.slug)}">${referenceNotesForWork(p,noteDescriptions,data.agencies,{includeEmptyKeys:pendingNoteKeys}).map(entry=>noteEntryMarkup(entry,p)).join('')}${noteChooserMarkup(p)}</div>`;
  const works=saved.map(slug=>data.projects.find(p=>p.slug===slug)).filter(Boolean);
+ const agencyMap=new Map(data.agencies.map(agency=>[agency.slug,agency]));
  const agencySlugs=new Set(works.flatMap(workAgencies));
  const agencies=data.agencies.filter(agency=>agencySlugs.has(agency.slug)).sort((a,b)=>a.name.localeCompare(b.name,'ru'));
  // A removed work must not silently clear the filter when returning to its card.
@@ -204,7 +206,7 @@ async function renderReferences({reloadCatalog=false}={}){
   </div>
   <p class="reference-search-help" id="reference-search-help">Ищем по названию, агентству, описанию, вопросам к работе и вашим заметкам. Все слова запроса должны встретиться в одном примере.</p>
   <div class="reference-view-bar"><div class="reference-view-switch" role="group" aria-label="Вид сохранённых примеров"><button type="button" data-reference-view="photos" aria-controls="saved-reference-grid">Фотосетка</button><button type="button" data-reference-view="notes" aria-controls="saved-reference-grid">С заметками</button></div><label class="reference-sort">Порядок<select id="reference-sort" aria-controls="saved-reference-grid">${[['recent','Сначала новые'],['earliest','Сначала добавленные'],['title','По названию'],['agency','По агентству']].map(([value,label])=>`<option value="${value}"${referenceView.sort===value?' selected':''}>${label}</option>`).join('')}</select></label><label class="reference-notes-filter"><input id="reference-only-notes" type="checkbox"${referenceView.onlyNotes?' checked':''} aria-controls="saved-reference-grid">Только с моими заметками</label><p class="reference-count" data-reference-count role="status" aria-live="polite" aria-atomic="true"></p></div>
-  <div class="reference-grid" id="saved-reference-grid">${works.map(p=>`<article data-saved-reference="${esc(p.slug)}"><a class="reference-cover${p.hasPhotos?'':' reference-cover-empty'}" href="${workLink(p)}">${p.hasPhotos?`<img src="${esc(p.preview||p.thumb||p.image)}" alt="${esc(p.fullTitle)}" loading="lazy">`:'<span aria-hidden="true">↗</span><span>Работа без фотографий</span>'}</a><h3><a href="${workLink(p)}">${esc(p.fullTitle)}</a></h3><p class="reference-team">${esc(p.client)}</p>${referencePresentationMarkup(p)}${referenceQuestionsMarkup(p)}${teamAction(p)}<button type="button" class="reference-note-toggle" data-toggle-reference-note aria-controls="reference-note-block-${esc(p.slug)}" aria-expanded="false">Мои заметки <span data-reference-note-mark>+</span></button><div class="reference-note-match" hidden></div>${noteMarkup(p)}<button class="reference-remove" data-remove-reference="${esc(p.slug)}">Убрать пример</button></article>`).join('')}</div>
+  <div class="reference-grid" id="saved-reference-grid">${works.map(p=>`<article data-saved-reference="${esc(p.slug)}"><a class="reference-cover${p.hasPhotos?'':' reference-cover-empty'}" href="${workLink(p)}">${p.hasPhotos?`<img src="${esc(p.preview||p.thumb||p.image)}" alt="${esc(p.fullTitle)}" loading="lazy">`:'<span aria-hidden="true">↗</span><span>Работа без фотографий</span>'}</a><h3><a href="${workLink(p)}">${esc(p.fullTitle)}</a></h3><p class="reference-team">${esc(workAgencyLabel(p,agencyMap))}</p>${workClientMention(p,agencyMap)?`<p class="reference-team reference-mention">Упоминание в работе: ${esc(workClientMention(p,agencyMap))}</p>`:''}${referencePresentationMarkup(p)}${referenceQuestionsMarkup(p)}${teamAction(p)}<button type="button" class="reference-note-toggle" data-toggle-reference-note aria-controls="reference-note-block-${esc(p.slug)}" aria-expanded="false">Мои заметки <span data-reference-note-mark>+</span></button><div class="reference-note-match" hidden></div>${noteMarkup(p)}<button class="reference-remove" data-remove-reference="${esc(p.slug)}">Убрать пример</button></article>`).join('')}</div>
   <div class="reference-empty" data-reference-empty hidden><h3>Таких примеров пока нет</h3><p>Попробуйте другое слово, выберите все агентства или снимите фильтр заметок.</p><button class="secondary-action" type="button" data-reset-references>Показать все сохранённые</button></div>`:
   '<div class="reference-empty"><h3>Начните с того, что нравится</h3><p>Откройте любую работу в каталоге и нажмите «Сохранить как пример». Она появится здесь вместе с вашей личной заметкой.</p><a class="secondary-action" href="/catalog?view=projects">Выбрать первый пример ↗</a></div>');
  setupReferenceBatch(host,removeReferenceBatch);

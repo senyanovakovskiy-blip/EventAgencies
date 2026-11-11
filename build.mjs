@@ -10,6 +10,7 @@ import {polishExperience} from './polish-experience.mjs';
 import {entranceExperience} from './entrance-experience.mjs';
 import {projectRouteExperience} from './project-route-experience.mjs';
 import {galleryExperience} from './gallery-experience.mjs';
+import {creditProjectsToAgencies} from './project-agency-credit.mjs';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = process.env.EA_BUILD_DIR ? path.resolve(root, process.env.EA_BUILD_DIR) : path.join(root, 'local-dist');
@@ -17,6 +18,7 @@ const readJSON = async name => JSON.parse(await fs.readFile(path.join(root, 'con
 const [site, about, projects] = await Promise.all(['site','about','projects'].map(readJSON));
 if (process.env.EA_SITE_ORIGIN) site.url = new URL(process.env.EA_SITE_ORIGIN).origin;
 const catalogSummary = await readJSON('catalog');
+const creditedProjects=creditProjectsToAgencies(projects,catalogSummary.agencies);
 site.home.stats = [[String(catalogSummary.agencies.length),'агентств'],[String(catalogSummary.stats.cases),'реальных кейса']];
 const moments = await readJSON('moments');
 const featuredSlugs = await readJSON('home-projects');
@@ -59,7 +61,7 @@ async function checkMedia(object, label) {
 }
 await checkMedia({site,about,projects,moments}, 'content');
 const tokens = {
-  ABOUT:{...about,email:site.contactLabel}, PROJECTS:projects, LOCATION:site.location,
+  ABOUT:{...about,email:site.contactLabel}, PROJECTS:creditedProjects, LOCATION:site.location,
   NAME:site.name, EMAIL:site.contactLabel, URL:origin, TITLE:site.title,
   ABOUT_PAGE_TITLE:'Как выбрать агентство — ' + site.name, PLAYGROUND_TITLE:'Атмосфера — ' + site.name,
   OG_IMAGE:site.ogImage, DESCRIPTION:site.description, PLAYGROUND_DESCRIPTION:site.playgroundDescription,
