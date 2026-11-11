@@ -204,6 +204,7 @@ html:root .agency-save{margin:4px 0 22px}
 .project-agency-head{margin:0;align-items:center}
 .project-agency-head h3{margin:0;font-size:clamp(26px,2.6vw,36px)}
 .project-case-reason{margin-top:24px}
+.project-case-reason .project-case-photo-note{margin:14px 0 0;padding:10px 12px;border-left:2px solid var(--line);font-size:13px;line-height:1.5;color:var(--muted)}
 .project-case-photo img{height:210px;max-height:none;object-fit:contain;background:var(--glass)}
 .project-no-case{min-height:210px;padding:26px 20px;border:1px dashed var(--line);border-radius:8px;display:flex;flex-direction:column;justify-content:center}
 .project-no-case>span{font-size:22px;color:var(--ink);line-height:1.2;margin-bottom:12px}
