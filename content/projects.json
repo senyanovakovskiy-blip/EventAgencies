@@ -1413,18 +1413,20 @@
     "year": "—",
     "eventDate": "Дата не указана",
     "category": "Портфолио",
-    "format": "Работа из портфолио",
-    "client": "Imagine Group",
+    "format": "Конференция по IT-инженерии",
+    "client": "Федеральная IT-компания",
     "agencySlug": "imagine-group",
     "agencySlugs": [
       "imagine-group"
     ],
     "agencyUrl": "/agency/imagine-group",
-    "types": [],
-    "role": "",
-    "industry": "Место не указано",
-    "description": "Работа из портфолио Imagine Group. Роль команды — в первоисточнике.",
-    "seoDescription": "Работа из портфолио Imagine Group. Роль команды — в первоисточнике.",
+    "types": [
+      "business"
+    ],
+    "role": "Imagine Group описывает задачу создать технологичное пространство: павильон превратили в мультимедийную IT-сцену. На главной странице агентство также указывает открывающее шоу с подвижными экранами и роботом KUKA в роли дирижёра живого оркестра.",
+    "industry": "IT-инженерия и новые технологии",
+    "description": "«Импульс» — конференция по IT-инженерии для 3 000 гостей. Imagine Group превратила павильон в мультимедийную IT-сцену; для открытия агентство указывает шоу с подвижными экранами и роботом KUKA, дирижировавшим живым оркестром.",
+    "seoDescription": "Конференция «Импульс» по IT-инженерии для 3 000 гостей: мультимедийная сцена в павильоне и робот KUKA в открывающем шоу — по материалам Imagine Group.",
     "source": "https://imgevent.ru/case#rec1055611251",
     "image": "/custom/library/3a9f81bf87.webp",
     "imageMobile": "/custom/library/3a9f81bf87.webp",
@@ -1481,7 +1483,13 @@
     "preview": "/custom/optimized/5b4583716af61a-960.webp",
     "imageWidth": 1280,
     "imageHeight": 854,
-    "previewSrcSet": "/custom/optimized/5b4583716af61a-640.webp 640w, /custom/optimized/5b4583716af61a-960.webp 960w, /custom/optimized/5b4583716af61a-1280.webp 1280w"
+    "previewSrcSet": "/custom/optimized/5b4583716af61a-640.webp 640w, /custom/optimized/5b4583716af61a-960.webp 960w, /custom/optimized/5b4583716af61a-1280.webp 1280w",
+    "sources": [
+      {
+        "url": "https://imgevent.ru/",
+        "label": "Открывающее шоу на сайте Imagine Group"
+      }
+    ]
   },
   {
     "slug": "case-enriched-37",
