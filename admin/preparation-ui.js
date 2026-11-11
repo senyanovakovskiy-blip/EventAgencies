@@ -20,9 +20,10 @@ export function ideaReactionControls(button){
 export function openOriginalEventIdea(button,state,panel,signature){
  if(!state||state.signature!==signature)return false;
  const current=button?.closest('[data-idea-card-index]'),from=state?.ideas[Number(current?.dataset.ideaCardIndex)],index=Number(button?.dataset.openOriginalIdea),original=state?.ideas[index],target=panel?.querySelector(`[data-idea-card-index="${index}"]`);
- if(!from?.revisedFromFeedback?.clarification||from.feedbackOriginal!==original||!target)return false;
+ const feedback=from?.revisedFromFeedback||from?.derivedFromReaction;
+ if(!feedback?.clarification||from.feedbackOriginal!==original||!target)return false;
  const details=target.querySelector('.event-idea-feedback'),select=details?.querySelector('[data-event-idea-reaction-detail]'),note=details?.querySelector('[data-event-idea-reaction-note]'),status=details?.querySelector('[data-event-idea-feedback-transfer-status]');if(!details||!select||!note||!status)return false;
- const phrase=from.revisedFromFeedback.note;
+ const phrase=feedback.note;
  const transferable=typeof phrase==='string'&&phrase.length<=240&&phrase.length>0&&phrase===phrase.replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim();
  if(note.value.length)status.textContent='Заметка уже заполнена; введённый текст сохранён без изменений. При необходимости перенесите фразу вручную.';
  else if(transferable){note.value=phrase;status.textContent='Записанная фраза перенесена. Выберите категорию только после уточнения у заказчика и отметьте его реакцию.';}
