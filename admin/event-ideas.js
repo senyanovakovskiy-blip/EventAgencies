@@ -107,6 +107,12 @@ function customerAnswersText(sources=[]){
  const answers=uniqueCustomerAnswers(sources);if(!answers.length)return '';
  return ['Ответы клиента к исходным работам — дословно','Каждый ответ относится только к указанной работе и сам по себе не означает согласие переносить её приём в новое событие или соединять работы. Учитывайте ограничения из ответа при подготовке сценария.',...answers.map(item=>item.agency+' · '+item.work+'\nВопрос из карточки: '+item.question+'\nОтвет клиента (дословно): '+item.answer)].join('\n\n');
 }
+function crossAgencySourceText(sources=[]){
+ const items=Array.isArray(sources)?sources:[],agencies=new Set(items.map(source=>source?.agencySlug).filter(Boolean));if(agencies.size<2)return '';
+ const works=new Map();
+ for(const source of items){if(!source?.agencySlug)continue;const key=JSON.stringify([source.agencySlug,source.workSlug||'']);if(works.has(key))continue;works.set(key,(source.agencyName||source.agencySlug)+' ['+source.agencySlug+'] · '+(source.workTitle||source.title||source.workSlug||'Работа не указана')+(source.workSlug?' ['+source.workSlug+']':''));}
+ return ['Общая гипотеза для обсуждения с несколькими командами','Исходные работы из каталога:\n'+[...works.values()].map(value=>'— '+value).join('\n'),'Это внутренний черновик оператора, а не предложение самих агентств. Совместимость, участие команд и распределение ответственности не подтверждены; уточните их отдельно.'].join('\n\n');
+}
 function timelineFor(journey,duration){
  const total=Number(duration);if(!Number.isInteger(total)||!Object.hasOwn(eventDurations,String(total)))return {items:[],duration:null,notice:''};
  const path=text(journey).replace(/\.\s+(?:Число гостей|Предварительный ориентир).*$/i,'');
@@ -764,7 +770,8 @@ export function combineEventIdeaOptions(options=[]){
 
 export function renderEventIdeaCombination(item){
  if(!item)return '';
- return `<section class="event-idea-combination" aria-label="Черновик сочетания вариантов"><h5>Черновик связки</h5><article class="event-idea-card"><span class="eyebrow">${esc(item.kind)}</span><h5>${esc(item.title)}</h5><p><strong>Идея.</strong> ${esc(item.idea)}</p><p><strong>Путь гостей.</strong> ${esc(item.journey)}</p><p><strong>Почему это гипотеза.</strong> ${esc(item.why)}</p><p><strong>Что проверить.</strong> ${esc(item.check)}</p><p><strong>Спросить заказчика.</strong> ${esc(item.question)}</p>${eventIdeaSourceImagesMarkup(item.sources)}${item.sources?.length?`<div class="event-idea-sources"><strong>Источники исходных вариантов</strong>${item.sources.map(source=>source.url?`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} · ${esc(source.agencyName)} ↗</a>`:`<span>${esc(source.title)} · ${esc(source.agencyName)}</span>`).join('')}</div>`:''}</article><button type="button" class="secondary" data-append-event-idea-combination>Добавить связку в черновой сценарий</button></section>`;
+ const crossAgency=new Set((item.sources||[]).map(source=>source?.agencySlug).filter(Boolean)).size>1;
+ return `<section class="event-idea-combination" aria-label="Черновик сочетания вариантов"><h5>Черновик связки</h5><article class="event-idea-card"><span class="eyebrow">${esc(item.kind)}</span><h5>${esc(item.title)}</h5><p><strong>Идея.</strong> ${esc(item.idea)}</p><p><strong>Путь гостей.</strong> ${esc(item.journey)}</p><p><strong>Почему это гипотеза.</strong> ${esc(item.why)}</p><p><strong>Что проверить.</strong> ${esc(item.check)}</p><p><strong>Спросить заказчика.</strong> ${esc(item.question)}</p>${eventIdeaSourceImagesMarkup(item.sources)}${item.sources?.length?`<div class="event-idea-sources"><strong>Источники исходных вариантов</strong>${item.sources.map(source=>source.url?`<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title)} · ${esc(source.agencyName)} ↗</a>`:`<span>${esc(source.title)} · ${esc(source.agencyName)}</span>`).join('')}</div>`:''}</article><button type="button" class="secondary" data-append-event-idea-combination>Добавить связку в черновой сценарий</button>${crossAgency?'<button type="button" class="secondary" data-append-event-idea-combination-shared>Добавить общую гипотезу в черновик события</button>':''}</section>`;
 }
 
 export function eventIdeaKey(item){return JSON.stringify([item.kind,item.legacyTitle||item.title,item.customDirection||'',item.participationMode||'varied',item.creativeAngle||'brief',item.audienceProfile||'unspecified',(item.sources||[]).map(source=>[source.agencySlug,source.workSlug||'',source.title,source.momentKey||'',Boolean(source.operatorSelected)]),item.derivedFromReaction?.keyTitle||item.derivedFromReaction?.title||'',item.derivedFromReaction?.detail||'',item.revisedFromFeedback?.keyTitle||item.revisedFromFeedback?.title||'',item.revisedFromFeedback?.detail||'']);}
@@ -824,6 +831,7 @@ export function eventIdeaText(item,commonChecks=''){
  const scopes=eventIdeaScopes(item),followUps=eventIdeaFollowUps(item);
  const parts=[
   'ВАРИАНТ: '+item.title+' ('+(item.revisedFromFeedback?.clarification?'Уточнение отзыва':item.revisedFromFeedback?'Направление переработки':item.derivedFromReaction?.clarification?'Уточнение отклика':item.kind)+')',
+  crossAgencySourceText(item.sources),
   'Идея: '+item.idea,
   (item.derivedFromReaction?'Исходный путь и следующий шаг: ':item.revisedFromFeedback?'Как продолжить: ':'Путь гостей: ')+item.journey,
    item.timeline?.length?'Черновой ритм программы · время от начала события · '+(eventDurations[String(item.timelineDuration)]||'общая длительность не указана')+':\n'+item.timeline.map(line=>'— '+line).join('\n')+'\n'+(item.timelineEdited?'После ручной правки проверьте сумму интервалов.':'Черновое распределение по смыслу этапов; уточнить с заказчиком, агентством и площадкой.'):item.timelineNotice?'Ритм не распределён автоматически: '+item.timelineNotice:'',
