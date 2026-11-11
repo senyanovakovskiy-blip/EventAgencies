@@ -148,7 +148,13 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   cards.forEach((card,index)=>{const button=document.createElement('button');button.type='button';button.className='secondary';button.dataset.toggleEventIdeaCompare=String(index);button.setAttribute('aria-pressed','false');button.textContent='Сравнить вариант';card.append(button);});
  }
  function installIdeaCombinationControl(panel){
-  const section=panel.querySelector('[data-event-idea-comparison] .event-idea-comparison');if(!section||section.querySelector('[data-suggest-event-idea-combination]'))return;
+  const section=panel.querySelector('[data-event-idea-comparison] .event-idea-comparison'),state=eventIdeaStates.get(panel);if(!section||!state)return;
+  const indices=[...state.comparison];if(indices.length===3){const note=document.createElement('p');note.className='small muted';note.textContent='Для связки оставьте ровно два варианта.';section.append(note);return;}
+  if(indices.length!==2)return;
+  const label=document.createElement('label'),picker=document.createElement('select');label.className='event-idea-format';label.textContent='Основа связки';picker.dataset.eventIdeaCombinationBase='';
+  for(const [position,index] of indices.entries()){const option=document.createElement('option');option.value=String(index);option.textContent='Вариант '+(position+1)+': '+(state.ideas[index]?.title||'Без названия');picker.append(option);}
+  state.combinationBase=indices.includes(state.combinationBase)?state.combinationBase:indices[0];picker.value=String(state.combinationBase);label.append(picker);section.append(label);
+  const note=document.createElement('p');note.className='small muted';note.textContent='Другой отмеченный вариант станет поддерживающим элементом.';section.append(note);
   const button=document.createElement('button');button.type='button';button.className='secondary';button.dataset.suggestEventIdeaCombination='';button.textContent='Предложить связку двух отмеченных вариантов';section.append(button);
  }
  function ideaInput(card,entries=contexts()){
@@ -162,8 +168,9 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    generate.disabled=form.dataset.busy==='true';
    if(!state)continue;
     const stale=state.signature!==eventIdeasSignature(ideaInput(card,entries));panel.dataset.stale=String(stale);
-    if(stale&&(state.comparison.size||state.combination)){state.comparison.clear();state.combination=null;const comparisonHost=panel.querySelector('[data-event-idea-comparison]');if(comparisonHost){comparisonHost.hidden=true;comparisonHost.innerHTML='';}for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]')){button.setAttribute('aria-pressed','false');button.textContent='Сравнить вариант';}}
+    if(stale&&(state.comparison.size||state.combination)){state.comparison.clear();state.combination=null;state.combinationBase=null;const comparisonHost=panel.querySelector('[data-event-idea-comparison]');if(comparisonHost){comparisonHost.hidden=true;comparisonHost.innerHTML='';}for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]')){button.setAttribute('aria-pressed','false');button.textContent='Сравнить вариант';}}
    for(const button of panel.querySelectorAll('[data-append-event-idea],[data-append-event-idea-comparison],[data-append-event-idea-combination],[data-copy-event-idea],[data-copy-event-idea-quick],[data-append-event-idea-pitch],[data-append-event-idea-reply],[data-append-event-idea-scale],[data-record-event-idea-response],[data-toggle-event-idea-compare],[data-suggest-event-idea-combination]'))button.disabled=form.dataset.busy==='true'||stale;
+    for(const picker of panel.querySelectorAll('[data-event-idea-combination-base]'))picker.disabled=form.dataset.busy==='true'||stale;
    for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]'))button.disabled=form.dataset.busy==='true'||stale||(!state.comparison.has(Number(button.dataset.toggleEventIdeaCompare))&&state.comparison.size>=3);
       status.textContent=stale?'Бриф, аудитория, путь, длительность, тема идеи или реакция заказчика изменились. Пересоберите подборку перед добавлением в сценарий.':state.message;
   }
@@ -224,7 +231,19 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   else{form.querySelector('#admin-preparation').scrollIntoView({block:'start'});select.focus({preventScroll:true});}
  }
  select.addEventListener('change',()=>{if(form.dataset.busy==='true')return;const entry=contexts().get(select.value);if(entry){active=select.value;show(entry);}});
-  form.addEventListener('change',event=>{if(event.target.matches('[data-event-idea-source-picker]')){syncIdeaSourcePreview(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-approach],[data-event-idea-format],[data-event-idea-participation],[data-event-idea-angle],[data-event-idea-audience],[data-event-idea-duration],[data-event-idea-manual-combine]')){sync();return;}if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});});
+  form.addEventListener('change',event=>{
+   if(event.target.matches('[data-event-idea-source-picker]')){syncIdeaSourcePreview(event.target.closest('[data-preparation-card]'));return;}
+   if(event.target.matches('[data-event-idea-combination-base]')){
+    const panel=event.target.closest('[data-event-idea-generator]'),state=panel&&eventIdeaStates.get(panel),status=panel?.querySelector('[data-event-ideas-status]'),index=Number(event.target.value);
+    if(!state||!status||form.dataset.busy==='true'||panel.dataset.stale==='true'||!state.comparison.has(index))return;
+    if(state.combinationBase===index)return;
+    state.combinationBase=index;state.combination=null;panel.querySelector('.event-idea-combination')?.remove();
+    const button=panel.querySelector('[data-suggest-event-idea-combination]');if(button)button.disabled=false;
+    state.message='Основа связки изменена. Можно предложить новую связку.';status.textContent=state.message;return;
+   }
+   if(event.target.matches('[data-event-idea-approach],[data-event-idea-format],[data-event-idea-participation],[data-event-idea-angle],[data-event-idea-audience],[data-event-idea-duration],[data-event-idea-manual-combine]')){sync();return;}
+   if(form.dataset.busy==='true'||!event.target.matches('[data-dossier-work]'))return;const card=event.target.closest('[data-preparation-card]'),workSlug=event.target.value||null;event.target.value=card.dataset.work;open({agencySlug:card.dataset.agency,workSlug});
+  });
   form.addEventListener('input',event=>{if(event.target.matches('[data-event-idea-pitch]')){syncPitchArchive(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-source-search]')){filterIdeaSourceOptions(event.target.closest('[data-preparation-card]'));return;}if(event.target.matches('[data-event-idea-direction]')){sync();return;}if(event.target.matches('[data-preparation-field]')){event.target.closest('[data-preparation-card]').querySelector('[data-generation-status]').textContent='';if(event.target.dataset.preparationField==='clientFeedback')sync();}});
  form.addEventListener('click',async event=>{
   const removePitch=event.target.closest('[data-remove-saved-idea-pitch]');
@@ -263,7 +282,9 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
   if(suggestCombination&&form.dataset.busy!=='true'){
    const card=suggestCombination.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]'),state=panel&&eventIdeaStates.get(panel),entries=contexts();if(!card||!panel||!status||!state)return;
    if(state.signature!==eventIdeasSignature(ideaInput(card,entries))){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед поиском связки.';return;}
-   const items=[...state.comparison].map(index=>state.ideas[index]).filter(Boolean),result=combineEventIdeaOptions(items);if(!result.option){state.combination=null;status.textContent=result.reason;return;}
+   const indices=[...state.comparison],baseValue=panel.querySelector('[data-event-idea-combination-base]')?.value,baseIndex=indices.find(index=>String(index)===baseValue);
+   if(indices.length!==2||baseIndex===undefined){status.textContent='Выберите два варианта и основу связки.';return;}
+   const items=[baseIndex,indices.find(index=>index!==baseIndex)].map(index=>state.ideas[index]).filter(Boolean),result=combineEventIdeaOptions(items);if(!result.option){state.combination=null;status.textContent=result.reason;return;}
    if(state.combination){status.textContent='Черновик связки уже подготовлен. Измените отмеченные варианты, чтобы собрать другой.';return;}
    state.combination=result.option;const host=panel.querySelector('[data-event-idea-comparison]');if(host)host.insertAdjacentHTML('beforeend',renderEventIdeaCombination(result.option));suggestCombination.disabled=true;state.message='Подготовлена гипотеза сочетания двух вариантов. Проверьте общую тему и возможность реализации.';status.textContent=state.message;return;
   }
@@ -285,7 +306,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    if(state.comparison.has(index))state.comparison.delete(index);
    else if(state.comparison.size>=3){status.textContent='Можно сравнить не больше трёх вариантов. Уберите один, чтобы добавить другой.';return;}
    else state.comparison.add(index);
-   const host=panel.querySelector('[data-event-idea-comparison]'),items=[...state.comparison].map(itemIndex=>state.ideas[itemIndex]).filter(Boolean);state.combination=null;
+   const host=panel.querySelector('[data-event-idea-comparison]'),items=[...state.comparison].map(itemIndex=>state.ideas[itemIndex]).filter(Boolean);state.combination=null;if(!state.comparison.has(state.combinationBase))state.combinationBase=null;
    if(host){host.hidden=items.length<2;host.innerHTML=items.length>=2?renderEventIdeaComparison(items):'';installIdeaCombinationControl(panel);}
    for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]')){const selected=state.comparison.has(Number(button.dataset.toggleEventIdeaCompare));button.setAttribute('aria-pressed',String(selected));button.textContent=selected?'Убрать из сравнения':'Сравнить вариант';button.disabled=!selected&&state.comparison.size>=3;}
    state.message=items.length?`В сравнении ${items.length} варианта. Сопоставьте основания, ограничения и вопросы перед обсуждением.`:state.comparison.size?`Отмечен один вариант. Добавьте ещё один, чтобы сравнить их рядом.`:'Сравнение очищено.';status.textContent=state.message;return;
@@ -316,7 +337,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
     for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){field.maxLength=IDEA_PITCH_TEXT_LIMIT;const hint=document.createElement('p');hint.className='small muted';hint.textContent=`До ${IDEA_PITCH_TEXT_LIMIT.toLocaleString('ru-RU')} символов. Ручная подача сохранится отдельно от сценария и ответа общей кнопкой заявки.`;field.after(hint);}
     panel.querySelector('[data-event-ideas-results]').hidden=false;
     const amount=ideas.options.length,noun=amount%10===1&&amount%100!==11?'вариант':amount%10>=2&&amount%10<=4&&(amount%100<12||amount%100>14)?'варианта':'вариантов',message=`${amount===1?'Подготовлен':'Подготовлено'} ${amount} ${noun} по выбранному пути. Добавьте подходящее в черновой сценарий; заявка сохранится общей кнопкой.`;
-    eventIdeaStates.set(panel,{ideas:ideas.options,commonChecks:ideas.commonChecks,signature,message,comparison:new Set(),combination:null});panel.dataset.stale='false';syncPitchArchive(card);refreshEventIdeas(entries);
+    eventIdeaStates.set(panel,{ideas:ideas.options,commonChecks:ideas.commonChecks,signature,message,comparison:new Set(),combination:null,combinationBase:null});panel.dataset.stale='false';syncPitchArchive(card);refreshEventIdeas(entries);
     status.focus({preventScroll:true});status.scrollIntoView({block:'center'});return;
    }
    const state=eventIdeaStates.get(panel),signature=eventIdeasSignature(input),action=appendIdea||copyQuickIdea||copyIdea||appendPitch||appendReply||appendScale,index=Number(action.dataset[appendIdea?'appendEventIdea':copyQuickIdea?'copyEventIdeaQuick':copyIdea?'copyEventIdea':appendPitch?'appendEventIdeaPitch':appendReply?'appendEventIdeaReply':'appendEventIdeaScale']),idea=state?.ideas[index];
