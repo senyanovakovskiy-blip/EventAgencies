@@ -430,7 +430,7 @@ function guestPlanning(value){
 
 export function eventIdeasSignature({entry,receipt,workflow,references=[],formatOverride='',participationMode='brief',creativeAngle='brief',audienceProfile='unspecified',ideaApproach='all',customDirection='',eventDuration='',allowUnmatchedManualCombination=false,clientFeedback=''}){
  const b=workflow?.brief||{},original=receipt?.brief||{};
- return JSON.stringify({entry:{agencySlug:entry?.agencySlug||'',workSlug:entry?.workSlug||''},original:{format:original.format||'',description:original.description||'',city:original.city||'',date:original.date||'',guests:original.guests||'',budget:original.budget||'',budgetHelp:Boolean(original.budgetHelp),dateUnknown:Boolean(original.dateUnknown)},clientSelection:(receipt?.selection||[]).map(item=>[item?.agencySlug||'',item?.workSlug||item?.work?.slug||'']),formatOverride,participationMode,creativeAngle,audienceProfile,ideaApproach,customDirection:text(customDirection),eventDuration,allowUnmatchedManualCombination:Boolean(allowUnmatchedManualCombination),clientFeedback:text(clientFeedback),brief:{goal:b.goal||'',city:b.city||'',date:b.date||'',guests:b.guests||'',services:b.services||'',budget:b.budget||'',expectations:b.expectations||'',confirmed:Boolean(b.confirmed),version:b.version||0},references:(references||[]).map(r=>[r.agencySlug||'',r.workSlug||'',r.momentKey||'',Boolean(r.operatorSelected)]).sort((a,b)=>a.join('/').localeCompare(b.join('/')))});
+ return JSON.stringify({entry:{agencySlug:entry?.agencySlug||'',workSlug:entry?.workSlug||''},original:{format:original.format||'',description:original.description||'',city:original.city||'',date:original.date||'',guests:original.guests||'',budget:original.budget||'',budgetHelp:Boolean(original.budgetHelp),dateUnknown:Boolean(original.dateUnknown)},clientSelection:(receipt?.selection||[]).map(item=>[item?.agencySlug||'',item?.workSlug||item?.work?.slug||'']),formatOverride,participationMode,creativeAngle,audienceProfile,ideaApproach,customDirection:text(customDirection),eventDuration,allowUnmatchedManualCombination:Boolean(allowUnmatchedManualCombination),clientFeedback:text(clientFeedback),brief:{goal:b.goal||'',city:b.city||'',date:b.date||'',guests:b.guests||'',services:b.services||'',budget:b.budget||'',expectations:b.expectations||'',confirmed:Boolean(b.confirmed),version:b.version||0},references:(references||[]).map(r=>[r.agencySlug||'',r.workSlug||'',r.momentKey||'',Boolean(r.operatorSelected)])});
 }
 
 export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],formatOverride='',participationMode='brief',creativeAngle='brief',audienceProfile='unspecified',ideaApproach='all',customDirection='',eventDuration='',allowUnmatchedManualCombination=false,clientFeedback=''}){
@@ -465,7 +465,8 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],fo
    options.push({kind:'Классическая альтернатива',classicFormatKey:alternativeKey,title:alternative.title,idea:alternative.idea,journey:alternative.journey,why:['Дополнительный классический каркас для сравнения с выбранной основой «'+classicFormatLabel+'». Это направление для обсуждения, не прогноз успеха.',goalNote,expectationNote].filter(Boolean).join(' '),check:alternative.check||'Согласовать главный момент программы, роли и резервный план.',question:alternative.question,sources:[]});
   }
  if(sources.length){
-   const source=sources.find(item=>item.operatorSelected)||sources.find(item=>item.selected)||sources[0];
+   const operatorDevelopmentSources=sources.filter(item=>item.operatorSelected).slice(0,3);
+   const source=operatorDevelopmentSources[0]||sources.find(item=>item.selected)||sources[0];
    function developmentOption(source,fromClientSelection=false,clientPosition=0){
     const clientAnswer=firstCustomerAnswer(source),sourceReason=clientAnswer?(source.selected?'Эта работа есть в исходном выборе клиента. ':'Работа добавлена в исходные пожелания как пример для обсуждения. ')+customerAnswerContext(clientAnswer):source.sharedNote?'Эта работа '+(source.wished?'добавлена клиентом в исходные пожелания для обсуждения. ':source.selected?'есть в исходном выборе клиента. ':'добавлена к внутреннему обсуждению. ')+sharedNoteContext(source)+' Уточните, какую деталь стоит перенести; заметка не означает согласие повторить весь проект.':source.wished?'Клиент добавил эту работу в исходные пожелания как пример для обсуждения. Это не согласие повторить или адаптировать проект целиком.':source.selected?'Эта работа есть в исходном выборе клиента; сам мотив выбора не записан — его нужно спросить.':'Эта работа добавлена к внутреннему обсуждению; это не означает, что клиент уже выбрал или одобрил её.';
     return {
@@ -477,7 +478,16 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],fo
     question:clientAnswer?'В отправленных пожеланиях вы ответили: '+quote(clientAnswer.answer,160)+'. Правильно ли мы поняли ваш ответ? Что для нового события сохранить, изменить или исключить?':source.sharedNote?'В заметке к этой работе отмечено «'+source.sharedNote+'». Что из этого особенно важно сохранить для нового события?':'Что именно в этом примере хотелось бы сохранить: сам приём, атмосферу, выбор для гостей или общий финал?',sources:[source]
     };
    }
-   options.push(developmentOption(source));
+   if(operatorDevelopmentSources.length){
+    for(const [index,item] of operatorDevelopmentSources.entries()){
+     const option=developmentOption(item);
+     if(index===0)option.legacyTitle=option.legacyTitle||option.title;
+     else delete option.legacyTitle;
+     option.title='Развить: '+excerpt(item.workTitle,50)+(item.momentLabel?' · '+item.momentLabel:'')+' · '+excerpt(item.agencyName,28);
+     options.push(option);
+    }
+   }else options.push(developmentOption(source));
+   const operatorWorkKeys=new Set(operatorDevelopmentSources.map(item=>JSON.stringify([item.agencySlug,item.workSlug])));
    const clientByWork=new Map();
    const clientPositions=new Map((receipt?.selection||[]).map((item,index)=>[JSON.stringify([item?.agencySlug,item?.workSlug||item?.work?.slug]),index+1]));
    for(const item of sources.filter(item=>item.selected)){
@@ -485,7 +495,7 @@ export function buildEventIdeas({entry,catalog,receipt,workflow,references=[],fo
     if(!clientByWork.has(key)||clientByWork.get(key).operatorSelected&&!item.operatorSelected)clientByWork.set(key,item);
    }
    for(const clientSource of [...clientByWork.values()].sort((a,b)=>(clientPositions.get(JSON.stringify([a.agencySlug,a.workSlug]))||99)-(clientPositions.get(JSON.stringify([b.agencySlug,b.workSlug]))||99)).slice(0,3)){
-    if(clientSource===source)continue;
+    if(clientSource===source||operatorWorkKeys.has(JSON.stringify([clientSource.agencySlug,clientSource.workSlug])))continue;
     options.push(developmentOption(clientSource,true,clientPositions.get(JSON.stringify([clientSource.agencySlug,clientSource.workSlug]))||1));
    }
  }
