@@ -1,6 +1,7 @@
 import {searchTerms} from './catalog-search.js';
 
 const workFits=(work,filters)=>(!filters.format||work.types?.includes(filters.format))&&(!filters.kind||work.kind===filters.kind)&&(!filters.occasion||work.occasions?.includes(filters.occasion))&&(!filters.participation||typeof work.presentation?.participation==='string'&&Boolean(work.presentation.participation.trim()))&&(!filters.photos||work.hasPhotos);
+const cityFits=(value,selected)=>!selected||(selected==='__unknown'?!(typeof value==='string'&&value.trim()&&value.trim()!=='—'):value===selected);
 
 // Agency location means the team's city; project location means the event's city.
 // Format, occasion, photographs and query must be supported by the SAME work.
@@ -23,11 +24,11 @@ export function buildCatalogMatches(data,search){
    const workTerms=terms.filter(term=>owned.some(work=>search.searchWork(work.slug,[term]).matches));
    const works=owned.filter(work=>workFits(work,filters)&&(!terms.length||search.searchAgencyWork(agency.slug,work.slug,terms).matches)&&(!workTerms.length||search.searchWork(work.slug,workTerms).matches));
    const direct=search.searchAgencyOwn(agency.slug,terms).matches;
-   const matches=(!filters.scope||filters.scope===agency.slug)&&(!filters.city||filters.city===agency.city)&&((hasWorkFilters||workTerms.length)?works.length>0:!terms.length||direct);
+   const matches=(!filters.scope||filters.scope===agency.slug)&&cityFits(agency.city,filters.city)&&((hasWorkFilters||workTerms.length)?works.length>0:!terms.length||direct);
    return {matches,works,contextual:Boolean(workTerms.length||hasWorkFilters),queryInWork:workTerms.length>0};
   },
   work(work,filters){
-   return !work.duplicateOf&&(!filters.scope||[work.agencySlug,...(work.agencySlugs||[])].includes(filters.scope))&&(!filters.city||work.eventCity===filters.city)&&workFits(work,filters)&&search.searchWork(work.slug,filters.query).matches;
+   return !work.duplicateOf&&(!filters.scope||[work.agencySlug,...(work.agencySlugs||[])].includes(filters.scope))&&cityFits(work.eventCity,filters.city)&&workFits(work,filters)&&search.searchWork(work.slug,filters.query).matches;
   }
  };
 }

@@ -26,8 +26,10 @@ async function startCatalog(){
  const toolbarControls=document.createElement('div'),sortLabel=document.createElement('label'),sort=document.createElement('select'),projectSortLabel=document.createElement('label'),projectSort=document.createElement('select');toolbarControls.className='catalog-toolbar-controls';sortLabel.className='catalog-sort';sort.id='catalog-sort';sort.setAttribute('aria-label','Порядок компаний в каталоге');for(const [value,label]of [['default','Порядок каталога'],['works','Больше опубликованных работ'],['photos','Больше фотографий']]){const option=document.createElement('option');option.value=value;option.textContent=label;sort.append(option);}sortLabel.append('Сортировать ',sort);projectSortLabel.className='catalog-sort catalog-project-sort';projectSort.id='catalog-project-sort';projectSort.setAttribute('aria-label','Порядок проектов в каталоге');for(const [value,label]of [['default','Сначала с фото'],['recent','Новые события · фото первыми'],['oldest','Ранние события · фото первыми'],['title','Название А—Я · фото первыми']]){const option=document.createElement('option');option.value=value;option.textContent=label;projectSort.append(option);}projectSortLabel.append('Сортировать ',projectSort);toolbarControls.append(sortLabel,projectSortLabel,count);toolbar?.append(toolbarControls);
  const inspirationLabels={wedding:'свадьбы',birthday:'дня рождения или юбилея',product_launch:'запуска продукта',opening:'открытия площадки',new_year:'новогоднего вечера',exhibition:'выставки',sports_day:'спортивного дня'};
  let view='companies',scope='',timer,inspiration='';
- const cityOptions=new Set([...data.agencies.map(a=>a.city).filter(Boolean),...data.projects.map(p=>p.eventCity).filter(Boolean)]);
+ const cityOptions=new Set(['__unknown',...data.agencies.map(a=>a.city).filter(Boolean),...data.projects.map(p=>p.eventCity).filter(Boolean)]);
  const cityByView={companies:'',projects:''};
+ const unknownCityOption=city.querySelector('option[value="__unknown"]');
+ function syncCityOption(){if(!unknownCityOption)return;const cityCount=Number(unknownCityOption.dataset[view==='companies'?'companyCount':'projectCount']||0);unknownCityOption.textContent=`Не указан (${cityCount})`;unknownCityOption.hidden=cityCount===0;if(cityCount===0&&city.value==='__unknown'){city.value='';cityByView[view]='';}}
  const extra=document.querySelector('.filter-options'),mobile=matchMedia('(max-width:900px)');
  const fitFilters=()=>{extra.open=!mobile.matches||Boolean(city.value||format.value||kind.value||occasion.value||participation.checked||photos.checked);};
  mobile.addEventListener('change',fitFilters);
@@ -79,6 +81,7 @@ async function startCatalog(){
   return photoCards+`<details class="catalog-no-photo-group"><summary>Показать ещё ${count} ${label}</summary><p>Эти работы доступны в каталоге без фотографий.</p><div class="catalog-grid">${textCards}</div></details>`;
  }
  function draw(write=true){
+  syncCityOption();
   const terms=searchTerms(search.value),filters={query:terms,city:city.value,format:format.value,kind:kind.value,occasion:occasion.value,participation:participation.checked,photos:photos.checked,scope};let items;
    if(view==='companies'){
     items=data.agencies.filter(a=>{const match=matcher.agency(a,filters);agencyMatches.set(a.slug,match);return match.matches;});
