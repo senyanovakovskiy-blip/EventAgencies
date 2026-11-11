@@ -9,7 +9,7 @@ const textLabels={
 const labelsFor=snapshot=>textLabels[snapshot?.kind==='agenda'?'agenda':'plan'];
 export function discussionPlanMarkup(id,{comparison=false}={}){
  const key=esc(id),title=comparison?'Повестка и полный план выбранных вариантов':'Повестка и полный план разговора';
- return `<section class="discussion-plan" data-discussion-plan data-discussion-plan-scope="${comparison?'comparison':'single'}" aria-labelledby="${key}-title"><h4 id="${key}-title">${title}</h4><p id="${key}-help" class="small muted">Повестка: задача и ожидания, мотив выбора, вопросы, ответ клиента, изменения и следующий шаг. Полный план добавляет весь бриф с бюджетом, подачу варианта и остальные записи со сценарием. ${comparison?'Варианты идут в порядке выбора в сравнении. ':''}Тексты включаются целиком. Результат остаётся на странице до успешного сохранения заявки или перезагрузки.</p><p id="${key}-unavailable" class="small muted" data-discussion-plan-unavailable role="status" hidden></p><div class="discussion-plan-actions"><button type="button" class="secondary" data-build-discussion-agenda>Собрать повестку</button><button type="button" class="secondary" data-build-discussion-plan>Собрать полный план</button><button type="button" class="secondary" data-copy-discussion-plan disabled>Скопировать собранный текст</button></div><p id="${key}-stale" class="reply-warning" data-discussion-plan-stale role="status" hidden></p><p id="${key}-status" class="small muted" data-discussion-plan-status role="status" aria-atomic="true"></p><details data-discussion-plan-preview hidden><summary data-discussion-plan-summary>Посмотреть собранный текст</summary><p id="${key}-context" class="discussion-plan-context" data-discussion-plan-context></p><label><span data-discussion-plan-label>Собранный текст — только для чтения</span><textarea data-discussion-plan-text readonly rows="18" spellcheck="false" aria-describedby="${key}-help ${key}-context ${key}-unavailable ${key}-stale ${key}-status"></textarea></label></details></section>`;
+ return `<section class="discussion-plan" data-discussion-plan data-discussion-plan-scope="${comparison?'comparison':'single'}" aria-labelledby="${key}-title"><h4 id="${key}-title">${title}</h4><p id="${key}-help" class="small muted">Повестка: задача и ожидания, мотив выбора, вопросы, ответ клиента, изменения и следующий шаг. Полный план добавляет весь бриф с бюджетом, подачу варианта и остальные записи со сценарием. ${comparison?'Варианты идут в порядке выбора в сравнении. ':''}Тексты включаются целиком. Результат остаётся на странице до успешного сохранения заявки или перезагрузки.</p><label class="small muted"><input type="checkbox" data-include-general-idea-draft aria-describedby="${key}-idea-note"> Добавить общий черновик и записанный отклик в полный план</label><p id="${key}-idea-note" class="small muted">Общий блок попадёт в полный план один раз. Повестка его не включает. Если меняется включённый общий блок, план нужно собрать заново.</p><p id="${key}-unavailable" class="small muted" data-discussion-plan-unavailable role="status" hidden></p><div class="discussion-plan-actions"><button type="button" class="secondary" data-build-discussion-agenda>Собрать повестку</button><button type="button" class="secondary" data-build-discussion-plan>Собрать полный план</button><button type="button" class="secondary" data-copy-discussion-plan disabled>Скопировать собранный текст</button></div><p id="${key}-stale" class="reply-warning" data-discussion-plan-stale role="status" hidden></p><p id="${key}-status" class="small muted" data-discussion-plan-status role="status" aria-atomic="true"></p><details data-discussion-plan-preview hidden><summary data-discussion-plan-summary>Посмотреть собранный текст</summary><p id="${key}-context" class="discussion-plan-context" data-discussion-plan-context></p><label><span data-discussion-plan-label>Собранный текст — только для чтения</span><textarea data-discussion-plan-text readonly rows="18" spellcheck="false" aria-describedby="${key}-help ${key}-context ${key}-unavailable ${key}-stale ${key}-status"></textarea></label></details></section>`;
 }
 
 // Snapshots belong only to this form and never enter preparation or view capture.
@@ -21,7 +21,7 @@ export function wireDiscussionPlans(form,{catalog,receipt,getPreparation,getWork
   let state=states.get(key);
   if(!state||state.root!==root){
    state={key,card,root,comparison,entry:comparison?null:{agencySlug:card.dataset.agency,workSlug:card.dataset.work||null},snapshot:null,stale:false,message:'',available:true,currentKey:key,unavailableMessage:'',activation:0,contextStamp:'',
-    buildAgenda:root.querySelector('[data-build-discussion-agenda]'),build:root.querySelector('[data-build-discussion-plan]'),copy:root.querySelector('[data-copy-discussion-plan]'),
+    includeGeneralIdeaDraft:root.querySelector('[data-include-general-idea-draft]'),buildAgenda:root.querySelector('[data-build-discussion-agenda]'),build:root.querySelector('[data-build-discussion-plan]'),copy:root.querySelector('[data-copy-discussion-plan]'),
     preview:root.querySelector('[data-discussion-plan-preview]'),area:root.querySelector('[data-discussion-plan-text]'),
     summary:root.querySelector('[data-discussion-plan-summary]'),label:root.querySelector('[data-discussion-plan-label]'),
     context:root.querySelector('[data-discussion-plan-context]'),warning:root.querySelector('[data-discussion-plan-stale]'),status:root.querySelector('[data-discussion-plan-status]'),unavailable:root.querySelector('[data-discussion-plan-unavailable]')};
@@ -33,8 +33,9 @@ export function wireDiscussionPlans(form,{catalog,receipt,getPreparation,getWork
  function fresh(state,inputs=currentInputs(),kind=state.snapshot?.kind){
   // Full-plan snapshots have no kind; always compare the current snapshot's
   // projection, so edits to fields omitted from an agenda cannot make it stale.
-  if(!state.comparison)return (kind==='agenda'?buildDiscussionAgenda:buildDiscussionPlan)({...inputs,entry:state.entry});
-  const {selectedKeys,contexts}=getComparison();return (kind==='agenda'?buildComparisonDiscussionAgenda:buildComparisonDiscussionPlan)({...inputs,selectedKeys,contexts});
+  const includeGeneralIdeaDraft=kind!=='agenda'&&Boolean(state.includeGeneralIdeaDraft?.checked);
+  if(!state.comparison)return (kind==='agenda'?buildDiscussionAgenda:buildDiscussionPlan)({...inputs,entry:state.entry,includeGeneralIdeaDraft});
+  const {selectedKeys,contexts}=getComparison();return (kind==='agenda'?buildComparisonDiscussionAgenda:buildComparisonDiscussionPlan)({...inputs,selectedKeys,contexts,includeGeneralIdeaDraft});
  }
  function connected(state){return form.isConnected&&state.root.isConnected&&form.contains(state.root)&&(!state.card||state.card.isConnected);}
  function active(state){return connected(state)&&!state.root.closest('[hidden]')&&(state.comparison||getActiveKey()===state.key);}
@@ -64,7 +65,7 @@ export function wireDiscussionPlans(form,{catalog,receipt,getPreparation,getWork
     setText(state.summary,'Посмотреть '+labels.object+scope);
     setText(state.label,'Текст '+labels.genitive+scope+' — только для чтения');
     setText(state.context,state.snapshot.title+': '+state.snapshot.contextTitle);
-    setText(state.warning,labels.stale+': данные или выбор изменились. Прежний текст оставлен ниже. Нажмите «'+labels.build+'» перед копированием.');
+    setText(state.warning,labels.stale+': данные, выбор или включённый общий блок изменились. Прежний текст оставлен ниже. Нажмите «'+labels.build+'» перед копированием.');
    }
    state.warning.hidden=!state.stale;
    setText(state.unavailable,state.unavailableMessage);state.unavailable.hidden=!state.unavailableMessage;
@@ -117,7 +118,7 @@ export function wireDiscussionPlans(form,{catalog,receipt,getPreparation,getWork
   else if(event.isTrusted)void copy(state);
  });
  // Read-only preview controls do not participate in the editor's dirty flow.
- for(const type of ['input','change'])form.addEventListener(type,event=>{if(event.target.closest('[data-discussion-plan]'))event.stopPropagation();},{capture:true});
+ for(const type of ['input','change'])form.addEventListener(type,event=>{if(!event.target.closest('[data-discussion-plan]'))return;event.stopPropagation();if(event.target.matches('[data-include-general-idea-draft]'))sync();},{capture:true});
  form.addEventListener('copy',event=>{
   if(!event.target.matches('[data-discussion-plan-text]'))return;
   const state=stateFor(event.target.closest('[data-discussion-plan]'));sync();

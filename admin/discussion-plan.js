@@ -42,6 +42,14 @@ const formatSections=sections=>sections.filter(section=>section!=='').join('\n\n
 function briefSection(workflow){
  return 'Задача — полный рабочий бриф со страницы\n\n'+Object.entries(briefFields).map(([key,label])=>valueBlock(label,workflow.brief[key])).join('\n\n');
 }
+function generalIdeaSection(workflow){
+ return [
+  'Общий черновик идеи и отклик — отдельные записи оператора',
+  'Эти тексты относятся к событию в целом, а не к выбранному агентству или его работе. Отклик передан как запись оператора; план сам по себе не подтверждает точность записи, интерес клиента или согласие с вариантом.',
+  valueBlock('Общий черновик идеи',workflow.ideaDraft,'Не заполнено.'),
+  valueBlock('Записанный отклик заказчика',workflow.ideaFeedback,'Не заполнено.')
+ ].join('\n\n');
+}
 function planLinks(column,origin){
  return [
   {kind:'agency',label:'Профиль агентства',href:column.agency.href},
@@ -97,19 +105,22 @@ function agendaVariantSections(column){
  * siteOrigin is optional. A safe http(s) origin makes available page links
  * absolute; otherwise they remain root-relative. No source URLs, contacts,
  * consent/history metadata or tokens are selected from the input objects.
+ * includeGeneralIdeaDraft opts the common operator draft and recorded customer
+ * reaction into the full plan. They are a separate event-wide section, not a
+ * claim about the selected agency/work; the agenda never includes this section.
  * Explicit free text is carried verbatim, not inspected or redacted. UI must
  * render `text` as plain text, not innerHTML; this module performs no DOM, I/O,
  * clipboard, save, clock or random operations. Equality of text can detect stale
  * previews; selection and preview state stay outside the workflow.
  */
-export function buildDiscussionPlan({entry,preparation,workflow,catalog,receipt,siteOrigin}={}){
+export function buildDiscussionPlan({entry,preparation,workflow,catalog,receipt,siteOrigin,includeGeneralIdeaDraft=false}={}){
  requireCurrentInputs(preparation,workflow);
  const option=getPreparationComparisonOptions([entry],catalog,receipt)[0];
  if(!option)return null;
  const comparison=buildPreparationComparison({selectedKeys:[option.key],contexts:[entry],preparation,catalog,receipt});
  const column=comparison.columns[0],origin=safeOrigin(siteOrigin);
  const links=planLinks(column,origin);
- const sections=[title,planNotice,...contextSections(column,links),briefSection(workflow),...variantSections(column)];
+ const sections=[title,planNotice,...contextSections(column,links),briefSection(workflow),includeGeneralIdeaDraft===true?generalIdeaSection(workflow):'',...variantSections(column)];
  return {key:column.key,title,contextTitle:column.label,text:formatSections(sections),warnings:column.warnings,links};
 }
 
@@ -136,8 +147,10 @@ export function buildDiscussionPlan({entry,preparation,workflow,catalog,receipt,
  * tracks order as well as membership. Use key AND text for stale detection;
  * neither is a stored receipt/version. Missing catalogue records are distinct
  * from unknown contexts: known contexts remain ready with explicit warnings.
+ * includeGeneralIdeaDraft opts one common event-wide section into the full plan;
+ * it appears once before all selected variants. The separate agenda is unchanged.
  */
-export function buildComparisonDiscussionPlan({selectedKeys=[],contexts,preparation,workflow,catalog,receipt,siteOrigin}={}){
+export function buildComparisonDiscussionPlan({selectedKeys=[],contexts,preparation,workflow,catalog,receipt,siteOrigin,includeGeneralIdeaDraft=false}={}){
  requireCurrentInputs(preparation,workflow);
  const {requestedKeys,comparison,reasons}=comparisonSelection({selectedKeys,contexts,preparation,catalog,receipt});
  const {selectedKeys:resolvedKeys,unknownKeys,overflowKeys,limit}=comparison;
@@ -161,6 +174,7 @@ export function buildComparisonDiscussionPlan({selectedKeys=[],contexts,preparat
   comparisonTitle,planNotice,
   'Варианты перечислены в порядке выбора в сравнении. Включение в план не подтверждает согласие клиента или команды.',
   briefSection(workflow),
+   includeGeneralIdeaDraft===true?generalIdeaSection(workflow):'',
   ...comparison.columns.flatMap((column,index)=>[
    'Вариант '+(index+1)+' — '+column.label,
    ...contextSections(column,result.variants[index].links),...variantSections(column)
