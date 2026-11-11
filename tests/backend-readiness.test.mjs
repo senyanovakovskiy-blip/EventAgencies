@@ -88,11 +88,13 @@ test('account copies enforce deliberate contact and note sharing, owner isolatio
   assert.equal((await api(db, '/api/project-copies/' + id, { method: 'DELETE' })).status, 200);
   assert.equal((await api(db, '/api/project-copies/' + id)).status, 404);
   assert.equal((await api(db, '/api/project-copies/' + id, { method: 'DELETE' })).status, 404);
-  // The current data lifecycle removes the retry key with the copy. A delayed
-  // original POST is a new creation; there is no retained deletion tombstone.
+  // A delayed retry must not recreate a copy the owner already deleted.
   const afterDeletion = await saveCopy(db, 'План на осень', snapshot, key);
-  assert.equal(afterDeletion.status, 201);
-  assert.notEqual(afterDeletion.data.item.id, id);
+  assert.equal(afterDeletion.status, 410);
+  assert.equal(afterDeletion.data.error, 'copy_deleted');
+  const freshCreation = await saveCopy(db, 'План на осень', snapshot, randomUUID());
+  assert.equal(freshCreation.status, 201);
+  assert.notEqual(freshCreation.data.item.id, id);
 });
 
 test('copy creation retries and competing payloads preserve one record', async t => {
@@ -266,6 +268,7 @@ test('project copy migration preserves an existing request, its private workflow
   const before = db.sqlite.prepare('SELECT * FROM inquiries WHERE id=1').get();
   const beforeHistory = db.sqlite.prepare('SELECT * FROM inquiry_history').all();
   db.sqlite.exec(fs.readFileSync(new URL('../drizzle/0002_slim_iron_monger.sql', import.meta.url), 'utf8'));
+  db.sqlite.exec(fs.readFileSync(new URL('../drizzle/0003_project_copy_tombstones.sql', import.meta.url), 'utf8'));
   assert.deepEqual(db.sqlite.prepare('SELECT * FROM inquiries WHERE id=1').get(), before);
   assert.deepEqual(db.sqlite.prepare('SELECT * FROM inquiry_history').all(), beforeHistory);
   assert.deepEqual(await store.detail(1), record);
