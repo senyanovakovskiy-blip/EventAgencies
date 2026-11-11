@@ -30,6 +30,11 @@ export function connectNativePhotoReel(frame, handlers, createNative, {projects,
     const image = (small.matches && picture.dataset.srcMobile) || picture.dataset.srcDesktop || picture.getAttribute('src') || '';
     window.dispatchEvent(new CustomEvent('ea:work', {detail:{slug:projects[index]?.slug || '', image}}));
   }
+  const syncSourceForViewport = () => {
+    warm();
+    publishScene(current);
+  };
+  small.addEventListener('change', syncSourceForViewport);
   function focus(slug) {
     const index = projects.findIndex(project => project.slug === slug);
     if (index >= 0) {
@@ -97,6 +102,7 @@ export function connectNativePhotoReel(frame, handlers, createNative, {projects,
       disposed = true;
       cancelAnimationFrame(layoutFrame);
       resize.disconnect();
+      small.removeEventListener('change', syncSourceForViewport);
       entrance.destroy();
       frame.removeEventListener('ea:prepare-return', prepareReturn);
       frame.removeEventListener('wheel', interruptEntrance);
