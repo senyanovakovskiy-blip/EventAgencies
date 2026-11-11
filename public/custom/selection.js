@@ -303,7 +303,7 @@ function renderHandoff(data=handoffData){
  if(!result.hidden&&focusRequest){result.scrollIntoView({block:'start'});result.focus({preventScroll:true});focusRequest=false;}
  const submit=document.querySelector('[data-submit-project]');
  const blockedSelection=unavailableSelection&&(contactPending||(!retryPending&&!accepted));
- submit.textContent=sending?(sendingRecovery?'Получаем подтверждение…':'Сохраняем заявку…'):blockedSelection?'Сначала исправьте выбор выше':contactPending?(contactEditor.blocked?'Проверить контакт перед отправкой':'Сохранить контакт и передать задачу'):accepted?'Заявка принята ✓':retryPending?'Получить подтверждение предыдущей отправки':'Передать задачу EventAgencies';
+ submit.textContent=sending?(sendingRecovery?'Получаем подтверждение…':'Сохраняем заявку…'):blockedSelection?'Сначала исправьте выбор выше':contactPending?(contactEditor.blocked?'Проверить контакт перед отправкой':'Сохранить контакт и передать задачу'):accepted?'Заявка принята ✓':retryPending?'Получить подтверждение предыдущей отправки':'Передать задачу EventAgencies 101';
  submit.disabled=sending||Boolean(accepted&&!contactPending)||blockedSelection;submit.setAttribute('aria-busy',String(sending));
  const descriptions=[unavailableSelection?'request-selection-warning':'',contactPending?'contact-save-status':''].filter(Boolean);
  if(descriptions.length)submit.setAttribute('aria-describedby',descriptions.join(' '));else submit.removeAttribute('aria-describedby');

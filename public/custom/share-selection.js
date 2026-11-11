@@ -83,6 +83,6 @@ export function setupSelectionShare({getState,getData}){
  });
  download.addEventListener('click',()=>{
   const snapshot=currentPrepared();if(!snapshot)return;
-  const url=URL.createObjectURL(new Blob([snapshot.html],{type:'text/html;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download='EventAgencies — подборка агентств.html';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Файл подготовлен для скачивания. Отправьте его коллеге как вложение.';
+  const url=URL.createObjectURL(new Blob([snapshot.html],{type:'text/html;charset=utf-8'})),link=document.createElement('a');link.href=url;link.download='EventAgencies 101 — подборка агентств.html';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Файл подготовлен для скачивания. Отправьте его коллеге как вложение.';
  });
 }

@@ -6,7 +6,7 @@ const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'sho
 const validDate=value=>typeof value==='string'&&Number.isFinite(Date.parse(value));
 const updatedLabel=item=>validDate(item.updatedAt)&&Date.parse(item.updatedAt)>Date.parse(item.createdAt)?'Заявка обновлена '+dateLabel(item.updatedAt):'';
 export function receiptText(receipt,rows,origin){
- return ['ЗАЯВКА '+receipt.id+' · EventAgencies','Отправлена: '+dateLabel(receipt.createdAt),'Получатель: EventAgencies','','ОПИСАНИЕ СОБЫТИЯ',...rows.map(([label,value])=>label+': '+value),'','ВЫБРАННЫЕ КОМАНДЫ',...receipt.selection.flatMap((item,index)=>['',`${index+1}. ${item.name}`,'Выбранная работа: '+(item.work?.title||'Работа не выбрана'),...(item.work?[origin+'/work/'+item.work.slug]:[])]),...(!receipt.selection.length?['Помощь с подбором; команды пока не выбраны.']:[]),'','КОНТАКТ ДЛЯ ОТВЕТА','Имя: '+receipt.contact.name,contactMethods[receipt.contact.method]+': '+receipt.contact.value,'','Это копия исходной заявки, сохранённой при отправке. Текущий статус можно посмотреть в «Моём проекте».',origin+'/my-project#project-history'].join('\n');
+ return ['ЗАЯВКА '+receipt.id+' · EventAgencies 101','Отправлена: '+dateLabel(receipt.createdAt),'Получатель: EventAgencies 101','','ОПИСАНИЕ СОБЫТИЯ',...rows.map(([label,value])=>label+': '+value),'','ВЫБРАННЫЕ КОМАНДЫ',...receipt.selection.flatMap((item,index)=>['',`${index+1}. ${item.name}`,'Выбранная работа: '+(item.work?.title||'Работа не выбрана'),...(item.work?[origin+'/work/'+item.work.slug]:[])]),...(!receipt.selection.length?['Помощь с подбором; команды пока не выбраны.']:[]),'','КОНТАКТ ДЛЯ ОТВЕТА','Имя: '+receipt.contact.name,contactMethods[receipt.contact.method]+': '+receipt.contact.value,'','Это копия исходной заявки, сохранённой при отправке. Текущий статус можно посмотреть в «Моём проекте».',origin+'/my-project#project-history'].join('\n');
 }
 function validHistory(value){
  return value&&Number.isSafeInteger(value.total)&&value.total>=0&&Number.isSafeInteger(value.page)&&value.page>=1&&Number.isSafeInteger(value.pages)&&value.pages>=value.page&&Array.isArray(value.items)&&value.items.length<=10&&value.items.every(item=>Number.isSafeInteger(item.recordId)&&item.recordId>0&&/^EA-\d{4}-\d{6,}$/.test(item.id)&&validDate(item.createdAt)&&['status','statusLabel','format','city','date'].every(key=>typeof item[key]==='string')&&typeof item.dateUnknown==='boolean'&&Array.isArray(item.agencies)&&item.agencies.every(name=>typeof name==='string'));
@@ -92,7 +92,7 @@ export function setupProjectHistory({briefRows,formatName,onReuse}){
  download.addEventListener('click',()=>{
   if(!currentReceipt)return;
   const text=receiptText(currentReceipt,briefRows(currentReceipt.brief),location.origin),url=URL.createObjectURL(new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'}));
-  const anchor=document.createElement('a');anchor.href=url;anchor.download='EventAgencies — '+currentReceipt.id+'.txt';anchor.hidden=true;document.body.append(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+  const anchor=document.createElement('a');anchor.href=url;anchor.download='EventAgencies 101 — '+currentReceipt.id+'.txt';anchor.hidden=true;document.body.append(anchor);anchor.click();anchor.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
   detailStatus.textContent='Текстовая копия заявки подготовлена для скачивания.';
  });
  document.addEventListener('ea:inquiry-accepted',()=>{loaded=false;if(panel.open)load(1);});
