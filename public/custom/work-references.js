@@ -261,6 +261,18 @@ function handleReferenceNoteUpdate(event){
 }
 document.addEventListener('input',handleReferenceNoteUpdate);
 document.addEventListener('ea:work-note-updated',handleReferenceNoteUpdate);
+document.addEventListener('ea:inline-note-external',()=>{
+ const host=document.getElementById('work-references');if(!host||!data)return;
+ let notes;try{notes=readDraft(localStorage).workNotes;}catch{return;}
+ const works=[];
+ host.querySelectorAll('[data-saved-reference]').forEach(card=>{
+  const work=data.projects.find(item=>item.slug===card.dataset.savedReference);if(!work)return;works.push(work);
+  const present=new Set(noteFields(card).map(field=>workNoteKey(field.dataset.workNote,field.dataset.noteWork)));
+  referenceNotesForWork(work,notes,data.agencies).forEach(entry=>{if(!present.has(entry.key))insertReferenceNote(card,entry);});
+  syncReferenceNoteMark(card);noteCopyController.sync(card);noteClearController.sync(card);syncReferenceNoteChooser(card,work);
+ });
+ filterReferences(host,works);
+});
 
 document.addEventListener('change',event=>{
  const select=event.target.closest('[data-reference-note-team]');if(!select||!data)return;

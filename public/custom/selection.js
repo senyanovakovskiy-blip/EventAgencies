@@ -17,6 +17,8 @@ import {setupProjectWorkPicker} from './project-work-picker.js';
 import {setupProjectNoteEditor} from './project-note-editor.js';
 import {setupProjectQuestionAnswer} from './project-question-answer.js';
 import {referenceProjectMarker} from './reference-batch-session.js';
+import {PREVIOUS_PROJECT_KEY} from './project-copy-client.js';
+import {setupInlineNoteGuard} from './inline-note-guard.js';
 import {setupComparisonCriteria,syncComparisonCriteria} from './project-comparison-criteria.js';
 import {comparisonValuesMatch} from './project-comparison-equality.js';
 import {selectionView,selectionProblems} from './project-selection-view.js';
@@ -40,6 +42,7 @@ let helpSelectionExpanded=false;
 let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendingRecovery=false,sendError='',selectionSendError=false,lastReceipt=null,wishesUndo=null,replacementUndo=null,briefUndo=null,briefEditor=null,contactEditor=null,handoffData=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
 try{draft=readDraft(localStorage);}catch{available=false;}
+const inlineNotes=setupInlineNoteGuard({document,storage:localStorage,marker:referenceProjectMarker,canSave:()=>available&&!sending,onSaved:(next)=>{if(!available)return;draft=next;document.dispatchEvent(new CustomEvent('ea:inline-note-external'));refresh();}});
 const getData=()=>dataPromise||(dataPromise=(async()=>{
  const embedded=document.getElementById('project-reference-data');
  if(embedded)return JSON.parse(embedded.textContent);
@@ -194,12 +197,15 @@ document.addEventListener('click',async event=>{
 });
 addEventListener('storage',e=>{
  try{if(e.storageArea!==localStorage)return;}catch{return;}
+ if(!available){const field=document.activeElement;if(field?.matches?.('textarea[data-work-note]'))inlineNotes.defer(field);return;}
  if(e.key===INQUIRY_KEY){refresh();return;}
- if(e.key!==KEY&&e.key!==null)return;
+ if(e.key!==KEY&&e.key!==PREVIOUS_PROJECT_KEY&&e.key!==null)return;
+ try{inlineNotes.reconcile(readDraft(localStorage),{projectChanged:e.key===PREVIOUS_PROJECT_KEY||e.key===null||(e.key===KEY&&e.newValue===null)});}catch{available=false;}
  if(contactEditor){
   if(e.key===null||e.newValue===null)contactEditor.invalidate();
   contactEditor.reconcile();
  }else try{draft=readDraft(localStorage);available=true;}catch{available=false;}
+ document.dispatchEvent(new CustomEvent('ea:inline-note-external'));
  refresh();
 });
 new MutationObserver(changes=>{if(changes.some(c=>c.type==='attributes'||[...c.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('[data-save-agency],[data-project-count]')||n.querySelector?.('[data-save-agency],[data-project-count]')))))refresh();}).observe(document.getElementById('root')||document.getElementById('content'),{childList:true,subtree:true,attributes:true,attributeFilter:['data-save-agency','data-save-work']});
@@ -388,7 +394,7 @@ function setHelpSelection(expanded){
  if(content)content.hidden=!expanded;
  if(button){button.setAttribute('aria-expanded',String(expanded));button.textContent=expanded?'Свернуть подборку':'Посмотреть подборку (необязательно)';}
 }
-let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesPrompt='',wishesSkipped=0,wishesUnavailable=0,wishesAgencyOnly=false,wishesAgencyName='',wishesOpening=false;
+let wishesDialog=null,wishesTrigger=null,wishesBase='',wishesWorks=[],wishesGenerated='',wishesPrompt='',wishesSkipped=0,wishesUnavailable=0,wishesAgencyOnly=false,wishesAgencyName='',wishesOpening=false,wishesProject=null,wishesHadDraft=false;
 function syncWishesOptions(){
  const changed=wishesDialog.querySelector('#wishes-addition').value!==wishesGenerated,hasNotes=wishesWorks.some(item=>item.notes?.length);
  wishesDialog.querySelector('[data-wishes-notes]').disabled=changed||!hasNotes||Boolean(wishesPrompt);
@@ -420,7 +426,13 @@ function updateWishesPreview(message=''){
 async function openWishes(trigger){
  if(editingBlocked()||wishesOpening||wishesDialog?.open)return;wishesOpening=true;
  try{
+  if(!available){notice('Проект не сохранён','Разрешите хранение данных сайта, нажмите «Сохранить черновик» в проекте и затем добавьте пожелание.');return;}
+  const project=referenceProjectMarker();if(project===null){notice('Не удалось открыть пожелания','Проверьте доступ к сохранённому проекту и попробуйте снова.');return;}
+  const hadDraft=localStorage.getItem(KEY)!==null;
   const data=await getData();if(editingBlocked())return;
+  if(!available){notice('Проект не сохранён','Разрешите хранение данных сайта, нажмите «Сохранить черновик» в проекте и затем добавьте пожелание.');return;}
+  if(referenceProjectMarker()!==project||(hadDraft&&localStorage.getItem(KEY)===null)){notice('Проект изменился','Откройте пример в текущем проекте и попробуйте снова.');return;}
+  wishesHadDraft=hadDraft;draft=readDraft(localStorage);wishesProject=project;
   const agencySlug=trigger.dataset.addWishesAgency,batch=trigger.hasAttribute('data-add-wishes-selection');wishesPrompt=(trigger.dataset.addWishesPrompt||'').trim();
   wishesAgencyOnly=trigger.hasAttribute('data-add-wishes-agency-prompt');
   wishesAgencyName=wishesAgencyOnly?data.agencies.find(agency=>agency.slug===agencySlug)?.name||'':'';
@@ -452,10 +464,22 @@ async function openWishes(trigger){
    });
    wishesDialog.querySelector('[data-confirm-wishes]').addEventListener('click',async()=>{
     if(sending){wishesDialog.querySelector('[data-wishes-status]').textContent='Заявка отправляется. Дождитесь результата, затем добавьте пожелание.';return;}
-    if(wishesBase!==draft.brief.description){if(wishesDialog.querySelector('#wishes-addition').value===wishesGenerated)regenerateWishes();updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
-    const merged=updateWishesPreview();if(merged.result!=='added')return;const previousDescription=draft.brief.description;
-    try{draft=writeDraft(localStorage,updateBrief(draft,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
-    catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось сохранить пожелания. Разрешите хранение данных сайта и попробуйте снова.';return;}
+    if(!available){wishesDialog.querySelector('[data-wishes-status]').textContent='Проект не сохранён. Разрешите хранение данных сайта, закройте это окно и нажмите «Сохранить черновик» в проекте. Затем повторите добавление.';return;}
+    let current;
+    try{
+     const marker=referenceProjectMarker();
+     if(marker===null){wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось прочитать проект. Разрешите хранение данных сайта и попробуйте снова.';return;}
+     if(wishesProject===null||marker!==wishesProject||(wishesHadDraft&&localStorage.getItem(KEY)===null)){wishesDialog.close();notice('Проект изменился','Откройте пример в текущем проекте и попробуйте снова.');return;}
+     current=readDraft(localStorage);
+     const markerAfterRead=referenceProjectMarker();
+     if(markerAfterRead===null){wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось прочитать проект. Разрешите хранение данных сайта и попробуйте снова.';return;}
+     if(markerAfterRead!==wishesProject){wishesDialog.close();notice('Проект изменился','Откройте пример в текущем проекте и попробуйте снова.');return;}
+    }catch{wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось прочитать проект. Разрешите хранение данных сайта и попробуйте снова.';return;}
+    draft=current;
+    if(wishesBase!==current.brief.description){if(wishesDialog.querySelector('#wishes-addition').value===wishesGenerated)regenerateWishes();updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
+    const merged=updateWishesPreview();if(merged.result!=='added')return;const previousDescription=current.brief.description;
+    try{draft=writeDraft(localStorage,updateBrief(current,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
+    catch{document.getElementById('project-storage-note')?.removeAttribute('hidden');wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось сохранить пожелания. Разрешите хранение данных сайта и попробуйте снова.';return;}
     wishesUndo?.record(previousDescription,merged.text);await renderProject();wishesDialog.close();
     const status=document.getElementById('project-wishes-status');if(status){if(!wishesUndo)status.textContent='Пожелания дополнены. Заявка ещё не отправлена.';status.focus({preventScroll:true});}else if(wishesPrompt)notice('Вопрос добавлен в пожелания','Он сохранён в описании проекта. Заявка ещё не отправлена.');
    });
@@ -521,8 +545,10 @@ document.addEventListener('ea:reference-note-edit',event=>{
  if(sending){change.result={ok:false,code:'sending'};field.closest('.work-note-block')?.querySelector('[role="status"]')?.replaceChildren('Заявка отправляется. Дождитесь результата, затем измените заметку.');editingBlocked();return;}
  if(!available){change.result={ok:false,code:'unsaved'};return;}
  const status=field.closest('.work-note-block').querySelector('[role="status"]'),key=workNoteKey(agencySlug,workSlug);
- const syncFields=value=>document.querySelectorAll('[data-work-note]').forEach(other=>{if(other.dataset.workNote===agencySlug&&other.dataset.noteWork===workSlug&&other.value!==value)other.value=value;});
+ if(inlineNotes.guarded(key)){change.result={ok:false,code:'unsaved'};return;}
+ const syncFields=value=>document.querySelectorAll('[data-work-note]').forEach(other=>{if(other.dataset.workNote===agencySlug&&other.dataset.noteWork===workSlug){other.value=value;inlineNotes.resetBaseline(other,value);}});
  try{
+  if(!inlineNotes.check(field,change.expected)){change.result={ok:false,code:'unsaved'};return;}
   const current=readDraft(localStorage),currentText=current.workNotes[key]||'';
   if(currentText!==change.expected){
    draft=current;syncFields(currentText);if(status)status.textContent='Показан актуальный текст заметки.';
@@ -543,13 +569,13 @@ document.addEventListener('input',event=>{
  const field=event.target.closest('[data-work-note]');if(!field)return;
  const status=field.closest('.work-note-block').querySelector('[role="status"]');
  if(sending){field.value=draft.workNotes[workNoteKey(field.dataset.workNote,field.dataset.noteWork)]||'';status.textContent='Заявка отправляется. Дождитесь результата, затем измените заметку.';syncComparisonNote(field);return;}
- const next=updateWorkNote(draft,field.dataset.workNote,field.dataset.noteWork,field.value);
- try{draft=writeDraft(localStorage,next);available=true;status.textContent='Сохранено · '+field.value.length+' / 1000';}
- catch{draft=next;available=false;status.textContent='Не удалось сохранить. Не закрывайте страницу: разрешите хранение данных и повторите ввод.';}
+ if(!available){inlineNotes.defer(field);event.stopImmediatePropagation();return;}
+ try{const result=inlineNotes.input(field);if(result.current)draft=result.current;if(!result.ok){event.stopImmediatePropagation();return;}available=true;status.textContent='Сохранено · '+field.value.length+' / 1000';}
+ catch{available=false;event.stopImmediatePropagation();status.textContent='Не удалось сохранить. Не закрывайте страницу: разрешите хранение данных и повторите ввод.';}
  document.getElementById('project-storage-note').hidden=available;
  document.querySelectorAll('[data-work-note]').forEach(other=>{if(other!==field&&other.dataset.workNote===field.dataset.workNote&&other.dataset.noteWork===field.dataset.noteWork)other.value=field.value;});
  syncComparisonNote(field);
-});
+},true);
 function syncComparisonNote(field){
  if(!field?.matches?.('textarea[data-work-note]'))return;
  document.querySelectorAll('[data-comparison-note-text]').forEach(node=>{
@@ -626,7 +652,7 @@ setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=
  document.getElementById('project-storage-note')?.setAttribute('hidden','');
  const fields=[...document.querySelectorAll('textarea[data-work-note]')].filter(field=>field.dataset.workNote===agencySlug&&field.dataset.noteWork===workSlug);
  for(const field of fields){
-  field.value=value;
+  field.value=value;inlineNotes.resetBaseline(field,value);
   const status=field.closest('.work-note-block')?.querySelector('[role="status"]');if(status)status.textContent='Сохранено · '+value.length+' / 1000';
  }
  // Existing listeners update saved examples, note counters and clear/undo for this key.
@@ -646,7 +672,7 @@ setupProjectQuestionAnswer({getData,canEdit:()=>available&&!sending,onError:mess
  document.getElementById('project-storage-note')?.setAttribute('hidden','');
  const fields=[...document.querySelectorAll('textarea[data-work-note]')].filter(field=>field.dataset.workNote===agencySlug&&field.dataset.noteWork===workSlug);
  for(const field of fields){
-  field.value=value;
+  field.value=value;inlineNotes.resetBaseline(field,value);
   const status=field.closest('.work-note-block')?.querySelector('[role="status"]');if(status)status.textContent='Сохранено · '+value.length+' / 1000';
  }
  fields[0]?.dispatchEvent(new CustomEvent('ea:work-note-updated',{bubbles:true,detail:{agencySlug,workSlug,reapplyReferenceFilters:true}}));
@@ -666,6 +692,7 @@ setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onErro
 const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending,onExportCopy:projectExporter?.openSavedCopy});
 setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
 for(const type of ['ea:project-copy-restored','ea:project-started'])document.addEventListener(type,()=>{
+ try{inlineNotes.reconcile(readDraft(localStorage),{projectChanged:true});}catch{available=false;}
  removedAgency=null;lastReceipt=null;sendError='';selectionSendError=false;focusRequest=false;orderStatus.textContent='';
  document.getElementById('project-undo')?.setAttribute('hidden','');
  if(contactEditor){contactEditor.invalidate();contactEditor.resetFromProject({focus:false});}
