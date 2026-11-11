@@ -88,15 +88,24 @@ function eventIdeaSourceImagesMarkup(sources=[]){
  if(!images.length)return '';
  return `<div class="event-idea-source-images" aria-label="Фотографии исходных работ">${images.map(image=>`<figure><img src="${esc(image.src)}" alt="${esc(image.alt)}" loading="lazy" decoding="async"><figcaption>${esc(image.caption)}</figcaption></figure>`).join('')}</div>`;
 }
-function customerAnswersMarkup(sources=[]){
+function uniqueCustomerAnswers(sources=[]){
  const seen=new Set(),answers=[];
- for(const source of Array.isArray(sources)?sources:[])for(const item of source.customerAnswers||[]){
+ for(const source of Array.isArray(sources)?sources:[])for(const item of Array.isArray(source?.customerAnswers)?source.customerAnswers:[]){
+  if(typeof item?.question!=='string'||typeof item?.answer!=='string'||!item.question.trim()||!item.answer.trim())continue;
   const key=JSON.stringify([source.agencySlug,source.workSlug,item.question,item.answer]);
   if(seen.has(key))continue;seen.add(key);
-  if(answers.length<3)answers.push({agency:source.agencyName,work:source.workTitle,question:item.question,answer:item.answer});
+  if(answers.length<3)answers.push({agency:source.agencyName||source.agencySlug||'Агентство не указано',work:source.workTitle||source.workSlug||source.title||'Работа не указана',question:item.question,answer:item.answer});
  }
+ return answers;
+}
+function customerAnswersMarkup(sources=[]){
+ const answers=uniqueCustomerAnswers(sources);
  if(!answers.length)return '';
  return `<section class="event-idea-resonance event-idea-client-answers"><strong>Ответ клиента к работе из исходной заявки</strong>${answers.map(item=>`<div><p>${esc(item.agency)} · ${esc(item.work)}</p><p><b>Вопрос из карточки:</b> ${esc(item.question)}</p><p><b>Ответ клиента (дословно):</b><br>${esc(item.answer).replace(/\n/g,'<br>')}</p></div>`).join('')}<p class="small muted">Это слова клиента о примере, а не согласие на предложенный сценарий. Если ответ ограничивает или отвергает приём, учтите это перед обсуждением варианта.</p></section>`;
+}
+function customerAnswersText(sources=[]){
+ const answers=uniqueCustomerAnswers(sources);if(!answers.length)return '';
+ return ['Ответы клиента к исходным работам — дословно','Каждый ответ относится только к указанной работе и сам по себе не означает согласие переносить её приём в новое событие или соединять работы. Учитывайте ограничения из ответа при подготовке сценария.',...answers.map(item=>item.agency+' · '+item.work+'\nВопрос из карточки: '+item.question+'\nОтвет клиента (дословно): '+item.answer)].join('\n\n');
 }
 function timelineFor(journey,duration){
  const total=Number(duration);if(!Number.isInteger(total)||!Object.hasOwn(eventDurations,String(total)))return {items:[],duration:null,notice:''};
@@ -295,7 +304,7 @@ function worksFor(entry,catalog,receipt,references){
   if(role==='operator'&&operatorCount>=3||role==='client'&&clientCount>=3||role==='other'&&otherCount>=3)continue;
   const sharedNote=submittedWorkNote(fragments,work,agencySlug);
    const wishedReference=wishedByKey.get(workKey);
-   result.push({agencySlug,workSlug,agencyName:agency?.name||workTitle||'Команда из каталога',title:moment?workTitle+' · '+moment.label:workTitle,workTitle,summary:excerpt(summary,260),kind:moment?.label|| (detailIdea?'замысел или приём из подробной справки':'фрагмент описания проекта'),momentKey:moment?.key||'',momentLabel:moment?.label||'',image:safeAssetImage(work.preview)||safeAssetImage(work.thumb)||safeAssetImage(work.image)||safeAssetImage(work.reelImage)||safeAssetImage(work.gallery?.find(photo=>photo.type==='image')?.src)||'',url:safeUrl(work.details?.source)||safeUrl(work.source),selected,operatorSelected:Boolean(item?.operatorSelected),wished:Boolean(wishedReference),wishedQuestion:wishedReference?.wishedQuestion||'',sharedNote,sharedMotives:submittedWorkMotives(sharedNote),customerAnswers:submittedWorkAnswers(fragments,work,agencySlug),types:Array.isArray(work.types)?work.types.filter(value=>typeof value==='string'):[],occasions:Array.isArray(work.occasions)?work.occasions.filter(value=>typeof value==='string'):[]});
+   result.push({agencySlug,workSlug,agencyName:agency?.name||agencySlug||'Команда из каталога',title:moment?workTitle+' · '+moment.label:workTitle,workTitle,summary:excerpt(summary,260),kind:moment?.label|| (detailIdea?'замысел или приём из подробной справки':'фрагмент описания проекта'),momentKey:moment?.key||'',momentLabel:moment?.label||'',image:safeAssetImage(work.preview)||safeAssetImage(work.thumb)||safeAssetImage(work.image)||safeAssetImage(work.reelImage)||safeAssetImage(work.gallery?.find(photo=>photo.type==='image')?.src)||'',url:safeUrl(work.details?.source)||safeUrl(work.source),selected,operatorSelected:Boolean(item?.operatorSelected),wished:Boolean(wishedReference),wishedQuestion:wishedReference?.wishedQuestion||'',sharedNote,sharedMotives:submittedWorkMotives(sharedNote),customerAnswers:submittedWorkAnswers(fragments,work,agencySlug),types:Array.isArray(work.types)?work.types.filter(value=>typeof value==='string'):[],occasions:Array.isArray(work.occasions)?work.occasions.filter(value=>typeof value==='string'):[]});
   if(role==='operator')operatorCount++;else if(role==='client')clientCount++;else otherCount++;
  }
  return result;
@@ -819,6 +828,7 @@ export function eventIdeaText(item,commonChecks=''){
   (item.derivedFromReaction?'Исходный путь и следующий шаг: ':item.revisedFromFeedback?'Как продолжить: ':'Путь гостей: ')+item.journey,
    item.timeline?.length?'Черновой ритм программы · время от начала события · '+(eventDurations[String(item.timelineDuration)]||'общая длительность не указана')+':\n'+item.timeline.map(line=>'— '+line).join('\n')+'\n'+(item.timelineEdited?'После ручной правки проверьте сумму интервалов.':'Черновое распределение по смыслу этапов; уточнить с заказчиком, агентством и площадкой.'):item.timelineNotice?'Ритм не распределён автоматически: '+item.timelineNotice:'',
   'Почему может подойти: '+item.why,
+  customerAnswersText(item.sources),
   item.resonance?(item.revisedFromFeedback||item.clientReaction?'Отклик клиента: ':item.kind==='Развить элемент кейса'&&firstCustomerAnswer(item.sources?.[0])?'Контекст заявки: ':'Сигнал интереса: ')+item.resonance.label+'. '+item.resonance.text:'',
   !item.revisedFromFeedback&&!item.derivedFromReaction?'Сдержанный вариант: '+scopes.compact:'',
   !item.revisedFromFeedback&&!item.derivedFromReaction?'Расширенный вариант: '+scopes.extended:'',
