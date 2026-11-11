@@ -24,12 +24,19 @@ export function connectNativePhotoReel(frame, handlers, createNative, {projects,
       image.decode().catch(() => {});
     }
   }
+  function publishScene(index) {
+    const picture = pictures[index];
+    if (!picture) return;
+    const image = (small.matches && picture.dataset.srcMobile) || picture.dataset.srcDesktop || picture.getAttribute('src') || '';
+    window.dispatchEvent(new CustomEvent('ea:work', {detail:{slug:projects[index]?.slug || '', image}}));
+  }
   function focus(slug) {
     const index = projects.findIndex(project => project.slug === slug);
     if (index >= 0) {
       current = index;
       frame.dataset.photoIndex = String(index);
       warm();
+      publishScene(index);
     }
     handlers.current.onFocus?.(slug);
   }
@@ -80,6 +87,7 @@ export function connectNativePhotoReel(frame, handlers, createNative, {projects,
         started = true;
         measureCaption(true);
         warm();
+        publishScene(current);
         if (skipHomeEntrance(projects[current].slug)) entrance.finish();
         else entrance.reveal(pictures[current]);
       }
