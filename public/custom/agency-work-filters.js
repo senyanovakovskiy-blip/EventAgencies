@@ -1,5 +1,31 @@
 import {saveWorkReferences} from './work-references.js';
  const content=document.querySelector('.agency-content'),grid=content?.querySelector('.catalog-grid');
+function improveAgencyWithoutWorks(){
+ const layout=content?.closest('.agency-layout');
+ if(!layout||content.querySelector('.work-card'))return;
+ const formats=[...layout.querySelectorAll('.agency-formats span')].map(node=>node.textContent.trim()).filter(Boolean),agencyName=layout.querySelector('.agency-aside h1')?.textContent.trim()||'команды';
+ const profile=layout.querySelector('.agency-intro'),descriptions=profile?.querySelectorAll('.agency-description');
+ if(descriptions?.[0])descriptions[0].textContent=formats.length?`В профиле указаны направления: ${formats.join(' / ')}.`:'Направления команды пока не указаны.';
+ if(descriptions?.[1])descriptions[1].textContent='Опубликованных работ команды в каталоге пока нет.';
+ const fit=profile?.querySelector('.client-fit'),fitLabel=fit?.querySelector('span');
+ if(fit&&fitLabel)fit.replaceChildren(fitLabel,document.createTextNode(' Попросите показать завершённый проект в похожем формате и уточните роль команды и масштаб работ.'));
+ const empty=content.querySelector('.empty-state');
+ if(empty){const heading=empty.querySelector('h2'),message=empty.querySelector('p');if(heading)heading.textContent='Опубликованных работ пока нет.';if(message)message.textContent='Чтобы сопоставить опыт с вашей задачей, запросите примеры, роль команды и масштаб. Вопросы ниже можно сохранить в пожелания проекта.';}
+ const discussion=content.querySelector('.agency-discussion');
+ if(!discussion)return;
+ const heading=discussion.querySelector('h2'),intro=discussion.querySelector(':scope > p'),list=discussion.querySelector('ol');
+ if(heading)heading.textContent='Проверить, подходит ли команда';
+ if(intro)intro.textContent='Работы ещё не опубликованы в каталоге. Эти вопросы помогут запросить примеры и уточнить роль команды; их можно изменить перед сохранением в пожелания.';
+ if(!list)return;
+ const focus=formats.length?formats.join(' / '):'направления, указанного в профиле';
+ const prompts=[
+  `Покажите 1–2 завершённых проекта по направлениям «${focus}» и уточните, что именно делала команда.`,
+  'Есть ли пример с похожей аудиторией и масштабом? Можно посмотреть описание проекта, фотографии и источник?',
+  'Какие части моего события команда готова взять на себя и что нужно уточнить для оценки сроков и бюджета?'
+ ];
+ list.replaceChildren(...prompts.map(prompt=>{const item=document.createElement('li'),text=document.createElement('p'),button=document.createElement('button');text.textContent=prompt;button.type='button';button.textContent='Добавить вопрос в пожелания…';button.dataset.addWishesAgencyPrompt='true';button.dataset.addWishesAgency=layout.dataset.agency||'';button.dataset.addWishesPrompt=prompt;button.setAttribute('aria-label',`Добавить в пожелания вопрос к команде «${agencyName}»: ${prompt}`);item.append(text,button);return item;}));
+}
+improveAgencyWithoutWorks();
 if(content&&grid){
  const cards=[...grid.querySelectorAll('.work-card')];
  if(cards.length>=4){
