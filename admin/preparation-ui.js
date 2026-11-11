@@ -17,6 +17,18 @@ export function ideaReactionControls(button){
  const card=button?.closest('.event-idea-card');
  return {detailField:card?.querySelector('[data-event-idea-reaction-detail]')||null,noteField:card?.querySelector('[data-event-idea-reaction-note]')||null,transferStatus:card?.querySelector('[data-event-idea-feedback-transfer-status]')||null};
 }
+export function openOriginalEventIdea(button,state,panel,signature){
+ if(!state||state.signature!==signature)return false;
+ const current=button?.closest('[data-idea-card-index]'),from=state?.ideas[Number(current?.dataset.ideaCardIndex)],index=Number(button?.dataset.openOriginalIdea),original=state?.ideas[index],target=panel?.querySelector(`[data-idea-card-index="${index}"]`);
+ if(!from?.revisedFromFeedback?.clarification||from.feedbackOriginal!==original||!target)return false;
+ const details=target.querySelector('.event-idea-feedback'),select=details?.querySelector('[data-event-idea-reaction-detail]'),note=details?.querySelector('[data-event-idea-reaction-note]'),status=details?.querySelector('[data-event-idea-feedback-transfer-status]');if(!details||!select||!note||!status)return false;
+ const phrase=from.revisedFromFeedback.note;
+ const transferable=typeof phrase==='string'&&phrase.length<=240&&phrase.length>0&&phrase===phrase.replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim();
+ if(note.value.length)status.textContent='Заметка уже заполнена; введённый текст сохранён без изменений. При необходимости перенесите фразу вручную.';
+ else if(transferable){note.value=phrase;status.textContent='Записанная фраза перенесена. Выберите категорию только после уточнения у заказчика и отметьте его реакцию.';}
+ else status.textContent='Не удалось перенести фразу без изменений. Добавьте вручную точный фрагмент до 240 символов без квадратных скобок и переносов.';
+ details.open=true;target.scrollIntoView({block:'center'});select.focus({preventScroll:true});return true;
+}
 export function selectedFeedbackPhrase(value,start,end){
  const source=typeof value==='string'?value:'';
  if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start<0||end>source.length||end<=start)return {error:'Сначала выделите в записи разговора слова клиента, относящиеся к этому варианту.'};
@@ -227,7 +239,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    if(!state)continue;
     const stale=state.signature!==eventIdeasSignature(ideaInput(card,entries));panel.dataset.stale=String(stale);
     if(stale&&(state.comparison.size||state.combination)){state.comparison.clear();state.combination=null;state.combinationBase=null;const comparisonHost=panel.querySelector('[data-event-idea-comparison]');if(comparisonHost){comparisonHost.hidden=true;comparisonHost.innerHTML='';}for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]')){button.setAttribute('aria-pressed','false');button.textContent='Сравнить вариант';}}
-   for(const button of panel.querySelectorAll('[data-append-event-idea],[data-append-event-idea-comparison],[data-append-event-idea-combination],[data-copy-event-idea],[data-copy-event-idea-quick],[data-append-event-idea-pitch],[data-append-event-idea-reply],[data-append-event-idea-scale],[data-record-event-idea-response],[data-use-selected-event-idea-feedback],[data-toggle-event-idea-compare],[data-suggest-event-idea-combination]'))button.disabled=form.dataset.busy==='true'||stale||(button.matches('[data-suggest-event-idea-combination]')&&Boolean(state.combination));
+   for(const button of panel.querySelectorAll('[data-append-event-idea],[data-append-event-idea-comparison],[data-append-event-idea-combination],[data-copy-event-idea],[data-copy-event-idea-quick],[data-append-event-idea-pitch],[data-append-event-idea-reply],[data-append-event-idea-scale],[data-record-event-idea-response],[data-use-selected-event-idea-feedback],[data-open-original-idea],[data-toggle-event-idea-compare],[data-suggest-event-idea-combination]'))button.disabled=form.dataset.busy==='true'||stale||(button.matches('[data-suggest-event-idea-combination]')&&Boolean(state.combination));
     for(const picker of panel.querySelectorAll('[data-event-idea-combination-base]'))picker.disabled=form.dataset.busy==='true'||stale;
    for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]'))button.disabled=form.dataset.busy==='true'||stale||(!state.comparison.has(Number(button.dataset.toggleEventIdeaCompare))&&state.comparison.size>=3);
       status.textContent=stale?'Бриф, аудитория, путь, длительность, тема идеи или реакция заказчика изменились. Пересоберите подборку перед добавлением в сценарий.':state.message;
@@ -313,6 +325,13 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
     for(const field of panel.querySelectorAll('[data-event-idea-pitch]')){const idea=state.ideas[Number(field.dataset.eventIdeaPitch)];if(!idea)continue;const currentKey=ideaPitchKey({...pitchContext(card),key:eventIdeaKey(idea)});if(currentKey===key||idea.pitchRestoredFromKey===key&&!pitchRows.has(currentKey)){field.value=eventIdeaPitchText(idea);delete idea.pitchRestoredFromKey;}}
    }
    pitchRows.delete(key);syncPitchArchive(removePitch.closest('[data-preparation-card]'));form.dispatchEvent(new Event('input',{bubbles:true}));return;
+  }
+  const openOriginal=event.target.closest('[data-open-original-idea]');
+  if(openOriginal&&form.dataset.busy!=='true'){
+   const card=openOriginal.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),state=panel&&eventIdeaStates.get(panel),status=panel?.querySelector('[data-event-ideas-status]');if(!card||!panel||!status)return;
+   const entries=contexts(),signature=eventIdeasSignature(ideaInput(card,entries));
+   if(!state||state.signature!==signature){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново перед переносом фразы.';return;}
+   openOriginalEventIdea(openOriginal,state,panel,signature);return;
   }
   const useSelectedFeedback=event.target.closest('[data-use-selected-event-idea-feedback]');
   if(useSelectedFeedback&&form.dataset.busy!=='true'){
