@@ -12,7 +12,8 @@ export function caseBody(p,agencies,photoSizes={}){
  const attendance=typeof p.guestLabel==='string'&&/\d/u.test(p.guestLabel)?p.guestLabel:'';
  const eventDate=String(p.eventDate||'').trim(),hasEventDate=Boolean(eventDate&&!/^(?:—|дата не указана)$/iu.test(eventDate)),yearOnly=hasEventDate&&/^\d{4}$/u.test(eventDate);
  const dateFact=hasEventDate?[yearOnly?'Год события':'Дата',eventDate]:['Дата',''];
- const facts=[['Формат',p.format||p.category],['Город события',p.eventCity],dateFact,['Место',text.place||p.industry],['Масштаб проекта',attendance]].filter(([,v])=>v&&v!=='—'&&v!=='Место не указано');
+ const place=typeof text.place==='string'?text.place.trim():'';
+ const facts=[['Формат',p.format||p.category],['Город события',p.eventCity],dateFact,[place?'Место':'Контекст из каталога',place||p.industry],['Масштаб проекта',attendance]].filter(([,v])=>v&&v!=='—'&&v!=='Место не указано');
   const missingFacts=[!p.format&&!p.category?'формате события':'',!p.eventCity?'городе события':'',!hasEventDate||yearOnly?'точной дате':'',!attendance?'числе гостей':''].filter(Boolean),factsNote=missingFacts.length?`<p class="case-facts-note">В опубликованном описании отсутствуют сведения о ${missingFacts.join(', ')}. При необходимости их можно уточнить у команды.</p>`:'';
  const participation=text.participation||p.role||'Состав задач команды в каталоге пока не указан.';
  const sourceLinks=[...(p.source?[{url:p.source,label:p.kind==='case'?'Источник кейса':'Источник материалов'}]:[]),...(Array.isArray(p.sources)?p.sources:[])].filter(s=>typeof s.url==='string'&&/^https?:\/\//i.test(s.url)&&typeof s.label==='string'&&s.label.trim());
