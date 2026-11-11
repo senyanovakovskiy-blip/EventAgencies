@@ -4988,22 +4988,31 @@
       "slug": "portfolio-avm-media-d9af9bf",
       "title": "VII церемония премии «ТЭФИ-KIDS»",
       "fullTitle": "VII церемония премии «ТЭФИ-KIDS»",
-      "year": "—",
-      "eventDate": "Дата не указана",
+      "year": "2025",
+      "eventDate": "27 октября 2025 года",
       "category": "Портфолио",
-      "format": "Работа из портфолио",
+      "format": "Церемония вручения национальной премии",
       "client": "AVM Media",
       "agencySlug": "avm-media",
       "agencySlugs": [
         "avm-media"
       ],
       "agencyUrl": "/agency/avm-media",
-      "types": [],
-      "role": "",
-      "industry": "Место не указано",
-      "description": "Работа из портфолио AVM Media. Роль команды — в первоисточнике.",
-      "seoDescription": "Работа из портфолио AVM Media. Роль команды — в первоисточнике.",
+      "types": [
+        "public",
+        "culture"
+      ],
+      "role": "AVM Media включает церемонию в портфолио; доступные публикации не раскрывают конкретную зону ответственности команды.",
+      "industry": "Детское, юношеское и семейное кино и телевидение",
+      "description": "В портфолио AVM Media представлены фотографии VII церемонии премии «ТЭФИ-KIDS». Анонс агентства от 24 октября 2025 года указывал 259 заявок со всей страны и 12 номинаций; церемонию планировали провести 27 октября в театре Et Cetera. Ведущими были объявлены Александр Олешко и Нонна Гришаева, а музыкальные выступления и встреча с артистами старых детских киносказок — заявлены в программе.",
+      "seoDescription": "VII церемония премии «ТЭФИ-KIDS» в портфолио AVM Media: 259 заявок, 12 номинаций и анонсированная программа награждения 2025 года.",
       "source": "https://avmmedia.ru/projects/vii-czeremoniya-nagrazhdeniya-premii-tefi-kids/",
+      "sources": [
+        {
+          "label": "AVM Media · официальный анонс VII «ТЭФИ-KIDS» от 24 октября 2025 года",
+          "url": "https://avmmedia.ru/news/czeremoniya-nagrazhdeniya-laureatov-premii-tefi-kids-2025/"
+        }
+      ],
       "image": "/custom/library/714d7d087a.webp",
       "imageMobile": "/custom/library/714d7d087a.webp",
       "ogImage": "/custom/library/714d7d087a.webp",
