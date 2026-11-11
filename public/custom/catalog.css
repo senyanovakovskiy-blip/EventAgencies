@@ -47,7 +47,7 @@
 .company-card .card-meta{flex-wrap:wrap}
 @media(max-width:760px){.catalog-toolbar{flex-wrap:wrap}.catalog-toolbar-controls{width:100%;justify-content:space-between}.catalog-sort{justify-content:space-between;flex:1 1 100%}.catalog-sort select{max-width:68%;min-width:0}}
 .agency-heading-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:6px 18px}.agency-heading-actions .text-link{align-self:auto;white-space:normal}
-.catalog-no-photo-group{grid-column:1/-1;min-width:0}.catalog-no-photo-group>summary{cursor:pointer;padding:16px 0;border-block:1px solid var(--line);font-size:13px;line-height:1.5;color:var(--muted)}.catalog-no-photo-group>summary:focus-visible{outline:2px solid var(--ink);outline-offset:4px}.catalog-no-photo-group>p{margin:14px 0;color:var(--muted);font-size:12px;line-height:1.5}.catalog-no-photo-group>.catalog-grid{margin:16px 0}
+.catalog-no-photo-group,.catalog-no-work-group{grid-column:1/-1;min-width:0}.catalog-no-photo-group>summary,.catalog-no-work-group>summary{cursor:pointer;padding:16px 0;border-block:1px solid var(--line);font-size:13px;line-height:1.5;color:var(--muted)}.catalog-no-photo-group>summary:focus-visible,.catalog-no-work-group>summary:focus-visible{outline:2px solid var(--ink);outline-offset:4px}.catalog-no-photo-group>p,.catalog-no-work-group>p{margin:14px 0;color:var(--muted);font-size:12px;line-height:1.5}.catalog-no-photo-group>.catalog-grid,.catalog-no-work-group>.catalog-grid{margin:16px 0}
 .catalog-filter-help{margin:-6px 0 12px;font-size:12px;line-height:1.5;color:var(--muted)}
 
 .agency-share-tools{display:grid;gap:6px;max-width:320px;margin:14px 0 24px}

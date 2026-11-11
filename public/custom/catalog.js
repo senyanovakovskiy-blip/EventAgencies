@@ -80,6 +80,12 @@ async function startCatalog(){
   const count=textWorks.length,label=plural(count,['работа без фотографий','работы без фотографий','работ без фотографий']);
   return photoCards+`<details class="catalog-no-photo-group"><summary>Показать ещё ${count} ${label}</summary><p>Эти работы доступны в каталоге без фотографий.</p><div class="catalog-grid">${textCards}</div></details>`;
  }
+  function companyResultsMarkup(items,terms){
+   const withWorks=items.filter(item=>Array.isArray(item.works)&&item.works.length),withoutWorks=items.filter(item=>!Array.isArray(item.works)||!item.works.length),workCards=withWorks.map(item=>companyCard(item,terms)).join(''),emptyCards=withoutWorks.map(item=>companyCard(item,terms)).join('');
+   if(!withWorks.length||!withoutWorks.length)return workCards+emptyCards;
+   const count=withoutWorks.length,label=plural(count,['компанию без добавленных работ','компании без добавленных работ','компаний без добавленных работ']);
+   return workCards+`<details class="catalog-no-work-group"><summary>Показать ещё ${count} ${label}</summary><p>Профили доступны, но примеры работ пока не опубликованы в каталоге.</p><div class="catalog-grid">${emptyCards}</div></details>`;
+  }
  function draw(write=true){
   syncCityOption();
   const terms=searchTerms(search.value),filters={query:terms,city:city.value,format:format.value,kind:kind.value,occasion:occasion.value,participation:participation.checked,photos:photos.checked,scope};let items;
@@ -89,7 +95,7 @@ async function startCatalog(){
     else if(sort.value==='photos')items.sort((a,b)=>(b.photoCount||0)-(a.photoCount||0)||(b.works?.length||0)-(a.works?.length||0)||a.name.localeCompare(b.name,'ru'));
    }
    else{items=data.projects.filter(p=>!p.duplicateOf&&matcher.work(p,filters));const yearOf=work=>Number(String(work.year||'').match(/\d{4}/)?.[0])||0,photoTie=(first,second)=>Number(second.hasPhotos)-Number(first.hasPhotos)||(second.photoCount||0)-(first.photoCount||0);if(projectSort.value==='title')items.sort((first,second)=>first.fullTitle.localeCompare(second.fullTitle,'ru')||photoTie(first,second));else if(projectSort.value==='recent')items.sort((first,second)=>{const a=yearOf(first),b=yearOf(second);return a&&b?b-a||photoTie(first,second):a?-1:b?1:photoTie(first,second);});else if(projectSort.value==='oldest')items.sort((first,second)=>{const a=yearOf(first),b=yearOf(second);return a&&b?a-b||photoTie(first,second):a?-1:b?1:photoTie(first,second);});else items.sort(photoTie);}
-   const cards=view==='companies'?items.map(item=>companyCard(item,terms)).join(''):projectResultsMarkup(items,terms);
+    const cards=view==='companies'?companyResultsMarkup(items,terms):projectResultsMarkup(items,terms);
    results.innerHTML=items.length?cards:empty();
   results.querySelectorAll('.work-cover:not(.is-empty)').forEach(cover=>{
    const photo=cover.querySelector('img');if(!photo)return;
