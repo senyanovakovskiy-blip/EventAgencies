@@ -8,6 +8,7 @@ import { createCloudStore, digest } from '../cloud/store.mjs';
 import { emptyDraft } from '../public/custom/project-store.js';
 import { recommendationKey, replyKey } from '../admin/manual-model.js';
 import { emptyTeam, briefFields, briefConfirmed, evidenceCurrent } from '../admin/workflow-model.js';
+import {emptyPreparation} from '../admin/preparation-model.js';
 
 // Execute the generated migration and the production SQL against a small D1
 // interface adapter. BEGIN is confined to this adapter to emulate D1 batch().
@@ -139,13 +140,43 @@ test('recommendation validation, reply freshness and status timestamps', async t
   let record = await store.update(1, update);assert.equal(record.recommendations[0].name, 'ARS COM');
   const statusTime = record.statusChangedAt;
   record = await store.update(1, { ...update, revision: record.revision, note: 'Internal' });assert.equal(record.statusChangedAt, statusTime);
-  const ready = { status: 'prepared', note: record.note, revision: record.revision, replyText: 'Ответ с ручными правками', replyBasis: await digest(replyKey([rec], record.workflow.brief, record.workflow.teams)) };
+   const ready = { status: 'prepared', note: record.note, revision: record.revision, replyText: 'Ответ с ручными правками', replyBasis: await digest(replyKey([rec], record.workflow.brief, record.workflow.teams, record.workflow)) };
   record = await store.update(1, ready);assert.equal(record.replyStale, false);
   const repeated = await store.update(1, ready);assert.equal(repeated.revision, record.revision);assert.equal(repeated.history.length, record.history.length);
   record = await store.update(1, { ...ready, revision: record.revision, recommendations: [{ ...rec, questions: 'Уточнить площадку' }] });
   assert.equal(record.replyStale, true);assert.equal(record.replyText, ready.replyText);assert.deepEqual(record.receipt, original.receipt);
   const reopened = createCloudStore(db, 'owner-a');assert.deepEqual(await reopened.detail(1), record);
   await assert.rejects(store.update(1, { ...ready, note: 'Stale overwrite' }), { code: 'revision_conflict' });
+});
+
+test('client discussion and idea changes invalidate a reviewed reply, including old fingerprints', async t => {
+  const db=database(t),store=createCloudStore(db,'owner-a');await store.save(randomUUID(),payload());
+  let record=await store.detail(1);
+  const edit=async patch=>{record=await store.update(1,{status:record.status,note:record.note,revision:record.revision,...patch});};
+  const oldKey=JSON.stringify({recommendations:[],brief:Object.fromEntries([...Object.keys(briefFields),'confirmed','version','confirmedVersion'].map(key=>[key,record.workflow.brief[key]??null])),teams:[]});
+  await edit({replyText:'Черновик клиенту',replyBasis:await digest(oldKey)});
+  assert.equal(record.replyStale,true,'A version-one basis needs a fresh review even without idea material');
+  await edit({replyBasis:await digest(replyKey([],record.workflow.brief,[],record.workflow))});
+  assert.equal(record.replyStale,false);
+  const preparation={...emptyPreparation('ars-com','positive-hack-days'),clientFeedback:'Клиент попросил меньше конкурсов'};
+  await edit({workflow:{...record.workflow,preparation:[preparation]}});
+  assert.equal(record.replyStale,true,'A new discussion note must invalidate the reply');
+  await edit({replyBasis:await digest(replyKey([],record.workflow.brief,[],record.workflow))});
+  assert.equal(record.replyStale,false);
+  await edit({workflow:{...record.workflow,preparation:[{...preparation,scenario:'Обновлённый сценарий'}]}});
+  assert.equal(record.replyStale,true,'A changed idea scenario must invalidate the reply');
+});
+
+test('reply reviewed before save stays current after server trims idea and brief text',async t=>{
+ const db=database(t),store=createCloudStore(db,'owner-a');await store.save(randomUUID(),payload());
+ const record=await store.detail(1),preparation={...emptyPreparation('ars-com','positive-hack-days'),scenario:'  Меньше конкурсов  ',clientFeedback:'  Клиент просит свободное общение  '};
+ const workflow={...record.workflow,brief:{...record.workflow.brief,city:'  '+record.workflow.brief.city+'  '},preparation:[preparation],ideaDraft:'  Камерный вечер  ',ideaFeedback:'  Обсудить с заказчиком  '};
+ const replyBasis=await digest(replyKey([],workflow.brief,workflow.teams,workflow));
+ const saved=await store.update(1,{status:record.status,note:record.note,revision:record.revision,workflow,replyText:'Предлагаю камерный вечер',replyBasis});
+ assert.equal(saved.workflow.preparation[0].clientFeedback,'Клиент просит свободное общение');
+ assert.equal(saved.workflow.ideaDraft,'Камерный вечер');
+ assert.equal(saved.workflow.brief.city,record.workflow.brief.city);
+ assert.equal(saved.replyStale,false);
 });
 
 test('concurrent admin changes use atomic revision guard and one matching history entry', async t => {
@@ -239,7 +270,7 @@ test('workflow progresses from refined brief through introduction and conversati
 test('changed brief invalidates confirmation and prior evidence; explicit renewal enables introduction', async t => {
   const f = await workflowFixture(t);await confirmedBrief(f);await interestedTeam(f);
   const oldVersion = f.record.workflow.brief.version;
-  await f.edit(() => {}, { replyText: 'Согласованные условия', replyBasis: await digest(replyKey(f.record.recommendations, f.record.workflow.brief, f.record.workflow.teams)) });
+  await f.edit(() => {}, { replyText: 'Согласованные условия', replyBasis: await digest(replyKey(f.record.recommendations, f.record.workflow.brief, f.record.workflow.teams, f.record.workflow)) });
   assert.equal(f.record.replyStale, false);
   await f.edit(w => { w.brief.budget = 'Новый бюджет';w.brief.version = 999;w.brief.confirmedVersion = 999; });
   assert.equal(f.record.workflow.brief.version, oldVersion + 1);assert.equal(briefConfirmed(f.record.workflow.brief), false);assert.equal(f.record.replyStale, true);

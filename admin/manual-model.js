@@ -1,11 +1,12 @@
-import {briefFields,briefConfirmed,evidenceCurrent} from './workflow-model.js';
+import {briefFields,briefConfirmed,evidenceCurrent,normalizeIdeaPitches,normalizeIdeaSettings,normalizeIdeaSources} from './workflow-model.js';
+import {preparationContentKey} from './preparation-model.js';
 export const statusLabels={new:'Новая',working:'В работе',clarify:'Ожидаем уточнений',prepared:'Подборка подготовлена',closed:'Закрыта'};
 export const historyStatusLabel=status=>statusLabels[status]||(status==='done'?'Завершена (прежний статус)':status);
 export const recommendationInputs=items=>items.map(r=>({agencySlug:r.agencySlug,workSlug:r.workSlug||null,reason:r.reason||'',questions:r.questions||''}));
 export const recommendationKey=items=>JSON.stringify(recommendationInputs(items));
-export const replyKey=(items,brief,teams=[])=>JSON.stringify({recommendations:recommendationInputs(items),brief:brief?Object.fromEntries([...Object.keys(briefFields),'confirmed','version','confirmedVersion'].map(k=>[k,brief[k]??null])):null,teams:teams.map(t=>Object.fromEntries(['agencySlug','response','responseBriefVersion','customerConsent','customerConsentBriefVersion','agencyConsent','agencyConsentBriefVersion','contactsShared','sharedBriefVersion','conversationHeld'].map(k=>[k,t[k]??null])))});
-export async function recommendationFingerprint(items,brief,teams=[]){
- const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(replyKey(items,brief,teams)));
+export const replyKey=(items,brief,teams=[],workflow={})=>JSON.stringify({version:2,recommendations:recommendationInputs(items),brief:brief?Object.fromEntries([...Object.keys(briefFields),'confirmed','version','confirmedVersion'].map(k=>[k,typeof brief[k]==='string'&&Object.hasOwn(briefFields,k)?brief[k].trim():brief[k]??null])):null,teams:teams.map(t=>Object.fromEntries(['agencySlug','response','responseBriefVersion','customerConsent','customerConsentBriefVersion','agencyConsent','agencyConsentBriefVersion','contactsShared','sharedBriefVersion','conversationHeld'].map(k=>[k,t[k]??null]))),ideaMaterial:{preparation:preparationContentKey(workflow.preparation),ideaDraft:typeof workflow.ideaDraft==='string'?workflow.ideaDraft.trim():'',ideaFeedback:typeof workflow.ideaFeedback==='string'?workflow.ideaFeedback.trim():'',ideaSources:normalizeIdeaSources(workflow.ideaSources),ideaPitches:normalizeIdeaPitches(workflow.ideaPitches),ideaSettings:normalizeIdeaSettings(workflow.ideaSettings)}});
+export async function recommendationFingerprint(items,brief,teams=[],workflow={}){
+ const bytes=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(replyKey(items,brief,teams,workflow)));
  return Array.from(new Uint8Array(bytes),v=>v.toString(16).padStart(2,'0')).join('');
 }
 export function customerTeamStatus(t,b){

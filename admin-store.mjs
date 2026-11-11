@@ -46,7 +46,7 @@ export function createAdminStore(db,receipt,accessFile,catalog,operatorSources={
   if(!row)throw problem(404,'not_found');
   const recommendations=JSON.parse(row.recommendations_json);
   const storedWorkflow=normalizeWorkflow(JSON.parse(row.workflow_json),receipt(row).brief);
-  return {workflow:storedWorkflow,recordId:row.id,receipt:receipt(row),status:row.status,note:row.note,revision:row.revision,updatedAt:row.updated_at,statusChangedAt:row.status_changed_at||row.created_at,closureReason:row.closure_reason,recommendations,replyText:row.reply_text,replyBasis:row.reply_basis,replyStale:Boolean(row.reply_text&&row.reply_basis!==hash(replyKey(recommendations,storedWorkflow.brief,storedWorkflow.teams))),history:db.prepare('SELECT created_at AS createdAt,actor,status,note,details_json FROM inquiry_history WHERE inquiry_id=? ORDER BY id DESC').all(id).map(({details_json,...h})=>({...h,details:JSON.parse(details_json)}))};
+  return {workflow:storedWorkflow,recordId:row.id,receipt:receipt(row),status:row.status,note:row.note,revision:row.revision,updatedAt:row.updated_at,statusChangedAt:row.status_changed_at||row.created_at,closureReason:row.closure_reason,recommendations,replyText:row.reply_text,replyBasis:row.reply_basis,replyStale:Boolean(row.reply_text&&row.reply_basis!==hash(replyKey(recommendations,storedWorkflow.brief,storedWorkflow.teams,storedWorkflow))),history:db.prepare('SELECT created_at AS createdAt,actor,status,note,details_json FROM inquiry_history WHERE inquiry_id=? ORDER BY id DESC').all(id).map(({details_json,...h})=>({...h,details:JSON.parse(details_json)}))};
  };
  const resolveRecommendations=value=>{
   if(!Array.isArray(value)||value.length>3)throw problem(400,'invalid_recommendations');

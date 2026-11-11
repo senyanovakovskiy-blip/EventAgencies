@@ -35,7 +35,7 @@ export function createCloudStore(binding, ownerId, catalog = catalogData, operat
       workflow, recordId: row.id, receipt: receipt(row), status: row.status, note: row.note,
       revision: row.revision, updatedAt: row.updated_at, statusChangedAt: row.status_changed_at,
       closureReason: row.closure_reason, recommendations, replyText: row.reply_text, replyBasis: row.reply_basis,
-      replyStale: Boolean(row.reply_text && row.reply_basis !== await digest(replyKey(recommendations, workflow.brief, workflow.teams))),
+      replyStale: Boolean(row.reply_text && row.reply_basis !== await digest(replyKey(recommendations, workflow.brief, workflow.teams, workflow))),
       history: history.map(({ details_json, ...item }) => ({ ...item, details: JSON.parse(details_json) })),
     };
   };
