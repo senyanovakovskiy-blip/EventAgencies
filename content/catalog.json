@@ -8065,9 +8065,15 @@
       ],
       "role": "Организация фестиваля Reebok с соревнованиями, мастер-классами и концертом Method Man — по данным Best Practice.",
       "industry": "Москва, парк Горького",
-      "description": "StreetFire собрал в Парке Горького соревнования и мастер-классы по граффити, диджеингу, уличным танцам, стритболу и воркауту. В программе были международные гости, а вечер завершил хип-хоп-концерт с Method Man, подготовленный совместно с телеканалом A-one. По данным Best Practice, дневную программу посетили 45 000 зрителей, концерт — 50 000; агентство не уточняет, пересекалась ли аудитория.",
-      "seoDescription": "StreetFire для Reebok в Парке Горького: уличные соревнования и мастер-классы, концерт Method Man. 45 000 зрителей дневной программы и 50 000 на концерте по данным Best Practice.",
+      "description": "В Парке Горького StreetFire превратил часть программы Дня города в открытую сцену стрит-культуры: граффити и диджейские баттлы, танцы, стритбол, воркаут и мастер-классы завершились концертом Method Man в партнёрстве с A-one. По данным Best Practice, в соревнованиях участвовали более 1 000 человек; дневную программу увидели 45 000 зрителей, концерт — 50 000. Эти аудитории не суммируются. Агентство также указывает 50+ публикаций в СМИ и 1,2 млн лайков в соцсетях.",
+      "seoDescription": "StreetFire — фестиваль стрит-культуры Reebok в Парке Горького: баттлы, мастер-классы и концерт Method Man. Best Practice указывает 1 000+ участников соревнований, 45 000 зрителей дневной программы, 50 000 концерта, 50+ публикаций и 1,2 млн лайков.",
       "source": "https://bepractice.ru/projects/festival-streetfire/",
+      "sources": [
+        {
+          "url": "https://aonehiphop.ru/news/plany_na_vyhodnye_festival_ulichnyh_kultur_streetfire/",
+          "label": "A-One: программа StreetFire"
+        }
+      ],
       "image": "/custom/library/best-practice-streetfire-01-stage.webp",
       "imageMobile": "/custom/library/best-practice-streetfire-04-workout.webp",
       "ogImage": "/custom/library/best-practice-streetfire-01-stage.webp",
@@ -8107,7 +8113,7 @@
       "reelTitle": "StreetFire",
       "featured": false,
       "eventCity": "Москва",
-      "guestLabel": "45 000 зрителей дневной программы и 50 000 концерта; аудитории не суммируются",
+      "guestLabel": "1 000+ участников соревнований; 45 000 зрителей дня и 50 000 концерта, аудитории отдельно",
       "occasions": [],
       "reelImage": "/custom/library/best-practice-streetfire-01-stage.webp",
       "reelMobile": "/custom/library/best-practice-streetfire-04-workout.webp",
