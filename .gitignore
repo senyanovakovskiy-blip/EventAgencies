@@ -45,7 +45,10 @@ yarn-error.log*
 
 # Workspace scaffolding and publication archives
 /.agents/
-/.codex/
+/.codex/*
+!/.codex/agents/
+/.codex/agents/*
+!/.codex/agents/*.toml
 /outputs/
 /work/
 
