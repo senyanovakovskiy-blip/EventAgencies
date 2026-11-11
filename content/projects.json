@@ -1676,19 +1676,21 @@
     "fullTitle": "Летний корпоративный фестиваль",
     "year": "—",
     "eventDate": "Дата не указана",
-    "category": "Портфолио",
-    "format": "Работа из портфолио",
-    "client": "Event Agency Good Brand",
+    "category": "Корпоративный фестиваль",
+    "format": "Летний корпоративный фестиваль",
+    "client": "",
     "agencySlug": "event-agency-good-brand",
     "agencySlugs": [
       "event-agency-good-brand"
     ],
     "agencyUrl": "/agency/event-agency-good-brand",
-    "types": [],
-    "role": "",
+    "types": [
+      "corporate"
+    ],
+    "role": "В кейсе GOOD BRAND описывает созданное летнее пространство: флаги, гамаки, фреш-зона, игровые площадки, арт-объекты для фото и лаунж-зоны с пляжными зонтами и подушками.",
     "industry": "Место не указано",
-    "description": "Работа из портфолио Event Agency Good Brand. Роль команды — в первоисточнике.",
-    "seoDescription": "Работа из портфолио Event Agency Good Brand. Роль команды — в первоисточнике.",
+    "description": "Ко дню рождения компании GOOD BRAND создала офлайн-фестиваль в Нижнем Новгороде для 2 500 человек. Летнее пространство объединило игровые площадки, фреш-зону, гамаки, арт-объекты для фото и лаунж-зоны с пляжными зонтами и подушками.",
+    "seoDescription": "GOOD BRAND оформила летний корпоративный фестиваль в Нижнем Новгороде для 2 500 человек: игры, фреш-зона, гамаки, арт-объекты и лаунж-зоны.",
     "source": "https://gbnn.ru/portfolio#summer-corporate-festival",
     "image": "/custom/library/6e0a3153c1.webp",
     "imageMobile": "/custom/library/6e0a3153c1.webp",
@@ -1731,9 +1733,11 @@
     "reelImage": "/custom/optimized/27521db8b754fe-1600.webp",
     "reelMobile": "/custom/optimized/27521db8b754fe-960.webp",
     "imageRatio": 1.5,
-    "eventCity": "",
-    "guestLabel": "",
-    "occasions": [],
+    "eventCity": "Нижний Новгород",
+    "guestLabel": "2 500 человек",
+    "occasions": [
+      "corporate"
+    ],
     "preview": "/custom/optimized/27521db8b754fe-960.webp",
     "imageWidth": 1680,
     "imageHeight": 1120,

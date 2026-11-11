@@ -2,7 +2,8 @@ import {escapeHtml as e,workSummary,referenceAction} from './public/custom/work-
 function caseHeroMarkup(p,gallery,dimensions,escape,noPhoto,responsiveAttributes){
  if(!gallery.length)return noPhoto;
  const photo=gallery[0],image=`<img src="${escape(photo.src)}"${responsiveAttributes(photo.src,"(max-width:760px) calc(100vw - 56px), (max-width:1600px) calc(100vw - 96px), 1420px")}${dimensions(photo.src)} alt="${escape(photo.alt||p.fullTitle)}" fetchpriority="high">`;
- return `<figure class="case-hero">${image}<figcaption>${escape(p.fullTitle)} · ${escape(p.client)}</figcaption></figure>`;
+ const caption=[p.fullTitle,p.client].filter(value=>typeof value==='string'&&value.trim());
+ return `<figure class="case-hero">${image}<figcaption>${caption.map(value=>escape(value)).join(' · ')}</figcaption></figure>`;
 }
 export function caseBody(p,agencies,photoSizes={}){
  const dimensions=src=>{const size=photoSizes[src];return size?` width="${size.width}" height="${size.height}"`:'';};
