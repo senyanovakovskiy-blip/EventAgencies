@@ -67,6 +67,9 @@ export function readPreparation(form,fallback=[]){
 export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  const host=form.querySelector('[data-preparation-cards]'),select=form.querySelector('[data-preparation-context]'),count=form.querySelector('[data-preparation-count]');
  const saved=normalizePreparation(data.workflow?.preparation),savedIdeaSources=normalizeIdeaSources(data.workflow?.ideaSources),savedIdeaSourcesByContext=new Map(savedIdeaSources.map(row=>[ideaSourceContextKey(row),row.sources])),savedIdeaPitches=normalizeIdeaPitches(data.workflow?.ideaPitches),pitchRows=new Map(savedIdeaPitches.map(row=>[ideaPitchKey(row),row])),savedIdeaSettings=normalizeIdeaSettings(data.workflow?.ideaSettings),savedIdeaSettingsByContext=new Map(savedIdeaSettings.map(row=>[ideaSourceContextKey(row),row])),settingsDefaults=new WeakMap(),visited=new Map(),eventIdeaStates=new WeakMap(),ideaSourceSelections=new WeakMap();let active='',optionKey='',comparison=null,plans=null;
+ const normalizeSourceSearch=value=>String(value??'').normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е').replace(/\s+/g,' ').trim();
+ const momentSearchIndex=new Map((catalog.projects||[]).flatMap(work=>ideaSourceMoments(work).map(moment=>[JSON.stringify([work.slug,moment.key]),normalizeSourceSearch(moment.text)])));
+ const optionMomentSearch=new WeakMap();
  host.innerHTML=saved.map(item=>cardMarkup(item,catalog,data.receipt,true)).join('');host.dataset.ready='true';
  const cards=()=>[...host.querySelectorAll('[data-preparation-card]')];
  const ideaCards=()=>[...cards(),form.querySelector('[data-general-idea-lab]')].filter(Boolean);
@@ -115,12 +118,12 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
  function sourcesFor(card){let selected=ideaSourceSelections.get(card);if(!selected){selected=new Map();const context=ideaSourceContextKey({agencySlug:card.dataset.agency,workSlug:card.dataset.work||null});for(const source of savedIdeaSourcesByContext.get(context)||[])selected.set(JSON.stringify([source.agencySlug,source.workSlug,source.momentKey]),{...source,operatorSelected:true});ideaSourceSelections.set(card,selected);}return selected;}
  function filterIdeaSourceOptions(card){
   const search=card.querySelector('[data-event-idea-source-search]'),picker=card.querySelector('[data-event-idea-source-picker]'),status=card.querySelector('[data-event-idea-source-search-status]');if(!search||!picker||!status)return;
-  const query=search.value.trim().normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е');let total=0,matched=0;
-  for(const option of picker.options){if(!option.value)continue;total++;const group=option.parentElement?.label||'',label=(group+' '+option.textContent).normalize('NFKC').toLocaleLowerCase('ru-RU').replaceAll('ё','е'),visible=!query||label.includes(query);option.hidden=!visible;if(visible)matched++;}
+  const query=normalizeSourceSearch(search.value);let total=0,matched=0;
+  for(const option of picker.options){if(!option.value)continue;total++;const group=option.parentElement?.label||'',label=normalizeSourceSearch(group+' '+option.textContent);let momentText=optionMomentSearch.get(option);if(query&&momentText===undefined){try{const [,workSlug,momentKey]=JSON.parse(option.value);momentText=momentSearchIndex.get(JSON.stringify([workSlug,momentKey]))||'';}catch{momentText='';}optionMomentSearch.set(option,momentText);}const visible=!query||label.includes(query)||momentText?.includes(query);option.hidden=!visible;if(visible)matched++;}
   for(const group of picker.querySelectorAll('optgroup'))group.hidden=[...group.options].every(option=>option.hidden);
   if(picker.selectedOptions[0]?.hidden)picker.value='';
   syncIdeaSourcePreview(card);
-  status.textContent=query?(matched?`Найдено опубликованных фрагментов: ${matched}.`:'Совпадений нет. Попробуйте часть названия или название агентства.'):`В списке ${total} опубликованных фрагментов.`;
+  status.textContent=query?(matched?`Найдено опубликованных фрагментов: ${matched}.`:'Совпадений нет. Попробуйте слово из названия работы, фрагмента или название агентства.'):`В списке ${total} опубликованных фрагментов.`;
  }
  function syncIdeaSourcePreview(card){
   const picker=card?.querySelector('[data-event-idea-source-picker]');if(!picker)return;
