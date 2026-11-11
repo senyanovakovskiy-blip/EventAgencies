@@ -2,6 +2,19 @@ import {normalizeDraft,workNoteKey} from './project-store.js';
 
 const validSlug=value=>typeof value==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 
+export function hasScopedReferenceNote(notes,agencySlug=''){
+ return (Array.isArray(notes)?notes:[]).some(item=>(!agencySlug||item?.agencySlug===agencySlug)&&typeof item?.note==='string'&&Boolean(item.note.trim()));
+}
+
+export function referenceNoteLabels(entry,work){
+ const shared=new Set([work?.agencySlug,...(Array.isArray(work?.agencySlugs)?work.agencySlugs:[])].filter(Boolean)).size>1;
+ const named=shared||!entry.isPrimary;
+ return {
+  label:named?'Моя заметка · '+entry.agencyName:'Моя заметка к примеру',
+  context:named?'Личная запись для команды «'+entry.agencyName+'». Сохраняется в этом браузере.':'Личная заметка · сохраняется в этом браузере.'
+ };
+}
+
 /** Describe an editor only for a real team linked to this work. */
 export function referenceNoteForTeam(work,agencySlug,notes,agencies=[]){
  const workSlug=work?.slug;

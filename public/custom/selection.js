@@ -75,14 +75,13 @@ function editingBlocked(){
  notice('Заявка отправляется','Дождитесь результата отправки, затем измените проект.');
  return true;
 }
-function withReferenceNote(state,agencySlug,workSlug,note){return workSlug&&note?.trim()&&!Object.hasOwn(state.workNotes,workNoteKey(agencySlug,workSlug))?updateWorkNote(state,agencySlug,workSlug,note):state;}
 const replacement=document.createElement('dialog');replacement.id='replacement-dialog';replacement.setAttribute('aria-labelledby','replacement-title');document.body.append(replacement);
 replacement.addEventListener('close',()=>{pendingReplacement=null;});
-async function offerReplacement(agencySlug,workSlug,note=''){
+async function offerReplacement(agencySlug,workSlug){
  try{
   const data=await getData();if(editingBlocked())return;
   const candidate=data.agencies.find(a=>a.slug===agencySlug);if(!candidate)return;
-  pendingReplacement={agencySlug,workSlug,note,name:candidate.name};
+  pendingReplacement={agencySlug,workSlug,name:candidate.name};
   replacement.innerHTML=`<button class="brief-close" data-cancel-replacement aria-label="Закрыть замену агентства">×</button><span class="eyebrow">До трёх команд в одном проекте</span><h2 id="replacement-title">Кого заменить на ${esc(candidate.name)}?</h2><p>Описание мероприятия сохранится. Вместо выбранной ниже команды появится ${esc(candidate.name)}${workSlug?' с выбранной работой':''}. Последнюю замену можно будет отменить.</p><div class="replacement-options">${draft.selection.map(s=>{const {label}=selectionView(data,s);return `<button class="secondary-action" data-replace-agency="${esc(s.agencySlug)}" data-replace-name="${esc(label)}">Заменить ${esc(label)}</button>`;}).join('')}</div><button class="replacement-cancel" data-cancel-replacement>Оставить подборку</button>`;
   pop.hidden=true;replacement.showModal();
  }catch{notice('Не удалось загрузить варианты замены','Подборка не изменилась. Попробуйте ещё раз.');}
@@ -131,19 +130,19 @@ document.addEventListener('click',async event=>{
  }
  const save=event.target.closest('[data-save-agency]');
  if(save){
-  event.preventDefault();const result=addAgency(draft,save.dataset.saveAgency,save.dataset.saveWork||null),referenceNote=save.dataset.referenceNoteAgency?draft.workNotes[workNoteKey(save.dataset.referenceNoteAgency,save.dataset.saveWork)]||'':'';
-  if(result.result==='full'){await offerReplacement(save.dataset.saveAgency,save.dataset.saveWork||null,referenceNote);return;}
+  event.preventDefault();const result=addAgency(draft,save.dataset.saveAgency,save.dataset.saveWork||null);
+  if(result.result==='full'){await offerReplacement(save.dataset.saveAgency,save.dataset.saveWork||null);return;}
   if(result.result==='invalid')return;
-  if(result.result!=='existing'&&!persist(withReferenceNote(result.state,save.dataset.saveAgency,save.dataset.saveWork,referenceNote)))return;
+  if(result.result!=='existing'&&!persist(result.state))return;
   const left=3-draft.selection.length;
   notice(result.result==='updated'?'Выбранная работа обновлена':result.result==='existing'?'Агентство уже в вашем проекте':'Агентство добавлено в ваш проект',left===2?'Можно добавить ещё две команды для сравнения или перейти к описанию мероприятия.':left===1?'Можно добавить ещё одну команду для сравнения или перейти к описанию мероприятия.':'Три команды выбраны. Перейдите к сравнению и описанию мероприятия.',{selectedPair:{agencySlug:save.dataset.saveAgency,workSlug:save.dataset.saveWork}});return;
  }
  const replace=event.target.closest('[data-replace-agency]');
  if(replace&&pendingReplacement){
-  const {agencySlug,workSlug,note,name:nextName}=pendingReplacement;
+  const {agencySlug,workSlug,name:nextName}=pendingReplacement;
   const previousSelection=draft.selection.map(item=>({...item})),previousName=replace.dataset.replaceName||replace.dataset.replaceAgency;
   const next=replaceAgency(draft,replace.dataset.replaceAgency,agencySlug,workSlug);
-  if(next.result==='replaced'&&persist(withReferenceNote(next.state,agencySlug,workSlug,note))){replacementUndo?.record(previousSelection,draft.selection,previousName,nextName);replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.',{undoReplacement:true,selectedPair:{agencySlug,workSlug}});}
+  if(next.result==='replaced'&&persist(next.state)){replacementUndo?.record(previousSelection,draft.selection,previousName,nextName);replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.',{undoReplacement:true,selectedPair:{agencySlug,workSlug}});}
   else if(next.result!=='replaced'){replacement.close();notice('Подборка уже изменилась','Проверьте выбранные команды в «Моём проекте».');}
   return;
  }

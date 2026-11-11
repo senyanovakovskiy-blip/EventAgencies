@@ -119,6 +119,7 @@ html[data-theme=dark] .case-page .case-photo-depth{box-shadow:0 3px 8px #0002,0 
 .reference-sort select{min-height:44px;max-width:100%;padding:10px 30px 10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--glass);color:var(--ink);font:14px/1.4 Motion,Arial,sans-serif}
 .reference-notes-filter{display:flex;align-items:center;gap:9px;min-height:44px;font:13px/1.4 Motion,Arial,sans-serif;color:var(--muted);cursor:pointer}
 .reference-notes-filter input{width:18px;height:18px;flex:none;margin:0;accent-color:var(--color-highlight)}
+.reference-notes-filter small{display:block;margin-top:2px;font:12px/1.4 Motion,Arial,sans-serif;color:var(--muted)}
 .reference-status:not(:empty){display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .reference-status>span{min-width:0;flex:1 1 auto}
 .reference-status button{min-height:40px;padding:8px 14px;border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;font:13px/1.4 Motion,Arial,sans-serif;cursor:pointer}
