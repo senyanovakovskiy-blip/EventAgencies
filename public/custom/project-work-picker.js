@@ -6,7 +6,7 @@ import {buildCatalogSearch,normalizeSearchText,publicPresentationText,searchTerm
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const workFor=(work,agencySlug)=>work.agencySlug===agencySlug||work.agencySlugs?.includes(agencySlug);
 
-export function setupProjectWorkPicker({getState,getData,canChoose,onChoose,onError}){
+export function setupProjectWorkPicker({getState,getData,getBasis,validateBasis,canChoose,onChoose,onError}){
  if(!document.getElementById('project-board'))return;
  const dialog=document.createElement('dialog');dialog.id='project-work-picker';dialog.setAttribute('aria-labelledby','work-picker-title');
  dialog.innerHTML='<header class="work-picker-header"><button class="brief-close" type="button" data-close-work-picker aria-label="Закрыть выбор работы">×</button><span class="eyebrow">Работа для сравнения</span><h2 id="work-picker-title">Выберите работу</h2><p data-work-picker-agency></p><div class="work-picker-search"><label for="work-picker-search">Поиск по работам, описаниям и моим заметкам</label><div><input id="work-picker-search" type="search" maxlength="120" autocomplete="off" placeholder="Название, описание или заметка"><button type="button" data-clear-work-search hidden>Сбросить</button></div></div></header><div class="work-picker-content"><div class="work-picker-filters" role="group" aria-label="Какие работы показать"><button type="button" data-work-picker-filter="all" aria-pressed="true">Все работы <span data-work-filter-count="all"></span></button><button type="button" data-work-picker-filter="saved" aria-pressed="false">Мои примеры <span data-work-filter-count="saved"></span></button><button type="button" data-work-picker-filter="notes" aria-pressed="false">С заметками <span data-work-filter-count="notes"></span></button></div><p class="work-picker-personal-warning" data-work-picker-personal-warning hidden></p><p class="work-picker-count" data-work-picker-count role="status"></p><fieldset><legend class="work-picker-sr">Выберите одну работу или оставьте агентство без работы</legend><label class="work-picker-none"><input type="radio" name="projectWork" value=""><span>Без выбранной работы<small>Сравнивать агентство в целом</small></span></label><div class="work-picker-grid" data-work-picker-grid></div></fieldset><div class="work-picker-empty" data-work-picker-empty hidden><p data-work-picker-empty-text></p><button class="secondary-action" type="button" data-reset-work-filters>Показать все работы</button></div></div><footer class="work-picker-footer"><div><p class="work-picker-choice" data-work-picker-choice></p><p class="work-picker-status" data-work-picker-status role="status"></p></div><div class="work-picker-actions"><button class="secondary-action" type="button" data-close-work-picker>Отмена</button><button class="primary-action" type="button" data-confirm-work-picker>Выбрать для сравнения</button></div></footer>';
@@ -74,13 +74,14 @@ export function setupProjectWorkPicker({getState,getData,canChoose,onChoose,onEr
  }
  async function open(opener){
   if(opening||dialog.open)return;
-  if(!canChoose()){onError('Дождитесь завершения отправки заявки, затем выберите работу.');return;}
-  opening=true;trigger=opener;
+  if(!canChoose()){onError('Сохраните текущие изменения проекта или дождитесь завершения отправки заявки, затем выберите работу.');return;}
+  opening=true;trigger=opener;const basis=getBasis();
   try{
-   const agencySlug=opener.dataset.openWorkPicker,data=await getData(),entry=getState().selection.find(item=>item.agencySlug===agencySlug),agency=data.agencies.find(item=>item.slug===agencySlug);
+   const agencySlug=opener.dataset.openWorkPicker,data=await getData();if(!validateBasis(basis))return;
+   const entry=getState().selection.find(item=>item.agencySlug===agencySlug),agency=data.agencies.find(item=>item.slug===agencySlug);
    if(!entry||!agency){onError('Агентство больше не выбрано. Добавьте его в проект, чтобы выбрать работу.');return;}
    const works=data.projects.filter(work=>workFor(work,agencySlug)&&(!work.duplicateOf||work.slug===entry.workSlug));
-   active={agencySlug,expected:entry.workSlug,works,searchIndex:buildCatalogSearch({projects:works}),mode:'all',saved:new Set(),notes:new Map(),agencyNames:new Map(data.agencies.map(item=>[item.slug,item.name]))};selected=entry.workSlug===null?null:works.some(work=>work.slug===entry.workSlug)?entry.workSlug:undefined;
+   active={agencySlug,expected:entry.workSlug,basis,works,searchIndex:buildCatalogSearch({projects:works}),mode:'all',saved:new Set(),notes:new Map(),agencyNames:new Map(data.agencies.map(item=>[item.slug,item.name]))};selected=entry.workSlug===null?null:works.some(work=>work.slug===entry.workSlug)?entry.workSlug:undefined;
    search.value='';status.textContent=selected===undefined?'Прежняя работа больше недоступна. Выберите другую или оставьте агентство без работы.':'';
    dialog.querySelector('[data-work-picker-agency]').textContent=agency.name;
    render();dialog.showModal();dialog.querySelector('.work-picker-content').scrollTop=0;search.focus({preventScroll:true});
@@ -101,17 +102,18 @@ export function setupProjectWorkPicker({getState,getData,canChoose,onChoose,onEr
  document.addEventListener('ea:project-copy-restored',()=>{if(dialog.open)dialog.close();});
  confirm.addEventListener('click',async()=>{
   if(!active||active.unavailable||busy||selected===undefined||selected===active.expected)return;
-  if(!canChoose()){status.textContent='Дождитесь завершения отправки заявки.';return;}
-  const request={agencySlug:active.agencySlug,workSlug:selected,expectedWorkSlug:active.expected};
+  if(!canChoose()){status.textContent='Сохраните текущие изменения проекта или дождитесь завершения отправки заявки.';return;}
+  const request={agencySlug:active.agencySlug,workSlug:selected,expectedWorkSlug:active.expected,basis:active.basis};
   busy=true;status.textContent='';syncChoice();
   try{
    const result=await onChoose(request);
    if(result==='saved'){dialog.close();return;}
+   if(result==='project-changed'){dialog.close();onError('Проект изменился. Откройте выбор работы заново в текущем проекте.');return;}
    if(!active)return;
    if(result==='changed'){
     const entry=getState().selection.find(item=>item.agencySlug===active.agencySlug);
     if(!entry){active.unavailable=true;selected=undefined;status.textContent='Агентство уже убрано из проекта. Закройте это окно и продолжите выбор команд.';}
-    else{active.expected=entry.workSlug;selected=entry.workSlug===null?null:active.works.some(work=>work.slug===entry.workSlug)?entry.workSlug:undefined;render();status.textContent='Выбранная работа уже изменилась. Показан текущий выбор — выберите работу снова.';}
+    else{active.basis=getBasis();active.expected=entry.workSlug;selected=entry.workSlug===null?null:active.works.some(work=>work.slug===entry.workSlug)?entry.workSlug:undefined;render();status.textContent='Выбранная работа уже изменилась. Показан текущий выбор — выберите работу снова.';}
    }else status.textContent='Не удалось сохранить работу. Разрешите хранение данных сайта, сохраните текущие изменения и попробуйте снова.';
   }catch{status.textContent='Не удалось сохранить работу. Попробуйте ещё раз.';}
   finally{busy=false;syncChoice();}

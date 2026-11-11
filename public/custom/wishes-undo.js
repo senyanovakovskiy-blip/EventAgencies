@@ -7,7 +7,7 @@ export function setupWishesUndo({getDescription,restore,canUndo}){
  const host=document.createElement('div');host.className='project-wishes-undo';host.hidden=true;
  const button=document.createElement('button');button.type='button';button.className='secondary-action';button.textContent='Отменить добавление примеров';host.append(button);status.after(host);
  let change=null;
- try{const saved=JSON.parse(sessionStorage.getItem(KEY)||'null');if(saved?.version===1&&typeof saved.before==='string'&&typeof saved.after==='string'&&saved.before.length<=3000&&saved.after.length<=3000&&saved.before!==saved.after)change=saved;}catch{}
+ try{const saved=JSON.parse(sessionStorage.getItem(KEY)||'null');if(saved?.version===2&&typeof saved.project==='string'&&saved.project.length<=80&&typeof saved.before==='string'&&typeof saved.after==='string'&&saved.before.length<=3000&&saved.after.length<=3000&&saved.before!==saved.after)change=saved;}catch{}
  function clear(){change=null;host.hidden=true;try{sessionStorage.removeItem(KEY);}catch{}if([addedMessage,retainedMessage].includes(status.textContent))status.textContent='';}
  function sync(){
   if(change&&getDescription()!==change.after){clear();return;}
@@ -18,11 +18,16 @@ export function setupWishesUndo({getDescription,restore,canUndo}){
   if(!canUndo()){status.textContent='Дождитесь завершения отправки заявки.';return;}
   if(getDescription()!==change.after){clear();status.textContent='Пожелания уже изменены. Отменить прежнее добавление автоматически нельзя.';return;}
   const before=change.before;
-  if(!restore(before)){status.textContent='Не удалось отменить добавление. Разрешите хранение данных сайта и попробуйте снова.';return;}
+  const result=restore(before,change.after,change.project);
+  if(result!=='saved'){
+   if(result==='changed'){clear();status.textContent='Проект или пожелания изменились. Проверьте их перед продолжением.';}
+   else status.textContent=result==='unsaved'?'Сначала сохраните изменения проекта, затем повторите отмену.':'Не удалось отменить добавление. Разрешите хранение данных сайта и попробуйте снова.';
+   return;
+  }
   clear();status.textContent='Последнее добавление отменено. Примеры и личные заметки сохранены.';status.focus({preventScroll:true});
  });
  document.addEventListener('ea:project-copy-restored',clear);
  document.addEventListener('ea:inquiry-accepted',clear);
  sync();if(change)status.textContent=retainedMessage;
- return {sync,clear,record(before,after){if(before===after)return;change={version:1,before,after};try{sessionStorage.setItem(KEY,JSON.stringify(change));}catch{}status.textContent=addedMessage;sync();}};
+ return {sync,clear,record(before,after,project){if(before===after||typeof project!=='string'||!project)return;change={version:2,before,after,project};try{sessionStorage.setItem(KEY,JSON.stringify(change));}catch{}status.textContent=addedMessage;sync();}};
 }

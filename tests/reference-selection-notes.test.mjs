@@ -9,19 +9,23 @@ const start=source.indexOf(" const save=event.target.closest('[data-save-agency]
 const end=source.indexOf(" if(event.target.closest('[data-cancel-replacement]'))",start);
 assert(start>=0&&end>start,'selection click branches must be present');
 const setup=new Function('addAgency','replaceAgency','initial',`
- let draft=structuredClone(initial),pendingReplacement=null;
- const persist=value=>(draft=value,true),notice=()=>{};
+ let draft=structuredClone(initial),pendingReplacement=null,selectionPageIdentity=null;
+ const refresh=()=>{};
+ const freshSelection=()=>({current:draft,identity:{marker:'initial',existed:true}}),persistFresh=(_snapshot,value)=>(draft=value,true),notice=()=>{};
+ const selectionBasis=()=>({identity:{marker:'initial',existed:true},selection:draft.selection});
  const replacementUndo={record(){}},replacement={close(){}};
- async function offerReplacement(agencySlug,workSlug){pendingReplacement={agencySlug,workSlug,name:agencySlug};}
+ async function offerReplacement(agencySlug,workSlug,basis){pendingReplacement={agencySlug,workSlug,basis,name:agencySlug};}
  return {dispatch:async(event)=>{${source.slice(start,end)}},state:()=>draft};
 `);
-const restoreStart=source.indexOf('restore:(selection,expected)=>{',source.indexOf('replacementUndo=setupReplacementUndo'));
-const restoreBodyStart=restoreStart+'restore:(selection,expected)=>{'.length;
+const restoreStart=source.indexOf('restore:(selection,expected,project)=>{',source.indexOf('replacementUndo=setupReplacementUndo'));
+const restoreBodyStart=restoreStart+'restore:(selection,expected,project)=>{'.length;
 const restoreEnd=source.indexOf('},onResult:',restoreBodyStart);
 assert(restoreStart>=0&&restoreEnd>restoreBodyStart,'replacement undo handler must be present');
 const makeRestore=new Function('readDraft','writeDraft','localStorage','initial',`
- let draft=initial,available=true,lastReceipt=null,sendError='';const refresh=()=>{};
- const restore=(selection,expected)=>{${source.slice(restoreBodyStart,restoreEnd)}};
+ let draft=initial,available=true,selectionFailure='failed';
+ const freshSelection=({selection})=>{const current=readDraft(localStorage);return JSON.stringify(current.selection)===JSON.stringify(selection)?{current}:null;};
+ const persistFresh=(_snapshot,next)=>(draft=writeDraft(localStorage,next),true);
+ const restore=(selection,expected,project={marker:'initial',existed:true})=>{${source.slice(restoreBodyStart,restoreEnd)}};
  return {restore,state:()=>draft};
 `);
 const eventFor=(kind,data)=>({preventDefault(){},target:{closest(selector){return selector===kind?{dataset:data}:null;}}});

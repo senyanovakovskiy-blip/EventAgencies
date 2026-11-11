@@ -5,7 +5,7 @@ import {restoreProjectCopy} from './project-copy-client.js';
 
 const errorText=error=>({browser_storage_unavailable:'Не удалось сохранить предыдущий вариант. Освободите место или разрешите хранение данных сайта и попробуйте снова.',restore_recovery_required:'Не удалось полностью восстановить данные браузера. Предыдущий вариант сохранён — освободите место и воспользуйтесь кнопкой возврата.'}[error?.code]||'Не удалось подготовить новый проект. Попробуйте ещё раз.');
 
-export function setupNewProject({anchor,getState,canStart,onStarted,onStorageIssue}){
+export function setupNewProject({anchor,getState,canStart,blockedMessage=()=> 'Дождитесь завершения отправки заявки или сохранения копии, затем повторите действие.',onStarted,onStorageIssue}){
  const opener=document.createElement('button');opener.type='button';opener.className='project-new-opener';opener.textContent='Начать новый проект…';anchor.after(opener);
  const dialog=document.createElement('dialog');dialog.id='new-project-dialog';dialog.setAttribute('aria-labelledby','new-project-title');
  dialog.innerHTML='<button class="brief-close" type="button" data-close-new-project aria-label="Закрыть создание проекта">×</button><span class="eyebrow">Следующее мероприятие</span><h2 id="new-project-title">Начать новый проект</h2><p>Описание события и выбранные команды будут очищены. Выберите, что перенести в новый проект.</p><form><fieldset><legend class="visually-hidden">Что оставить</legend><label class="new-project-option"><input name="keepReferences" type="checkbox" checked><span>Сохранённые примеры и заметки к ним<small data-new-reference-count></small></span></label><label class="new-project-option"><input name="keepContact" type="checkbox" checked><span>Имя и контакт для ответа<small data-new-contact-hint></small></span></label></fieldset><div class="new-project-changes" data-new-project-changes></div><p class="new-project-backup">Предыдущий вариант останется в этом браузере для возврата. Копии в аккаунте и история заявок сохранятся.</p><p class="new-project-account-note">Для доступа к прежнему проекту с другого устройства сначала сохраните его через «Копии в аккаунте».</p><p class="brief-local-note" role="status" data-new-project-status></p><div class="new-project-actions"><button class="primary-action" type="submit">Создать и описать событие</button><button class="secondary-action" type="button" data-cancel-new-project>Отмена</button></div></form>';
@@ -54,7 +54,7 @@ export function setupNewProject({anchor,getState,canStart,onStarted,onStorageIss
  });
  form.addEventListener('submit',event=>{
   event.preventDefault();if(!source)return;
-  if(!canStart()){status.textContent='Дождитесь завершения отправки заявки или сохранения копии, затем повторите действие.';return;}
+  if(!canStart()){status.textContent=blockedMessage();return;}
   try{
    const current=readSource();
    if(JSON.stringify(current)!==JSON.stringify(source)){source=current;render();status.textContent='Проект изменился. Описание изменений обновлено — нажмите кнопку ещё раз, чтобы продолжить.';return;}

@@ -7,7 +7,7 @@ import {restoreProjectCopy} from './project-copy-client.js';
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const errorText=error=>({browser_storage_unavailable:'Не удалось сохранить текущий проект для возврата. Освободите место или разрешите хранение данных сайта и попробуйте снова.',restore_recovery_required:'Не удалось полностью восстановить данные браузера. Предыдущий вариант сохранён — освободите место и воспользуйтесь кнопкой возврата.'}[error?.code]||'Не удалось подготовить проект. Закройте окно и попробуйте ещё раз.');
 
-export function setupProjectFromInquiry({getState,getData,briefRows,canCreate,onCreated,onStorageIssue}){
+export function setupProjectFromInquiry({getState,getData,briefRows,canCreate,blockedMessage=()=> 'Дождитесь завершения отправки заявки или сохранения копии, затем повторите действие.',onCreated,onStorageIssue}){
  const dialog=document.createElement('dialog');dialog.id='request-project-dialog';dialog.setAttribute('aria-labelledby','request-project-title');
  dialog.innerHTML='<button class="brief-close" type="button" data-cancel-request-project aria-label="Закрыть создание проекта">×</button><span class="eyebrow">На основе отправленной заявки</span><h2 id="request-project-title">Новый проект из заявки</h2><p class="request-project-intro">Описание и выбранные команды станут основой нового проекта. Дату нужно указать заново. После создания откроется форма описания события.</p><div class="account-copy-preview" data-request-project-preview></div><form><label class="request-project-contact"><input name="useContact" type="checkbox"><span>Использовать контакт из этой заявки<small data-request-source-contact></small></span></label><p class="request-project-effect">Текущий контакт сохранится, если не выбрать перенос. Сохранённые примеры и личные заметки останутся в проекте. Предыдущий вариант будет доступен для возврата в этом браузере.</p><p class="request-project-effect">Исходная заявка останется в истории. Повторная отправка происходит отдельно, через форму заявки.</p><p class="brief-local-note" role="status" data-request-project-status></p><div class="request-project-actions"><button class="primary-action" type="submit" disabled>Создать и указать дату</button><button class="secondary-action" type="button" data-cancel-request-project>Отмена</button></div></form>';
  document.body.append(dialog);
@@ -21,7 +21,7 @@ export function setupProjectFromInquiry({getState,getData,briefRows,canCreate,on
  });
  form.addEventListener('submit',event=>{
   event.preventDefault();if(!active)return;
-  if(!canCreate()){status.textContent='Дождитесь завершения отправки заявки или сохранения копии, затем повторите действие.';return;}
+  if(!canCreate()){status.textContent=blockedMessage();return;}
   try{
    const snapshot={...active.prepared.loadSnapshot,includeContact:contact.checked};
    if(contact.checked)snapshot.draft={...snapshot.draft,contact:active.receipt.contact};

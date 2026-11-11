@@ -42,6 +42,8 @@ html:root .card-actions .ea-save-button{font-family:Motion,Arial,sans-serif;font
 .ea-selection-notice :is(button,a):focus-visible{outline:2px solid var(--color-highlight);outline-offset:3px}
 .ea-selection-notice .ea-notice-note-status{margin:0}
 .ea-selection-notice .ea-notice-note-status:not(:empty){margin-top:14px}
+.ea-selection-notice .ea-unsaved-project{display:grid;gap:8px;margin-top:18px;font-size:14px;line-height:1.4}
+.ea-selection-notice [data-unsaved-project-text]{box-sizing:border-box;width:100%;min-height:180px;padding:10px;border:1px solid var(--color-divider);background:var(--color-bg);color:var(--color-title);font:14px/1.5 Motion,Arial,sans-serif;resize:vertical}
 .my-project{position:relative;z-index:1;margin:0 auto;padding:60px 4vw 80px;max-width:1600px;font-family:Motion,Arial,sans-serif}
 .project-section-nav{position:sticky;top:12px;z-index:35;display:flex;align-items:center;gap:6px;width:max-content;max-width:100%;box-sizing:border-box;padding:6px;margin:26px 0 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface,var(--color-bg));backdrop-filter:blur(18px);box-shadow:0 8px 24px #0001;overflow-x:auto;scrollbar-width:none}
 .project-section-nav::-webkit-scrollbar{display:none}

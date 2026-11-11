@@ -19,6 +19,7 @@ import {setupProjectQuestionAnswer} from './project-question-answer.js';
 import {referenceProjectMarker} from './reference-batch-session.js';
 import {PREVIOUS_PROJECT_KEY} from './project-copy-client.js';
 import {setupInlineNoteGuard} from './inline-note-guard.js';
+import {unsavedProjectText} from './project-recovery-text.js';
 import {setupComparisonCriteria,syncComparisonCriteria} from './project-comparison-criteria.js';
 import {comparisonValuesMatch} from './project-comparison-equality.js';
 import {selectionView,selectionProblems} from './project-selection-view.js';
@@ -42,18 +43,50 @@ let helpSelectionExpanded=false;
 let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendingRecovery=false,sendError='',selectionSendError=false,lastReceipt=null,wishesUndo=null,replacementUndo=null,briefUndo=null,briefEditor=null,contactEditor=null,handoffData=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
 try{draft=readDraft(localStorage);}catch{available=false;}
-const inlineNotes=setupInlineNoteGuard({document,storage:localStorage,marker:referenceProjectMarker,canSave:()=>available&&!sending,onSaved:(next)=>{if(!available)return;draft=next;document.dispatchEvent(new CustomEvent('ea:inline-note-external'));refresh();}});
+function selectionIdentity(){try{const marker=referenceProjectMarker();return marker===null?null:{marker,existed:localStorage.getItem(KEY)!==null};}catch{return null;}}
+let selectionPageIdentity=selectionIdentity(),selectionDisplayed=null,unsavedBaseline=null,unsavedProject=false,selectionFailure='failed';
+const recoveryHelp='Нажмите «Показать несохранённые данные» и скопируйте текст на этой странице. Текст в открытых полях скопируйте отдельно. В «Моём проекте» также можно скачать черновик и отметить контакт, примеры и заметки; проверьте содержимое файла. Автоматически восстановить проект из него нельзя.';
+function markSelectionSaved(){const identity=selectionIdentity();if(identity)selectionPageIdentity=identity;}
+const sameSelection=(left,right)=>JSON.stringify(left)===JSON.stringify(right);
+function selectionStateBasis(){return {identity:selectionPageIdentity&&{...selectionPageIdentity},selection:draft.selection.map(item=>({...item}))};}
+function selectionBasis(){const basis=document.getElementById('project-board')&&selectionDisplayed?selectionDisplayed:selectionStateBasis();return {identity:basis.identity&&{...basis.identity},selection:basis.selection.map(item=>({...item}))};}
+function selectionConflict(current,identity){
+ if(current&&identity){draft=current;selectionPageIdentity=identity;refresh();}
+ notice('Проект изменился','Показана актуальная подборка. Проверьте её и повторите действие.');
+}
+function freshSelection(basis=selectionBasis()){
+ selectionFailure='failed';
+ if(!available){notice('Проект не сохранён','Сохраните текущие изменения проекта и повторите действие.');return null;}
+ try{
+  const identity=selectionIdentity(),raw=localStorage.getItem(KEY);
+  if(!identity||!basis.identity)throw Error('storage');
+  const source=raw===null?emptyDraft():JSON.parse(raw);
+  if(!source||source.version!==1||!Array.isArray(source.selection))throw Error('storage');
+  const current=normalizeDraft(source);
+  if(referenceProjectMarker()!==identity.marker||localStorage.getItem(KEY)!==raw)throw Error('changed');
+  if(identity.marker!==basis.identity.marker||(basis.identity.existed&&raw===null)||!sameSelection(current.selection,basis.selection)){selectionFailure=identity.marker!==basis.identity.marker||(basis.identity.existed&&raw===null)?'project':'changed';selectionConflict(current,identity);return null;}
+  return {current,identity,raw};
+ }catch{notice('Не удалось прочитать проект','Проверьте доступ к сохранению и повторите действие.');return null;}
+}
+function persistFresh(snapshot,next){
+ try{
+  if(referenceProjectMarker()!==snapshot.identity.marker||localStorage.getItem(KEY)!==snapshot.raw){const identity=selectionIdentity();if(available&&identity)selectionConflict(readDraft(localStorage),identity);else if(!available)notice('Проект изменился',recoveryHelp);else notice('Проект изменился','Обновите проект и повторите действие.');return false;}
+  const saved=persist(next,{baseline:snapshot});if(saved)selectionPageIdentity={marker:snapshot.identity.marker,existed:true};return saved;
+ }catch{notice('Не удалось сохранить проект','Проверьте доступ к сохранению и повторите действие.');return false;}
+}
+const inlineNotes=setupInlineNoteGuard({document,storage:localStorage,marker:referenceProjectMarker,canSave:()=>available&&!sending,onSaved:(next)=>{if(!available)return;draft=next;markSelectionSaved();document.dispatchEvent(new CustomEvent('ea:inline-note-external'));refresh();}});
 const getData=()=>dataPromise||(dataPromise=(async()=>{
  const embedded=document.getElementById('project-reference-data');
  if(embedded)return JSON.parse(embedded.textContent);
  const response=await fetch('/custom/catalog-data.json');if(!response.ok)throw Error('data');return response.json();
 })().catch(error=>{dataPromise=null;throw error;}));
-function persist(next,{quiet=false}={}){
+function persist(next,{quiet=false,baseline=null}={}){
  if(editingBlocked())return false;
  orderStatus.textContent='';
  lastReceipt=null;sendError='';
- try{draft=writeDraft(localStorage,next);available=true;refresh();return true;}
- catch{draft=normalizeDraft({...next,request:null});available=false;refresh();document.getElementById('project-storage-note')?.removeAttribute('hidden');if(!quiet)notice('Не удалось сохранить изменения','В браузере недоступно сохранение. Разрешите хранение данных сайта и попробуйте ещё раз.');return false;}
+ if(!baseline&&available)try{const identity=selectionIdentity(),raw=localStorage.getItem(KEY);if(identity&&sameSelection(readDraft(localStorage).selection,draft.selection)&&JSON.stringify(readDraft(localStorage))===JSON.stringify(draft))baseline={identity,raw};}catch{}
+ try{draft=writeDraft(localStorage,next);available=true;unsavedBaseline=null;unsavedProject=false;markSelectionSaved();refresh();return true;}
+ catch{draft=normalizeDraft({...next,request:null});unsavedBaseline=baseline&&{identity:baseline.identity,raw:baseline.raw};unsavedProject=true;available=false;refresh();document.getElementById('project-storage-note')?.removeAttribute('hidden');if(!quiet)notice('Не удалось сохранить изменения','В браузере недоступно сохранение. Разрешите хранение данных сайта и попробуйте ещё раз.');return false;}
 }
 const pop=document.createElement('aside');pop.className='ea-selection-notice';pop.hidden=true;pop.setAttribute('aria-label','Ваша подборка');document.body.append(pop);
 let noticeNote=null;
@@ -71,6 +104,7 @@ function notice(title,copy,{undoReplacement=false,selectedPair=null}={}){
  noticeNote=null;
  pop.innerHTML=`<button class="ea-notice-close" type="button" aria-label="Закрыть уведомление">×</button><div role="status"><strong>${esc(title)}</strong><p>${esc(copy)}</p></div><div class="ea-notice-actions">${context?`<button type="button" data-edit-comparison-note="${esc(context.agencySlug)}" data-note-work="${esc(context.workSlug)}" data-note-project="${esc(context.marker)}">${noteActionLabel(context.value)}</button>`:''}${undoReplacement&&replacementUndo?.hasChange()?'<button type="button" data-undo-replacement>Отменить замену</button>':''}<button type="button" data-continue>Продолжить выбор</button><a href="${inProject?'#project-comparison':'/my-project'}"${inProject?' data-edit-selection':''}>${inProject?'К сравнению':'Мой проект'}${draft.selection.length?' · '+draft.selection.length:''} ↗</a></div>${context?'<p class="ea-notice-note-status" data-note-saved-status role="status" aria-live="polite" aria-atomic="true"></p>':''}`;
  if(context)noticeNote={...context,button:pop.querySelector('[data-edit-comparison-note]'),status:pop.querySelector('[data-note-saved-status]')};
+ if(unsavedProject){const button=document.createElement('button');button.type='button';button.className='secondary-action';button.dataset.showUnsavedProject='';button.textContent='Показать несохранённые данные';pop.querySelector('.ea-notice-actions').append(button);}
  pop.hidden=false;replacementUndo?.sync();
 }
 function editingBlocked(){
@@ -80,11 +114,13 @@ function editingBlocked(){
 }
 const replacement=document.createElement('dialog');replacement.id='replacement-dialog';replacement.setAttribute('aria-labelledby','replacement-title');document.body.append(replacement);
 replacement.addEventListener('close',()=>{pendingReplacement=null;});
-async function offerReplacement(agencySlug,workSlug){
+async function offerReplacement(agencySlug,workSlug,basis){
  try{
   const data=await getData();if(editingBlocked())return;
+  const snapshot=freshSelection(basis);if(!snapshot)return;
+  draft=snapshot.current;selectionPageIdentity=snapshot.identity;
   const candidate=data.agencies.find(a=>a.slug===agencySlug);if(!candidate)return;
-  pendingReplacement={agencySlug,workSlug,name:candidate.name};
+  pendingReplacement={agencySlug,workSlug,name:candidate.name,basis:selectionBasis()};
   replacement.innerHTML=`<button class="brief-close" data-cancel-replacement aria-label="Закрыть замену агентства">×</button><span class="eyebrow">До трёх команд в одном проекте</span><h2 id="replacement-title">Кого заменить на ${esc(candidate.name)}?</h2><p>Описание мероприятия сохранится. Вместо выбранной ниже команды появится ${esc(candidate.name)}${workSlug?' с выбранной работой':''}. Последнюю замену можно будет отменить.</p><div class="replacement-options">${draft.selection.map(s=>{const {label}=selectionView(data,s);return `<button class="secondary-action" data-replace-agency="${esc(s.agencySlug)}" data-replace-name="${esc(label)}">Заменить ${esc(label)}</button>`;}).join('')}</div><button class="replacement-cancel" data-cancel-replacement>Оставить подборку</button>`;
   pop.hidden=true;replacement.showModal();
  }catch{notice('Не удалось загрузить варианты замены','Подборка не изменилась. Попробуйте ещё раз.');}
@@ -105,6 +141,11 @@ function refresh(){
  if(document.getElementById('project-board'))renderProject();
 }
 document.addEventListener('click',async event=>{
+ const recovery=event.target.closest('[data-show-unsaved-project]');if(recovery){
+  event.preventDefault();let field=pop.querySelector('[data-unsaved-project-text]');
+  if(!field){const label=document.createElement('label');label.className='ea-unsaved-project';label.textContent='Несохранённые данные — выделите и скопируйте';field=document.createElement('textarea');field.dataset.unsavedProjectText='';field.readOnly=true;field.rows=10;label.append(field);pop.append(label);}
+  field.value=unsavedProjectText(draft);field.focus();field.select();return;
+ }
   const copyRequestId=event.target.closest('[data-copy-request-id]');if(copyRequestId){
    event.preventDefault();const id=copyRequestId.dataset.copyRequestId||'',group=copyRequestId.parentElement,status=group?.querySelector('[data-request-copy-status]');if(!id||!status)return;
    let copied=false;try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(id);copied=true;}}catch{}
@@ -119,9 +160,10 @@ document.addEventListener('click',async event=>{
  const wishes=event.target.closest('[data-add-wishes-work],[data-add-wishes-selection],[data-add-wishes-agency-prompt]');if(wishes){event.preventDefault();await openWishes(wishes);return;}
  const view=event.target.closest('[data-comparison-view]');if(view){comparisonView=view.dataset.comparisonView;rememberProjectView();renderProject();return;}
  const move=event.target.closest('[data-move-agency]');if(move){
-  const agencySlug=move.dataset.moveAgency,direction=Number(move.dataset.moveDirection),next=moveAgency(draft,agencySlug,direction);
-  if(next===draft)return;
-  if(persist(next)){
+  const snapshot=freshSelection();if(!snapshot)return;
+  const agencySlug=move.dataset.moveAgency,direction=Number(move.dataset.moveDirection),next=moveAgency(snapshot.current,agencySlug,direction);
+  if(next===snapshot.current)return;
+  if(persistFresh(snapshot,next)){
    await renderProject();
    const index=draft.selection.findIndex(item=>item.agencySlug===agencySlug),data=await getData(),name=data.agencies.find(agency=>agency.slug===agencySlug)?.name||'Недоступная команда · '+agencySlug;
    orderStatus.textContent=name+' — приоритет '+(index+1)+' в вашей подборке.';
@@ -133,42 +175,51 @@ document.addEventListener('click',async event=>{
  }
  const save=event.target.closest('[data-save-agency]');
  if(save){
-  event.preventDefault();const result=addAgency(draft,save.dataset.saveAgency,save.dataset.saveWork||null);
-  if(result.result==='full'){await offerReplacement(save.dataset.saveAgency,save.dataset.saveWork||null);return;}
+  event.preventDefault();const snapshot=freshSelection();if(!snapshot)return;
+  const result=addAgency(snapshot.current,save.dataset.saveAgency,save.dataset.saveWork||null);
+  if(result.result==='full'){await offerReplacement(save.dataset.saveAgency,save.dataset.saveWork||null,{identity:snapshot.identity,selection:snapshot.current.selection});return;}
   if(result.result==='invalid')return;
-  if(result.result!=='existing'&&!persist(result.state))return;
+  if(result.result!=='existing'&&!persistFresh(snapshot,result.state))return;
+  if(result.result==='existing'){draft=snapshot.current;selectionPageIdentity=snapshot.identity;refresh();}
   const left=3-draft.selection.length;
   notice(result.result==='updated'?'Выбранная работа обновлена':result.result==='existing'?'Агентство уже в вашем проекте':'Агентство добавлено в ваш проект',left===2?'Можно добавить ещё две команды для сравнения или перейти к описанию мероприятия.':left===1?'Можно добавить ещё одну команду для сравнения или перейти к описанию мероприятия.':'Три команды выбраны. Перейдите к сравнению и описанию мероприятия.',{selectedPair:{agencySlug:save.dataset.saveAgency,workSlug:save.dataset.saveWork}});return;
  }
  const replace=event.target.closest('[data-replace-agency]');
  if(replace&&pendingReplacement){
-  const {agencySlug,workSlug,name:nextName}=pendingReplacement;
-  const previousSelection=draft.selection.map(item=>({...item})),previousName=replace.dataset.replaceName||replace.dataset.replaceAgency;
-  const next=replaceAgency(draft,replace.dataset.replaceAgency,agencySlug,workSlug);
-  if(next.result==='replaced'&&persist(next.state)){replacementUndo?.record(previousSelection,draft.selection,previousName,nextName);replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.',{undoReplacement:true,selectedPair:{agencySlug,workSlug}});}
+  const {agencySlug,workSlug,name:nextName,basis}=pendingReplacement,snapshot=freshSelection(basis);
+  if(!snapshot){replacement.close();return;}
+  const previousSelection=snapshot.current.selection.map(item=>({...item})),previousName=replace.dataset.replaceName||replace.dataset.replaceAgency;
+  const next=replaceAgency(snapshot.current,replace.dataset.replaceAgency,agencySlug,workSlug);
+  if(next.result==='replaced'&&persistFresh(snapshot,next.state)){replacementUndo?.record(previousSelection,draft.selection,previousName,nextName);replacement.close();notice('Агентство заменено','В подборке по-прежнему три команды. Описание мероприятия сохранено.',{undoReplacement:true,selectedPair:{agencySlug,workSlug}});}
   else if(next.result!=='replaced'){replacement.close();notice('Подборка уже изменилась','Проверьте выбранные команды в «Моём проекте».');}
   return;
  }
  if(event.target.closest('[data-cancel-replacement]')){replacement.close();return;}
  if(event.target.closest('[data-continue],.ea-notice-close')){pop.hidden=true;return;}
  const remove=event.target.closest('[data-remove-agency]');if(remove){
-  const index=draft.selection.findIndex(s=>s.agencySlug===remove.dataset.removeAgency);if(index<0)return;
-  const item={...draft.selection[index]};
+  const snapshot=freshSelection();if(!snapshot)return;
+  const index=snapshot.current.selection.findIndex(s=>s.agencySlug===remove.dataset.removeAgency);if(index<0)return;
+  const item={...snapshot.current.selection[index]};
   const name=remove.dataset.agencyName||remove.closest('article')?.querySelector('h3')?.textContent||item.agencySlug;
-  if(persist(removeAgency(draft,item.agencySlug))){
-   removedAgency={item,index};const undo=document.getElementById('project-undo');
+  if(persistFresh(snapshot,removeAgency(snapshot.current,item.agencySlug))){
+   removedAgency={item,index,basis:selectionStateBasis()};const undo=document.getElementById('project-undo');
    if(undo){undo.hidden=false;document.getElementById('project-undo-status').textContent=name+' убрано из подборки. Можно вернуть вместе с сохранённым выбором работы.';undo.querySelector('button').focus();}
   }return;
  }
  if(event.target.closest('[data-undo-removal]')&&removedAgency){
-  const restored=restoreAgency(draft,removedAgency.item,removedAgency.index);
+  const snapshot=freshSelection(removedAgency.basis);if(!snapshot){
+   if(selectionFailure==='changed')removedAgency.basis=selectionStateBasis();
+   else if(selectionFailure==='project'){removedAgency=null;const undo=document.getElementById('project-undo');if(undo)undo.hidden=true;notice('Проект изменился','Прежнее удаление нельзя отменить в новом проекте.');}
+   return;
+  }
+  const restored=restoreAgency(snapshot.current,removedAgency.item,removedAgency.index);
   const status=document.getElementById('project-undo-status');
   if(restored.result==='full'){status.textContent='В подборке уже три команды. Уберите одну, затем верните агентство.';return;}
   if(restored.result==='existing'){status.textContent='Эта команда уже в подборке. Ваш текущий выбор кейса сохранён.';return;}
-  if(restored.result==='restored'&&persist(restored.state)){removedAgency=null;document.getElementById('project-undo').hidden=true;document.getElementById('project-comparison').focus();}
+  if(restored.result==='restored'&&persistFresh(snapshot,restored.state)){removedAgency=null;document.getElementById('project-undo').hidden=true;document.getElementById('project-comparison').focus();}
   return;
  }
- const occasion=event.target.closest('[data-occasion]');if(occasion&&!draft.brief.format&&(Object.hasOwn(occasions,occasion.dataset.occasion)||occasion.dataset.occasion==='other'))persist(updateBrief(draft,{format:occasion.dataset.occasion}),{quiet:true});
+ const occasion=event.target.closest('[data-occasion]');if(occasion&&(Object.hasOwn(occasions,occasion.dataset.occasion)||occasion.dataset.occasion==='other')){const snapshot=freshSelection();if(snapshot&&!snapshot.current.brief.format)persistFresh(snapshot,updateBrief(snapshot.current,{format:occasion.dataset.occasion}));}
  const editBrief=event.target.closest('[data-edit-brief]');if(editBrief)openBrief(editBrief.dataset.briefField);
  const editWork=event.target.closest('[data-review-work]');if(editWork){
   event.preventDefault();setHelpSelection(true);comparisonView='cards';rememberProjectView();await renderProject();
@@ -190,7 +241,16 @@ document.addEventListener('click',async event=>{
  if(event.target.closest('[data-save-draft]')){
   if(savingDraft||(available&&draft.request))return;
   savingDraft=true;const button=document.querySelector('[data-save-draft]');button.disabled=true;
-  try{const result=submitLocal(draft,'EA-LOCAL-'+Date.now().toString(36).toUpperCase(),new Date().toISOString());focusRequest=true;if(!persist(result.state))focusRequest=false;}
+  try{
+   let snapshot;
+   if(available){snapshot=freshSelection();if(!snapshot)return;}
+   else{
+    const identity=selectionIdentity(),raw=localStorage.getItem(KEY);
+    if(!unsavedBaseline||!identity||identity.marker!==unsavedBaseline.identity.marker||raw!==unsavedBaseline.raw){notice('Не удалось безопасно сохранить',recoveryHelp);return;}
+    snapshot={identity,raw,current:draft};
+   }
+   const result=submitLocal(snapshot.current,'EA-LOCAL-'+Date.now().toString(36).toUpperCase(),new Date().toISOString());focusRequest=true;if(!persistFresh(snapshot,result.state))focusRequest=false;
+  }catch{notice('Не удалось сохранить черновик',recoveryHelp);}
   finally{savingDraft=false;button.disabled=sending||Boolean(available&&draft.request);}
  }
 
@@ -205,6 +265,7 @@ addEventListener('storage',e=>{
   if(e.key===null||e.newValue===null)contactEditor.invalidate();
   contactEditor.reconcile();
  }else try{draft=readDraft(localStorage);available=true;}catch{available=false;}
+ if(available)markSelectionSaved();
  document.dispatchEvent(new CustomEvent('ea:inline-note-external'));
  refresh();
 });
@@ -286,6 +347,7 @@ async function renderProject(){
   }).join(''):`<div class="project-empty"><h3>Команды можно выбрать позже.</h3><p>Добавьте до трёх агентств для сравнения.</p><a class="primary-action" href="/catalog">Добавить агентство ↗</a></div>`;
   host.querySelectorAll('[data-agency-details]').forEach(details=>details.addEventListener('toggle',()=>{if(details.open)expandedAgencies.add(details.dataset.agencyDetails);else expandedAgencies.delete(details.dataset.agencyDetails);rememberProjectView();}));
   renderComparison(data,entries);
+  selectionDisplayed=selectionStateBasis();
   renderHandoff(data);
  }catch{host.innerHTML='<div class="project-empty"><h3>Не удалось загрузить команды.</h3><p>Обновите страницу, чтобы повторить загрузку. Описание мероприятия можно заполнить сейчас.</p></div>';renderHandoff();}
 }
@@ -378,6 +440,7 @@ async function sendInquiry({recover=false}={}){
 }
 function openBrief(field){
  if(editingBlocked())return;
+ if(unsavedProject){notice('Проект не сохранён','Сначала сохраните черновик проекта. Если проект изменился в другой вкладке, скачайте черновик перед обновлением страницы.');return;}
  const dialog=document.getElementById('brief-dialog');if(!dialog){location.assign('/my-project?edit=1');return;}
  briefEditor?.open(field);
 }
@@ -478,9 +541,9 @@ async function openWishes(trigger){
     draft=current;
     if(wishesBase!==current.brief.description){if(wishesDialog.querySelector('#wishes-addition').value===wishesGenerated)regenerateWishes();updateWishesPreview('Пожелания изменились. Проверьте обновлённый предпросмотр и подтвердите добавление ещё раз.');return;}
     const merged=updateWishesPreview();if(merged.result!=='added')return;const previousDescription=current.brief.description;
-    try{draft=writeDraft(localStorage,updateBrief(current,{description:merged.text}));available=true;lastReceipt=null;sendError='';}
+    try{draft=writeDraft(localStorage,updateBrief(current,{description:merged.text}));available=true;markSelectionSaved();lastReceipt=null;sendError='';}
     catch{document.getElementById('project-storage-note')?.removeAttribute('hidden');wishesDialog.querySelector('[data-wishes-status]').textContent='Не удалось сохранить пожелания. Разрешите хранение данных сайта и попробуйте снова.';return;}
-    wishesUndo?.record(previousDescription,merged.text);await renderProject();wishesDialog.close();
+    wishesUndo?.record(previousDescription,merged.text,wishesProject);await renderProject();wishesDialog.close();
     const status=document.getElementById('project-wishes-status');if(status){if(!wishesUndo)status.textContent='Пожелания дополнены. Заявка ещё не отправлена.';status.focus({preventScroll:true});}else if(wishesPrompt)notice('Вопрос добавлен в пожелания','Он сохранён в описании проекта. Заявка ещё не отправлена.');
    });
   }
@@ -500,12 +563,12 @@ function updateBriefDescriptionCount(form){
 const briefForm=document.getElementById('event-brief-form');
 if(briefForm){
  const dialog=document.getElementById('brief-dialog');
- briefUndo=setupBriefSessionUndo({form:briefForm,dialog,canUndo:current=>!sending&&!inquiries.hasPending(current)&&!inquiries.accepted(current),onRestored:(next,context)=>{draft=next;available=true;briefEditor?.restored(next,context);syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);refresh();}});
- briefEditor=setupBriefEditor({form:briefForm,dialog,undo:briefUndo,canEdit:()=>!sending,
+ briefUndo=setupBriefSessionUndo({form:briefForm,dialog,canUndo:current=>!sending&&!unsavedProject&&!inquiries.hasPending(current)&&!inquiries.accepted(current),onRestored:(next,context)=>{draft=next;available=true;markSelectionSaved();briefEditor?.restored(next,context);syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);refresh();}});
+ briefEditor=setupBriefEditor({form:briefForm,dialog,undo:briefUndo,canEdit:()=>!sending&&!unsavedProject,blockedMessage:()=>unsavedProject?'Сначала сохраните черновик проекта. Ввод остаётся в окне.':'Заявка отправляется. Ввод остаётся в окне; дождитесь результата и сохраните описание.',
   getFallbackBrief:()=>draft.brief,
   updateForm:()=>{syncUnknown(briefForm);updateBriefDescriptionCount(briefForm);},
-  onRead:next=>{draft=next;available=true;},
-  onSaved:next=>{draft=next;available=true;orderStatus.textContent='';lastReceipt=null;sendError='';refresh();},
+  onRead:next=>{if(!available)return;draft=next;markSelectionSaved();},
+  onSaved:next=>{draft=next;available=true;markSelectionSaved();orderStatus.textContent='';lastReceipt=null;sendError='';refresh();},
   onClose:()=>refresh(),
   onSubmit:()=>{if(helpMode)focusContact();}
  });
@@ -514,9 +577,9 @@ if(briefForm){
 const contactForm=document.getElementById('project-contact-form');
 const contactPresentation=contactForm?setupContactPresentation(contactForm):null;
 if(contactForm){
- contactEditor=setupContactEditor({form:contactForm,presentation:contactPresentation,canEdit:()=>!sending,
-  onRead:next=>{draft=next;available=true;},
-  onSaved:next=>{draft=next;available=true;orderStatus.textContent='';lastReceipt=null;sendError='';selectionSendError=false;refresh();},
+ contactEditor=setupContactEditor({form:contactForm,presentation:contactPresentation,canEdit:()=>!sending&&!unsavedProject,blockedMessage:()=>unsavedProject?'Сначала сохраните черновик проекта. Введённый контакт остаётся в полях.':'Дождитесь завершения отправки, затем сохраните введённый контакт.',
+  onRead:next=>{if(!available)return;draft=next;markSelectionSaved();},
+  onSaved:next=>{draft=next;available=true;markSelectionSaved();orderStatus.textContent='';lastReceipt=null;sendError='';selectionSendError=false;refresh();},
   onStorageError:()=>{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');}
  });
  contactForm.addEventListener('ea:contact-editor-state',()=>renderHandoff());
@@ -554,7 +617,7 @@ document.addEventListener('ea:reference-note-edit',event=>{
    draft=current;syncFields(currentText);if(status)status.textContent='Показан актуальный текст заметки.';
    change.result={ok:false,code:'changed'};
   }else{
-   draft=writeDraft(localStorage,updateWorkNote(current,agencySlug,workSlug,change.value));available=true;
+   draft=writeDraft(localStorage,updateWorkNote(current,agencySlug,workSlug,change.value));available=true;markSelectionSaved();
    syncFields(change.value);if(status)status.textContent='Сохранено · '+change.value.length+' / 1000';
    change.result={ok:true};
   }
@@ -570,7 +633,7 @@ document.addEventListener('input',event=>{
  const status=field.closest('.work-note-block').querySelector('[role="status"]');
  if(sending){field.value=draft.workNotes[workNoteKey(field.dataset.workNote,field.dataset.noteWork)]||'';status.textContent='Заявка отправляется. Дождитесь результата, затем измените заметку.';syncComparisonNote(field);return;}
  if(!available){inlineNotes.defer(field);event.stopImmediatePropagation();return;}
- try{const result=inlineNotes.input(field);if(result.current)draft=result.current;if(!result.ok){event.stopImmediatePropagation();return;}available=true;status.textContent='Сохранено · '+field.value.length+' / 1000';}
+ try{const result=inlineNotes.input(field);if(result.current)draft=result.current;if(!result.ok){event.stopImmediatePropagation();return;}available=true;markSelectionSaved();status.textContent='Сохранено · '+field.value.length+' / 1000';}
  catch{available=false;event.stopImmediatePropagation();status.textContent='Не удалось сохранить. Не закрывайте страницу: разрешите хранение данных и повторите ввод.';}
  document.getElementById('project-storage-note').hidden=available;
  document.querySelectorAll('[data-work-note]').forEach(other=>{if(other!==field&&other.dataset.workNote===field.dataset.workNote&&other.dataset.noteWork===field.dataset.noteWork)other.value=field.value;});
@@ -625,16 +688,22 @@ function renderComparison(data,entries){
 
 setupSelectionShare({getState:()=>draft,getData});
 const projectExporter=setupProjectExport({getState:()=>draft,getData,briefRows,workRole:role});
-wishesUndo=setupWishesUndo({getDescription:()=>draft.brief.description,canUndo:()=>!sending,restore:description=>{
- try{draft=writeDraft(localStorage,updateBrief(draft,{description}));available=true;lastReceipt=null;sendError='';refresh();return true;}
- catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return false;}
+wishesUndo=setupWishesUndo({getDescription:()=>draft.brief.description,canUndo:()=>!sending,restore:(description,expected,project)=>{
+ if(!available)return 'unsaved';
+ try{
+  const marker=referenceProjectMarker();if(marker===null)return 'failed';
+  if(marker!==project||localStorage.getItem(KEY)===null)return 'changed';
+  const current=readDraft(localStorage),afterRead=referenceProjectMarker();
+  if(afterRead===null)return 'failed';
+  if(afterRead!==project||localStorage.getItem(KEY)===null||current.brief.description!==expected)return 'changed';
+  draft=writeDraft(localStorage,updateBrief(current,{description}));available=true;markSelectionSaved();lastReceipt=null;sendError='';refresh();return 'saved';
+ }catch{document.getElementById('project-storage-note')?.removeAttribute('hidden');return 'failed';}
 }});
-replacementUndo=setupReplacementUndo({getSelection:()=>draft.selection,canUndo:()=>!sending,restore:(selection,expected)=>{
+replacementUndo=setupReplacementUndo({getSelection:()=>draft.selection,getIdentity:()=>selectionPageIdentity,canUndo:()=>!sending,restore:(selection,expected,project)=>{
  if(!available)return 'failed';
  try{
-  const current=readDraft(localStorage);
-  if(JSON.stringify(current.selection)!==JSON.stringify(expected)){draft=current;refresh();return 'changed';}
-  draft=writeDraft(localStorage,{...current,selection,request:null});available=true;lastReceipt=null;sendError='';refresh();return 'saved';
+  const snapshot=freshSelection({identity:project,selection:expected});if(!snapshot)return selectionFailure==='failed'?'failed':'changed';
+  return persistFresh(snapshot,{...snapshot.current,selection,request:null})?'saved':'failed';
  }catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return 'failed';}
 },onResult:(result,name)=>{
  if(result==='saved'){
@@ -648,7 +717,7 @@ if(inquiries.accepted(draft))replacementUndo.clear();
 setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=>notice('Личная заметка',message),onSaved:async(next,{agencySlug,workSlug,value,trigger,marker,path})=>{
  const savedNotice=noticeNote?.button===trigger&&noticeNote.agencySlug===agencySlug&&noticeNote.workSlug===workSlug&&noticeNote.marker===marker?noticeNote:null;
  // A private note preserves request/receipt state and all other freshly read fields.
- draft=next;available=true;
+ draft=next;available=true;markSelectionSaved();
  document.getElementById('project-storage-note')?.setAttribute('hidden','');
  const fields=[...document.querySelectorAll('textarea[data-work-note]')].filter(field=>field.dataset.workNote===agencySlug&&field.dataset.noteWork===workSlug);
  for(const field of fields){
@@ -668,7 +737,7 @@ setupProjectNoteEditor({getData,canEdit:()=>available&&!sending,onError:message=
  savedNotice.status.textContent=message;
 }});
 setupProjectQuestionAnswer({getData,canEdit:()=>available&&!sending,onError:message=>notice('Ответ на вопрос',message),onSaved:async(next,{agencySlug,workSlug,value})=>{
- draft=next;available=true;
+ draft=next;available=true;markSelectionSaved();
  document.getElementById('project-storage-note')?.setAttribute('hidden','');
  const fields=[...document.querySelectorAll('textarea[data-work-note]')].filter(field=>field.dataset.workNote===agencySlug&&field.dataset.noteWork===workSlug);
  for(const field of fields){
@@ -678,18 +747,19 @@ setupProjectQuestionAnswer({getData,canEdit:()=>available&&!sending,onError:mess
  fields[0]?.dispatchEvent(new CustomEvent('ea:work-note-updated',{bubbles:true,detail:{agencySlug,workSlug,reapplyReferenceFilters:true}}));
  orderStatus.textContent='Ответ сохранён в личной заметке. Пожелания и заявка не изменены.';
 }});
-setupProjectWorkPicker({getState:()=>draft,getData,canChoose:()=>!sending,onError:message=>notice('Выбор работы',message),onChoose:async({agencySlug,workSlug,expectedWorkSlug})=>{
+setupProjectWorkPicker({getState:()=>draft,getData,getBasis:selectionBasis,validateBasis:basis=>{const snapshot=freshSelection(basis);if(!snapshot)return false;draft=snapshot.current;selectionPageIdentity=snapshot.identity;return true;},canChoose:()=>available&&!sending,onError:message=>notice('Выбор работы',message),onChoose:async({agencySlug,workSlug,expectedWorkSlug,basis})=>{
  if(!available||sending)return 'failed';
  try{
-  const current=readDraft(localStorage),entry=current.selection.find(item=>item.agencySlug===agencySlug);
+  const snapshot=freshSelection(basis);if(!snapshot)return selectionFailure==='project'?'project-changed':selectionFailure;
+  const current=snapshot.current,entry=current.selection.find(item=>item.agencySlug===agencySlug);
   if(!entry||entry.workSlug!==expectedWorkSlug){draft=current;refresh();await renderProject();return 'changed';}
-  draft=writeDraft(localStorage,{...current,selection:current.selection.map(item=>item.agencySlug===agencySlug?{...item,workSlug}:item),request:null});
-  available=true;lastReceipt=null;sendError='';refresh();await renderProject();
+  if(!persistFresh(snapshot,{...current,selection:current.selection.map(item=>item.agencySlug===agencySlug?{...item,workSlug}:item),request:null}))return 'failed';
+  await renderProject();
   orderStatus.textContent=workSlug?'Работа для сравнения обновлена. Личные заметки к другим работам сохранены.':'Агентство осталось в сравнении без выбранной работы. Личные заметки сохранены.';
   return 'saved';
  }catch{available=false;document.getElementById('project-storage-note')?.removeAttribute('hidden');return 'failed';}
 }});
-const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending,onExportCopy:projectExporter?.openSavedCopy});
+const accountCopies=setupAccountProjectCopies({getState:()=>draft,getData,briefRows,formatName,canRestore:()=>!sending&&!unsavedProject,blockedMessage:()=>unsavedProject?'Сначала сохраните черновик. Если проект изменился в другой вкладке, скачайте черновик перед обновлением страницы.':'Дождитесь завершения отправки заявки или сохранения копии, затем повторите действие.',onExportCopy:projectExporter?.openSavedCopy});
 setupProjectHistory({briefRows,formatName,onReuse:accountCopies?.openReceiptProject});
 for(const type of ['ea:project-copy-restored','ea:project-started'])document.addEventListener(type,()=>{
  try{inlineNotes.reconcile(readDraft(localStorage),{projectChanged:true});}catch{available=false;}
@@ -697,18 +767,20 @@ for(const type of ['ea:project-copy-restored','ea:project-started'])document.add
  document.getElementById('project-undo')?.setAttribute('hidden','');
  if(contactEditor){contactEditor.invalidate();contactEditor.resetFromProject({focus:false});}
  else try{draft=readDraft(localStorage);available=true;}catch{available=false;}
+ if(available)markSelectionSaved();
  refresh();
 });
 setupProjectSections();
 
 document.addEventListener('change',async event=>{
  const field=event.target.closest('[data-selected-work]');if(!field)return;
- const agencySlug=field.dataset.selectedWork,workSlug=field.value||null;
+ const agencySlug=field.dataset.selectedWork,workSlug=field.value||null,basis=selectionBasis();
  const restore=()=>{field.value=draft.selection.find(item=>item.agencySlug===agencySlug)?.workSlug||'';};
  if(editingBlocked()){restore();return;}
  const data=await getData();
  if(editingBlocked()){restore();return;}
  if(workSlug&&!data.projects.some(p=>p.slug===workSlug&&(p.agencySlug===agencySlug||p.agencySlugs?.includes(agencySlug))))return;
- persist({...draft,selection:draft.selection.map(s=>s.agencySlug===agencySlug?{...s,workSlug}:s),request:null});
+ const snapshot=freshSelection(basis);if(!snapshot){restore();return;}
+ if(!persistFresh(snapshot,{...snapshot.current,selection:snapshot.current.selection.map(s=>s.agencySlug===agencySlug?{...s,workSlug}:s),request:null})){restore();return;}
  await renderProject();document.getElementById('work-choice-'+agencySlug)?.focus({preventScroll:true});
 });

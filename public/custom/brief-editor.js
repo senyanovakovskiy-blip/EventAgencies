@@ -31,7 +31,7 @@ const experiencePrompts=[
 ];
 
 // The form is a local input buffer. Only explicitly edited groups may be written.
-export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onClose,onSubmit,getFallbackBrief,canEdit=()=>true}){
+export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onClose,onSubmit,getFallbackBrief,canEdit=()=>true,blockedMessage=()=> 'Заявка отправляется. Ввод остаётся в окне; дождитесь результата и сохраните описание.'}){
  if(!form||!dialog)return null;
  const doc=form.ownerDocument,status=form.querySelector('#brief-save-status');
  const promptBox=form.querySelector('[data-brief-prompt-suggestions]'),promptList=form.querySelector('[data-brief-prompt-list]'),promptStatus=form.querySelector('[data-brief-prompt-status]'),description=form.elements.namedItem('description');
@@ -114,7 +114,7 @@ export function setupBriefEditor({form,dialog,undo,updateForm,onRead,onSaved,onC
  }
  function save(groups){
   if(!session)return false;
-  if(!canEdit()){session.error='Заявка отправляется. Ввод остаётся в окне; дождитесь результата и сохраните описание.';paint();return false;}
+  if(!canEdit()){session.error=blockedMessage();paint();return false;}
   updateForm();
   const state=reconcile();if(!state)return false;
   const requested=groups||pending(),input=displayed();

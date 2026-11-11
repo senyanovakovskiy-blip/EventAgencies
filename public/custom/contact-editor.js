@@ -17,7 +17,7 @@ const record=value=>value!==null&&typeof value==='object'&&!Array.isArray(value)
  * onSaved may render after the saved groups' baselines have been advanced.
  * resetFromProject is an explicit discard/accept operation, never a render hook.
  */
-export function setupContactEditor({form,presentation,onRead,onSaved,onStorageError,canEdit=()=>true}){
+export function setupContactEditor({form,presentation,onRead,onSaved,onStorageError,canEdit=()=>true,blockedMessage=()=> 'Дождитесь завершения отправки, затем сохраните введённый контакт.'}){
  if(!form)return null;
  const doc=form.ownerDocument,win=doc.defaultView;
  const fields=Object.fromEntries(keys.map(key=>[key,form.elements.namedItem(key)]));
@@ -58,7 +58,7 @@ export function setupContactEditor({form,presentation,onRead,onSaved,onStorageEr
  function paint(){
   const unsaved=pending(),conflicts=groups.filter(group=>session.conflicts.has(group.id)),editable=canEdit();
   const invalidText=session.invalid==='resume'?'Страница вернулась из истории. Ввод сохранён в полях; примите контакт текущего проекта перед продолжением.':session.invalid==='unreadable'?'Не удалось открыть сохранённый контакт. Ввод остаётся в полях; повторите чтение проекта.':session.invalid?'Проект изменился. Ввод остаётся в полях и не будет перенесён в другой проект.':'';
-  const text=invalidText?(invalidText+(session.error?' '+session.error:'')):conflicts.length?'В проекте изменились: '+conflicts.map(group=>group.label).join(', ')+'. Ваш ввод оставлен в полях. Примите актуальные значения, чтобы продолжить.'+(session.error?' '+session.error:''):session.error|| (unsaved.length?(editable?'Есть несохранённые изменения контакта. Повторите сохранение.':'Дождитесь завершения отправки, затем сохраните введённый контакт.'):session.saved?'Контакт сохранён в этом браузере.':'Контакт сохраняется в этом браузере по мере заполнения.');
+  const text=invalidText?(invalidText+(session.error?' '+session.error:'')):conflicts.length?'В проекте изменились: '+conflicts.map(group=>group.label).join(', ')+'. Ваш ввод оставлен в полях. Примите актуальные значения, чтобы продолжить.'+(session.error?' '+session.error:''):session.error|| (unsaved.length?(editable?'Есть несохранённые изменения контакта. Повторите сохранение.':blockedMessage()):!editable?blockedMessage():session.saved?'Контакт сохранён в этом браузере.':'Контакт сохраняется в этом браузере по мере заполнения.');
   if(status.textContent!==text)status.textContent=text;
   recovery.hidden=!session.invalid&&!conflicts.length&&!session.error&&!unsaved.length;
   explanation.textContent=session.invalid?'Принятие заменит имя, способ связи и контакт актуальными значениями проекта. Если нужен введённый текст, скопируйте его перед принятием.':conflicts.length?'Принятие заменит только указанную группу полей. Остальной ввод останется на странице.':'Введённый текст остаётся на странице. Не закрывайте её, пока изменения не сохранены.';

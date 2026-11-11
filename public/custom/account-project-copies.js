@@ -16,7 +16,7 @@ const dateLabel=value=>new Intl.DateTimeFormat('ru-RU',{day:'numeric',month:'sho
 const errorMessage=error=>({authentication_required:'Войдите в свой аккаунт, чтобы открыть сохранённые копии.',catalog_unavailable:'Не удалось загрузить каталог для просмотра копии. Вернитесь к списку и откройте копию ещё раз.',copy_limit:'В аккаунте уже 100 копий. Удалите ненужную копию и повторите сохранение.',copy_too_large:'Копия слишком большая. Сохраните её без заметок или уменьшите количество примеров.',too_large:'Копия слишком большая. Сохраните её без заметок или уменьшите количество примеров.',browser_storage_unavailable:'В браузере недоступно сохранение. Освободите место или разрешите хранение данных сайта и попробуйте снова.',restore_recovery_required:'Не удалось полностью восстановить данные браузера. Предыдущий вариант сохранён — освободите место и откройте его через кнопку возврата.',sending_in_progress:'Дождитесь завершения отправки заявки, затем загрузите копию.',not_found:'Этой копии уже нет в вашем аккаунте.',copy_deleted:'Этот запрос сохранения относится к уже удалённой копии. Нажмите «Сохранить новую копию» ещё раз, чтобы начать новое сохранение.'}[error?.code]||'Не удалось выполнить действие. Попробуйте ещё раз.');
 const validItem=item=>item&&Number.isSafeInteger(item.id)&&item.id>0&&typeof item.name==='string'&&Number.isFinite(Date.parse(item.createdAt))&&['teams','references','notes'].every(key=>Number.isSafeInteger(item[key])&&item[key]>=0);
 
-export function setupAccountProjectCopies({getState,getData,briefRows,formatName,canRestore=()=>true,onExportCopy=null}){
+export function setupAccountProjectCopies({getState,getData,briefRows,formatName,canRestore=()=>true,blockedMessage=()=> 'Дождитесь завершения отправки заявки или сохранения копии, затем повторите действие.',onExportCopy=null}){
  const opener=document.querySelector('[data-open-account-copies]');if(!opener||opener.hidden)return;
  const accountStatus=document.querySelector('[data-account-copy-status]');
  const banner=document.createElement('aside');banner.className='project-copy-undo';banner.hidden=true;banner.innerHTML='<p role="status">Доступен предыдущий вариант проекта в этом браузере.</p><button class="secondary-action" type="button" data-open-previous-project>Вернуть предыдущий вариант</button>';
@@ -235,7 +235,7 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
   try{
    if(mode==='delete'){await copyRequest('/api/project-copies/'+selected.id,{method:'DELETE'});showManager();await loadList(page);saveStatus.textContent='Копия «'+selected.name+'» удалена.';}
    else{
-    if(!canRestore())throw Object.assign(new Error('sending_in_progress'),{code:'sending_in_progress'});
+    if(!canRestore()){actionStatus.textContent=blockedMessage();return;}
     restoreProjectCopy(selected.loadSnapshot,getState,{preserveReferences:selected.loadScope==='event'});syncUndo();
     banner.querySelector('p').textContent=(selected.loadScope==='references'?'Из копии «'+selected.name+'» добавлено примеров: '+selected.mergeSummary.addedReferences+', заметок: '+selected.mergeSummary.addedNotes+'. Текущие данные проекта сохранены.':(selected.loadScope==='event'?'Загружены данные события из копии «':selected.partial?'Загружены доступные элементы копии «':'Загружен проект «')+selected.name+'».')+' Предыдущий вариант доступен для возврата.';
     returnFocus=document.getElementById(selected.loadScope==='references'?'work-references':'project-overview')||document.getElementById('project-overview');dialog.close();returnFocus?.scrollIntoView({block:'start'});returnFocus?.focus({preventScroll:true});
@@ -246,7 +246,7 @@ export function setupAccountProjectCopies({getState,getData,briefRows,formatName
  banner.querySelector('button').addEventListener('click',()=>{
   const snapshot=previousProject();if(!snapshot)return;returnFocus=banner.querySelector('button');if(!dialog.open)dialog.showModal();showPreview({name:'Предыдущий вариант в этом браузере',snapshot,localPrevious:true});
  });
- setupNewProject({anchor:opener,getState,canStart:()=>!busy&&canRestore(),onStarted:()=>{syncUndo();banner.querySelector('p').textContent='Создан новый проект. Предыдущий вариант доступен для возврата в этом браузере.';},onStorageIssue:syncUndo});
+ setupNewProject({anchor:opener,getState,canStart:()=>!busy&&canRestore(),blockedMessage,onStarted:()=>{syncUndo();banner.querySelector('p').textContent='Создан новый проект. Предыдущий вариант доступен для возврата в этом браузере.';},onStorageIssue:syncUndo});
  syncUndo();
- return {openReceiptProject:setupProjectFromInquiry({getState,getData,briefRows,canCreate:()=>!busy&&canRestore(),onCreated:id=>{syncUndo();banner.querySelector('p').textContent='Создан проект на основе заявки '+id+'. Предыдущий вариант доступен для возврата в этом браузере.';},onStorageIssue:syncUndo})};
+ return {openReceiptProject:setupProjectFromInquiry({getState,getData,briefRows,canCreate:()=>!busy&&canRestore(),blockedMessage,onCreated:id=>{syncUndo();banner.querySelector('p').textContent='Создан проект на основе заявки '+id+'. Предыдущий вариант доступен для возврата в этом браузере.';},onStorageIssue:syncUndo})};
 }
