@@ -1815,24 +1815,26 @@
   },
   {
     "slug": "portfolio-avm-media-d9af9bf",
-    "title": "VII церемония премии «ТЭФИ-KIDS»",
-    "fullTitle": "VII церемония премии «ТЭФИ-KIDS»",
-    "year": "—",
-    "eventDate": "Дата не указана",
+    "title": "VII церемония премии «ТЭФИ-KIDS» 2025",
+    "fullTitle": "VII церемония премии «ТЭФИ-KIDS» 2025",
+    "year": "2025",
+    "eventDate": "27 октября 2025",
     "category": "Портфолио",
-    "format": "Работа из портфолио",
-    "client": "AVM Media",
+    "format": "Церемония национальной премии в сфере детского и семейного кино и телевидения",
+    "client": "",
     "agencySlug": "avm-media",
     "agencySlugs": [
       "avm-media"
     ],
     "agencyUrl": "/agency/avm-media",
-    "types": [],
-    "role": "",
-    "industry": "Место не указано",
-    "description": "Работа из портфолио AVM Media. Роль команды — в первоисточнике.",
-    "seoDescription": "Работа из портфолио AVM Media. Роль команды — в первоисточнике.",
-    "source": "https://avmmedia.ru/projects/vii-czeremoniya-nagrazhdeniya-premii-tefi-kids/",
+    "types": [
+      "culture"
+    ],
+    "role": "AVM Media включает фотокейс церемонии в своё портфолио; открытые материалы не раскрывают объём работ команды.",
+    "industry": "Детское, юношеское и семейное кино и телевидение",
+    "description": "27 октября 2025 года в театре Et Cetera объявили лауреатов VII премии «ТЭФИ-KIDS». 259 работ — в 12 номинациях; вечер вели Александр Олешко и Нонна Гришаева. Среди лауреатов — «Голос. Дети», «Сто лет тому вперёд» и «Лунтик. Возвращение домой». Фотокейс входит в портфолио AVM Media.",
+    "seoDescription": "VII «ТЭФИ-KIDS» в театре Et Cetera в Москве: церемония 27 октября 2025 года, 259 работ, 12 номинаций, ведущие Александр Олешко и Нонна Гришаева, победители «Голос. Дети», «Сто лет тому вперёд» и «Лунтик». Фотокейс AVM Media.",
+    "source": "https://avmmedia.ru/news/czeremoniya-nagrazhdeniya-laureatov-premii-tefi-kids-2025/",
     "image": "/custom/library/714d7d087a.webp",
     "imageMobile": "/custom/library/714d7d087a.webp",
     "ogImage": "/custom/library/714d7d087a.webp",
@@ -1880,13 +1882,23 @@
     "reelImage": "/custom/optimized/da864b68f0aa86-1600.webp",
     "reelMobile": "/custom/optimized/da864b68f0aa86-960.webp",
     "imageRatio": 1.4823965410747375,
-    "eventCity": "",
+    "eventCity": "Москва",
     "guestLabel": "",
     "occasions": [],
     "preview": "/custom/optimized/da864b68f0aa86-960.webp",
     "imageWidth": 2400,
     "imageHeight": 1619,
-    "previewSrcSet": "/custom/optimized/da864b68f0aa86-640.webp 640w, /custom/optimized/da864b68f0aa86-960.webp 960w, /custom/optimized/da864b68f0aa86-1600.webp 1600w"
+    "previewSrcSet": "/custom/optimized/da864b68f0aa86-640.webp 640w, /custom/optimized/da864b68f0aa86-960.webp 960w, /custom/optimized/da864b68f0aa86-1600.webp 1600w",
+    "sources": [
+      {
+        "url": "https://www.tefi.ru/news/stali_izvestny_pobediteli_rossiyskoy_natsionalnoy_premii_v_oblasti_detskogo-_yunosheskogo-_semeynogo/",
+        "label": "Лауреаты на сайте Академии российского телевидения"
+      },
+      {
+        "url": "https://avmmedia.ru/cases/",
+        "label": "Проекты AVM Media"
+      }
+    ]
   },
   {
     "slug": "portfolio-lyudi-dobrye-ba9ea67",
