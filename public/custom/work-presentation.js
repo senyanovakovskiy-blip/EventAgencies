@@ -1,5 +1,6 @@
 export const escapeHtml=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function workSummary(p){if(p.presentation?.lead)return p.presentation.lead;return (p.summary||p.description||p.format||p.category||'').replace(/Фотографии этого проекта пока не добавлены\.?/g,'').trim().split(/(?<=[.!?])\s+/)[0];}
+export function workCardScale(p){const label=String(p?.guestLabel||'').trim();if(!/\d/u.test(label)||label.length>70||/[;|]/u.test(label)||/(?:разниц|не заверш|не объяс|не подтвержд|не указаны|не раскры|может быть|по разным)/iu.test(label))return '';return `Масштаб: ${label}`;}
 export function referenceAction(p){return `<button class="reference-button" data-reference-work="${escapeHtml(p.slug)}" aria-pressed="false">Сохранить как пример</button>`;}
 export function workAgencies(work,agencyMap){
  const slugs=[...new Set([work.agencySlug,...(Array.isArray(work.agencySlugs)?work.agencySlugs:[])].filter(Boolean))];
