@@ -13,6 +13,29 @@ export const readIdeaPitches=(form,fallback=[])=>preparationViews.get(form)?.rea
 export const readIdeaSettings=(form,fallback=[])=>preparationViews.get(form)?.readSettings()||normalizeIdeaSettings(fallback);
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const text=value=>Array.isArray(value)?value.join(', '):typeof value==='string'?value:'';
+export function ideaReactionControls(button){
+ const card=button?.closest('.event-idea-card');
+ return {detailField:card?.querySelector('[data-event-idea-reaction-detail]')||null,noteField:card?.querySelector('[data-event-idea-reaction-note]')||null,transferStatus:card?.querySelector('[data-event-idea-feedback-transfer-status]')||null};
+}
+export function selectedFeedbackPhrase(value,start,end){
+ const source=typeof value==='string'?value:'';
+ if(!Number.isSafeInteger(start)||!Number.isSafeInteger(end)||start<0||end>source.length||end<=start)return {error:'Сначала выделите в записи разговора слова клиента, относящиеся к этому варианту.'};
+ const phrase=source.slice(start,end).trim();
+ if(!phrase)return {error:'Выделите непустую фразу клиента.'};
+ if(phrase.length>240)return {error:'Выделенная фраза длиннее 240 символов. Выберите более короткий точный фрагмент.'};
+ const lineStart=source.lastIndexOf('\n',start-1)+1,nextBreak=source.indexOf('\n',end),line=source.slice(lineStart,nextBreak<0?source.length:nextBreak);
+ if(/[\r\n\[\]]/.test(phrase)||/(?:Источник варианта|Клиент отметил|Комментарий клиента)\s*:|·\s*(?:Выбрал для проработки|Заинтересовало, нужны детали|Сомневается, нужны уточнения|Не подошло)\s*:\s*«/iu.test(line))return {error:'Выделите только одну фразу клиента без служебных отметок.'};
+ return {phrase};
+}
+export function transferSelectedFeedbackPhrase(button,feedback){
+ const {noteField}=ideaReactionControls(button);
+ if(!feedback||!noteField)return {error:'Не удалось открыть запись разговора и заметку этого варианта.'};
+ if(noteField.value.trim())return {error:'Заметка этого варианта уже заполнена. Очистите её, если хотите взять другую фразу.'};
+ const selected=selectedFeedbackPhrase(feedback.value,feedback.selectionStart,feedback.selectionEnd);
+ if(selected.error)return selected;
+ noteField.value=selected.phrase;
+ return {phrase:selected.phrase,noteField};
+}
 const worksFor=(catalog,slug)=>catalog.projects.filter(p=>p.agencySlug===slug||p.agencySlugs?.includes(slug));
 const sourceLink=(url,label)=>{try{const parsed=new URL(url);return ['https:','http:'].includes(parsed.protocol)?`<a href="${esc(parsed.href)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`:'';}catch{return '';}};
 const fact=(label,value)=>`<div><dt>${esc(label)}</dt><dd>${esc(text(value)||'В текущей справке не указано')}</dd></div>`;
@@ -204,7 +227,7 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    if(!state)continue;
     const stale=state.signature!==eventIdeasSignature(ideaInput(card,entries));panel.dataset.stale=String(stale);
     if(stale&&(state.comparison.size||state.combination)){state.comparison.clear();state.combination=null;state.combinationBase=null;const comparisonHost=panel.querySelector('[data-event-idea-comparison]');if(comparisonHost){comparisonHost.hidden=true;comparisonHost.innerHTML='';}for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]')){button.setAttribute('aria-pressed','false');button.textContent='Сравнить вариант';}}
-   for(const button of panel.querySelectorAll('[data-append-event-idea],[data-append-event-idea-comparison],[data-append-event-idea-combination],[data-copy-event-idea],[data-copy-event-idea-quick],[data-append-event-idea-pitch],[data-append-event-idea-reply],[data-append-event-idea-scale],[data-record-event-idea-response],[data-toggle-event-idea-compare],[data-suggest-event-idea-combination]'))button.disabled=form.dataset.busy==='true'||stale||(button.matches('[data-suggest-event-idea-combination]')&&Boolean(state.combination));
+   for(const button of panel.querySelectorAll('[data-append-event-idea],[data-append-event-idea-comparison],[data-append-event-idea-combination],[data-copy-event-idea],[data-copy-event-idea-quick],[data-append-event-idea-pitch],[data-append-event-idea-reply],[data-append-event-idea-scale],[data-record-event-idea-response],[data-use-selected-event-idea-feedback],[data-toggle-event-idea-compare],[data-suggest-event-idea-combination]'))button.disabled=form.dataset.busy==='true'||stale||(button.matches('[data-suggest-event-idea-combination]')&&Boolean(state.combination));
     for(const picker of panel.querySelectorAll('[data-event-idea-combination-base]'))picker.disabled=form.dataset.busy==='true'||stale;
    for(const button of panel.querySelectorAll('[data-toggle-event-idea-compare]'))button.disabled=form.dataset.busy==='true'||stale||(!state.comparison.has(Number(button.dataset.toggleEventIdeaCompare))&&state.comparison.size>=3);
       status.textContent=stale?'Бриф, аудитория, путь, длительность, тема идеи или реакция заказчика изменились. Пересоберите подборку перед добавлением в сценарий.':state.message;
@@ -291,10 +314,21 @@ export function wirePreparation(form,catalog,data,{getValues,selectStage}){
    }
    pitchRows.delete(key);syncPitchArchive(removePitch.closest('[data-preparation-card]'));form.dispatchEvent(new Event('input',{bubbles:true}));return;
   }
+  const useSelectedFeedback=event.target.closest('[data-use-selected-event-idea-feedback]');
+  if(useSelectedFeedback&&form.dataset.busy!=='true'){
+   const card=useSelectedFeedback.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]'),feedback=card?.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]'),controls=ideaReactionControls(useSelectedFeedback),transferStatus=controls.transferStatus||status;
+   if(!card||!panel||!status||!transferStatus)return;
+   const state=eventIdeaStates.get(panel),index=Number(useSelectedFeedback.dataset.useSelectedEventIdeaFeedback),entries=contexts();
+   if(!state||state.signature!==eventIdeasSignature(ideaInput(card,entries))||!state.ideas[index]){refreshEventIdeas(entries);transferStatus.textContent='Подборка устарела. Соберите варианты заново перед привязкой фразы.';return;}
+   const selected=transferSelectedFeedbackPhrase(useSelectedFeedback,feedback);
+   if(selected.error){transferStatus.textContent=selected.error;return;}
+   transferStatus.textContent='Фраза перенесена в заметку этого варианта. Теперь выберите ниже, как заказчик отнёсся к нему; исходная запись разговора осталась на месте.';
+   selected.noteField.focus({preventScroll:true});selected.noteField.scrollIntoView({block:'center'});return;
+  }
   const responseButton=event.target.closest('[data-record-event-idea-response]');
   if(responseButton&&form.dataset.busy!=='true'){
    const card=responseButton.closest('[data-preparation-card]'),panel=card?.querySelector('[data-event-idea-generator]'),status=panel?.querySelector('[data-event-ideas-status]');if(!card||!panel||!status)return;
-    const state=eventIdeaStates.get(panel),index=Number(responseButton.dataset.recordEventIdeaResponse),idea=state?.ideas[index],entries=contexts(),signature=eventIdeasSignature(ideaInput(card,entries)),label=ideaResponseLabels[responseButton.dataset.eventIdeaResponse],detail=ideaReactionDetails[panel.querySelector('[data-event-idea-reaction-detail]')?.value||'']||'',noteField=panel.querySelector('[data-event-idea-reaction-note]'),note=(noteField?.value||'').replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim(),feedback=card.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]');
+    const state=eventIdeaStates.get(panel),index=Number(responseButton.dataset.recordEventIdeaResponse),idea=state?.ideas[index],entries=contexts(),signature=eventIdeasSignature(ideaInput(card,entries)),label=ideaResponseLabels[responseButton.dataset.eventIdeaResponse],controls=ideaReactionControls(responseButton),detail=ideaReactionDetails[controls.detailField?.value||'']||'',noteField=controls.noteField,note=(noteField?.value||'').replace(/[\[\]\r\n]/g,' ').replace(/\s+/g,' ').trim(),feedback=card.querySelector('[data-preparation-field="clientFeedback"],[data-general-event-feedback]');
    if(!state||state.signature!==signature||!idea){refreshEventIdeas(entries);status.textContent='Подборка устарела. Соберите варианты заново, затем запишите реакцию на нужный вариант.';return;}
    if(!label||!feedback){status.textContent='Не удалось открыть поле для записи итога разговора.';return;}
     const sourceId=eventIdeaSourceFingerprint(idea),block=`${new Date().toLocaleString('ru-RU',{dateStyle:'short',timeStyle:'short'})} · ${label}: «${idea.title}».${sourceId?' [Источник варианта: '+sourceId+']':''}${detail?' [Клиент отметил: '+detail+']':''}${note?' [Комментарий клиента: '+note+']':''}`;
