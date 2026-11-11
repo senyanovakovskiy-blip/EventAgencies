@@ -4402,7 +4402,7 @@
       "reelImage": "/custom/optimized/84395937dbb1aa-1600.webp",
       "reelMobile": "/custom/optimized/84395937dbb1aa-960.webp",
       "imageRatio": 1.725358045492839,
-      "eventCity": "",
+      "eventCity": "Москва",
       "guestLabel": "",
       "occasions": [],
       "preview": "/custom/optimized/84395937dbb1aa-960.webp",
@@ -5588,7 +5588,7 @@
       "reelImage": "/custom/optimized/3ea956fdc19081-1500.webp",
       "reelMobile": "/custom/optimized/3ea956fdc19081-960.webp",
       "imageRatio": 1.5,
-      "eventCity": "",
+      "eventCity": "Москва",
       "guestLabel": "650 гостей",
       "occasions": [
         "corporate"
@@ -5717,7 +5717,7 @@
       "reelImage": "/custom/optimized/3ea956fdc19081-1500.webp",
       "reelMobile": "/custom/optimized/3ea956fdc19081-960.webp",
       "imageRatio": 1.5,
-      "eventCity": "",
+      "eventCity": "Москва",
       "guestLabel": "650 гостей",
       "occasions": [
         "corporate"
@@ -5725,7 +5725,8 @@
       "preview": "/custom/optimized/3ea956fdc19081-960.webp",
       "imageWidth": 1500,
       "imageHeight": 1000,
-      "previewSrcSet": "/custom/optimized/3ea956fdc19081-640.webp 640w, /custom/optimized/3ea956fdc19081-960.webp 960w, /custom/optimized/3ea956fdc19081-1500.webp 1500w"
+      "previewSrcSet": "/custom/optimized/3ea956fdc19081-640.webp 640w, /custom/optimized/3ea956fdc19081-960.webp 960w, /custom/optimized/3ea956fdc19081-1500.webp 1500w",
+      "duplicateOf": "case-25"
     },
     {
       "slug": "portfolio-install-profi-8349af5",
@@ -5983,7 +5984,7 @@
       "agencyUrl": "/agency/diversity-group",
       "types": [],
       "role": "",
-      "industry": "Место не указано",
+      "industry": "ГУМ-Каток",
       "description": "Работа из портфолио Diversity Group. Роль команды — в первоисточнике.",
       "seoDescription": "Работа из портфолио Diversity Group. Роль команды — в первоисточнике.",
       "source": "https://thediversity.ru/stoloto.html",
@@ -6003,7 +6004,7 @@
       "reelImage": "/custom/optimized/6cc14cf0d1afee-560.webp",
       "reelMobile": "/custom/optimized/6cc14cf0d1afee-560.webp",
       "imageRatio": 1,
-      "eventCity": "",
+      "eventCity": "Москва",
       "guestLabel": "",
       "occasions": [],
       "preview": "/custom/optimized/6cc14cf0d1afee-560.webp",
