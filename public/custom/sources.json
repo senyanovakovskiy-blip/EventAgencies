@@ -3489,5 +3489,41 @@
         "caseId": "case-enriched-143"
       }
     ]
+  },
+  {
+    "file": "/custom/library/now-openspace-1100-02-coworking-interior.webp",
+    "original": "https://now-agency.ru/wp-content/uploads/2024/04/Frame-12-2-1024x530.jpg",
+    "source": "https://now-agency.ru/yandex_coworking/",
+    "credits": [
+      {
+        "agency": "N:OW",
+        "title": "Коворкинг Яндекса на New Star Camp",
+        "caseId": "case-enriched-135"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/now-openspace-1100-01-festival-exterior.webp",
+    "original": "https://now-agency.ru/wp-content/uploads/2024/04/Frame-11-2-1024x530.jpg",
+    "source": "https://now-agency.ru/yandex_coworking/",
+    "credits": [
+      {
+        "agency": "N:OW",
+        "title": "Коворкинг Яндекса на New Star Camp",
+        "caseId": "case-enriched-135"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/now-openspace-1100-03-guests-space.webp",
+    "original": "https://now-agency.ru/wp-content/uploads/2024/04/Frame-16-2-1024x530.jpg",
+    "source": "https://now-agency.ru/yandex_coworking/",
+    "credits": [
+      {
+        "agency": "N:OW",
+        "title": "Коворкинг Яндекса на New Star Camp",
+        "caseId": "case-enriched-135"
+      }
+    ]
   }
 ]

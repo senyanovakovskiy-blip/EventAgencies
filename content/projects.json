@@ -10830,7 +10830,7 @@
     "title": "Openspace 1100 — созвон после спуска",
     "fullTitle": "Коворкинг Яндекса Openspace 1100 на фестивале New Star Camp",
     "year": "2024",
-    "eventDate": "25–31 марта 2024",
+    "eventDate": "21–31 марта 2024",
     "category": "Фестивальная бренд-интеграция",
     "format": "Открытый коворкинг в горах: рабочие места, консультации и игровые активации",
     "client": "Яндекс Team",
@@ -10846,18 +10846,37 @@
     ],
     "role": "BEMA относит к зоне N:OW креатив, застройку и проведение коворкинга на New Star Camp. Отдельное пространство в «Гараже» вел Punchy; свои блоки готовили команды Яндекса.",
     "industry": "Спортивные фестивали, IT и HR-бренд",
-    "description": "На высоте 1100 метров рабочий созвон начинался сразу после спуска: Openspace позволял чередовать катание, работу и атмосферу Яндекса. Telegram-бот связывал активации сервисов, баллы и мерч; в программе были карьерные консультации, 360-открытки, баланс-борд Yandex Cloud и Random Coffee. BEMA указывает, что N:OW отвечало за креатив, застройку и мероприятия коворкинга на New Star Camp; другие пространства проекта делали отдельные команды. По данным N:OW, коворкинг посетили более 1 300 гостей, а рабочие места были заполнены на 100%.",
-    "seoDescription": "Openspace 1100 от N:OW и Яндекса на New Star Camp: коворкинг в горах, где после катания можно было подключиться к созвону, пройти карьерную консультацию и сыграть в сервисные активации.",
+    "description": "На фестивале Quiksilver New Star Camp в Роза Хутор коворкинг Openspace 1100 соединял катание, работу и общение с командой Яндекса. Гости могли вернуться со склона к рабочим местам, пройти карьерную консультацию или попробовать активации сервисов: Telegram-бот связывал задания, баллы и мерч. В программе были «Открытки 360», баланс-борд Yandex Cloud, Random Coffee и доска рабочих инсайтов. По данным N:OW, пространство посетили более 1 300 гостей, а рабочие места были заполнены полностью.",
+    "seoDescription": "N:OW и Яндекс создали на New Star Camp Openspace 1100 — коворкинг с карьерными консультациями, сервисными активациями и пространством для отдыха после катания.",
     "source": "https://now-agency.ru/yandex_coworking/",
-    "image": "/custom/empty/case-enriched-135.svg",
-    "imageMobile": "/custom/empty/case-enriched-135.svg",
-    "ogImage": "/custom/empty/case-enriched-135.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/now-openspace-1100-02-coworking-interior.webp",
+    "imageMobile": "/custom/library/now-openspace-1100-02-coworking-interior.webp",
+    "ogImage": "/custom/library/now-openspace-1100-02-coworking-interior.webp",
+    "thumb": "/custom/optimized/now-openspace-1100-02-coworking-interior-480.webp",
+    "hasPhotos": true,
+    "photoCount": 3,
     "caseId": "case-enriched-135",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/now-openspace-1100-02-coworking-interior.webp",
+        "ratio": 1.9320754716981132,
+        "alt": "Внутри коворкинга Openspace 1100: стол для пинг-понга, рабочие места и зона отдыха. Фото: N:OW."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/now-openspace-1100-01-festival-exterior.webp",
+        "ratio": 1.9320754716981132,
+        "alt": "Гости New Star Camp у брендированного коворкинга Яндекса Openspace 1100. Фото: N:OW."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/now-openspace-1100-03-guests-space.webp",
+        "ratio": 1.9320754716981132,
+        "alt": "Гости общаются и отдыхают в лаунж-зоне Openspace 1100. Фото: N:OW."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#152447,#5e9bb2)",
     "curated": false,
     "reelTitle": "Openspace 1100 · work-ride balance",
@@ -10886,7 +10905,14 @@
         "label": "Рейтинг Sostav · первое место BEMA 2025 за спонсорскую интеграцию",
         "url": "https://ratings.sostav.ru/works/1003"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/now-openspace-1100-02-coworking-interior.webp",
+    "reelMobile": "/custom/library/now-openspace-1100-01-festival-exterior.webp",
+    "preview": "/custom/optimized/now-openspace-1100-02-coworking-interior-480.webp",
+    "imageWidth": 1024,
+    "imageHeight": 530,
+    "imageRatio": 1.9320754716981132,
+    "previewSrcSet": "/custom/optimized/now-openspace-1100-02-coworking-interior-480.webp 480w, /custom/library/now-openspace-1100-02-coworking-interior.webp 1024w"
   },
   {
     "slug": "case-enriched-136",
