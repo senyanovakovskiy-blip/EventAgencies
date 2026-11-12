@@ -1,4 +1,5 @@
 import {normalizeDraft,workNoteKey} from './project-store.js';
+import {canonicalWorkNoteKey} from './project-aliases.js';
 
 const validSlug=value=>typeof value==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value);
 
@@ -25,7 +26,8 @@ export function referenceNoteForTeam(work,agencySlug,notes,agencies=[]){
  const agency=agencyMap.get(agencySlug);if(!agency)return null;
  const key=workNoteKey(agencySlug,workSlug),workNotes=normalizeDraft({version:1,workNotes:notes}).workNotes;
  const agencyName=typeof agency.name==='string'?agency.name:agencySlug;
- return {key,agencySlug,workSlug,note:workNotes[key]??'',agencyName,isPrimary,canUseForWishes:true};
+ const note=workNotes[key]??'',legacyKey='intelsport-bb868/portfolio-intelsport-bb868-8bf1feb',legacyNote=canonicalWorkNoteKey(legacyKey)===canonicalWorkNoteKey(key)?workNotes[legacyKey]||'':'';
+ return {key,agencySlug,workSlug,note:note||legacyNote,legacyNote:note&&legacyNote&&note!==legacyNote?legacyNote:'',agencyName,isPrimary,canUseForWishes:true};
 }
 
 /** Describe personal notes without removing entries missing from today's catalog. */
@@ -48,5 +50,8 @@ export function referenceNotesForWork(work,notes,agencies=[],{includeEmptyKeys=[
   .filter(([key,note])=>key!==primaryKey&&key.split('/')[1]===workSlug&&(note.trim()||retainedKeys.has(key)))
   .map(([key,note])=>describe(key,note))
   .sort((left,right)=>left.agencyName.localeCompare(right.agencyName,'ru')||left.key.localeCompare(right.key,'ru'));
- return primaryKey?[describe(primaryKey,workNotes[primaryKey]??''),...others]:others;
+ if(!primaryKey)return others;
+ const primary=describe(primaryKey,workNotes[primaryKey]??''),legacyKey='intelsport-bb868/portfolio-intelsport-bb868-8bf1feb',legacyNote=canonicalWorkNoteKey(legacyKey)===canonicalWorkNoteKey(primaryKey)?workNotes[legacyKey]||'':'';
+ primary.legacyNote=primary.note&&legacyNote&&primary.note!==legacyNote?legacyNote:'';
+ return [primary,...others];
 }

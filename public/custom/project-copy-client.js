@@ -1,6 +1,7 @@
 import {KEY,normalizeDraft} from './project-store.js';
-import {REFERENCE_KEY,normalizeReferences} from './reference-store.js';
+import {REFERENCE_KEY,normalizeReferences,hasLegacyReferenceAliases} from './reference-store.js';
 import {makeProjectCopy,normalizeProjectCopy} from './project-copy-model.js';
+import {hasLegacyDraftIdentifiers} from './project-aliases.js';
 
 const RETRY_KEY='eventagencies-account-copy-retry-v1';
 export const PREVIOUS_PROJECT_KEY='eventagencies-previous-project-v1';
@@ -37,9 +38,11 @@ export async function saveAccountCopy(name,snapshot){
 }
 export function previousProject(){
  try{
-  const value=JSON.parse(localStorage.getItem(PREVIOUS_PROJECT_KEY)||'null');
+  const raw=localStorage.getItem(PREVIOUS_PROJECT_KEY),value=JSON.parse(raw||'null');
   if(value?.version!==1||value.draft?.version!==1||!Array.isArray(value.references))return null;
-  return {version:1,draft:normalizeDraft(value.draft),references:normalizeReferences(value.references),includeNotes:true,includeContact:true};
+  const draft=normalizeDraft(value.draft),references=normalizeReferences(value.references),migrateDraft=hasLegacyDraftIdentifiers(value.draft),migrateReferences=hasLegacyReferenceAliases(value.references),migrated={...value,...(migrateDraft?{draft:{...value.draft,selection:draft.selection,workNotes:draft.workNotes}}:{}),...(migrateReferences?{references}: {})};
+  if((migrateDraft||migrateReferences)&&raw&&JSON.stringify(migrated)!==raw)try{if(localStorage.getItem(PREVIOUS_PROJECT_KEY)===raw)localStorage.setItem(PREVIOUS_PROJECT_KEY,JSON.stringify(migrated));}catch{}
+  return {version:1,draft,references,includeNotes:true,includeContact:true};
  }catch{return null;}
 }
 export function restoreProjectCopy(snapshot,getState,{preserveReferences=false}={}){

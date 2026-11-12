@@ -1,4 +1,5 @@
 import {workNoteKey} from './project-store.js';
+import {canonicalWorkNoteKey} from './project-aliases.js';
 
 /** Resolve a saved choice without replacing or fabricating catalog entities. */
 export function selectionView(data,s,notes={}){
@@ -7,7 +8,9 @@ export function selectionView(data,s,notes={}){
  const linked=Boolean(work&&(work.agencySlug===s.agencySlug||work.agencySlugs?.includes(s.agencySlug)));
  const p=a&&linked?work:null;
  const workStatus=!s.workSlug?'Работа не выбрана':!a?'Профиль команды недоступен. Сохранённый выбор работы остаётся в проекте.':!work?'Выбранная работа недоступна в каталоге':!linked?'Прежняя работа больше не связана с этой командой':'';
- return {s,a,p,work,workStatus,label:a?.name||'Недоступная команда · '+s.agencySlug,note:s.workSlug?notes[workNoteKey(s.agencySlug,s.workSlug)]||'':''};
+ const note=s.workSlug?notes[workNoteKey(s.agencySlug,s.workSlug)]||'':'';
+ const legacyKey='intelsport-bb868/portfolio-intelsport-bb868-8bf1feb',legacyNote=s.workSlug&&canonicalWorkNoteKey(legacyKey)===canonicalWorkNoteKey(workNoteKey(s.agencySlug,s.workSlug))?notes[legacyKey]||'':'';
+ return {s,a,p,work,workStatus,label:a?.name||'Недоступная команда · '+s.agencySlug,note:note||legacyNote,legacyNote:note&&legacyNote&&note!==legacyNote?legacyNote:''};
 }
 
 /** A missing work is invalid only when a work was actually selected. */

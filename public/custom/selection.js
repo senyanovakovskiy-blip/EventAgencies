@@ -24,7 +24,7 @@ import {setupComparisonCriteria,syncComparisonCriteria} from './project-comparis
 import {comparisonValuesMatch} from './project-comparison-equality.js';
 import {selectionView,selectionProblems} from './project-selection-view.js';
 import {projectPresentation} from './project-presentation.js';
-import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,submitLocal} from './project-store.js';
+import {KEY,workNoteKey,updateWorkNote,occasions,contactMethods,emptyDraft,normalizeDraft,readDraft,readDraftAndMigrateAliases,writeDraft,addAgency,replaceAgency,removeAgency,restoreAgency,moveAgency,updateBrief,submitLocal} from './project-store.js';
 import {reviewMarkup,receiptMarkup,wishesAddition,mergeWishes} from './request-review.js';
 import {createInquiryClient} from './inquiry-client.js';
 import {INQUIRY_KEY,contactError,validPayload,submissionPayload} from './inquiry-model.js';
@@ -42,7 +42,7 @@ const helpMode=new URLSearchParams(location.search).has('help');
 let helpSelectionExpanded=false;
 let draft=emptyDraft(),available=true,dataPromise,focusRequest=false,pendingReplacement=null,savingDraft=false,sending=false,sendingRecovery=false,sendError='',selectionSendError=false,lastReceipt=null,wishesUndo=null,replacementUndo=null,briefUndo=null,briefEditor=null,contactEditor=null,handoffData=null;
 const inquiries=createInquiryClient({storage:{getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value)}});
-try{draft=readDraft(localStorage);}catch{available=false;}
+try{draft=readDraftAndMigrateAliases(localStorage);}catch{available=false;}
 function selectionIdentity(){try{const marker=referenceProjectMarker();return marker===null?null:{marker,existed:localStorage.getItem(KEY)!==null};}catch{return null;}}
 let selectionPageIdentity=selectionIdentity(),selectionDisplayed=null,unsavedBaseline=null,unsavedProject=false,selectionFailure='failed';
 const recoveryHelp='Нажмите «Показать несохранённые данные» и скопируйте текст на этой странице. Текст в открытых полях скопируйте отдельно. В «Моём проекте» также можно скачать черновик и отметить контакт, примеры и заметки; проверьте содержимое файла. Автоматически восстановить проект из него нельзя.';
@@ -264,7 +264,7 @@ addEventListener('storage',e=>{
  if(contactEditor){
   if(e.key===null||e.newValue===null)contactEditor.invalidate();
   contactEditor.reconcile();
- }else try{draft=readDraft(localStorage);available=true;}catch{available=false;}
+ }else try{draft=readDraftAndMigrateAliases(localStorage);available=true;}catch{available=false;}
  if(available)markSelectionSaved();
  document.dispatchEvent(new CustomEvent('ea:inline-note-external'));
  refresh();
@@ -295,6 +295,9 @@ function unavailableWorkMarkup(pick){
 function preservedNoteMarkup(pick){
  if(!pick.s.workSlug)return '<p>Работа не выбрана. Личная заметка к работе не указана.</p>';
  return `<div class="project-preserved-note"><p>Заметка к сохранённому выбору работы</p><div class="comparison-note-text" data-comparison-note-text="${pick.s.agencySlug}" data-note-work="${pick.s.workSlug}">${esc(pick.note||'Сохранённой заметки к этой работе нет.')}</div><p class="project-saved-id">Работа: <code>${esc(pick.s.workSlug)}</code> · команда: <code>${esc(pick.s.agencySlug)}</code></p><small>Только для чтения, пока выбор недоступен. При выборе другой работы её заметка будет отдельной; прежний текст останется сохранён.</small></div>`;
+}
+function legacyNoteMarkup(pick){
+ return pick.legacyNote?`<details class="project-legacy-note"><summary>Отдельная заметка из прежнего выбора</summary><p>${esc(pick.legacyNote)}</p><small>Исходный текст сохранён. Его можно скопировать в активную заметку выше, если он всё ещё нужен.</small></details>`:'';
 }
 function projectPresentationMarkup(pick,{showWorkTitle=true}={}){
  const {scope,title,lead,fit,participation,discussionPrompts=[]}=projectPresentation(pick);
@@ -335,7 +338,7 @@ async function renderProject(){
     <div class="project-agency-head"><div><h3>${esc(a.name)}</h3><p class="project-agency-location">${esc(a.city||'Город не указан')}</p></div></div>
     <div class="project-case-reason">${p?`${p.hasPhotos?`<a class="project-case-photo" href="${link}"><img src="${p.preview||p.reelMobile||p.image}" srcset="${esc(p.previewSrcSet||'')}" sizes="(max-width:900px) 100vw, 33vw" width="${p.imageWidth||1500}" height="${p.imageHeight||1000}" decoding="async" alt="${esc(p.fullTitle)}" loading="lazy"></a>`:''}<span class="eyebrow">${p.kind==='case'?'Выбранный кейс':'Выбранная работа'}</span><h4><a href="${link}">${esc(p.fullTitle)} ↗</a></h4><p>${esc(facts(p))}</p>${p.hasPhotos?'':'<p class="project-case-photo-note">Фотографии этой работы пока не добавлены в каталог.</p>'}`:unavailableWorkMarkup(pick)}</div>
     ${projectPresentationMarkup(pick,{showWorkTitle:false})}
-    <section class="work-note-block"><label for="work-choice-${a.slug}">Работа для сравнения</label><select id="work-choice-${a.slug}" data-selected-work="${a.slug}">${s.workSlug&&!p?`<option value="${esc(s.workSlug)}" selected disabled>Прежний выбор недоступен · ${esc(s.workSlug)}</option>`:''}<option value="">Без выбранной работы</option>${data.projects.filter(w=>(w.agencySlug===a.slug||w.agencySlugs?.includes(a.slug))&&(!w.duplicateOf||w.slug===s.workSlug)).map(w=>`<option value="${esc(w.slug)}" ${w.slug===s.workSlug?'selected':''}>${esc(w.fullTitle)}</option>`).join('')}</select><button class="secondary-action work-picker-opener" type="button" data-open-work-picker="${a.slug}" aria-label="Посмотреть и выбрать работу ${esc(a.name)}">Посмотреть работы…</button>${p?`<label for="note-${a.slug}">Что нравится в этой работе?</label><textarea id="note-${a.slug}" data-work-note="${a.slug}" data-note-work="${p.slug}" rows="3" maxlength="1000" aria-describedby="note-help-${a.slug} note-status-${a.slug}" placeholder="Например: тёплый свет, оформление сцены, живая музыка">${esc(draft.workNotes[workNoteKey(a.slug,p.slug)]||'')}</textarea><p id="note-help-${a.slug}">Личная заметка · только в этом браузере. Передать её можно через «Добавить в пожелания».</p><button class="secondary-action" type="button" data-add-wishes-work="${p.slug}" data-add-wishes-agency="${a.slug}">Добавить в пожелания…</button><p id="note-status-${a.slug}" role="status"></p>`:s.workSlug?preservedNoteMarkup(pick):'<p>Выберите работу выше, чтобы оставить заметку.</p>'}</section>
+    <section class="work-note-block"><label for="work-choice-${a.slug}">Работа для сравнения</label><select id="work-choice-${a.slug}" data-selected-work="${a.slug}">${s.workSlug&&!p?`<option value="${esc(s.workSlug)}" selected disabled>Прежний выбор недоступен · ${esc(s.workSlug)}</option>`:''}<option value="">Без выбранной работы</option>${data.projects.filter(w=>(w.agencySlug===a.slug||w.agencySlugs?.includes(a.slug))&&(!w.duplicateOf||w.slug===s.workSlug)).map(w=>`<option value="${esc(w.slug)}" ${w.slug===s.workSlug?'selected':''}>${esc(w.fullTitle)}</option>`).join('')}</select><button class="secondary-action work-picker-opener" type="button" data-open-work-picker="${a.slug}" aria-label="Посмотреть и выбрать работу ${esc(a.name)}">Посмотреть работы…</button>${legacyNoteMarkup(pick)}${p?`<label for="note-${a.slug}">Что нравится в этой работе?</label><textarea id="note-${a.slug}" data-work-note="${a.slug}" data-note-work="${p.slug}" rows="3" maxlength="1000" aria-describedby="note-help-${a.slug} note-status-${a.slug}" placeholder="Например: тёплый свет, оформление сцены, живая музыка">${esc(draft.workNotes[workNoteKey(a.slug,p.slug)]||'')}</textarea><p id="note-help-${a.slug}">Личная заметка · только в этом браузере. Передать её можно через «Добавить в пожелания».</p><button class="secondary-action" type="button" data-add-wishes-work="${p.slug}" data-add-wishes-agency="${a.slug}">Добавить в пожелания…</button><p id="note-status-${a.slug}" role="status"></p>`:s.workSlug?preservedNoteMarkup(pick):'<p>Выберите работу выше, чтобы оставить заметку.</p>'}</section>
     <details class="project-agency-details" data-agency-details="${a.slug}"${expandedAgencies.has(a.slug)?' open':''}><summary><span>Об агентстве и условиях</span><span class="agency-details-sign" aria-hidden="true">+</span></summary>
     <section class="comparison-block"><h4>Специализация</h4><p>${esc(specialization)}</p></section>
     <section class="comparison-block"><h4>География работы</h4><p>${esc(a.geography||'Нужно уточнить')}</p><p class="comparison-detail">Город команды: ${esc(a.city||'Нужно уточнить')}</p></section>
@@ -766,7 +769,7 @@ for(const type of ['ea:project-copy-restored','ea:project-started'])document.add
  removedAgency=null;lastReceipt=null;sendError='';selectionSendError=false;focusRequest=false;orderStatus.textContent='';
  document.getElementById('project-undo')?.setAttribute('hidden','');
  if(contactEditor){contactEditor.invalidate();contactEditor.resetFromProject({focus:false});}
- else try{draft=readDraft(localStorage);available=true;}catch{available=false;}
+ else try{draft=readDraftAndMigrateAliases(localStorage);available=true;}catch{available=false;}
  if(available)markSelectionSaved();
  refresh();
 });

@@ -1,13 +1,29 @@
+import {canonicalAgencySlug,canonicalWorkSlug,canonicalWorkNoteKey,hasLegacyDraftIdentifiers} from './project-aliases.js';
 export const KEY='eventagencies-project-v1';
 export const occasions={corporate:'Корпоратив',conference:'Конференция',presentation:'Презентация',teambuilding:'Тимбилдинг',private:'Частное событие',wedding:'Свадьба',birthday:'День рождения или юбилей',product_launch:'Запуск продукта или бренда',opening:'Открытие площадки',new_year:'Новогодний вечер',exhibition:'Выставка или экспозиция',sports_day:'Спортивный день или турнир'};
 export const contactMethods={email:'Электронная почта',phone:'Телефон',telegram:'Telegram'};
 const slug=v=>typeof v==='string'&&/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(v);
 export const emptyDraft=()=>({version:1,selection:[],workNotes:{},brief:{format:'',city:'',date:'',dateUnknown:false,guests:'',budget:'',budgetHelp:false,description:''},contact:{name:'',method:'email',value:''},request:null});
+export function normalizeSelection(items){
+ const selection=[],seenSources=new Set(),sourceIsAlias=new Map();
+ for(const item of Array.isArray(items)?items:[]){
+  if(!slug(item?.agencySlug)||seenSources.has(item.agencySlug))continue;
+  seenSources.add(item.agencySlug);
+  const agencySlug=canonicalAgencySlug(item.agencySlug),workSlug=slug(item.workSlug)?canonicalWorkSlug(item.workSlug):null,isAlias=agencySlug!==item.agencySlug;
+  const index=selection.findIndex(entry=>entry.agencySlug===agencySlug);
+  if(index<0){selection.push({agencySlug,workSlug});sourceIsAlias.set(agencySlug,isAlias);}
+  else if(sourceIsAlias.get(agencySlug)&&!isAlias){selection[index]={agencySlug,workSlug:workSlug||selection[index].workSlug};sourceIsAlias.set(agencySlug,false);}
+  else if(!selection[index].workSlug&&workSlug)selection[index]={agencySlug,workSlug};
+  if(seenSources.size===3)break;
+ }
+ return selection;
+}
 export function normalizeDraft(value){
  const state=emptyDraft();if(!value||value.version!==1)return state;
  for(const [key,note] of Object.entries(value.workNotes||{})){const parts=key.split('/');if(parts.length===2&&parts.every(slug)&&typeof note==='string')state.workNotes[key]=note.slice(0,1000);}
- const seen=new Set();
- for(const item of Array.isArray(value.selection)?value.selection:[]){if(!slug(item?.agencySlug)||seen.has(item.agencySlug))continue;seen.add(item.agencySlug);state.selection.push({agencySlug:item.agencySlug,workSlug:slug(item.workSlug)?item.workSlug:null});if(state.selection.length===3)break;}
+ state.selection=normalizeSelection(value.selection);
+ const legacyNoteKey='intelsport-bb868/portfolio-intelsport-bb868-8bf1feb',canonicalNoteKey=canonicalWorkNoteKey(legacyNoteKey);
+ if(state.workNotes[legacyNoteKey]&&!state.workNotes[canonicalNoteKey])state.workNotes[canonicalNoteKey]=state.workNotes[legacyNoteKey];
  for(const key of ['format','city','date','guests','budget','description'])if(typeof value.brief?.[key]==='string')state.brief[key]=value.brief[key].slice(0,key==='description'?3000:180);
  if(!Object.hasOwn(occasions,state.brief.format)&&state.brief.format!=='other')state.brief.format='';
  state.brief.budgetHelp=value.brief?.budgetHelp===true;
@@ -18,6 +34,17 @@ export function normalizeDraft(value){
  return state;
 }
 export function readDraft(storage){const raw=storage.getItem(KEY);if(!raw)return emptyDraft();try{return normalizeDraft(JSON.parse(raw));}catch{return emptyDraft();}}
+export function readDraftAndMigrateAliases(storage){
+ const raw=storage.getItem(KEY);if(!raw)return emptyDraft();
+ try{
+  const value=JSON.parse(raw),state=normalizeDraft(value);
+  if(hasLegacyDraftIdentifiers(value)){
+   const migrated=JSON.stringify({...value,selection:state.selection,workNotes:state.workNotes});
+   if(migrated!==raw)try{if(storage.getItem(KEY)===raw)storage.setItem(KEY,migrated);}catch{}
+  }
+  return state;
+ }catch{return emptyDraft();}
+}
 export function writeDraft(storage,state){const next=normalizeDraft(state);storage.setItem(KEY,JSON.stringify(next));return next;}
 export function addAgency(state,agencySlug,workSlug){
  if(!slug(agencySlug)||(workSlug!==null&&!slug(workSlug)))return {state,result:'invalid'};
