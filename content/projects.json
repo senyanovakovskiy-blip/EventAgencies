@@ -9836,15 +9836,52 @@
     "description": "19 июля 2025 года городской парк Звенигорода стал площадкой фестиваля «Время надежд» — путешествия в атмосферу 1950–60-х. Хиты середины века, поэтические чтения, интерактивы, ретроавтомобиль для фото и книжная ярмарка соединили музыку, культуру и семейный отдых. TT Events описывает сценическую программу от камерного открытия до финальной дискотеки и съёмку видеоролика о событии. По данным агентства, фестиваль был рассчитан на семейную аудиторию и собрал более 200 активных участников.",
     "seoDescription": "Ретрофестиваль «Время надежд» прошёл в городском парке Звенигорода 19 июля 2025 года: музыка 1950–60-х, поэзия, интерактивы и фотозоны. TT Events описывает сценическую программу и видеосъёмку фестиваля.",
     "source": "https://ttevents.ru/case/vremnadezhdfest2025",
-    "image": "/custom/empty/case-enriched-123.svg",
-    "imageMobile": "/custom/empty/case-enriched-123.svg",
-    "ogImage": "/custom/empty/case-enriched-123.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/ttevents-vremya-2025-03.webp",
+    "imageMobile": "/custom/optimized/ttevents-vremya-2025-03-640.webp",
+    "ogImage": "/custom/optimized/ttevents-vremya-2025-03-960.webp",
+    "thumb": "/custom/optimized/ttevents-vremya-2025-03-640.webp",
+    "hasPhotos": true,
+    "photoCount": 6,
     "caseId": "case-enriched-123",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/ttevents-vremya-2025-03.webp",
+        "ratio": 1.778,
+        "alt": "Концертная площадка фестиваля «Время надежд» в Звенигороде"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ttevents-vremya-2025-01.webp",
+        "ratio": 1.778,
+        "alt": "Гости ретро-фестиваля «Время надежд» в Звенигороде"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ttevents-vremya-2025-02.webp",
+        "ratio": 1.778,
+        "alt": "Артисты в образах 1960-х на фестивале «Время надежд — 2025»"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ttevents-vremya-2025-04.webp",
+        "ratio": 1.778,
+        "alt": "Солистка ретро-программы фестиваля «Время надежд»"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ttevents-vremya-2025-05.webp",
+        "ratio": 1.778,
+        "alt": "Гости и артисты на танцевальной площадке фестиваля"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ttevents-vremya-2025-06.webp",
+        "ratio": 1.778,
+        "alt": "Артисты и гости фестиваля «Время надежд — 2025»"
+      }
+    ],
     "gradient": "linear-gradient(145deg,#274b69,#c84c43)",
     "curated": false,
     "reelTitle": "«Время надежд» · Звенигород",
@@ -9864,7 +9901,13 @@
         "label": "Туристический портал Одинцовского округа · отчёт о фестивале",
         "url": "https://visitodintsovo.ru/o-odintsovskom-gorodskom-okruge/novosti/2349/"
       }
-    ]
+    ],
+    "preview": "/custom/optimized/ttevents-vremya-2025-03-960.webp",
+    "previewSrcSet": "/custom/optimized/ttevents-vremya-2025-03-640.webp 640w, /custom/optimized/ttevents-vremya-2025-03-960.webp 960w, /custom/library/ttevents-vremya-2025-03.webp 1280w",
+    "imageWidth": 1280,
+    "imageHeight": 720,
+    "imageRatio": 1.778,
+    "reelMobile": "/custom/optimized/ttevents-vremya-2025-03-960.webp"
   },
   {
     "slug": "case-enriched-124",
