@@ -3369,5 +3369,65 @@
         "caseId": "case-enriched-116"
       }
     ]
+  },
+  {
+    "file": "/custom/library/2capitals-tbank-villa-05-two-storey-stand.webp",
+    "original": "https://static.tildacdn.com/tild3239-6665-4135-b464-303136386338/Rectangle_1880.png",
+    "source": "https://2capitals.ru/kejsy/t-bank",
+    "credits": [
+      {
+        "agency": "2CAPITALS",
+        "title": "Вилла Т-Банка на PHDays Fest",
+        "caseId": "case-enriched-129"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/2capitals-tbank-villa-02-fraud-roulette.webp",
+    "original": "https://static.tildacdn.com/tild3433-6236-4464-b338-303532326438/Rectangle_1873.png",
+    "source": "https://2capitals.ru/kejsy/t-bank",
+    "credits": [
+      {
+        "agency": "2CAPITALS",
+        "title": "Вилла Т-Банка на PHDays Fest",
+        "caseId": "case-enriched-129"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/2capitals-tbank-villa-08-cyber-game.webp",
+    "original": "https://static.tildacdn.com/tild6461-3963-4363-b036-303835333062/Rectangle_1882.png",
+    "source": "https://2capitals.ru/kejsy/t-bank",
+    "credits": [
+      {
+        "agency": "2CAPITALS",
+        "title": "Вилла Т-Банка на PHDays Fest",
+        "caseId": "case-enriched-129"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/2capitals-tbank-villa-06-lounge.webp",
+    "original": "https://static.tildacdn.com/tild3938-6662-4564-a630-636136396437/Rectangle_1878.png",
+    "source": "https://2capitals.ru/kejsy/t-bank",
+    "credits": [
+      {
+        "agency": "2CAPITALS",
+        "title": "Вилла Т-Банка на PHDays Fest",
+        "caseId": "case-enriched-129"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/2capitals-tbank-villa-01-overview.webp",
+    "original": "https://static.tildacdn.com/tild3036-6239-4234-a438-343066626266/Rectangle_1872.png",
+    "source": "https://2capitals.ru/kejsy/t-bank",
+    "credits": [
+      {
+        "agency": "2CAPITALS",
+        "title": "Вилла Т-Банка на PHDays Fest",
+        "caseId": "case-enriched-129"
+      }
+    ]
   }
 ]

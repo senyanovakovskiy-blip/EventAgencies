@@ -10382,18 +10382,49 @@
     ],
     "role": "2CAPITALS создало для Т-Банка двухэтажный стенд на PHDays Fest. На первом этаже проходили задания по кибербезопасности и «Фрод-рулетка», на втором разместились лаунж, кафе и диджей. Полный перечень работ агентство не публикует.",
     "industry": "Банковские услуги и кибербезопасность",
-    "description": "На стенде Т-Банка тему цифровой безопасности можно было не только обсуждать, но и прожить в игре. 2CAPITALS создало для PHDays Fest двухэтажную «Виллу»: на первом этаже гостей ждали задания по кибербезопасности и «Фрод-рулетка» — попробовать удержать мошенника на линии и получить фирменный мерч. Наверху разместились лаунж, собственное кафе с напитками и диджей, а из зоны отдыха открывался вид на главную сцену фестиваля. Так в одной локации соединились короткая игровая механика, место для общения и возможность смотреть программу.",
+    "description": "У «Виллы» Т-Банка было два этажа и два способа включиться в PHDays Fest. Внизу гости проходили задания по кибербезопасности и пробовали «Фрод-рулетку» — удержать мошенника на линии и получить фирменный мерч. Наверху можно было отдохнуть в лаунже, взять напиток в кафе и послушать диджея с видом на главную сцену. Фестиваль прошёл 22–24 мая 2025 года в «Лужниках»; по данным организатора, за три дня его посетили более 150 000 человек. Отдельную посещаемость стенда агентство не указывает.",
     "seoDescription": "2CAPITALS создало для Т-Банка на PHDays Fest двухэтажную «Виллу»: задания по кибербезопасности и «Фрод-рулетка» внизу, лаунж, кафе и диджей с видом на главную сцену — наверху.",
     "source": "https://2capitals.ru/kejsy/t-bank",
-    "image": "/custom/empty/case-enriched-129.svg",
-    "imageMobile": "/custom/empty/case-enriched-129.svg",
-    "ogImage": "/custom/empty/case-enriched-129.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/2capitals-tbank-villa-05-two-storey-stand.webp",
+    "imageMobile": "/custom/library/2capitals-tbank-villa-01-overview.webp",
+    "ogImage": "/custom/library/2capitals-tbank-villa-05-two-storey-stand.webp",
+    "thumb": "/custom/optimized/2capitals-tbank-villa-05-two-storey-stand-640.webp",
+    "hasPhotos": true,
+    "photoCount": 5,
     "caseId": "case-enriched-129",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/2capitals-tbank-villa-05-two-storey-stand.webp",
+        "ratio": 1.4695767195767195,
+        "alt": "Гости входят в двухэтажную «Виллу» Т-Банка; видны лестница на второй этаж и очередь у стенда. Фото: 2CAPITALS."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/2capitals-tbank-villa-02-fraud-roulette.webp",
+        "ratio": 0.6708860759493671,
+        "alt": "Посетитель держит телефонную трубку у жёлтой игровой зоны «Фрод-рулетки». Фото: 2CAPITALS."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/2capitals-tbank-villa-08-cyber-game.webp",
+        "ratio": 1.4597093791281375,
+        "alt": "Интерактивная зона SafeLiner со сценарием по цифровой безопасности внутри стенда. Фото: 2CAPITALS."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/2capitals-tbank-villa-06-lounge.webp",
+        "ratio": 1.453104359313078,
+        "alt": "Вход в лаунж-зону «Виллы»: экран, растения и надпись «Лаунж». Фото: 2CAPITALS."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/2capitals-tbank-villa-01-overview.webp",
+        "ratio": 1.47556142668428,
+        "alt": "Общий вид «Виллы» на фестивале: два этажа и места для отдыха перед стендом. Фото: 2CAPITALS."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#202536,#f1bc35)",
     "curated": false,
     "reelTitle": "Вилла Т-Банка · PHDays Fest",
@@ -10412,8 +10443,19 @@
       {
         "label": "«Хакер» · PHDays Fest 2025: даты, площадка и репортаж о «Вилле Т-Банка»",
         "url": "https://xakep.ru/2025/06/18/phdfest3-report/"
+      },
+      {
+        "label": "PHDays · даты, площадка и посещаемость фестиваля",
+        "url": "https://phdays.com/ru/press-center/news/tekhnologicheskoe-sotrudnichestvo-v-osnove-tsifrovogo-suvereniteta-na-phdays-fest-bolee-40-stran-obsudili-ideyu-kooperatsii-v-ib/"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/2capitals-tbank-villa-05-two-storey-stand.webp",
+    "reelMobile": "/custom/library/2capitals-tbank-villa-01-overview.webp",
+    "preview": "/custom/optimized/2capitals-tbank-villa-05-two-storey-stand-640.webp",
+    "imageWidth": 1111,
+    "imageHeight": 756,
+    "imageRatio": 1.4695767195767195,
+    "previewSrcSet": "/custom/optimized/2capitals-tbank-villa-05-two-storey-stand-640.webp 640w, /custom/library/2capitals-tbank-villa-05-two-storey-stand.webp 1111w"
   },
   {
     "slug": "case-enriched-130",
