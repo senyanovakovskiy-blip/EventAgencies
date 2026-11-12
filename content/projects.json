@@ -8302,7 +8302,7 @@
     "title": "II Чувашская биеннале — Чебоксары",
     "fullTitle": "II Чувашская биеннале современного искусства «Дом о семи крыльях»",
     "year": "2025",
-    "eventDate": "19 июля — 10 августа 2025",
+    "eventDate": "18 июля — 10 августа 2025",
     "category": "Культура",
     "format": "Многоплощадочная биеннале современного искусства",
     "client": "Клиент не указан",
@@ -8312,20 +8312,51 @@
       "public",
       "culture"
     ],
-    "role": "Организация биеннале; четыре площадки, более 70 художников и свыше 100 событий.",
+    "role": "Организация биеннале на четырёх площадках; масштабы программы и аудитории приводит IVS Group.",
     "industry": "Современное искусство и культура Чувашии",
-    "description": "IVS Group организовала II Чувашскую биеннале современного искусства в Чебоксарах под темой «Дом о семи крыльях». С 19 июля по 10 августа 2025 года выставки и программа из лекций, дискуссий, перформансов, мастер-классов, концертов и творческих встреч развернулись на четырёх площадках города. По данным IVS Group, биеннале объединила более 70 художников, свыше 100 событий и более 10 000 посетителей; медиаохват превысил 35 млн.",
+    "description": "IVS Group организовала II Чувашскую биеннале современного искусства в Чебоксарах под темой «Дом о семи крыльях». С 18 июля по 10 августа 2025 года выставки и программа из лекций, дискуссий, перформансов, мастер-классов, концертов и творческих встреч развернулись на четырёх площадках города. По данным IVS Group, биеннале объединила более 70 художников, свыше 100 событий и более 10 000 посетителей; медиаохват превысил 35 млн.",
     "seoDescription": "II Чувашская биеннале от IVS Group: современное искусство и культура региона, четыре площадки, 70+ художников и 100+ событий.",
     "source": "https://ivsgroup.ru/portfolio/ii-chuvashskaya-biennale-sovremennogo-iskusstva-cheboksary",
-    "image": "/custom/empty/case-enriched-102.svg",
-    "imageMobile": "/custom/empty/case-enriched-102.svg",
-    "ogImage": "/custom/empty/case-enriched-102.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/ivs-chuvash-biennale-2025-13.webp",
+    "imageMobile": "/custom/optimized/ivs-chuvash-biennale-2025-13-960.webp",
+    "ogImage": "/custom/library/ivs-chuvash-biennale-2025-13.webp",
+    "thumb": "/custom/optimized/ivs-chuvash-biennale-2025-13-320.webp",
+    "hasPhotos": true,
+    "photoCount": 6,
     "caseId": "case-enriched-102",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/ivs-chuvash-biennale-2025-01.webp",
+        "ratio": 1.4981273408239701,
+        "alt": "Посетители рассматривают экспозицию с текстильной работой в пространстве биеннале."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ivs-chuvash-biennale-2025-03.webp",
+        "ratio": 1.4981273408239701,
+        "alt": "Выступающий ведёт программу биеннале на сцене."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ivs-chuvash-biennale-2025-04.webp",
+        "ratio": 1.5,
+        "alt": "Участники слушают встречу в камерном выставочном зале."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ivs-chuvash-biennale-2025-06.webp",
+        "ratio": 1.5,
+        "alt": "Посетители осматривают театральный зал во время программы биеннале."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/ivs-chuvash-biennale-2025-09.webp",
+        "ratio": 0.6681514476614699,
+        "alt": "Текстильная инсталляция в выставочном пространстве биеннале."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#253448,#aa784f)",
     "curated": false,
     "reelTitle": "Дом о семи крыльях · биеннале",
@@ -8335,7 +8366,20 @@
     "occasions": [
       "public",
       "culture"
-    ]
+    ],
+    "sources": [
+      {
+        "url": "https://chuvashbiennale.com/whatisbiennale",
+        "label": "Официальный сайт биеннале: тема, даты и площадки"
+      }
+    ],
+    "reelImage": "/custom/library/ivs-chuvash-biennale-2025-13.webp",
+    "reelMobile": "/custom/optimized/ivs-chuvash-biennale-2025-13-960.webp",
+    "preview": "/custom/optimized/ivs-chuvash-biennale-2025-13-960.webp",
+    "imageWidth": 1200,
+    "imageHeight": 801,
+    "imageRatio": 1.4981273408239701,
+    "previewSrcSet": "/custom/optimized/ivs-chuvash-biennale-2025-13-320.webp 320w, /custom/optimized/ivs-chuvash-biennale-2025-13-640.webp 640w, /custom/optimized/ivs-chuvash-biennale-2025-13-960.webp 960w, /custom/optimized/ivs-chuvash-biennale-2025-13-1200.webp 1200w"
   },
   {
     "slug": "case-enriched-103",
