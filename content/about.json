@@ -84,7 +84,7 @@
     ]
   ],
   "profile": {
-    "src": "/custom/events/vkusy-rossii-03.webp",
+    "src": "/custom/library/ff8961c117.webp",
     "alt": "Гастрономический фестиваль «Вкусы России» · LYRA",
     "fit": {
       "mode": "fill",
@@ -98,50 +98,50 @@
         "text": "Как организованы потоки гостей и зоны фестиваля.",
         "label": "Фестивали",
         "images": [
-          "/custom/events/positive-hack-days-02.webp",
-          "/custom/events/positive-hack-days-03.webp",
-          "/custom/events/positive-hack-days-04.webp",
-          "/custom/events/positive-hack-days-05.webp"
+          "/custom/library/7b580cf4f6.webp",
+          "/custom/library/cf5cb0f19a.webp",
+          "/custom/library/8caba15114.webp",
+          "/custom/library/4fb7a35e8d.webp"
         ]
       },
       {
         "text": "Как оформлены сцена, экраны и места для общения.",
         "label": "Конференции",
         "images": [
-          "/custom/events/vk-cloud-conf-02.webp",
-          "/custom/events/vk-cloud-conf-03.webp",
-          "/custom/events/vk-cloud-conf-04.webp",
-          "/custom/events/vk-cloud-conf-05.webp"
+          "/custom/library/6b37101c77.webp",
+          "/custom/library/8795799197.webp",
+          "/custom/library/08f30f8587.webp",
+          "/custom/library/4b14cefc9f.webp"
         ]
       },
       {
         "text": "Чем заняты участники и как они взаимодействуют.",
         "label": "Для команды",
         "images": [
-          "/custom/events/vk-team-ranch-02.webp",
-          "/custom/events/vk-team-ranch-03.webp",
-          "/custom/events/vk-team-ranch-04.webp",
-          "/custom/events/vk-team-ranch-05.webp"
+          "/custom/library/b5a5c0244b.webp",
+          "/custom/library/9bcc3d00ce.webp",
+          "/custom/library/375701b47c.webp",
+          "/custom/library/c54fbd3669.webp"
         ]
       },
       {
         "text": "Как устроены соревнования и поддержка команд.",
         "label": "Спорт",
         "images": [
-          "/custom/events/tmh-league-02.webp",
-          "/custom/events/tmh-league-03.webp",
-          "/custom/events/tmh-league-04.webp",
-          "/custom/events/tmh-league-05.webp"
+          "/custom/library/90f00baf42.webp",
+          "/custom/library/2752a8bfd9.webp",
+          "/custom/library/09d254dd42.webp",
+          "/custom/library/75acfd4cfb.webp"
         ]
       },
       {
         "text": "Как оформление помогает создать нужное настроение.",
         "label": "Впечатления",
         "images": [
-          "/custom/events/vkusy-rossii-02.webp",
-          "/custom/events/vkusy-rossii-03.webp",
-          "/custom/events/vkusy-rossii-04.webp",
-          "/custom/events/vkusy-rossii-05.webp"
+          "/custom/library/73e6aef118.webp",
+          "/custom/library/ff8961c117.webp",
+          "/custom/library/040e7fd50a.webp",
+          "/custom/library/cdaca814d5.webp"
         ]
       }
     ]
