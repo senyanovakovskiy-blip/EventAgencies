@@ -552,7 +552,7 @@
         "business",
         "online"
       ],
-      "description": "",
+      "description": "В фотокейсах Market Emotion аудиторию соединяют через серию тематических тимбилдингов и многоязычный онлайн-эфир. Для Лиги цифровой экономики агентство провело 11 тимбилдингов на гибридной платформе: региональные встречи были посвящены культурам разных стран и завершились общим финалом в Москве. В кейсе Samsung SOSCON Russia Market Emotion указывает разработку сайта, подготовку студии и трансляцию на русском, английском и корейском. Подойдёт, если участники распределены по регионам или языкам и важно заранее продумать общий формат участия.",
       "website": "https://marketemotion.ru/",
       "works": [
         "case-12",
@@ -5892,10 +5892,10 @@
       "title": "Samsung SOSCON Russia",
       "fullTitle": "Samsung SOSCON Russia",
       "year": "2021",
-      "eventDate": "21 марта 2021",
+      "eventDate": "2021",
       "category": "Бизнес",
       "format": "Онлайн-конференция",
-      "client": "Market Emotion",
+      "client": "Samsung",
       "agencySlug": "market-emotion",
       "agencySlugs": [
         "market-emotion"
@@ -5905,11 +5905,17 @@
         "business",
         "online"
       ],
-      "role": "Market Emotion: концепция и оформление студии, двуязычный сайт и русско-англо-корейская трансляция для международной конференции Samsung.",
+      "role": "В кейсе Market Emotion указаны разработка концепции и оформление студии, двуязычный сайт и трансляция на русском, английском и корейском языках.",
       "industry": "Онлайн, VUDU SPACE",
-      "description": "Samsung Open Source Conference Russia прошла онлайн на платформе VUDU SPACE 21 марта 2021 года. Market Emotion разработала сайт конференции, подготовила студию и провела трансляцию на русском, английском и корейском языках; одновременно могли участвовать до 2 000 специалистов.",
-      "seoDescription": "Samsung Open Source Conference Russia прошла онлайн на платформе VUDU SPACE 21 марта 2021 года. Market Emotion разработала сайт конференции, подготовила студию и провела трансляцию на русском, английском и корейском языках; одновременно могли участвовать до 2 000 специалистов.",
+      "description": "Samsung Open Source Conference Russia прошла онлайн на платформе VUDU SPACE. Точную дату нужно уточнить: Samsung Newsroom указывает 15 сентября 2021 года, а в кейсе Market Emotion стоит 21 марта 2021 года. В кейсе Market Emotion указано, что команда разработала сайт конференции, подготовила студию и провела трансляцию на русском, английском и корейском языках; до 2 000 одновременных участников — данные агентства.",
+      "seoDescription": "Samsung SOSCON Russia прошла онлайн на VUDU SPACE. Даты в источниках расходятся: Samsung Newsroom указывает 15 сентября, портфолио Market Emotion — 21 марта 2021 года. Сайт, студия, трансляция на трёх языках и до 2 000 участников — сведения Market Emotion.",
       "source": "https://marketemotion.ru/ru/works/samsung",
+      "sources": [
+        {
+          "url": "https://news.samsung.com/ru/international-conference-samsung-open-source-conference-2021-took-place-in-russia",
+          "label": "Samsung Newsroom · дата и описание конференции"
+        }
+      ],
       "image": "/custom/library/aaf577a70a.jpg",
       "imageMobile": "/custom/library/aaf577a70a.jpg",
       "ogImage": "/custom/library/aaf577a70a.jpg",
@@ -5927,7 +5933,7 @@
       "reelMobile": "/custom/optimized/1d7796ed43fbea-801.webp",
       "imageRatio": 1.7879464285714286,
       "eventCity": "",
-      "guestLabel": "До 2 000 одновременных участников",
+      "guestLabel": "До 2 000 одновременных участников (по данным Market Emotion)",
       "occasions": [
         "conference"
       ],
