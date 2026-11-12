@@ -9267,7 +9267,7 @@
     "eventDate": "Дата не указана",
     "category": "Для команды",
     "format": "Семейный фестиваль",
-    "client": "Louder",
+    "client": "Яндекс",
     "agencySlug": "louder",
     "agencySlugs": [
       "louder"
@@ -9276,10 +9276,10 @@
     "types": [
       "corporate"
     ],
-    "role": "Проект в портфолио агентства",
-    "industry": "Место не указано",
-    "description": "Семейный фестиваль. Фотографии этого проекта пока не добавлены.",
-    "seoDescription": "Семейный фестиваль. Фотографии этого проекта пока не добавлены.",
+    "role": "Команда Louder превратила офис Яндекса «Сербская Роза» в семейный фестиваль для детей и родителей.",
+    "industry": "Семейные события",
+    "description": "По данным Louder, фестиваль посетили более 400 гостей. Дети участвовали в мастерских по дизайну, IT и робототехнике, изучали роверы и смотрели мультфильмы; родители — в коуч-сессиях и детском ток-шоу.",
+    "seoDescription": "Семейный фестиваль Louder в офисе Яндекса: более 400 гостей по данным агентства, мастерские для детей и программа для родителей.",
     "source": "https://louder.ru/our-work/detskiy-festival-v-ofise-yandeksa/",
     "image": "/custom/empty/case-enriched-71.svg",
     "imageMobile": "/custom/empty/case-enriched-71.svg",
@@ -9295,7 +9295,7 @@
     "reelTitle": "Детский фестиваль в…",
     "featured": false,
     "eventCity": "",
-    "guestLabel": "",
+    "guestLabel": "400+ гостей (по данным Louder)",
     "occasions": [
       "corporate"
     ]

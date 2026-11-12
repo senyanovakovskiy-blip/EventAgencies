@@ -282,7 +282,7 @@ function syncCatalogFormatLink(brief){
  link.setAttribute('aria-label',occasion?'Показать работы близкого направления; это не подтверждение идентичного кейса':'Открыть каталог работ агентств для вдохновения');
  link.href='/catalog?'+query.toString();
 }
-function facts(p){return [p.category,p.eventCity,p.guestLabel].filter(Boolean).join(' · ');}
+function facts(p){return [p.category,p.place||p.eventCity,p.guestLabel].filter(Boolean).join(' · ');}
 function role(p){
  const text=p?.role?.trim();
  if(!text||/^(?:Проект в (?:официальном )?портфолио агентства|Работа (?:представлена в |из |в )портфолио агентства)(?: для .*)?\.?$/i.test(text))return 'Нужно уточнить';

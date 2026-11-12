@@ -1,4 +1,5 @@
 const publicText=value=>typeof value==='string'?value:'';
+const publicPrompts=value=>Array.isArray(value)?value.filter(prompt=>typeof prompt==='string'&&prompt.trim()).slice(0,3):[];
 
 export function projectBody(data){
 // data is the public catalogue from presentCatalog. Keep the embedded copy
@@ -10,8 +11,8 @@ const reference={
   presentation:{lead:publicText(presentation?.lead),fit:publicText(presentation?.fit)}
  })),
  projects:data.projects.map(({slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source,presentation})=>({
-  slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,guestLabel,role,source,
-  presentation:{lead:publicText(presentation?.lead),intro:publicText(presentation?.intro),fit:publicText(presentation?.fit),participation:publicText(presentation?.participation)}
+  slug,agencySlug,agencySlugs,fullTitle,kind,hasPhotos,reelMobile,image,preview,previewSrcSet,imageWidth,imageHeight,category,eventCity,place:publicText(presentation?.place),guestLabel,role,source,
+  presentation:{lead:publicText(presentation?.lead),intro:publicText(presentation?.intro),fit:publicText(presentation?.fit),participation:publicText(presentation?.participation),discussionPrompts:publicPrompts(presentation?.discussionPrompts)}
  }))
 };
 return `<main class="my-project" id="content">
