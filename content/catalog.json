@@ -1168,6 +1168,7 @@
     },
     {
       "slug": "intelsport-bb868",
+      "duplicateOf": "intelsport",
       "name": "ИнтелСпорт",
       "city": "Москва",
       "types": [
@@ -7158,6 +7159,7 @@
     },
     {
       "slug": "portfolio-intelsport-bb868-8bf1feb",
+      "duplicateOf": "mts-sport",
       "title": "Федеральный спортивный фестиваль МТС",
       "fullTitle": "Федеральный спортивный фестиваль МТС",
       "year": "—",

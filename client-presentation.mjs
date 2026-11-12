@@ -3,7 +3,7 @@
 const pick=(source,keys)=>Object.fromEntries(keys.filter(key=>Object.hasOwn(source,key)).map(key=>[key,source[key]]));
 // The last three agency fields and role/guestLabel remain the existing public
 // facts used by comparison and exports; these do not come from operatorCatalog.
-const agencyFields='slug name city types website works caseCount photoCount cover coverWork geography services budgetConditions'.split(' ');
+const agencyFields='slug name city types website works caseCount photoCount cover coverWork geography services budgetConditions duplicateOf'.split(' ');
 const workFields='slug title fullTitle year eventDate category format client agencySlug agencySlugs agencyUrl types industry role source sources image imageMobile ogImage thumb hasPhotos photoCount caseId duplicateOf kind gradient curated reelTitle featured reelImage reelMobile imageRatio eventCity guestLabel occasions preview imageWidth imageHeight previewSrcSet'.split(' ');
 const copy=(entries,slug)=>{
  const value=entries?.[slug];
@@ -20,10 +20,11 @@ export function presentCatalog(catalog,presentation){
  });
  const projectBySlug=new Map(projects.map(p=>[p.slug,p]));
  const publishedProjects=projects.filter(p=>!p.duplicateOf);
+ const publishedAgencies=catalog.agencies.filter(a=>!a.duplicateOf);
  const sumPhotos=items=>items.reduce((total,p)=>{const count=Number(p?.photoCount);return total+(Number.isFinite(count)&&count>0?count:0);},0);
  return {
   types:catalog.types,
-  stats:{cases:publishedProjects.filter(p=>p.kind==='case').length,photos:sumPhotos(publishedProjects),works:publishedProjects.length},
+  stats:{agencies:publishedAgencies.length,cases:publishedProjects.filter(p=>p.kind==='case').length,photos:sumPhotos(publishedProjects),works:publishedProjects.length},
   agencies:catalog.agencies.map(a=>{
    const text=copy(presentation.agencies,a.slug);
    const works=a.works.filter(slug=>!duplicateSlugs.has(slug)&&projectBySlug.has(slug));
