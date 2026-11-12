@@ -130,6 +130,11 @@ const framework=spawnSync(process.execPath,['scripts/run-framework.mjs','build']
 if(framework.status!==0)process.exit(framework.status??1);
 const prunedFrameworkCatalogMedia=await pruneUnusedCatalogMedia(path.join(root,'dist','client'));
 if(prunedFrameworkCatalogMedia)console.log(`Excluded ${prunedFrameworkCatalogMedia} unreferenced catalogue images from the final hosted build; source files are preserved.`);
+const legacyAlphaImage=path.join(root,'dist','client','custom','library','38291ff36f.png');
+if(!assetReferenceText.includes('/custom/library/38291ff36f.png')){
+ const existed=await fs.stat(legacyAlphaImage).then(()=>true,error=>error.code==='ENOENT'?false:Promise.reject(error));
+ if(existed){await fs.rm(legacyAlphaImage);console.log('Excluded one replaced REDDAY source image from the final hosted build; source file is preserved.');}
+}
 const prunedEventImages=await pruneUnusedEventImages(path.join(root,'dist','client','custom','events'));
 if(prunedEventImages)console.log(`Excluded ${prunedEventImages} unreferenced event images from the hosted build; source files are preserved.`);
 console.log('Hosted build includes static pages, protected API and D1 migrations.');
