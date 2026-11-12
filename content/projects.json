@@ -3515,10 +3515,10 @@
     "title": "Modest Fashion Day",
     "fullTitle": "Modest Fashion Day",
     "year": "2025",
-    "eventDate": "2025",
+    "eventDate": "14 мая 2025",
     "category": "Культура",
-    "format": "Международный модный показ",
-    "client": "Imagine Group",
+    "format": "Международный показ благопристойной моды",
+    "client": "АИР РТ",
     "agencySlug": "imagine-group",
     "agencySlugs": [
       "imagine-group"
@@ -3528,11 +3528,17 @@
       "culture",
       "public"
     ],
-    "role": "Концептуальное шоу для АИР РТ с брендами из семи стран",
-    "industry": "Казань",
-    "description": "Международный модный показ. Площадка: Казань. Работа команды: Концептуальное шоу для АИР РТ с брендами из семи стран.",
-    "seoDescription": "Международный модный показ. Площадка: Казань. Работа команды: Концептуальное шоу для АИР РТ с брендами из семи стран.",
+    "role": "Концепция единого шоу, объединившего бренды из семи стран",
+    "industry": "Мода и креативные индустрии",
+    "description": "Семь стран — один подиум: на Modest Fashion Day в рамках KazanForum российские и международные дизайнеры представили свои коллекции. Imagine Group объединила бренды в едином концептуальном шоу; клиент проекта — АИР РТ. Показ прошёл в Казани 14 мая 2025 года.",
+    "seoDescription": "Modest Fashion Day 2025 в Казани: международный показ на KazanForum. Imagine Group объединила бренды из семи стран в едином концептуальном шоу для АИР РТ.",
     "source": "https://imgevent.ru/",
+    "sources": [
+      {
+        "label": "KazanForum · дата, площадка и программа показа 2025 года",
+        "url": "https://kazanforum.ru/press-center/news/12796/"
+      }
+    ],
     "image": "/custom/library/26297dc263.jpg",
     "imageMobile": "/custom/library/26297dc263.jpg",
     "ogImage": "/custom/library/26297dc263.jpg",
