@@ -379,7 +379,7 @@
         "case-enriched-145"
       ],
       "caseCount": 10,
-      "photoCount": 22,
+      "photoCount": 30,
       "cover": "/custom/library/6b37101c77.webp",
       "coverWork": "vk-cloud-conf",
       "geography": "Россия и Казахстан — указано в описании агентства."
@@ -10921,18 +10921,67 @@
       ],
       "role": "Организация регистрации, застройка декором и мебелью, сцена и экран, кейтеринг и вечеринка награждения.",
       "industry": "IT и корпоративные события",
-      "description": "5 июня 2025 года N:OW организовало хакатон для IT-компании на 180 гостей. Агентство обеспечило регистрацию, сцену и экран, оформление мебелью и декором, кейтеринг и вечеринку награждения на крыше. Серферскую тему поддержали озеленение, фотозона с досками для сёрфинга и фудтрак во внутреннем дворике. Название клиента, город и площадка в кейсе не указаны.",
-      "seoDescription": "Хакатон для IT-компании от N:OW: 180 гостей, серферская фотозона, фудтрак и вечеринка награждения на крыше.",
+      "description": "5 июня 2025 года N:OW организовало хакатон для IT-компании на 180 гостей. Агентство обеспечило регистрацию, сцену и экран, оформление мебелью и декором, кейтеринг и вечеринку награждения. Серферскую тему поддержали фотозона с досками для сёрфинга, озеленение и фудтрак во внутреннем дворике. Клиент, город и площадка в кейсе не указаны.",
+      "seoDescription": "Хакатон N:OW для IT-компании на 180 гостей: серферская фотозона, фудтрак во дворике и вечеринка награждения на крыше.",
       "source": "https://now-agency.ru/%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F-%D1%85%D0%B0%D0%BA%D0%B0%D1%82%D0%BE%D0%BD%D0%B0-%D0%B4%D0%BB%D1%8F-it-%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D0%B8%D0%B8/",
-      "image": "/custom/empty/case-enriched-106.svg",
-      "imageMobile": "/custom/empty/case-enriched-106.svg",
-      "ogImage": "/custom/empty/case-enriched-106.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/now-hackathon-01.webp",
+      "imageMobile": "/custom/optimized/now-hackathon-01-640.webp",
+      "ogImage": "/custom/library/now-hackathon-01.webp",
+      "thumb": "/custom/optimized/now-hackathon-01-640.webp",
+      "hasPhotos": true,
+      "photoCount": 8,
       "caseId": "case-enriched-106",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-01.webp",
+          "ratio": 1.932075,
+          "alt": "Общий вид хакатона: участники в зале с экраном и цветной подсветкой."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-02.webp",
+          "ratio": 1.932075,
+          "alt": "Рабочее пространство хакатона со столами и экраном."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-03.webp",
+          "ratio": 1.932075,
+          "alt": "Спикер выступает перед участниками хакатона."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-04.webp",
+          "ratio": 1.932075,
+          "alt": "Неоновая вывеска VIBE CODING на фоне зелёных листьев."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-05.webp",
+          "ratio": 1.932075,
+          "alt": "Оформление VIBE CODING с зелёной стеной и декором."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-06.webp",
+          "ratio": 1.932075,
+          "alt": "Жёлтый фудтрак во внутреннем дворике мероприятия."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-07.webp",
+          "ratio": 1.932075,
+          "alt": "Коллаж с фотозоной VIBE CODING, участником вечерней программы и серферским оформлением."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/now-hackathon-08.webp",
+          "ratio": 1.932075,
+          "alt": "Коллаж с диджеем, живой музыкой и вечерней площадкой на крыше."
+        }
+      ],
       "gradient": "linear-gradient(150deg,#28534b,#c79057)",
       "curated": false,
       "reelTitle": "Хакатон N:OW · серферская тема",
@@ -10941,7 +10990,14 @@
       "guestLabel": "180 гостей (по данным N:OW)",
       "occasions": [
         "corporate"
-      ]
+      ],
+      "reelImage": "/custom/library/now-hackathon-01.webp",
+      "reelMobile": "/custom/optimized/now-hackathon-01-640.webp",
+      "imageRatio": 1.9320754716981132,
+      "preview": "/custom/optimized/now-hackathon-01-640.webp",
+      "imageWidth": 1024,
+      "imageHeight": 530,
+      "previewSrcSet": "/custom/optimized/now-hackathon-01-320.webp 320w, /custom/optimized/now-hackathon-01-640.webp 640w, /custom/library/now-hackathon-01.webp 1024w"
     },
     {
       "slug": "case-enriched-107",
@@ -15288,6 +15344,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 422
+    "photos": 430
   }
 }
