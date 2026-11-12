@@ -379,7 +379,7 @@
         "case-enriched-145"
       ],
       "caseCount": 10,
-      "photoCount": 35,
+      "photoCount": 40,
       "cover": "/custom/library/6b37101c77.webp",
       "coverWork": "vk-cloud-conf",
       "geography": "Россия и Казахстан — указано в описании агентства."
@@ -13450,18 +13450,49 @@
       "description": "Камерная церемония в «Художественном» превратила идею «слово становится действием» в цельный вечер: режиссура и визуальный образ поддерживали ощущение признания, а видео и оригинальное звуковое сопровождение связывали его части. N:OW описывает полный цикл своего вклада — от работы с площадкой до мерча, контента и музыки. 270 гостей — по данным агентства.",
       "seoDescription": "N:OW создало режиссуру и визуальную концепцию премии Дзена «Люди слова» в кинотеатре «Художественный», подготовив контент, мерч и оригинальный звук.",
       "source": "https://now-agency.ru/%D0%BF%D1%80/",
-      "image": "/custom/empty/case-enriched-139.svg",
-      "imageMobile": "/custom/empty/case-enriched-139.svg",
-      "ogImage": "/custom/empty/case-enriched-139.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/lyudi-slova-01.webp",
+      "imageMobile": "/custom/library/lyudi-slova-01.webp",
+      "ogImage": "/custom/library/lyudi-slova-01.webp",
+      "thumb": "/custom/library/lyudi-slova-01.webp",
+      "hasPhotos": true,
+      "photoCount": 5,
       "caseId": "case-enriched-139",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-slova-01.webp",
+          "ratio": 1.932367,
+          "alt": "Гости идут между рядами в кинотеатре «Художественный»"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-slova-02.webp",
+          "ratio": 1.932367,
+          "alt": "Коллаж с залом, сценой и оформлением премии «Люди слова»"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-slova-03.webp",
+          "ratio": 1.932367,
+          "alt": "Коллаж с проекцией названия премии, гостями и фотозоной"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-slova-04.webp",
+          "ratio": 1.932367,
+          "alt": "Коллаж с выступлением на сцене и гостями у оформления премии"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/lyudi-slova-05.webp",
+          "ratio": 1.927711,
+          "alt": "Гости общаются у высокого стола в оформленном зале"
+        }
+      ],
       "gradient": "linear-gradient(145deg,#21181f,#b2948a)",
       "curated": false,
-      "reelTitle": "Дзен · премия «Люди слова»",
+      "reelTitle": "Дзен · слово становится действием",
       "featured": false,
       "eventCity": "Москва · кинотеатр «Художественный»",
       "guestLabel": "270 гостей (по данным N:OW)",
@@ -13478,7 +13509,14 @@
           "label": "«Вечерняя Москва» · дата, площадка и премия Дзена",
           "url": "https://vm.ru/news/1285580-ceremoniya-nagrazhdeniya-premiej-lyudi-slova-sostoyalas-v-moskovskom-kinoteatre"
         }
-      ]
+      ],
+      "reelImage": "/custom/library/lyudi-slova-01.webp",
+      "reelMobile": "/custom/library/lyudi-slova-01.webp",
+      "imageRatio": 1.932367149758454,
+      "preview": "/custom/library/lyudi-slova-01.webp",
+      "imageWidth": 800,
+      "imageHeight": 414,
+      "previewSrcSet": "/custom/library/lyudi-slova-01.webp 800w"
     },
     {
       "slug": "case-enriched-140",
@@ -15517,6 +15555,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 451
+    "photos": 456
   }
 }
