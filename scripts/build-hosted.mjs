@@ -131,7 +131,8 @@ if(framework.status!==0)process.exit(framework.status??1);
 const prunedFrameworkCatalogMedia=await pruneUnusedCatalogMedia(path.join(root,'dist','client'));
 if(prunedFrameworkCatalogMedia)console.log(`Excluded ${prunedFrameworkCatalogMedia} unreferenced catalogue images from the final hosted build; source files are preserved.`);
 const legacyAlphaImage=path.join(root,'dist','client','custom','library','38291ff36f.png');
-if(!assetReferenceText.includes('/custom/library/38291ff36f.png')){
+const currentCatalogSources=(await Promise.all(['catalog','projects'].map(name=>fs.readFile(path.join(root,'content',name+'.json'),'utf8')))).join('\n');
+if(!currentCatalogSources.includes('/custom/library/38291ff36f.png')){
  const existed=await fs.stat(legacyAlphaImage).then(()=>true,error=>error.code==='ENOENT'?false:Promise.reject(error));
  if(existed){await fs.rm(legacyAlphaImage);console.log('Excluded one replaced REDDAY source image from the final hosted build; source file is preserved.');}
 }
