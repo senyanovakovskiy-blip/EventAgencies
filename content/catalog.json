@@ -279,7 +279,7 @@
         "case-enriched-142"
       ],
       "caseCount": 6,
-      "photoCount": 8,
+      "photoCount": 10,
       "cover": "/custom/library/423c7c2c36.webp",
       "coverWork": "portfolio-dream-laser-15dd06e"
     },
@@ -477,7 +477,7 @@
         "case-enriched-138"
       ],
       "caseCount": 3,
-      "photoCount": 17,
+      "photoCount": 16,
       "cover": "/custom/library/044ba5a2d2-thumb.webp",
       "coverWork": "lada-conference"
     },
@@ -13394,7 +13394,7 @@
       "ogImage": "/custom/library/yandex-pay-01.webp",
       "thumb": "/custom/library/yandex-pay-01.webp",
       "hasPhotos": true,
-      "photoCount": 3,
+      "photoCount": 2,
       "caseId": "case-enriched-138",
       "kind": "case",
       "gallery": [
@@ -13409,12 +13409,6 @@
           "src": "/custom/library/yandex-pay-02.webp",
           "ratio": 0.666667,
           "alt": "Посетительница перед брендированной инсталляцией Яндекс Пэй"
-        },
-        {
-          "type": "image",
-          "src": "/custom/library/yandex-pay-03.webp",
-          "ratio": 0.666667,
-          "alt": "Два посетителя у брендированной инсталляции Яндекс Пэй"
         }
       ],
       "gradient": "linear-gradient(145deg,#15171b,#aeb4bb)",
@@ -13718,15 +13712,28 @@
       "description": "Пчелиное сообщество стало образом общества будущего, где каждый вносит свой вклад в общее развитие. Dreamlaser превратил эту идею в анимационную историю для open call Expo 2025: её показывали на фасаде EXPO Hall Shining Hat в Осаке. В этой работе важен не масштаб сцены, а понятная метафора — как индивидуальный труд складывается в общий мир.",
       "seoDescription": "Анимационная работа Dreamlaser «Bees of the Future: Connecting Worlds» вошла в open-call программу проекций Expo 2025 в Осаке.",
       "source": "https://dreamlaser.ru/news/mepping-dreamlaser-na-vsemirnoj-vystavke-v-yaponii",
-      "image": "/custom/empty/case-enriched-142.svg",
-      "imageMobile": "/custom/empty/case-enriched-142.svg",
-      "ogImage": "/custom/empty/case-enriched-142.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/dreamlaser-bees-expo-01-projection.webp",
+      "imageMobile": "/custom/library/dreamlaser-bees-expo-03-blossom.webp",
+      "ogImage": "/custom/library/dreamlaser-bees-expo-01-projection.webp",
+      "thumb": "/custom/library/dreamlaser-bees-expo-01-projection.webp",
+      "hasPhotos": true,
+      "photoCount": 2,
       "caseId": "case-enriched-142",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/dreamlaser-bees-expo-01-projection.webp",
+          "ratio": 1.758957654723127,
+          "alt": "Кадр анимации Dreamlaser «Bees of the Future»: пчёлы и светлый сот на фасаде EXPO Hall Shining Hat. Фото: Dreamlaser."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/dreamlaser-bees-expo-03-blossom.webp",
+          "ratio": 1.7504051863857375,
+          "alt": "Пчёлы летят над цветами в анимационной работе Dreamlaser для Expo 2025. Фото: Dreamlaser."
+        }
+      ],
       "gradient": "linear-gradient(145deg,#101c22,#8ea84c)",
       "curated": false,
       "reelTitle": "Dreamlaser · Bees of the Future",
@@ -13749,7 +13756,13 @@
           "label": "Expo 2025 · Program C, где указаны работа и Dreamlaser",
           "url": "https://www.expo2025.or.jp/wp/wp-content/themes/expo2025orjp_2022/assets/pdf/future-index/art/projectionmapping/program_C_en.pdf"
         }
-      ]
+      ],
+      "reelImage": "/custom/library/dreamlaser-bees-expo-01-projection.webp",
+      "reelMobile": "/custom/library/dreamlaser-bees-expo-03-blossom.webp",
+      "preview": "/custom/library/dreamlaser-bees-expo-01-projection.webp",
+      "imageRatio": 1.758957654723127,
+      "imageWidth": 1080,
+      "imageHeight": 614
     },
     {
       "slug": "case-enriched-143",
@@ -15600,6 +15613,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 461
+    "photos": 462
   }
 }
