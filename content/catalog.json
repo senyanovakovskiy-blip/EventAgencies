@@ -12056,18 +12056,43 @@
       ],
       "role": "AVM Media включает акцию в список своих проектов; публикация описывает программу и участие ВТБ, но не раскрывает конкретную зону ответственности агентства.",
       "industry": "Благотворительность и медицинская помощь детям",
-      "description": "Хрюша, Степашка, Филя, Каркуша и робот Айтиша приезжают в детские больницы с интерактивным спектаклем о финансовой грамотности: фокусы и конкурсы помогают говорить с детьми о деньгах и мошенниках простым языком. ВТБ передаёт участвующим больницам сертификаты на нужное медицинское оборудование. По публикации AVM Media от 6 октября 2025 года, с марта акция уже охватила 13 регионов; сезон ещё продолжался. Конкретная роль агентства в источнике не раскрыта.",
-      "seoDescription": "Акция ВТБ «Мир без слёз»: выездной спектакль о финансовой грамотности для детей в больницах и сертификаты на медицинское оборудование. По публикации AVM Media от 6 октября 2025 года — 13 регионов на тот момент.",
+      "description": "«Мир без слёз» соединяет эмоциональную поддержку и практическую помощь детским больницам. Хрюша, Степашка, Филя и Каркуша вместе с роботом Айтишей приезжают с образовательным спектаклем о финансовой грамотности; фокусы и конкурсы помогают детям говорить о деньгах и мошенниках простым языком. Каждый ребёнок получает мягкую игрушку Айтишу, а участвующим больницам ВТБ передаёт сертификаты на оборудование. По публикации AVM Media от 6 октября 2025 года, с марта сезон охватил 13 регионов; роль агентства по этапам не раскрыта. Та же публикация сообщает, что в 2025 году акции исполнилось 22 года, а помощь по программе получили 218 больниц в 80 регионах.",
+      "seoDescription": "Акция ВТБ «Мир без слёз»: спектакль о финансовой грамотности для детей в больницах и сертификаты на медицинское оборудование. По публикации AVM Media, в сезоне 2025 года программа охватила 13 регионов.",
       "source": "https://avmmedia.ru/news/vsyo-radi-ulybok-detej-akcziya-mir-bez-slyoz-v-regionah-rf/",
-      "image": "/custom/empty/case-enriched-114.svg",
-      "imageMobile": "/custom/empty/case-enriched-114.svg",
-      "ogImage": "/custom/empty/case-enriched-114.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/avm-mir-bez-slez-2025-02.webp",
+      "imageMobile": "/custom/optimized/avm-mir-bez-slez-2025-02-960.webp",
+      "ogImage": "/custom/library/avm-mir-bez-slez-2025-02.webp",
+      "thumb": "/custom/optimized/avm-mir-bez-slez-2025-02-320.webp",
+      "hasPhotos": true,
+      "photoCount": 5,
       "caseId": "case-enriched-114",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/avm-mir-bez-slez-2025-01.webp",
+          "ratio": 1.5012106537530265,
+          "alt": "Дети выбирают подарки — мягкие игрушки-роботы и фирменные пакеты акции «Мир без слёз». Фото: AVM Media."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/avm-mir-bez-slez-2025-03.webp",
+          "ratio": 0.8,
+          "alt": "Фотостена с кадрами акции, детьми и персонажем-роботом Айтишей. Фото: AVM Media."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/avm-mir-bez-slez-2025-04.webp",
+          "ratio": 1.5012106537530265,
+          "alt": "Брендированная фотозона с роботом Айтишей, книгой и сундуком. Фото: AVM Media."
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/avm-mir-bez-slez-2025-05.webp",
+          "ratio": 1.4993954050785974,
+          "alt": "Дети и артисты на сцене на фоне декораций акции «Мир без слёз» и воздушных шаров ВТБ. Фото: AVM Media."
+        }
+      ],
       "gradient": "linear-gradient(145deg,#355c65,#d69360)",
       "curated": false,
       "reelTitle": "Мир без слёз · ВТБ",
@@ -12076,7 +12101,14 @@
       "guestLabel": "",
       "occasions": [
         "public"
-      ]
+      ],
+      "reelImage": "/custom/library/avm-mir-bez-slez-2025-02.webp",
+      "reelMobile": "/custom/optimized/avm-mir-bez-slez-2025-02-960.webp",
+      "preview": "/custom/optimized/avm-mir-bez-slez-2025-02-960.webp",
+      "imageWidth": 1240,
+      "imageHeight": 827,
+      "imageRatio": 1.4993954050785974,
+      "previewSrcSet": "/custom/optimized/avm-mir-bez-slez-2025-02-320.webp 320w, /custom/optimized/avm-mir-bez-slez-2025-02-640.webp 640w, /custom/optimized/avm-mir-bez-slez-2025-02-960.webp 960w, /custom/optimized/avm-mir-bez-slez-2025-02-1200.webp 1200w, /custom/optimized/avm-mir-bez-slez-2025-02-1240.webp 1240w"
     },
     {
       "slug": "case-enriched-115",
@@ -15920,6 +15952,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 501
+    "photos": 506
   }
 }
