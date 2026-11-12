@@ -3525,5 +3525,65 @@
         "caseId": "case-enriched-135"
       }
     ]
+  },
+  {
+    "file": "/custom/library/pt-open-day-0c6326a724cb.webp",
+    "original": "https://www.arscom.ru/upload/iblock/bdf/cdfatub6wwzqwcvohwdczxk4vqbgvgha.jpg",
+    "source": "https://www.arscom.ru/eng/projects/pt-open-day-synthesis/",
+    "credits": [
+      {
+        "agency": "ARS Communications",
+        "title": "PT Open Day: Synthesis",
+        "caseId": "case-enriched-103"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/pt-open-day-ca75eeb64906.webp",
+    "original": "https://www.arscom.ru/upload/iblock/1a6/1upimpcp6mp90y8z1c2j5a45hvvdg5f2.jpg",
+    "source": "https://www.arscom.ru/eng/projects/pt-open-day-synthesis/",
+    "credits": [
+      {
+        "agency": "ARS Communications",
+        "title": "PT Open Day: Synthesis",
+        "caseId": "case-enriched-103"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/pt-open-day-22c9553ba1a1.webp",
+    "original": "https://www.arscom.ru/upload/iblock/5e5/0hlcqqjtiicrbcn0e6bvm1o5lapr88tr.jpg",
+    "source": "https://www.arscom.ru/eng/projects/pt-open-day-synthesis/",
+    "credits": [
+      {
+        "agency": "ARS Communications",
+        "title": "PT Open Day: Synthesis",
+        "caseId": "case-enriched-103"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/pt-open-day-270ed3b83d79.webp",
+    "original": "https://www.arscom.ru/upload/iblock/5c9/l7vpzi7fugbd47gdy11kc5z8izzc9j2g.jpg",
+    "source": "https://www.arscom.ru/eng/projects/pt-open-day-synthesis/",
+    "credits": [
+      {
+        "agency": "ARS Communications",
+        "title": "PT Open Day: Synthesis",
+        "caseId": "case-enriched-103"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/pt-open-day-cd120f2ebff1.webp",
+    "original": "https://www.arscom.ru/upload/iblock/001/ssvekbis8wdxysy0a4o59l8qwl95t09a.jpg",
+    "source": "https://www.arscom.ru/eng/projects/pt-open-day-synthesis/",
+    "credits": [
+      {
+        "agency": "ARS Communications",
+        "title": "PT Open Day: Synthesis",
+        "caseId": "case-enriched-103"
+      }
+    ]
   }
 ]

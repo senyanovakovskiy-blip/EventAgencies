@@ -8357,15 +8357,46 @@
     "description": "PT Open Day: Synthesis — ежегодная встреча партнёров PT в Lomonosov Cluster в Москве. ARS Communications отвечала за программу и активности, техническое оснащение, логистику и пространство, оформление и партнёрские стенды, режиссуру, персонал и безопасность, кейтеринг, трансферы и координацию сервисов. В кейсе агентства указаны 1 500 участников и явка 90%; событие прошло 13 марта, год не раскрыт.",
     "seoDescription": "PT Open Day: Synthesis от ARS Communications: 1 500 участников, явка 90%, партнёрские стенды и полный комплекс событийных сервисов.",
     "source": "https://www.arscom.ru/eng/projects/pt-open-day-synthesis/",
-    "image": "/custom/empty/case-enriched-103.svg",
-    "imageMobile": "/custom/empty/case-enriched-103.svg",
-    "ogImage": "/custom/empty/case-enriched-103.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/pt-open-day-270ed3b83d79.webp",
+    "imageMobile": "/custom/library/pt-open-day-270ed3b83d79.webp",
+    "ogImage": "/custom/library/pt-open-day-270ed3b83d79.webp",
+    "thumb": "/custom/optimized/pt-open-day-270ed3b83d79-960.webp",
+    "hasPhotos": true,
+    "photoCount": 5,
     "caseId": "case-enriched-103",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/pt-open-day-270ed3b83d79.webp",
+        "ratio": 1.499531396438613,
+        "alt": "Входная зона PT Open Day: Synthesis с брендированными декорациями. Фото: ARS Communications."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/pt-open-day-cd120f2ebff1.webp",
+        "ratio": 1.499531396438613,
+        "alt": "Стойка регистрации и навигация по этажам PT Open Day: Synthesis. Фото: ARS Communications."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/pt-open-day-0c6326a724cb.webp",
+        "ratio": 1.499531396438613,
+        "alt": "Зона отдыха PT Open Day с креслами и кейтерингом. Фото: ARS Communications."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/pt-open-day-ca75eeb64906.webp",
+        "ratio": 0.6666666666666666,
+        "alt": "Печатные материалы и сувениры с айдентикой Positive Technologies. Фото: ARS Communications."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/pt-open-day-22c9553ba1a1.webp",
+        "ratio": 0.6666666666666666,
+        "alt": "Инсталляция с подсвеченными надписями, изданиями и тематическими предметами. Фото: ARS Communications."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#203d3b,#b58655)",
     "curated": false,
     "reelTitle": "PT Open Day: Synthesis",
@@ -8374,7 +8405,14 @@
     "guestLabel": "1 500 участников; явка 90% (по данным ARS Communications)",
     "occasions": [
       "corporate"
-    ]
+    ],
+    "reelImage": "/custom/optimized/pt-open-day-270ed3b83d79-1600.webp",
+    "reelMobile": "/custom/optimized/pt-open-day-270ed3b83d79-960.webp",
+    "imageRatio": 1.499531396438613,
+    "preview": "/custom/optimized/pt-open-day-270ed3b83d79-960.webp",
+    "imageWidth": 1600,
+    "imageHeight": 1067,
+    "previewSrcSet": "/custom/optimized/pt-open-day-270ed3b83d79-640.webp 640w, /custom/optimized/pt-open-day-270ed3b83d79-960.webp 960w, /custom/optimized/pt-open-day-270ed3b83d79-1600.webp 1600w"
   },
   {
     "slug": "case-enriched-104",
