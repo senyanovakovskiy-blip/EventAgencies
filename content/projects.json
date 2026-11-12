@@ -12149,15 +12149,28 @@
     "description": "«Это мы!» — день рождения Positive Technologies в THE BIRCH в Подмосковье. Днём гости выбирали занятие по настроению: покерный турнир, спортивные активности, лазертаг, квесты, «отель гнева» и фирменный Posi X. Михаил Мун провёл «Что? Где? Когда?», а вечером сцена перешла к концерту с лазерами и живой музыкой. 2CAPITALS указывает 2 900 участников; подробный вклад агентства по блокам кейс не раскрывает.",
     "seoDescription": "День рождения Positive Technologies «Это мы!» в THE BIRCH: дневные игры, лазертаг и квесты, шоу Михаила Муна и вечерний концерт. Аудитория — по данным кейса 2CAPITALS.",
     "source": "https://2capitals.ru/kejsy/eto-my",
-    "image": "/custom/empty/case-enriched-156.svg",
-    "imageMobile": "/custom/empty/case-enriched-156.svg",
-    "ogImage": "/custom/empty/case-enriched-156.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/2capitals-its-we-evening-stage.webp",
+    "imageMobile": "/custom/library/2capitals-its-we-stage-talk.webp",
+    "ogImage": "/custom/library/2capitals-its-we-evening-stage.webp",
+    "thumb": "/custom/library/2capitals-its-we-evening-stage.webp",
+    "hasPhotos": true,
+    "photoCount": 2,
     "caseId": "case-enriched-156",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/2capitals-its-we-evening-stage.webp",
+        "ratio": 1.484,
+        "alt": "Гости смотрят вечерний концерт на главной сцене праздника Positive Technologies. Фото: 2CAPITALS."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/2capitals-its-we-stage-talk.webp",
+        "ratio": 1.484,
+        "alt": "Ведущий беседует с участницей на сцене под оформлением «Это мы!». Фото: 2CAPITALS."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#101b37,#e94479)",
     "curated": false,
     "reelTitle": "Это мы! · Positive Technologies",
@@ -12173,7 +12186,13 @@
         "label": "2CAPITALS · описание события, программа и заявленная аудитория",
         "url": "https://2capitals.ru/kejsy/eto-my"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/2capitals-its-we-evening-stage.webp",
+    "reelMobile": "/custom/library/2capitals-its-we-stage-talk.webp",
+    "preview": "/custom/library/2capitals-its-we-evening-stage.webp",
+    "imageRatio": 1.484,
+    "imageWidth": 1080,
+    "imageHeight": 728
   },
   {
     "slug": "case-enriched-157",
