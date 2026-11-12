@@ -12024,15 +12024,40 @@
     "description": "С 26 марта по 1 апреля 2023 года в Екатеринбург-Экспо прошли «Игры вызова легенд» — турнир, объединивший спортивную и художественную гимнастику, спортивную акробатику и аэробику. 3Q Холдинг описывает свою задачу как объединение четырёх дисциплин на одной площадке. Официальный сайт соревнований указывает 2 300 участников и 300 волонтёров — это масштаб турнира в целом, не отдельный результат агентства.",
     "seoDescription": "3Q Холдинг и «Игры вызова легенд-2023»: четыре гимнастические дисциплины на площадке Екатеринбург-Экспо; участники и волонтёры — показатели всего турнира.",
     "source": "https://3qholding.com/igryvisovalegend",
-    "image": "/custom/empty/case-enriched-151.svg",
-    "imageMobile": "/custom/empty/case-enriched-151.svg",
-    "ogImage": "/custom/empty/case-enriched-151.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/legend-games-5d0a3455e032.webp",
+    "imageMobile": "/custom/library/legend-games-5d0a3455e032.webp",
+    "ogImage": "/custom/library/legend-games-5d0a3455e032.webp",
+    "thumb": "/custom/optimized/legend-games-5d0a3455e032-960.webp",
+    "hasPhotos": true,
+    "photoCount": 4,
     "caseId": "case-enriched-151",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/legend-games-5d0a3455e032.webp",
+        "ratio": 1.5005861664712778,
+        "alt": "Пара акробатов выполняет поддерживаемый элемент на фоне сцены «Игр вызова легенд». Источник: официальная фотогалерея турнира."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/legend-games-bfa0e89f33b7.webp",
+        "ratio": 1.499531396438613,
+        "alt": "Спортсменка исполняет упражнение с мячом на ковре художественной гимнастики. Источник: официальная фотогалерея турнира."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/legend-games-68170fd063d5.webp",
+        "ratio": 1.499531396438613,
+        "alt": "Команда спортсменок выступает в программе спортивной аэробики. Источник: официальная фотогалерея турнира."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/legend-games-c942a16ad583.webp",
+        "ratio": 1.499531396438613,
+        "alt": "Гимнаст выполняет упражнение на коне в программе спортивной гимнастики. Источник: официальная фотогалерея турнира."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#16283a,#8869a4)",
     "curated": false,
     "reelTitle": "Игры вызова легенд · четыре дисциплины",
@@ -12050,8 +12075,19 @@
       {
         "label": "Официальный сайт «Игр вызова легенд» · площадка, виды спорта и масштаб соревнований",
         "url": "https://legendgames.ru/"
+      },
+      {
+        "label": "Официальная фотогалерея «Игр вызова легенд» — альбомы соревнований по дисциплинам",
+        "url": "https://legendgames.ru/fotogalereya"
       }
-    ]
+    ],
+    "reelImage": "/custom/optimized/legend-games-5d0a3455e032-960.webp",
+    "reelMobile": "/custom/optimized/legend-games-5d0a3455e032-960.webp",
+    "imageRatio": 1.5005861664712778,
+    "preview": "/custom/optimized/legend-games-5d0a3455e032-960.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/legend-games-5d0a3455e032-640.webp 640w, /custom/optimized/legend-games-5d0a3455e032-960.webp 960w"
   },
   {
     "slug": "case-enriched-152",

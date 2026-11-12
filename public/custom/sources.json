@@ -3585,5 +3585,53 @@
         "caseId": "case-enriched-103"
       }
     ]
+  },
+  {
+    "file": "/custom/library/legend-games-5d0a3455e032.webp",
+    "original": "https://disk.yandex.ru/d/0SC7f2VVWcu5IA",
+    "source": "https://legendgames.ru/fotogalereya",
+    "credits": [
+      {
+        "agency": "Официальная фотогалерея «Игр вызова легенд»",
+        "title": "29.03 Акробатика · 013- 29-03-2023-.jpg",
+        "caseId": "case-enriched-151"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/legend-games-bfa0e89f33b7.webp",
+    "original": "https://disk.yandex.ru/d/5NrdH3K290_HtQ",
+    "source": "https://legendgames.ru/fotogalereya",
+    "credits": [
+      {
+        "agency": "Официальная фотогалерея «Игр вызова легенд»",
+        "title": "30.03 Художественная гимнастика · ХГ-1600-2023-03-30--11-51-59.jpg",
+        "caseId": "case-enriched-151"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/legend-games-68170fd063d5.webp",
+    "original": "https://disk.yandex.ru/d/WPs6wGbobTF6Aw",
+    "source": "https://legendgames.ru/fotogalereya",
+    "credits": [
+      {
+        "agency": "Официальная фотогалерея «Игр вызова легенд»",
+        "title": "30.03 Аэробика · 017- 30-03-2023-.jpg",
+        "caseId": "case-enriched-151"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/legend-games-c942a16ad583.webp",
+    "original": "https://disk.yandex.ru/d/HWXTTDiPONdjeg",
+    "source": "https://legendgames.ru/fotogalereya",
+    "credits": [
+      {
+        "agency": "Официальная фотогалерея «Игр вызова легенд»",
+        "title": "31.03 Спортивная гимнастика · 013- 31-03-2023-Kolchin-.jpg",
+        "caseId": "case-enriched-151"
+      }
+    ]
   }
 ]
