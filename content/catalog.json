@@ -11327,10 +11327,10 @@
       "reelImage": "/custom/library/vkusy-kazani-02.webp",
       "reelMobile": "/custom/optimized/vkusy-kazani-02-640.webp",
       "imageRatio": 1.4988290398126465,
-      "preview": "/custom/optimized/vkusy-kazani-02-960.webp",
+      "preview": "/custom/optimized/vkusy-kazani-05-640.webp",
       "imageWidth": 1280,
       "imageHeight": 854,
-      "previewSrcSet": "/custom/optimized/vkusy-kazani-02-320.webp 320w, /custom/optimized/vkusy-kazani-02-640.webp 640w, /custom/optimized/vkusy-kazani-02-960.webp 960w, /custom/optimized/vkusy-kazani-02-1280.webp 1280w",
+      "previewSrcSet": "/custom/optimized/vkusy-kazani-05-640.webp 640w, /custom/optimized/vkusy-kazani-05-1280.webp 1280w",
       "sources": [
         {
           "label": "AREAL EVENT · описание проекта, программа и фотогалерея",
