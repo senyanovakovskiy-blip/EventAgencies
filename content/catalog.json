@@ -2024,9 +2024,9 @@
         "case-enriched-111"
       ],
       "caseCount": 2,
-      "photoCount": 0,
-      "cover": null,
-      "coverWork": null
+      "photoCount": 5,
+      "cover": "/custom/library/vkusy-kazani-02.webp",
+      "coverWork": "case-enriched-90"
     },
     {
       "slug": "2capitals",
@@ -11275,23 +11275,67 @@
       "description": "5–6 сентября 2026 года AREAL EVENT провело на Кремлёвской набережной в Казани фестиваль «Вкусы Казани» со свободным входом, сценами, семейной зоной и партнёрскими интеграциями. Агентство указывает 100 гастропроектов и описывает фестиваль как собственный проект: команда отвечала за концепцию, отбор участников и партнёров, программу, безопасность и медиасопровождение. По данным AREAL EVENT, за два дня фестиваль посетили 92 000 человек.",
       "seoDescription": "«Вкусы Казани» от AREAL EVENT: городской гастрофестиваль на Кремлёвской набережной 5–6 сентября 2026 года, 100 гастропроектов и 92 000 посетителей по данным агентства.",
       "source": "https://arealevent.ru/cases/vkusy-kazani",
-      "image": "/custom/empty/case-enriched-90.svg",
-      "imageMobile": "/custom/empty/case-enriched-90.svg",
-      "ogImage": "/custom/empty/case-enriched-90.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/vkusy-kazani-02.webp",
+      "imageMobile": "/custom/optimized/vkusy-kazani-02-640.webp",
+      "ogImage": "/custom/library/vkusy-kazani-02.webp",
+      "thumb": "/custom/optimized/vkusy-kazani-02-640.webp",
+      "hasPhotos": true,
+      "photoCount": 5,
       "caseId": "case-enriched-90",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/vkusy-kazani-02.webp",
+          "ratio": 1.498829,
+          "alt": "Главная сцена и зрители на вечернем выступлении"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/vkusy-kazani-01.webp",
+          "ratio": 1.498829,
+          "alt": "Зрители фотографируют выступление у главной сцены фестиваля"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/vkusy-kazani-03.webp",
+          "ratio": 1.498829,
+          "alt": "На сцене сворачивают кыстыбый диаметром 303 см"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/vkusy-kazani-04.webp",
+          "ratio": 1.498829,
+          "alt": "Фудтрак на фоне Казанского Кремля"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/vkusy-kazani-05.webp",
+          "ratio": 1.498829,
+          "alt": "Вечерняя программа у сцены на Кремлёвской набережной"
+        }
+      ],
       "gradient": "linear-gradient(150deg,#31383d,#78563b)",
       "curated": false,
-      "reelTitle": "Гастрофестиваль «Вкусы Казани»",
+      "reelTitle": "Вкусы Казани · город за одним столом",
       "featured": false,
       "eventCity": "Кремлёвская набережная, Казань",
       "guestLabel": "92 000 посетителей за два дня (по данным AREAL EVENT)",
       "occasions": [
         "public"
+      ],
+      "reelImage": "/custom/library/vkusy-kazani-02.webp",
+      "reelMobile": "/custom/optimized/vkusy-kazani-02-640.webp",
+      "imageRatio": 1.4988290398126465,
+      "preview": "/custom/optimized/vkusy-kazani-02-960.webp",
+      "imageWidth": 1280,
+      "imageHeight": 854,
+      "previewSrcSet": "/custom/optimized/vkusy-kazani-02-320.webp 320w, /custom/optimized/vkusy-kazani-02-640.webp 640w, /custom/optimized/vkusy-kazani-02-960.webp 960w, /custom/optimized/vkusy-kazani-02-1280.webp 1280w",
+      "sources": [
+        {
+          "label": "AREAL EVENT · описание проекта, программа и фотогалерея",
+          "url": "https://arealevent.ru/cases/vkusy-kazani"
+        }
       ]
     },
     {
@@ -15397,6 +15441,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 436
+    "photos": 441
   }
 }
