@@ -129,6 +129,8 @@ const prunedCatalogMedia=await pruneUnusedCatalogMedia(target);
 if(prunedCatalogMedia)console.log(`Excluded ${prunedCatalogMedia} unreferenced catalogue images from the hosted build; source files are preserved.`);
 const framework=spawnSync(process.execPath,['scripts/run-framework.mjs','build'],{cwd:root,stdio:'inherit'});
 if(framework.status!==0)process.exit(framework.status??1);
+const prunedFrameworkCatalogMedia=await pruneUnusedCatalogMedia(path.join(root,'dist','client'));
+if(prunedFrameworkCatalogMedia)console.log(`Excluded ${prunedFrameworkCatalogMedia} unreferenced catalogue images from the final hosted build; source files are preserved.`);
 const prunedEventImages=await pruneUnusedEventImages(path.join(root,'dist','client','custom','events'));
 if(prunedEventImages)console.log(`Excluded ${prunedEventImages} unreferenced event images from the hosted build; source files are preserved.`);
 console.log('Hosted build includes static pages, protected API and D1 migrations.');
