@@ -228,7 +228,7 @@
     ]
   },
   {
-    "file": "/custom/library/38291ff36f.png",
+    "file": "/custom/optimized/6fc917a0895a0d-1600.webp",
     "original": "https://static.tildacdn.com/tild3036-3732-4161-b330-376630333439/AMSK0177_resized.png",
     "source": "https://www.redday.events/projects/alfa-bank/confa",
     "credits": [
@@ -3307,6 +3307,66 @@
         "agency": "REDDAY",
         "title": "Yandex Scale 2024",
         "caseId": "case-6"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/kros-mvideo-drone-race-01-training.webp",
+    "original": "https://www.cros.ru/upload/medialibrary/5e6/1.png",
+    "source": "https://www.cros.ru/ru/kb/case/race/",
+    "credits": [
+      {
+        "agency": "КРОС",
+        "title": "«Гонка дронов» для «М.Видео»",
+        "caseId": "case-enriched-116"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/kros-mvideo-drone-race-02-team.webp",
+    "original": "https://www.cros.ru/upload/medialibrary/32b/2.png",
+    "source": "https://www.cros.ru/ru/kb/case/race/",
+    "credits": [
+      {
+        "agency": "КРОС",
+        "title": "«Гонка дронов» для «М.Видео»",
+        "caseId": "case-enriched-116"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/kros-mvideo-drone-race-04-fpv.webp",
+    "original": "https://www.cros.ru/upload/medialibrary/348/4.png",
+    "source": "https://www.cros.ru/ru/kb/case/race/",
+    "credits": [
+      {
+        "agency": "КРОС",
+        "title": "«Гонка дронов» для «М.Видео»",
+        "caseId": "case-enriched-116"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/kros-mvideo-drone-race-05-interview.webp",
+    "original": "https://www.cros.ru/upload/medialibrary/d0c/5.png",
+    "source": "https://www.cros.ru/ru/kb/case/race/",
+    "credits": [
+      {
+        "agency": "КРОС",
+        "title": "«Гонка дронов» для «М.Видео»",
+        "caseId": "case-enriched-116"
+      }
+    ]
+  },
+  {
+    "file": "/custom/library/kros-mvideo-drone-race-06-winner.webp",
+    "original": "https://www.cros.ru/upload/medialibrary/601/6.png",
+    "source": "https://www.cros.ru/ru/kb/case/race/",
+    "credits": [
+      {
+        "agency": "КРОС",
+        "title": "«Гонка дронов» для «М.Видео»",
+        "caseId": "case-enriched-116"
       }
     ]
   }

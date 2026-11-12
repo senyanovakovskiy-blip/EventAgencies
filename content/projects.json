@@ -3143,15 +3143,22 @@
     "description": "В декабре 2024 года REDDAY вместе с командой Альфа-Банка организовала московскую Альфа-Конфу с обновлённой концепцией. Во Дворце гимнастики Ирины Винер-Усмановой собрались более 5 000 предпринимателей. Ксения Собчак, Артемий Лебедев, Роман Тарасенко, Алексей Ситников и Олег Пароев обсуждали с гостями ценности бизнеса, которые помогают добиваться успеха.",
     "seoDescription": "Московская Альфа-Конфа в декабре 2024 года собрала более 5 000 предпринимателей во Дворце гимнастики Ирины Винер-Усмановой. REDDAY и Альфа-Банк обновили концепцию и посвятили конференцию ценностям бизнеса.",
     "source": "https://www.redday.events/projects/alfa-bank/confa",
-    "image": "/custom/library/38291ff36f.png",
-    "imageMobile": "/custom/library/38291ff36f.png",
-    "ogImage": "/custom/library/38291ff36f.png",
+    "image": "/custom/optimized/6fc917a0895a0d-1600.webp",
+    "imageMobile": "/custom/optimized/6fc917a0895a0d-960.webp",
+    "ogImage": "/custom/optimized/6fc917a0895a0d-1600.webp",
     "thumb": "/custom/library/38291ff36f-thumb.webp",
     "hasPhotos": true,
     "photoCount": 1,
     "caseId": "case-5",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/optimized/6fc917a0895a0d-1600.webp",
+        "ratio": 1.5,
+        "alt": "Зал Альфа-Конфы с центральной сценической конструкцией в фирменных цветах. Фото: REDDAY."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "Альфа-Конфа в Москве",
@@ -3165,8 +3172,8 @@
       "conference"
     ],
     "preview": "/custom/optimized/6fc917a0895a0d-960.webp",
-    "imageWidth": 1680,
-    "imageHeight": 1120,
+    "imageWidth": 1600,
+    "imageHeight": 1067,
     "previewSrcSet": "/custom/optimized/6fc917a0895a0d-640.webp 640w, /custom/optimized/6fc917a0895a0d-960.webp 960w, /custom/optimized/6fc917a0895a0d-1600.webp 1600w"
   },
   {
@@ -9600,27 +9607,65 @@
       "pr",
       "public"
     ],
-    "role": "КРОС.Маркетинг разработала механику акции и финальное событие: четыре команды со звёздными участниками и профессиональными пилотами, видеодневники тренировок в течение четырёх недель, специальная трасса и трансляция с 12 камер, включая пять бортовых.",
+    "role": "КРОС.Маркетинг разработала механику акции и финальное событие: покупка с бонусной картой и регистрация чека открывали участие, затем зрители выбирали одну из четырёх команд со звёздными участниками и профессиональными пилотами. Агентство выпускало видеодневники четырёх недель тренировок, организовало финал на специальной трассе в Москве и трансляцию с 12 камер, включая пять бортовых.",
     "industry": "Розничная торговля и электроника",
-    "description": "Розыгрыш бонусных рублей «М.Видео» превратился в серию тренировок и финальную гонку дронов. Четыре команды — знаменитости и профессиональные пилоты — готовились на протяжении четырёх недель, а в Москве для финала построили трассу для соревнований. Трансляцию вели с 12 камер, пять из них — на дронах. По данным КРОС, на промосайте сделали более 9 000 ставок; трафик в магазины вырос на 4%, количество чеков — на 5% к аналогичному периоду предыдущего года. Год проведения в публикации не указан.",
-    "seoDescription": "«Гонка дронов» КРОС.Маркетинг для «М.Видео»: четыре команды, четыре недели подготовки, финал в Москве и трансляция с 12 камер. По данным агентства, промосайт собрал 9 000+ ставок.",
+    "description": "Покупка с бонусной картой и регистрация чека открывали путь в игру: участник выбирал одну из четырёх команд, где знаменитость тренировалась вместе с профессиональным пилотом. Четыре недели видеодневников поддерживали интригу до московского финала, а пять бортовых камер показывали гонку глазами дронов. По данным КРОС, промосайт собрал более 9 000 ставок, трафик в магазины вырос на 4%, а число чеков — на 5% к сопоставимому периоду предыдущего года. Год проекта источник не указывает.",
+    "seoDescription": "«Гонка дронов» КРОС.Маркетинг для «М.Видео»: регистрация чека, четыре команды, тренировки и трансляция финала с бортовых камер. По данным агентства, промосайт собрал более 9 000 ставок.",
     "source": "https://www.cros.ru/ru/kb/case/race/",
-    "image": "/custom/empty/case-enriched-116.svg",
-    "imageMobile": "/custom/empty/case-enriched-116.svg",
-    "ogImage": "/custom/empty/case-enriched-116.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/kros-mvideo-drone-race-01-training.webp",
+    "imageMobile": "/custom/library/kros-mvideo-drone-race-02-team.webp",
+    "ogImage": "/custom/library/kros-mvideo-drone-race-01-training.webp",
+    "thumb": "/custom/library/kros-mvideo-drone-race-01-training.webp",
+    "hasPhotos": true,
+    "photoCount": 5,
     "caseId": "case-enriched-116",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/kros-mvideo-drone-race-01-training.webp",
+        "ratio": 1.5352480417754568,
+        "alt": "Участник и пилот рассматривают гоночный дрон на поле. Фото: КРОС."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kros-mvideo-drone-race-02-team.webp",
+        "ratio": 1.5038363171355498,
+        "alt": "Участница управляет дроном, рядом пилот в FPV-очках. Фото: КРОС."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kros-mvideo-drone-race-04-fpv.webp",
+        "ratio": 1.504,
+        "alt": "Участники в FPV-очках управляют гоночными дронами. Фото: КРОС."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kros-mvideo-drone-race-05-interview.webp",
+        "ratio": 1.504,
+        "alt": "Ведущий берёт интервью у участницы в FPV-очках. Фото: КРОС."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kros-mvideo-drone-race-06-winner.webp",
+        "ratio": 1.504,
+        "alt": "Участница празднует победу с кубком и дипломом. Фото: КРОС."
+      }
+    ],
     "gradient": "linear-gradient(145deg,#202734,#f39c34)",
     "curated": false,
     "reelTitle": "Гонка дронов · М.Видео",
     "featured": false,
     "eventCity": "Финал, Москва",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "reelImage": "/custom/library/kros-mvideo-drone-race-01-training.webp",
+    "reelMobile": "/custom/library/kros-mvideo-drone-race-02-team.webp",
+    "preview": "/custom/library/kros-mvideo-drone-race-01-training.webp",
+    "imageWidth": 588,
+    "imageHeight": 383,
+    "imageRatio": 1.5352480417754568,
+    "previewSrcSet": "/custom/library/kros-mvideo-drone-race-01-training.webp 588w"
   },
   {
     "slug": "case-enriched-117",
