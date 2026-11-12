@@ -5329,7 +5329,7 @@
     "eventDate": "2025",
     "category": "Бизнес",
     "format": "Выставочный стенд и интерактивная программа",
-    "client": "LARNILANE",
+    "client": "Т-Банк",
     "agencySlug": "larnilane",
     "agencySlugs": [
       "larnilane"
@@ -5339,11 +5339,11 @@
       "business",
       "btl"
     ],
-    "role": "Комплексное обслуживание проекта, инсталляция, квест и демонстрационные зоны",
-    "industry": "Финополис 2025",
-    "description": "На «Финополисе 2025» LARNILANE создала для Т-Банка стенд, где знакомство с биометрией проходило в формате квеста. Рядом работали зона мультибанкинга и Lounge Dolce Vita; центральной точкой стала шестиметровая инсталляция в виде дерева.",
-    "seoDescription": "PAYvolution от Т-Банка на «Финополисе 2025»: стенд LARNILANE, квест по биометрии, зона мультибанкинга и шестиметровая инсталляция.",
-    "source": "https://larnilane.com/page94099906.html",
+    "role": "Комплексное обслуживание проекта 360 и создание шестиметровой инсталляции со световыми сценариями",
+    "industry": "Финансовые технологии и банковские услуги",
+    "description": "На «Финополисе 2025» в Сириусе стенд Т-Банка PAYvolution знакомил гостей с платежными технологиями через шестиметровое дерево со световыми сценариями. Telegram-квест предлагал задания по биометрии и финальную игру с призами; рядом работали демо «Мультибанкинга» с мега-тетрисом на LED и Lounge Dolce Vita с авторскими горячими напитками. LARNILANE указывает комплексное обслуживание проекта 360 и создание центральной инсталляции.",
+    "seoDescription": "PAYvolution Т-Банка на «Финополисе 2025»: дерево-инсталляция, Telegram-квест по биометрии, демо «Мультибанкинга» и Lounge Dolce Vita.",
+    "source": "https://larnilane.com/projects",
     "image": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
     "imageMobile": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
     "ogImage": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
@@ -5357,14 +5357,14 @@
         "type": "image",
         "src": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
         "ratio": 1.5,
-        "alt": "Центральная шестиметровая инсталляция-дерево на стенде Т-Банка PAYvolution на «Финополисе 2025». Фото: LARNILANE."
+        "alt": "Шестиметровая инсталляция-дерево PAYvolution со световыми сценариями на стенде Т-Банка; фото LARNILANE."
       }
     ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "PAYvolution · Т-Банк",
     "featured": false,
-    "eventCity": "",
+    "eventCity": "Сириус",
     "guestLabel": "",
     "occasions": [],
     "reelImage": "/custom/library/larnilane-tbank-payvolution-01-tree-installation.webp",
