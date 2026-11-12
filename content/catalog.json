@@ -1142,7 +1142,7 @@
         "case-enriched-155"
       ],
       "caseCount": 2,
-      "photoCount": 1,
+      "photoCount": 2,
       "cover": "/custom/library/9ba54abefe-thumb.webp",
       "coverWork": "case-enriched-69"
     },
@@ -14335,15 +14335,22 @@
       "description": "21 июля 2018 года открытие ТЦ «Каравай» в Наро-Фоминске стало частью городского праздника. Днём проходили мастер-классы и конкурсы, вечером — концерт Натальи Королёвой, группы «На-на» и «Лазурного берега». MaxMedium пишет, что разработало программу церемонии, семейных активностей и вечерней части за 2,5 недели. Агентство сообщает о более чем 28 000 участниках; муниципальная публикация число гостей не подтверждает.",
       "seoDescription": "Открытие ТЦ «Каравай» в Наро-Фоминске: дневные мастер-классы, семейная программа и концерт. MaxMedium описывает подготовку открытия в рамках Дня города.",
       "source": "https://max-medium.ru/ru/proekty/tzkaravai",
-      "image": "/custom/empty/case-enriched-155.svg",
-      "imageMobile": "/custom/empty/case-enriched-155.svg",
-      "ogImage": "/custom/empty/case-enriched-155.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/karavay-opening-01.webp",
+      "imageMobile": "/custom/optimized/karavay-opening-01-640.webp",
+      "ogImage": "/custom/library/karavay-opening-01.webp",
+      "thumb": "/custom/optimized/karavay-opening-01-640.webp",
+      "hasPhotos": true,
+      "photoCount": 1,
       "caseId": "case-enriched-155",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/karavay-opening-01.webp",
+          "ratio": 1.5,
+          "alt": "Мужчина с микрофоном выступает перед группой людей у входа в ТЦ «Каравай»; над дверями — арка из воздушных шаров."
+        }
+      ],
       "gradient": "linear-gradient(145deg,#294b57,#e3a55d)",
       "curated": false,
       "reelTitle": "Каравай · открытие с городским размахом",
@@ -14363,7 +14370,14 @@
           "label": "Администрация Наро-Фоминского округа · дата, открытие и публичная программа",
           "url": "https://nfreg.ru/novosti/karavaj-vse-chto-hochesh-vybiraj/"
         }
-      ]
+      ],
+      "reelImage": "/custom/library/karavay-opening-01.webp",
+      "reelMobile": "/custom/optimized/karavay-opening-01-640.webp",
+      "imageRatio": 1.5,
+      "preview": "/custom/optimized/karavay-opening-01-640.webp",
+      "imageWidth": 915,
+      "imageHeight": 610,
+      "previewSrcSet": "/custom/optimized/karavay-opening-01-320.webp 320w, /custom/optimized/karavay-opening-01-640.webp 640w, /custom/library/karavay-opening-01.webp 915w"
     },
     {
       "slug": "case-enriched-156",
@@ -15344,6 +15358,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 430
+    "photos": 431
   }
 }
