@@ -7573,18 +7573,61 @@
     ],
     "role": "Креативная концепция и механика кампании 360, чемпионаты, скаутская система и звёздные наставники.",
     "industry": "Спорт и молодёжная аудитория",
-    "description": "DPG Russia разработала и реализовала кампанию KFC Battle: чемпионаты по футболу и стритболу для юношей и девушек 14–30 лет в 28 городах России, Казахстана и Кыргызстана. В проект вошли скаутская система и звёздные наставники, в том числе игрок NBA Тимофей Мозгов. По данным DPG, в чемпионатах участвовали 92 063 человека, а число контактов с брендом составило 120 млн.",
-    "seoDescription": "KFC Battle от DPG Russia: футбольные и стритбольные чемпионаты в 28 городах трёх стран. 92 063 участника и 120 млн контактов с брендом — по данным агентства.",
+    "description": "DPG Russia разработала и реализовала кампанию KFC Battle — чемпионаты по футболу и стритболу для юношей и девушек 14–30 лет в 28 городах России, Казахстана и Кыргызстана. В механику вошли скаутская система и звёздные наставники, включая игрока NBA Тимофея Мозгова. По данным DPG, в чемпионатах участвовали 92 063 человека; отдельно агентство указывает 120 млн контактов с брендом.",
+    "seoDescription": "KFC Battle от DPG Russia — чемпионаты по футболу и стритболу в 28 городах трёх стран. 92 063 участника и 120 млн контактов с брендом — данные агентства.",
     "source": "https://dpgrussia.com/project/kfc-battle/",
-    "image": "/custom/empty/case-enriched-85.svg",
-    "imageMobile": "/custom/empty/case-enriched-85.svg",
-    "ogImage": "/custom/empty/case-enriched-85.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/kfc-battle-01.webp",
+    "imageMobile": "/custom/optimized/kfc-battle-01-640.webp",
+    "ogImage": "/custom/library/kfc-battle-01.webp",
+    "thumb": "/custom/optimized/kfc-battle-01-640.webp",
+    "hasPhotos": true,
+    "photoCount": 7,
     "caseId": "case-enriched-85",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/kfc-battle-01.webp",
+        "ratio": 1.497479,
+        "alt": "Игроки KFC Battle борются за мяч в стритбольном матче."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kfc-battle-02.webp",
+        "ratio": 1.50084,
+        "alt": "Участник KFC Battle бросает мяч к кольцу на уличной площадке."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kfc-battle-03.webp",
+        "ratio": 1.50084,
+        "alt": "Участники KFC Battle играют в футбол на площадке."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kfc-battle-04.webp",
+        "ratio": 1.50084,
+        "alt": "Футбольный матч KFC Battle на открытой площадке."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kfc-battle-05.webp",
+        "ratio": 1.497479,
+        "alt": "Спикер с микрофоном на площадке KFC Battle."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kfc-battle-06.webp",
+        "ratio": 1.50084,
+        "alt": "Участники KFC Battle на церемонии награждения."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/kfc-battle-07.webp",
+        "ratio": 1.50084,
+        "alt": "Ведущий KFC Battle обращается к участникам на футбольном поле."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#252323,#492b27)",
     "curated": false,
     "reelTitle": "KFC Battle — футбол и стритбол",
@@ -7593,7 +7636,14 @@
     "guestLabel": "92 063 участника",
     "occasions": [
       "public"
-    ]
+    ],
+    "reelImage": "/custom/library/kfc-battle-01.webp",
+    "reelMobile": "/custom/optimized/kfc-battle-01-640.webp",
+    "imageRatio": 1.4974789915966387,
+    "preview": "/custom/optimized/kfc-battle-01-640.webp",
+    "imageWidth": 891,
+    "imageHeight": 595,
+    "previewSrcSet": "/custom/optimized/kfc-battle-01-320.webp 320w, /custom/optimized/kfc-battle-01-640.webp 640w, /custom/library/kfc-battle-01.webp 891w"
   },
   {
     "slug": "case-enriched-91",
