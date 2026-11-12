@@ -2082,7 +2082,7 @@
         "case-enriched-161"
       ],
       "caseCount": 3,
-      "photoCount": 9,
+      "photoCount": 14,
       "cover": "/custom/library/eventex-gts-fest-01.webp",
       "coverWork": "case-enriched-96"
     },
@@ -14859,15 +14859,46 @@
       "description": "В 2024 году EVENTEX собрала партнёров-вендоров компании на четырёхдневный выезд в Архыз; заказчик не раскрыт. Участники жили в закрытом бутик-отеле, гуляли верхом вдоль горной реки и вместе поднимались к Софийским водопадам. Финалом стал гала-ужин по мотивам «Кавказской пленницы». EVENTEX указывает 30 участников и описывает полный маршрут заботы — от авиабилетов и сопровождения до мерча и приветственных наборов.",
       "seoDescription": "Четырёхдневный выезд EVENTEX для партнёров компании в Архыз: конная прогулка, восхождение к Софийским водопадам и гала-ужин в духе «Кавказской пленницы». 30 участников — по данным агентства.",
       "source": "https://eventex.moscow/cases/arhyzgoryzvezdy",
-      "image": "/custom/empty/case-enriched-161.svg",
-      "imageMobile": "/custom/empty/case-enriched-161.svg",
-      "ogImage": "/custom/empty/case-enriched-161.svg",
-      "thumb": null,
-      "hasPhotos": false,
-      "photoCount": 0,
+      "image": "/custom/library/arhyz-gory-01.webp",
+      "imageMobile": "/custom/library/arhyz-gory-01.webp",
+      "ogImage": "/custom/library/arhyz-gory-01.webp",
+      "thumb": "/custom/library/arhyz-gory-01.webp",
+      "hasPhotos": true,
+      "photoCount": 5,
       "caseId": "case-enriched-161",
       "kind": "case",
-      "gallery": [],
+      "gallery": [
+        {
+          "type": "image",
+          "src": "/custom/library/arhyz-gory-01.webp",
+          "ratio": 1.5,
+          "alt": "Группа едет верхом на лошадях вдоль горной реки у Архыза"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/arhyz-gory-02.webp",
+          "ratio": 1.502347,
+          "alt": "Горный склон и водопад в Архызе"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/arhyz-gory-03.webp",
+          "ratio": 0.666667,
+          "alt": "Участники поездки у подножия Софийских водопадов"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/arhyz-gory-04.webp",
+          "ratio": 0.666667,
+          "alt": "Внедорожник пересекает горную реку"
+        },
+        {
+          "type": "image",
+          "src": "/custom/library/arhyz-gory-05.webp",
+          "ratio": 1.502347,
+          "alt": "Внедорожники едут по горной дороге"
+        }
+      ],
       "gradient": "linear-gradient(145deg,#18364b,#b87458)",
       "curated": false,
       "reelTitle": "Архыз · горы, звёзды и общий путь",
@@ -14883,7 +14914,14 @@
           "label": "EVENTEX · программа поездки, решения команды и заявленные 30 участников",
           "url": "https://eventex.moscow/cases/arhyzgoryzvezdy"
         }
-      ]
+      ],
+      "reelImage": "/custom/library/arhyz-gory-01.webp",
+      "reelMobile": "/custom/library/arhyz-gory-01.webp",
+      "imageRatio": 1.5,
+      "preview": "/custom/library/arhyz-gory-01.webp",
+      "imageWidth": 960,
+      "imageHeight": 640,
+      "previewSrcSet": "/custom/library/arhyz-gory-01.webp 960w"
     },
     {
       "slug": "case-enriched-162",
@@ -15479,6 +15517,6 @@
     "agencies": 116,
     "cases": 182,
     "works": 229,
-    "photos": 446
+    "photos": 451
   }
 }
