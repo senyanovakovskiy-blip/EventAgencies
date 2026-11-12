@@ -7481,22 +7481,77 @@
     "description": "На VK Fest 2025 Beetl создало для «Ингосстраха» открытое пространство с мягкими формами и интерактивными зонами, адаптированное к атмосфере музыкального фестиваля. Гости могли участвовать в активностях, общаться с представителями бренда или просто отдохнуть; вечером площадку подсвечивали. Целями были узнаваемость у молодой аудитории и сбор релевантных контактов. По данным Beetl, за фестиваль пространство собрало около 4 200 контактов.",
     "seoDescription": "Бренд-зона «Ингосстраха» на VK Fest 2025: интерактив, мягкие формы и вечерняя подсветка; около 4 200 контактов по данным Beetl.",
     "source": "https://beetl.ru/portfolio/ingosstrakh-na-vk-fest/",
-    "image": "/custom/empty/case-enriched-84.svg",
-    "imageMobile": "/custom/empty/case-enriched-84.svg",
-    "ogImage": "/custom/empty/case-enriched-84.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/beetl-vkfest-2025-08.webp",
+    "imageMobile": "/custom/optimized/beetl-vkfest-2025-08-640.webp",
+    "ogImage": "/custom/optimized/beetl-vkfest-2025-08-960.webp",
+    "thumb": "/custom/optimized/beetl-vkfest-2025-08-640.webp",
+    "hasPhotos": true,
+    "photoCount": 8,
     "caseId": "case-enriched-84",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-08.webp",
+        "ratio": 1.5,
+        "alt": "Общий вид бренд-пространства «Ингосстраха» на VK Fest 2025 — фото из портфолио Beetl."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-03.webp",
+        "ratio": 1.5,
+        "alt": "Гости у открытой бренд-зоны «Ингосстраха» на VK Fest 2025 — фото из портфолио Beetl."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-04.webp",
+        "ratio": 1.5,
+        "alt": "Гости участвуют в механике стенда «Ингосстраха» на VK Fest 2025 — фото из портфолио Beetl."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-01.webp",
+        "ratio": 0.667,
+        "alt": "Синий стенд «Ингосстраха» с интерактивной витриной на VK Fest 2025 — фото из портфолио Beetl."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-02.webp",
+        "ratio": 0.667,
+        "alt": "Брендированная игровая стойка «Ингосстраха» на VK Fest 2025 — фото из портфолио Beetl."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-05.webp",
+        "ratio": 0.667,
+        "alt": "Интерактивная витрина с призовой механикой в зоне «Ингосстраха» на VK Fest 2025 — фото из портфолио Beetl."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-06.webp",
+        "ratio": 1.5,
+        "alt": "Посетители проходят игру в зоне «Ингосстраха» на VK Fest 2025 — фото из портфолио Beetl."
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/beetl-vkfest-2025-07.webp",
+        "ratio": 1.5,
+        "alt": "Гоночные симуляторы в зоне «Ингосстраха» на VK Fest 2025 — фото из портфолио Beetl."
+      }
+    ],
     "gradient": "linear-gradient(150deg,#19252e,#353127)",
     "curated": false,
     "reelTitle": "Ингосстрах на VK Fest 2025",
     "featured": false,
     "eventCity": "Москва",
     "guestLabel": "",
-    "occasions": []
+    "occasions": [],
+    "preview": "/custom/optimized/beetl-vkfest-2025-08-960.webp",
+    "previewSrcSet": "/custom/optimized/beetl-vkfest-2025-08-640.webp 640w, /custom/optimized/beetl-vkfest-2025-08-960.webp 960w, /custom/optimized/beetl-vkfest-2025-08-1440.webp 1440w",
+    "imageWidth": 1600,
+    "imageHeight": 1067,
+    "imageRatio": 1.5,
+    "reelMobile": "/custom/optimized/beetl-vkfest-2025-08-960.webp"
   },
   {
     "slug": "case-enriched-85",
