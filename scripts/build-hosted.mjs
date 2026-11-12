@@ -38,7 +38,17 @@ const collectReferenceFiles=async directory=>{
 };
 for(const directory of ['content','public','app','admin','cloud','lib','scripts','template-source','worker'])
  await collectReferenceFiles(path.join(root,directory));
+// The generated catalog and HTML pages carry the exact image references for
+// this build. Keep them in the hosted asset set while leaving source assets intact.
+await collectReferenceFiles(target);
 const referenceText=(await Promise.all(references.map(file=>fs.readFile(file,'utf8')))).join('\n');
+const staleCatalogData=path.resolve(root,'public/custom/catalog-data.json');
+const mediaManifestPath=path.resolve(root,'content/media.json');
+const assetReferenceFiles=references.filter(file=>{
+ const resolved=path.resolve(file);
+ return resolved!==staleCatalogData&&resolved!==mediaManifestPath;
+});
+const assetReferenceText=(await Promise.all(assetReferenceFiles.map(file=>fs.readFile(file,'utf8')))).join('\n');
 const pruneUnusedEventImages=async eventsRoot=>{
  const eventFiles=[];
  const collectEventFiles=async directory=>{
@@ -64,6 +74,37 @@ const pruneUnusedEventImages=async eventsRoot=>{
  }
  return removed;
 };
+const pruneUnusedCatalogMedia=async assetsRoot=>{
+ const used=new Set([...assetReferenceText.matchAll(/\/custom\/(?:library|optimized)\/[A-Za-z0-9._-]+/g)].map(match=>match[0]));
+ const media=JSON.parse(await fs.readFile(mediaManifestPath,'utf8'));
+ for(const url of [...used]){
+  if(!url.startsWith('/custom/library/'))continue;
+  const entry=media[url];
+  if(!entry)continue;
+  const candidates=[entry.src,entry.preview,...(String(entry.srcset||'').match(/\/custom\/(?:library|optimized)\/[A-Za-z0-9._-]+/g)||[])];
+  for(const candidate of candidates)if(typeof candidate==='string'&&candidate.startsWith('/custom/'))used.add(candidate);
+ }
+ let removed=0;
+ for(const folder of ['library','optimized']){
+  const directory=path.resolve(assetsRoot,'custom',folder);
+  const collect=async current=>{
+   let entries=[];try{entries=await fs.readdir(current,{withFileTypes:true});}catch(error){if(error.code==='ENOENT')return;throw error;}
+   for(const entry of entries){
+    const file=path.join(current,entry.name);
+    if(entry.isDirectory())await collect(file);
+    else if(entry.isFile()){
+     const relative=path.relative(directory,file).split(path.sep).join('/'),url='/custom/'+folder+'/'+relative;
+     if(used.has(url))continue;
+     const resolved=path.resolve(file);
+     if(!resolved.startsWith(directory+path.sep))throw Error('Invalid hosted catalogue asset path');
+     await fs.rm(resolved);removed++;
+    }
+   }
+  };
+  await collect(directory);
+ }
+ return removed;
+};
 await fs.cp(path.join(root,'admin'),path.join(target,'admin'),{recursive:true});
 const rewrite=async(file,replacements)=>{
  let text=await fs.readFile(path.join(target,file),'utf8');
@@ -84,6 +125,8 @@ await rewrite('admin/index.html',[
 ]);
 const protectedCount=await packProtectedAssets(target,path.join(root,'.sites-build','protected-assets.mjs'));
 console.log(`Bundled ${protectedCount} protected pages and scripts behind the Worker access gate.`);
+const prunedCatalogMedia=await pruneUnusedCatalogMedia(target);
+if(prunedCatalogMedia)console.log(`Excluded ${prunedCatalogMedia} unreferenced catalogue images from the hosted build; source files are preserved.`);
 const framework=spawnSync(process.execPath,['scripts/run-framework.mjs','build'],{cwd:root,stdio:'inherit'});
 if(framework.status!==0)process.exit(framework.status??1);
 const prunedEventImages=await pruneUnusedEventImages(path.join(root,'dist','client','custom','events'));
