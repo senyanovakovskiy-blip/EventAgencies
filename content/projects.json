@@ -11441,18 +11441,49 @@
     "description": "На стенде площадью 84 м² LYRA собрала около 30 символов Новгородской области в иллюстрированную карту. Гость надевал наушники и выбирал один из трёх маршрутов — от «12 веков за 12 минут» до детской истории о пропавших гусях. По пути можно было искать берестяные грамоты, звонить в валдайский колокольчик и встречать театрального Петрушку. По выходным приезжали новгородские музыканты и ремесленники. LYRA сообщает о 153 мастер-классах и более чем 6 000 участниках за девять месяцев.",
     "seoDescription": "Стенд Новгородской области для выставки «Россия»: три аудиомаршрута, около 30 символов региона, интерактивы и 153 мастер-класса от LYRA.",
     "source": "https://lyra-agency.ru/stendnovgorod",
-    "image": "/custom/empty/case-enriched-146.svg",
-    "imageMobile": "/custom/empty/case-enriched-146.svg",
-    "ogImage": "/custom/empty/case-enriched-146.svg",
-    "thumb": null,
-    "hasPhotos": false,
-    "photoCount": 0,
+    "image": "/custom/library/novgorod-lyra-01.webp",
+    "imageMobile": "/custom/optimized/novgorod-lyra-01-640.webp",
+    "ogImage": "/custom/library/novgorod-lyra-01.webp",
+    "thumb": "/custom/optimized/novgorod-lyra-01-640.webp",
+    "hasPhotos": true,
+    "photoCount": 5,
     "caseId": "case-enriched-146",
     "kind": "case",
-    "gallery": [],
+    "gallery": [
+      {
+        "type": "image",
+        "src": "/custom/library/novgorod-lyra-01.webp",
+        "ratio": 1.500586,
+        "alt": "Общий вид стенда Новгородской области с иллюстрированной экспозицией и людьми у стойки"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/novgorod-lyra-02.webp",
+        "ratio": 1.500586,
+        "alt": "Иллюстрированная стена стенда и стойка с символикой Новгородской области"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/novgorod-lyra-03.webp",
+        "ratio": 1.500586,
+        "alt": "Фрагмент экспозиции с надписью «Новгородская область» и иллюстрациями"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/novgorod-lyra-04.webp",
+        "ratio": 1.500586,
+        "alt": "Интерактивная зона с аркой, иллюстрированной картой и экранами"
+      },
+      {
+        "type": "image",
+        "src": "/custom/library/novgorod-lyra-05.webp",
+        "ratio": 1.500586,
+        "alt": "Иллюстрированная панель с персонажем и символикой региона"
+      }
+    ],
     "gradient": "linear-gradient(145deg,#123d3a,#d2a567)",
     "curated": false,
-    "reelTitle": "12 веков за 12 минут · Новгородская область",
+    "reelTitle": "Новгородская область · история, которую ищут",
     "featured": false,
     "eventCity": "Москва · ВДНХ",
     "guestLabel": "Более 6 000 участников мастер-классов (по данным LYRA)",
@@ -11465,7 +11496,14 @@
         "label": "LYRA · концепция стенда, даты, маршруты, программа и данные мастер-классов",
         "url": "https://lyra-agency.ru/stendnovgorod"
       }
-    ]
+    ],
+    "reelImage": "/custom/library/novgorod-lyra-01.webp",
+    "reelMobile": "/custom/optimized/novgorod-lyra-01-640.webp",
+    "imageRatio": 1.5005861664712778,
+    "preview": "/custom/optimized/novgorod-lyra-01-640.webp",
+    "imageWidth": 1280,
+    "imageHeight": 853,
+    "previewSrcSet": "/custom/optimized/novgorod-lyra-01-640.webp 640w, /custom/library/novgorod-lyra-01.webp 1280w"
   },
   {
     "slug": "case-enriched-147",
