@@ -42,11 +42,10 @@ for(const directory of ['content','public','app','admin','cloud','lib','scripts'
 // this build. Keep them in the hosted asset set while leaving source assets intact.
 await collectReferenceFiles(target);
 const referenceText=(await Promise.all(references.map(file=>fs.readFile(file,'utf8')))).join('\n');
-const staleCatalogData=path.resolve(root,'public/custom/catalog-data.json');
 const mediaManifestPath=path.resolve(root,'content/media.json');
 const assetReferenceFiles=references.filter(file=>{
  const resolved=path.resolve(file);
- return resolved!==staleCatalogData&&resolved!==mediaManifestPath;
+ return path.basename(resolved)!=='catalog-data.json'&&resolved!==mediaManifestPath;
 });
 const assetReferenceText=(await Promise.all(assetReferenceFiles.map(file=>fs.readFile(file,'utf8')))).join('\n');
 const pruneUnusedEventImages=async eventsRoot=>{
